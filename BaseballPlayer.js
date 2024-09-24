@@ -1,5 +1,14 @@
 class BaseballPlayer {
 
+    static debug(){
+        let temp = new BaseballPlayer();
+        temp.pitchScoreAverage = 7;
+        temp.swingPercent = 7;
+        temp.contactPercent = 7;
+        temp.hitScoreAverage = 7;
+        return temp;
+    }
+
     // Static method to compare two players based on their batting average
     static compareByBattingAverage(player1, player2) {
         if (player1.battingAverage > player2.battingAverage) {
@@ -21,7 +30,7 @@ class BaseballPlayer {
     }
 
     // Constructor to initialize player attributes
-    constructor(name) {
+    constructor() {
         this.firstName = Name.create_first_name(); // Player's name
         this.lastName = Name.create_last_name();
         this.fullname = this.firstName + " " + Name.create_nickname(this.firstName, this.lastName) + " " + this.lastName;
