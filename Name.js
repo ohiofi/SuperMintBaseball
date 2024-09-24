@@ -1,6 +1,5 @@
 class Name {
   //static class variables
-  static commonLastNames = []; // it's fun to have re-occurring last names
   static firstNameList = [
     "Aaliyah", "Aaron", "Abby", "Abigail", "Abraham", "Adam", "Addison", "Adrian", "Adriana", "Adrianna", "Aidan", "Aiden", "Alan", "Alana", "Alejandro", "Alex", "Alexa", "Alexander", "Alexandra", "Alexandria", "Alexia", "Alexis", "Alicia", "Allison", "Alondra", "Alyssa", "Amanda", "Amber", "Amelia", "Amy", "Ana", "Andrea", "Andres", "Andrew", "Angel", "Angela", "Angelica", "Angelina", "Anna", "Anthony", "Antonio", "Ariana", "Arianna", "Ashley", "Ashlyn", "Ashton", "Aubrey", "Audrey", "Austin", "Autumn", "Ava", "Avery", "Ayden", "Bailey", "Benjamin", "Bianca", "Blake", "Braden", "Bradley", "Brady", "Brandon", "Brayden", "Breanna", "Brendan", "Brian", "Briana", "Brianna", "Brittany", "Brody", "Brooke", "Brooklyn", "Bryan", "Bryce", "Bryson", "Caden", "Caitlin", "Caitlyn", "Caleb", "Cameron", "Camila", "Carlos", "Caroline", "Carson", "Carter", "Cassandra", "Cassidy", "Catherine", "Cesar", "Charles", "Charlotte", "Chase", "Chelsea", "Cheyenne", "Chloe", "Christian", "Christina", "Christopher", "Claire", "Cody", "Colby", "Cole", "Colin", "Collin", "Colton", "Conner", "Connor", "Cooper", "Courtney", "Cristian", "Crystal", "Daisy", "Dakota", "Dalton", "Damian", "Daniel", "Daniela", "Danielle", "David", "Delaney", "Derek", "Destiny", "Devin", "Devon", "Diana", "Diego", "Dominic", "Donovan", "Dylan", "Edgar", "Eduardo", "Edward", "Edwin", "Eli", "Elias", "Elijah", "Elizabeth", "Ella", "Ellie", "Emily", "Emma", "Emmanuel", "Eric", "Erica", "Erick", "Erik", "Erin", "Ethan", "Eva", "Evan", "Evelyn", "Faith", "Fernando", "Francisco", "Gabriel", "Gabriela", "Gabriella", "Gabrielle", "Gage", "Garrett", "Gavin", "Genesis", "George", "Gianna", "Giovanni", "Giselle", "Grace", "Gracie", "Grant", "Gregory", "Hailey", "Haley", "Hannah", "Hayden", "Hector", "Henry", "Hope", "Hunter", "Ian", "Isaac", "Isabel", "Isabella", "Isabelle", "Isaiah", "Ivan", "Jack", "Jackson", "Jacob", "Jacqueline", "Jada", "Jade", "Jaden", "Jake", "Jalen", "James", "Jared", "Jasmin", "Jasmine", "Jason", "Javier", "Jayden", "Jayla", "Jazmin", "Jeffrey", "Jenna", "Jennifer", "Jeremiah", "Jeremy", "Jesse", "Jessica", "Jesus", "Jillian", "Jocelyn", "Joel", "John", "Johnathan", "Jonah", "Jonathan", "Jordan", "Jordyn", "Jorge", "Jose", "Joseph", "Joshua", "Josiah", "Juan", "Julia", "Julian", "Juliana", "Justin", "Kaden", "Kaitlyn", "Kaleb", "Karen", "Karina", "Kate", "Katelyn", "Katherine", "Kathryn", "Katie", "Kayla", "Kaylee", "Kelly", "Kelsey", "Kendall", "Kennedy", "Kenneth", "Kevin", "Kiara", "Kimberly", "Kyle", "Kylee", "Kylie", "Landon", "Laura", "Lauren", "Layla", "Leah", "Leonardo", "Leslie", "Levi", "Liam", "Liliana", "Lillian", "Lilly", "Lily", "Lindsey", "Logan", "Lucas", "Lucy", "Luis", "Luke", "Lydia", "Mackenzie", "Madeline", "Madelyn", "Madison", "Makayla", "Makenzie", "Malachi", "Manuel", "Marco", "Marcus", "Margaret", "Maria", "Mariah", "Mario", "Marissa", "Mark", "Martin", "Mary", "Mason", "Matthew", "Max", "Maxwell", "Maya", "Mckenzie", "Megan", "Melanie", "Melissa", "Mia", "Micah", "Michael", "Michelle", "Miguel", "Mikayla", "Miranda", "Molly", "Morgan", "Mya", "Naomi", "Natalia", "Natalie", "Nathan", "Nathaniel", "Nevaeh", "Nicholas", "Nicolas", "Nicole", "Noah", "Nolan", "Oliver", "Olivia", "Omar", "Oscar", "Owen", "Paige", "Parker", "Patrick", "Paul", "Payton", "Peter", "Peyton", "Preston", "Rachel", "Raymond", "Reagan", "Rebecca", "Ricardo", "Richard", "Riley", "Robert", "Ruby", "Ryan", "Rylee", "Sabrina", "Sadie", "Samantha", "Samuel", "Sara", "Sarah", "Savannah", "Sean", "Sebastian", "Serenity", "Sergio", "Seth", "Shane", "Shawn", "Shelby", "Sierra", "Skylar", "Sofia", "Sophia", "Sophie", "Spencer", "Stephanie", "Stephen", "Steven", "Summer", "Sydney", "Tanner", "Taylor", "Thomas", "Tiffany", "Timothy", "Travis", "Trenton", "Trevor", "Trinity", "Tristan", "Tyler", "Valeria", "Valerie", "Vanessa", "Veronica", "Victor", "Victoria", "Vincent", "Wesley", "William", "Wyatt", "Xavier", "Zachary", "Zoe", "Zoey"
   ];
@@ -51,12 +50,12 @@ class Name {
     "Enhancing the ", "Nurturing a Better ",
     "Driving the Future of ", "Harnessing the Power of ",
     "Leaders in ", "First in ", "Get the ", "Don't be ", "Just ", "Get ", "", "110% ",
-    "Experience the ", "Stay Ahead with ", 
-    "The Power of ", "Focus on ", 
-    "Your Source for ", "Setting the Standard for ", 
-    "Full Speed ", "Discover ", 
-    "Maximize Your ", "Let's Go ", 
-    "Built for ", "Delivering ", 
+    "Experience the ", "Stay Ahead with ",
+    "The Power of ", "Focus on ",
+    "Your Source for ", "Setting the Standard for ",
+    "Full Speed ", "Discover ",
+    "Maximize Your ", "Let's Go ",
+    "Built for ", "Delivering ",
     "Elevate Your ", "Destroy ", "Demolish ",
     "Annihilate ",
     "Obliterate ",
@@ -93,12 +92,12 @@ class Name {
     "Duplicity",
     "Scam",
     "Betrayal",
-    "Subterfuge", 
+    "Subterfuge",
     "Lies", "Scum",
-    "Falsification", "Nature","Health","Family","Business","Money"
+    "Falsification", "Nature", "Health", "Family", "Business", "Money"
   ];
 
-  static catchphraseEndings = ["","","","","","","","","",""," Today"," Tomorrow"," Forever"," for All"," Always"," for Now","-ish"," Fun",", Dude!"," to the Extreme"," and Love"," and Business"," and Family"," and Beyond", " and More"];
+  static catchphraseEndings = ["", "", "", "", "", "", "", "", "", "", " Today", " Tomorrow", " Forever", " for All", " Always", " for Now", "-ish", " Fun", ", Dude!", " to the Extreme", " and Love", " and Business", " and Family", " and Beyond", " and More"];
 
   // static methods
   // @staticmethod
@@ -140,24 +139,27 @@ class Name {
     return Name.findLetterMatch(listname, searchquery, num - 1);
   };
 
-  static shuffle(someArray) {
-    for (let i = someArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * i);
-      const temp = someArray[i];
-      someArray[i] = someArray[j];
-      someArray[j] = temp;
-    }
-    return someArray
-  };
+  // static shuffle(someArray) {
+  //   for (let i = someArray.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * i);
+  //     const temp = someArray[i];
+  //     someArray[i] = someArray[j];
+  //     someArray[j] = temp;
+  //   }
+  //   return someArray
+  // };
+
+  static randomItem(someArray) {
+    return someArray[Math.floor(Math.random() * someArray.length)];
+  }
 
   //@staticmethod
   static create_first_name() {
-    // # first
-    // random.shuffle(Name.firstNameList)
-    Name.shuffle(Name.firstNameList);
-    // firstName = Name.firstNameList[0][:Name.find_first_vowel(Name.firstNameList[0])] + Name.firstNameList[1][Name.find_first_vowel(Name.firstNameList[1]):]
-    let firstName = Name.firstNameList[0].substring(0, Name.find_first_vowel(Name.firstNameList[0]));
-    firstName += Name.firstNameList[1].substring(Name.find_first_vowel(Name.firstNameList[1]));
+    let nameA = Name.randomItem(Name.firstNameList);
+    let nameB = Name.randomItem(Name.firstNameList);
+
+    let firstName = nameA.substring(0, Name.find_first_vowel(nameA));
+    firstName += nameB.substring(Name.find_first_vowel(nameB));
     // if not firstName[0].isupper():
     //if(firstName.charAt(0) != firstName.charAt(0).toUpperCase()){
     //   firstName = firstName[0].capitalize() + firstName[1:]
@@ -169,30 +171,24 @@ class Name {
   //@staticmethod
   static create_last_name() {
     // # last
-    // random.shuffle(Name.lastNameList)
-    Name.shuffle(Name.lastNameList);
-    // lastName = Name.lastNameList[0][:Name.find_first_vowel(Name.lastNameList[0])] + Name.lastNameList[1][Name.find_first_vowel(Name.lastNameList[1]):]
-    let lastName = Name.lastNameList[0].substring(0, Name.find_first_vowel(Name.lastNameList[0]));
-    lastName += Name.lastNameList[1].substring(Name.find_first_vowel(Name.lastNameList[1]));
+    let nameA = Name.randomItem(Name.firstNameList);
+    let nameB = Name.randomItem(Name.firstNameList);
+
+    let lastName = nameA.substring(0, Name.find_first_vowel(nameA));
+    lastName += nameB.substring(Name.find_first_vowel(nameB));
     // if not lastName[0].isupper():
     //if(lastName.charAt(0) != lastName.charAt(0).toUpperCase()){
     //   lastName = lastName[0].capitalize() + lastName[1:]
     lastName = lastName.charAt(0).toUpperCase() + lastName.substring(1).toLowerCase();
     //}
-    Name.commonLastNames.push(lastName);
-    // if random.randint(1,4) == 1:
-    if (Math.random() < 0.25) {
-      //   lastName = random.choice(Name.commonLastNames)
-      lastName = Name.commonLastNames[Math.floor(Math.random() * Name.commonLastNames.length)];
-    }
     return lastName;
   };
 
   //@staticmethod
   static create_nickname(firstName, lastName) {
     // # nickname
-    // random.shuffle(Name.adjList)
-    Name.shuffle(Name.adjList);
+
+    let adj = Name.randomItem(Name.adjList);
     let nickname = "";
     // if random.random() < 0.5:
     if (Math.random() < 0.3) {
@@ -202,21 +198,21 @@ class Name {
       if (tempAdj != null) {
         nickname = tempAdj;
       } else {
-        nickname = Name.adjList[0].charAt(0).toUpperCase() + Name.adjList[0].substring(1).toLowerCase();
+        nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
       }
     } else if (Math.random() < 0.3) {
-      //   Name.adjList[0].capitalize()
-      nickname = Name.adjList[0].charAt(0).toUpperCase() + Name.adjList[0].substring(1).toLowerCase();
+      //   adj.capitalize()
+      nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
     }
     // if len(nickname) > 1:
     if (nickname.length > 1) {
       //   nickname += ('-',' ')[random.randint(0,1)]
       nickname += Math.random() < 0.5 ? '-' : ' ';
     }
-    // random.shuffle(Name.nickNameList)
-    Name.shuffle(Name.nickNameList);
-    // tempNickNoun1 = Name.nickNameList[0].capitalize()
-    let tempNickNoun1 = Name.nickNameList[0].charAt(0).toUpperCase() + Name.nickNameList[0].substring(1).toLowerCase();
+
+    let nameA = Name.randomItem(Name.nickNameList);
+    // tempNickNoun1 = nameA.capitalize()
+    let tempNickNoun1 = nameA.charAt(0).toUpperCase() + nameA.substring(1).toLowerCase();
     // if random.random() < 0.5:
     if (Math.random() < 0.3) {
       //   # try to match 1st + 2nd letter
@@ -281,16 +277,13 @@ class Name {
   };
 
   static generateCompanyName() {
-    Name.shuffle(Name.companyNames);
-    const noun = Name.companyNames[0];
-    Name.shuffle(Name.adjList);
-    let halfAdjective = Name.adjList[0].charAt(0).toUpperCase() + Name.adjList[0].slice(1, Math.ceil(Name.adjList[0].length / 2));
+    const noun = Name.randomItem(Name.companyNames);
+    let adj = Name.randomItem(Name.adjList);
+    let halfAdjective = adj.charAt(0).toUpperCase() + adj.slice(1, Math.ceil(adj.length / 2));
     const halfNoun = noun.slice(Math.floor(noun.length / 2));
-    Name.shuffle(Name.catchphraseBeginnings);
-    Name.shuffle(Name.catchphraseMiddles);
-    Name.shuffle(Name.catchphraseEndings);
-    let catchphrase = Name.catchphraseBeginnings[0] + Name.catchphraseMiddles[0] +Name.catchphraseEndings[0];
-    
+
+    let catchphrase = Name.randomItem(Name.catchphraseBeginnings) + Name.randomItem(Name.catchphraseMiddles) + Name.randomItem(Name.catchphraseEndings);
+
 
     return `${halfAdjective}${halfNoun}: ${catchphrase}`;
   }
