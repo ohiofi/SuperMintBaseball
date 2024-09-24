@@ -99,6 +99,74 @@ class Name {
 
   static catchphraseEndings = ["", "", "", "", "", "", "", "", "", "", " Today", " Tomorrow", " Forever", " for All", " Always", " for Now", "-ish", " Fun", ", Dude!", " to the Extreme", " and Love", " and Business", " and Family", " and Beyond", " and More"];
 
+  static teamRoles = ["Catcher",
+    "First Baseman",
+    "Second Baseman",
+    "Third Baseman",
+    "Shortstop",
+    "Left Fielder",
+    "Center Fielder",
+    "Right Fielder",
+    "Infielder",
+    "Infield",
+    "Outfielder",
+    "Outfield",
+    "Fourth Baseman",
+    "Team Mascot",
+    "Utility Infielder",
+    "Equipment Manager",
+    "Coach",
+    "Batboy",
+    "Batgirl",
+    "1st Base",
+    "2nd Base",
+    "3rd Base",
+    "Team Captain",
+    "Wicketkeeper",
+    "Batter",
+    "Bowler",
+    "All-rounder",
+    "Midfielder",
+    "Backfielder",
+    "Sweeper",
+    "Forward",
+    "Defender",
+    "Enforcer",
+    "Winger",
+    "First Base",
+    "Second Base",
+    "Third Base",
+    "Last Base",
+    "Comedian",
+    "Goofball",
+    "Distracter",
+    "Mentor",
+    "Data Analyst",
+    "Artist",
+    "Entertainer",
+    "Debater",
+    "Caregiver",
+    "Mastermind",
+    "Pragmatist",
+    "Optimist",
+    "Pessimist",
+    "Idealist",
+    "Nihilist",
+    "Existentialist",
+    "Absurdist",
+    "Left Base",
+    "Right Base",
+    "Center Base",
+    "Prophet",
+    "Clairvoyant",
+    "Illusionist",
+    "Professor",
+    "Gatekeeper",
+    "Color Commentator",
+    "Benchwarmer",
+    "Underdog",
+    "null"
+  ]
   // static methods
   // @staticmethod
   static find_first_vowel(str) {
@@ -141,7 +209,7 @@ class Name {
 
   // static shuffle(someArray) {
   //   for (let i = someArray.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * i);
+  //     const j = Math.floor(rng.random() * i);
   //     const temp = someArray[i];
   //     someArray[i] = someArray[j];
   //     someArray[j] = temp;
@@ -150,7 +218,7 @@ class Name {
   // };
 
   static randomItem(someArray) {
-    return someArray[Math.floor(Math.random() * someArray.length)];
+    return someArray[Math.floor(rng.random() * someArray.length)];
   }
 
   //@staticmethod
@@ -171,8 +239,8 @@ class Name {
   //@staticmethod
   static create_last_name() {
     // # last
-    let nameA = Name.randomItem(Name.firstNameList);
-    let nameB = Name.randomItem(Name.firstNameList);
+    let nameA = Name.randomItem(Name.lastNameList);
+    let nameB = Name.randomItem(Name.lastNameList);
 
     let lastName = nameA.substring(0, Name.find_first_vowel(nameA));
     lastName += nameB.substring(Name.find_first_vowel(nameB));
@@ -191,7 +259,7 @@ class Name {
     let adj = Name.randomItem(Name.adjList);
     let nickname = "";
     // if random.random() < 0.5:
-    if (Math.random() < 0.3) {
+    if (rng.random() < 0.3) {
       //   # try to match 1st + 2nd letter
       let tempAdj = Name.findLetterMatch(Name.adjList, firstName, 3);
       //   if tempAdj != None:
@@ -200,21 +268,21 @@ class Name {
       } else {
         nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
       }
-    } else if (Math.random() < 0.3) {
+    } else if (rng.random() < 0.3) {
       //   adj.capitalize()
       nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
     }
     // if len(nickname) > 1:
     if (nickname.length > 1) {
       //   nickname += ('-',' ')[random.randint(0,1)]
-      nickname += Math.random() < 0.5 ? '-' : ' ';
+      nickname += rng.random() < 0.5 ? '-' : ' ';
     }
 
     let nameA = Name.randomItem(Name.nickNameList);
     // tempNickNoun1 = nameA.capitalize()
     let tempNickNoun1 = nameA.charAt(0).toUpperCase() + nameA.substring(1).toLowerCase();
     // if random.random() < 0.5:
-    if (Math.random() < 0.3) {
+    if (rng.random() < 0.3) {
       //   # try to match 1st + 2nd letter
       let tempNickNoun2 = Name.findLetterMatch(Name.nickNameList, lastName, 3);
       //   if tempNickNoun2 != None:
@@ -222,7 +290,7 @@ class Name {
         tempNickNoun1 = tempNickNoun2;
       }
       // elif random.random() < 0.5:
-    } else if (Math.random() < 0.3) {
+    } else if (rng.random() < 0.3) {
       //   # try to match 1st + 2nd letter
       let tempNickNoun2 = Name.findLetterMatch(Name.nickNameList, firstName, 3)
       //   if tempNickNoun2 != None:
@@ -230,10 +298,10 @@ class Name {
         tempNickNoun1 = tempNickNoun2;
       }
       // elif random.random() < 0.33:
-    } else if (Math.random() < 0.3) {
+    } else if (rng.random() < 0.3) {
       tempNickNoun1 = lastName[0];
       // elif random.random() < 0.33:
-    } else if (Math.random() < 0.3) {
+    } else if (rng.random() < 0.3) {
       tempNickNoun1 = firstName[0];
     }
     nickname += tempNickNoun1;
@@ -260,8 +328,8 @@ class Name {
 
   // @staticmethod
   static create_college() {
-    const place = Name.placeList[Math.floor(Math.random() * Name.placeList.length)];
-    const num = Math.round(Math.random()) + Math.round(Math.random()) + Math.round(Math.random());
+    const place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)];
+    const num = Math.round(rng.random()) + Math.round(rng.random()) + Math.round(rng.random());
     if (num == 0) {
       return "U" + place
     }

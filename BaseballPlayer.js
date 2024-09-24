@@ -1,6 +1,6 @@
 class BaseballPlayer {
 
-    static debug(){
+    static debug() {
         let temp = new BaseballPlayer();
         temp.pitchScoreAverage = 7;
         temp.swingPercent = 7;
@@ -23,7 +23,7 @@ class BaseballPlayer {
     // Keeps values in the range (0...10) inclusive
     static normalizeToTen(data) {
         data = Math.abs(data) % 20;
-        if(data <= 10){
+        if (data <= 10) {
             return data;
         }
         return 10 - (data - 10);
@@ -33,61 +33,85 @@ class BaseballPlayer {
     constructor() {
         this.firstName = Name.create_first_name(); // Player's name
         this.lastName = Name.create_last_name();
-        this.fullname = this.firstName + " " + Name.create_nickname(this.firstName, this.lastName) + " " + this.lastName;
-        this.team = "null"; // Team name
+        this.jerseyNumber = 0;
+        this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
+        this.teamName = "null"; // Team name
         this.position = "null"; // Position on the field
         this.stats = new Stats();
-        this.pitchScoreAverage = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6);
-        this.pitchScoreDeviation = 1 + Math.random() + Math.random();
-        this.swingPercent = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6) * 10;
-        this.contactPercent = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6) * 10;
-        this.hitScoreAverage = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6);
-        this.hitScoreDeviation = 1 + Math.random() + Math.random();
+        this.mood = rng.random() * 0.5 + rng.random() * 0.5
+        this.hunger = 1;
+        this.hungerRate = rng.random() * 0.1 + rng.random() * 0.1;
+        this.exhaustion = rng.random() + rng.random();
+        this.pitchScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.pitchScoreDeviation = 1 + rng.random() + rng.random();
+        this.swinginess = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.thwackiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.hitScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.hitScoreDeviation = 1 + rng.random() + rng.random();
         this.currentSeasonStats = new Stats();
         this.lifetimeStats = new Stats();
     }
 
-    
+
 
     // Method to display player information
     displayInfo() {
-        return `Name: ${this.name}\nTeam: ${this.team}\nPosition: ${this.position}\nBatting Average: ${this.battingAverage.toFixed(3)}\nHome Runs: ${this.homeRuns}`;
+        return `Name: ${this.fullname}\nTeam: ${this.teamName}\nPosition: ${this.position}\nBatting Average: ${this.battingAverage.toFixed(3)}\nHome Runs: ${this.homeRuns}`;
+    }
+    getSummary() {
+        return `${this.jerseyNumber} ${this.fullname} / ${this.position}\n`;
     }
 
     // Pitching methods
 
-    getPitchScore(pitchNumber){
-        let tiredness = pitchNumber * 0.01;
-        return BaseballPlayer.normalizeToTen(this.pitchScoreAverage + Math.sin(pitchNumber) * this.pitchScoreDeviation - tiredness);
+    getPitchScore(pitchNumber) {
+        let tiredness = pitchNumber * this.exhaustion * 0.01;
+        return BaseballPlayer.normalizeToTen(this.pitchScoreAverage + Math.sin(pitchNumber) * this.pitchScoreDeviation + this.hunger - tiredness);
     }
 
     // Batting methods
 
-    isSwingingBat(pitchNumber, pitchScore){
-        let tiredness = pitchNumber * 0.01;
+    isSwingingBat(pitchNumber, pitchScore) {
+        let tiredness = pitchNumber * this.exhaustion * 0.01;
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // player's prefer to swing at better pitches aka higher pitch scores
-        if(pitchScore >= (100 - this.swingPercent)/10 + tiredness || this.swingPercent > Math.random()*100 + tiredness){
+        if (pitchScore >= (10 - this.swinginess) + tiredness || this.swinginess + this.hunger > rng.random() * 10 + tiredness) {
             return true;
         }
         return false;
     }
 
-    isContactingBall(pitchNumber, pitchScore){
-        let tiredness = pitchNumber * 0.01;
+    isContactingBall(pitchNumber, pitchScore) {
+        let tiredness = pitchNumber * this.exhaustion * 0.01;
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // the lower the pitch score, the easier to hit
-        if(pitchScore <= this.contactPercent/10 - tiredness ||  this.contactPercent > Math.random()*100 + tiredness){
+        if (pitchScore <= this.thwackiness - tiredness || this.thwackiness + this.hunger > rng.random() * 10 + tiredness) {
             return true;
         }
         return false;
     }
 
-    getHitScore(pitchNumber, pitchScore){
-        let tiredness = pitchNumber * 0.01;
+    getHitScore(pitchNumber, pitchScore) {
+        let tiredness = pitchNumber * this.exhaustion * 0.01;
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
-        return BaseballPlayer.normalizeToTen(this.hitScoreAverage * pitchScore * 0.1 + Math.sin(pitchNumber) * this.hitScoreDeviation - tiredness);
+        return BaseballPlayer.normalizeToTen(this.hitScoreAverage * pitchScore * 0.1 + Math.sin(pitchNumber) * this.hitScoreDeviation + this.hunger - tiredness);
     }
 
+    setHungerUp() {
+        this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
+    }
 
+    setHungerDown() {
+        if (this.hunger > 0.01) {
+            this.hunger *= this.hungerRate
+        }
+    }
+
+    getPitchingAptitude(){
+        return this.pitchScoreAverage / this.pitchScoreDeviation;
+    }
+
+    getHittingAptitude(){
+        return (this.hitScoreAverage + this.thwackiness) / (this.hitScoreDeviation + Math.abs(5 - this.swinginess));
+    }
 }

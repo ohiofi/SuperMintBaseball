@@ -4,12 +4,12 @@ class Stats {
         this.gamesPlayed = 0;
         this.wins = 0;
         this.losses = 0;
-      this.homeRuns = 0;
-      this.atBats = 0;
-      this.hits = 0;
-      this.strikeoutsAtBat = 0;
-      this.strikeoutsThrown = 0;
-      this.stolenBases = 0;
+        this.homeRuns = 0;
+        this.atBats = 0;
+        this.hits = 0;
+        this.strikeoutsAtBat = 0;
+        this.strikeoutsThrown = 0;
+        this.stolenBases = 0;
     }
   
     // Method to update home runs

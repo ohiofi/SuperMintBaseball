@@ -25,8 +25,8 @@ class DraftCeremony {
       ////# generate twice as many players as teams, so there can be two rounds of draft picks
       //for i in range(len(this.teams)*2){
       for (let i = 0; i < this.teams.length * 3; i++) {
-        let temp1 = Player()
-        let temp2 = Player()
+        let temp1 = new BaseballPlayer();
+        let temp2 = new BaseballPlayer();
         if (temp1.getGrade() > temp2.getGrade()) {
           this.draftPlayerList.push(temp1)
         } else {

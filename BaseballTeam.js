@@ -18,7 +18,7 @@ class BaseballTeam {
   static teamCount = 0;
   //alert(Name.teamNameList);
   //Name.shuffle(Name.teamNameList);
-  static teamNameList = Name.randomItem(Name.teamNameList);
+  static teamNameList = Name.teamNameList;
   //random.seed(10) not possible to seed in vanilla JS
 
   static teamPlaceList = [];
@@ -26,33 +26,30 @@ class BaseballTeam {
 
   constructor() {
     this.teamIdNumber = 10 + (BaseballTeam.teamCount++)
-    this.isUserControlled = false
     this.jerseyNumberList = []
-    this.place = Name.placeList[Math.floor(Math.random() * Name.placeList.length)]
+    this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
     while (this.place in BaseballTeam.teamPlaceList) {
-      this.place = Name.placeList[Math.floor(Math.random() * Name.placeList.length)]
+      this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
     }
     BaseballTeam.teamPlaceList.push(this.place)
-    this.name = BaseballTeam.teamNameList[BaseballTeam.teamCount - 1].toUpperCase()
+    this.name = BaseballTeam.teamNameList.splice(Math.floor(rng.random() * BaseballTeam.teamNameList.length),1)[0];
+
     
-    this.mood = Math.random() * 0.5 + Math.random() * 0.5
+    this.mood = rng.random() * 0.5 + rng.random() * 0.5
     this.hunger = 1
     this.hungerRate = 0.35
     this.players = []
     //for i in range(Team.playersPerTeam):
     for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
-      let temp = new BaseballPlayer(this.getJerseyNumber())
+      let temp = new BaseballPlayer()
       temp.teamName = this.place
+      temp.jerseyNumber = this.getJerseyNumber()
       this.players.push(temp)
     }
-    this.wr = null
-    this.qb = null
-    this.fb = null
-    this.k = null
+    
     this.stats = new Stats(this.place, this.name)
     this.dailyStats = new Stats(this.place, this.name)
     this.xp = 0
-    this.dailyXp = 0
     this.setup()
   }
 
@@ -65,14 +62,14 @@ class BaseballTeam {
 
 
   getJerseyNumber() {
-    let result = Math.ceil(Math.random() * 98)
+    let result = Math.ceil(rng.random() * 98)
     //# don't use while loop in case the jerseyNumberList ever fills up
     //for i in range(Team.playersPerTeam):
     for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
       if (!this.jerseyNumberList.includes(result)) {
         break
       }
-      result = Math.ceil(Math.random() * 98)
+      result = Math.ceil(rng.random() * 98)
     }
     this.jerseyNumberList.push(result)
     return result
@@ -101,17 +98,17 @@ class BaseballTeam {
     if (toFirstDown > 10) {
       playType = ["pass", "pass", "pass", "pass", "pass", "pass", "run",
         preferredPlayType
-      ][Math.floor(Math.random() * 8)]
+      ][Math.floor(rng.random() * 8)]
     } else if (toFirstDown <= 3) {
       //# if SHORT 75+% chance of run
       playType = ["pass", "run", "run", "run", "run", "run", "run",
         preferredPlayType
-      ][Math.floor(Math.random() * 8)]
+      ][Math.floor(rng.random() * 8)]
     } else {
       //# 75% chance of preferredPlayType
-      playType = ["pass", "run", preferredPlayType, preferredPlayType][Math.floor(Math.random() * 4)]
+      playType = ["pass", "run", preferredPlayType, preferredPlayType][Math.floor(rng.random() * 4)]
     }
-    return this.playbook[playType][Math.floor(Math.random() * this.playbook[playType].length)]
+    return this.playbook[playType][Math.floor(rng.random() * this.playbook[playType].length)]
   }
 
   getFullName() {
@@ -157,7 +154,7 @@ class BaseballTeam {
   getRandomPlayer() {
     //for i in range(10):
     for (let i = 0; i < 10; i++) {
-      result = this.players[Math.floor(Math.random() * this.players.length)]
+      result = this.players[Math.floor(rng.random() * this.players.length)]
       if (!result.isAsleep()) {
         break
       }
@@ -168,8 +165,9 @@ class BaseballTeam {
   getTeamGrade() {
     let total = 0
     for (let each of this.players) {
-      total += parseFloat(each.getGrade())
+      total += parseFloat(each.getHittingAptitude())
     }
+    total += this.pitcher.getPitchingAptitude();
     return Math.round(total / this.players.length * 100) / 100
   }
 
@@ -314,7 +312,7 @@ class BaseballTeam {
   getPlayerWithHigh(attributeString = null) {
     //for i in range(12,0,-1):
     for (let i = 12; i >= 0; i--) {
-      let randPlayer = this.players[Math.floor(Math.random() * this.players.length)]
+      let randPlayer = this.players[Math.floor(rng.random() * this.players.length)]
       if (randPlayer.isAsleep()) {
         continue
       }
@@ -322,7 +320,7 @@ class BaseballTeam {
         return randPlayer
       }
     }
-    return this.players[Math.floor(Math.random() * this.players.length)]
+    return this.players[Math.floor(rng.random() * this.players.length)]
   }
 
   getPlayerWithLow(attributeString = null) {
@@ -359,13 +357,11 @@ class BaseballTeam {
       this.players[i].stats.teamLoc = this.place
     }
     this.setPositions()
-    this.preferredPlayOrder = ["pass", "pass", "run", "run"]
-    this.setPreferredPlayOrder()
-    this.defenseGrade = this.setDefenseGrade()
+    
   }
 
   setHungerUp() {
-    this.hunger += Math.random() * this.hungerRate + Math.random() * this.hungerRate
+    this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
   }
 
   setHungerDown() {
@@ -378,7 +374,6 @@ class BaseballTeam {
     let result = ""
     result += this.place + " " + this.name + " --- Team Grade: " + (this.getTeamGrade()) + "\n"
     result += (this.getPlayerList())
-    result += (this.getPlaybook())
     return result
   }
 
@@ -387,106 +382,51 @@ class BaseballTeam {
     for (let eachPlayer of this.players) {
       eachPlayer.position = null
     }
-    //# find FB
-    //this.players.sort(key=lambda x: x.getFbGrade(), reverse=true)
+    //# find pitcher
+    //this.players.sort(key=lambda x: x.getPitchingAptitude(), reverse=true)
     this.players.sort(function(a, b) {
-      return b.getFbGrade() - a.getFbGrade()
+      return b.getPitchingAptitude() - a.getPitchingAptitude()
     });
     for (let eachPlayer of this.players) {
-      if (eachPlayer.isAsleep()) {
-        continue
-      }
       if (eachPlayer.position == null) {
-        eachPlayer.position = "FB"
-        this.fb = eachPlayer
+        eachPlayer.position = "Pitcher"
+        this.pitcher = eachPlayer
         break
       }
     }
-    //# find WR
-    //this.players.sort(key=lambda x: x.getWrGrade(), reverse=true)
+    //# find slugger
+    //this.players.sort(key=lambda x: x.getHittingAptitude(), reverse=true)
     this.players.sort(function(a, b) {
-      return b.getWrGrade() - a.getWrGrade()
+      return b.getHittingAptitude() - a.getHittingAptitude()
     });
     for (let eachPlayer of this.players) {
-      if (eachPlayer.isAsleep()) {
-        continue
-      }
       if (eachPlayer.position == null) {
-        eachPlayer.position = "WR"
-        this.wr = eachPlayer
+        eachPlayer.position = "Slugger"
+        this.slugger = eachPlayer
         break
       }
     }
-    //# find QB
-    //this.players.sort(key=lambda x: x.getQbGrade(),reverse=true)
-    this.players.sort(function(a, b) {
-      return b.getQbGrade() - a.getQbGrade()
-    });
-    //# this.players[0].position = "QB"
-    //# this.qb = this.players[0]
+    // swap index 0 with index 3 (the cleanup hitter position)
+    let temp = this.players[0];
+    this.players[0] = this.players[3];
+    this.players[3] = temp;
+    //# fill in with random position names
     for (let eachPlayer of this.players) {
-      if (eachPlayer.isAsleep()) {
-        continue
-      }
       if (eachPlayer.position == null) {
-        eachPlayer.position = "QB"
-        this.qb = eachPlayer
-        break
+        eachPlayer.position = Name.randomItem(Name.teamRoles);
       }
     }
-    //# find K
-    //this.players.sort(key=lambda x:x.getKGrade(),reverse=true)
-    this.players.sort(function(a, b) {
-      return b.getKGrade() - a.getKGrade()
-    });
-    for (let eachPlayer of this.players) {
-      if (eachPlayer.isAsleep()) {
-        continue
-      }
-      if (eachPlayer.position == null) {
-        eachPlayer.position = "K"
-        this.k = eachPlayer
-        break
-      }
-    }
-    //this.players.sort(key=lambda x: x.getGrade(), reverse=true)
-    this.players.sort(function(a, b) {
-      return b.getGrade() - a.getGrade()
-    });
+
   }
 
-  setPreferredPlayOrder() {
-    let passPlayScore = this.qb.throwing + this.qb.strength + this.wr.catching
-    let runPlayScore = this.fb.speed + this.fb.agility + this.fb.acceleration
-    //# loop through preferredPlayOrder w/ 50% chance of replacing
-    //for i in range(this.preferredPlayOrder.length):
-    for (let i = 0; i < this.preferredPlayOrder.length; i++) {
-      if (Math.random() < 0.5) {
-        if (passPlayScore > runPlayScore) {
-          this.preferredPlayOrder[i] = "pass"
-        } else if (passPlayScore < runPlayScore) {
-          this.preferredPlayOrder[i] = "run"
-        }
-      }
-    }
-  }
 
-  setUserControlled() {
-    this.isUserControlled = true
-    this.hungerRate = 0.7
-    this.hunger = 2
-  }
 
-  resetDailyStats() {
-    this.dailyStats = new Stats(this.place, this.name)
-  }
+
+
+
 
   resetSeasonStats() {
     this.stats = new Stats(this.place, this.name)
-  }
-
-  updateSeasonStats() {
-    this.stats.append(this.dailyStats)
   }
 
   updateXp() {
