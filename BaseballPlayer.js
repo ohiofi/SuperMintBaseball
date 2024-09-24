@@ -22,9 +22,9 @@ class BaseballPlayer {
 
     // Constructor to initialize player attributes
     constructor(name) {
-        this.firstName = name; // Player's name
-        this.lastName = name;
-        this.fullname = this.firstName + this.lastName;
+        this.firstName = Name.create_first_name(); // Player's name
+        this.lastName = Name.create_last_name();
+        this.fullname = this.firstName + " " + Name.create_nickname(this.firstName, this.lastName) + " " + this.lastName;
         this.team = "null"; // Team name
         this.position = "null"; // Position on the field
         this.stats = new Stats();
@@ -34,6 +34,8 @@ class BaseballPlayer {
         this.contactPercent = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6) * 10;
         this.hitScoreAverage = BaseballPlayer.normalizeToTen(Math.random()*6 + Math.random()*6);
         this.hitScoreDeviation = 1 + Math.random() + Math.random();
+        this.currentSeasonStats = new Stats();
+        this.lifetimeStats = new Stats();
     }
 
     
