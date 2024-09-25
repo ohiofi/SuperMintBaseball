@@ -8,8 +8,14 @@ class Stats {
         this.atBats = 0;
         this.hits = 0;
         this.strikeoutsAtBat = 0;
-        this.strikeoutsThrown = 0;
         this.stolenBases = 0;
+        // pitcher stuff
+        this.strikeoutsThrown = 0;
+        this.pitchesThrown = 0;
+        this.gamesPitched = 0;
+        this.runsAllowed = 0;
+        this.homeRunsAllowed = 0;
+        this.walksAllowed = 0;
     }
   
     // Method to update home runs
