@@ -6,6 +6,9 @@ class BaseballPlayer {
         temp.swingPercent = 7;
         temp.contactPercent = 7;
         temp.hitScoreAverage = 7;
+        temp.hitScoreDeviation = 0;
+        temp.pitchScoreDeviation = 0;
+        temp.exhaustion = 0;
         return temp;
     }
 
@@ -37,7 +40,7 @@ class BaseballPlayer {
         this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
         this.teamName = "null"; // Team name
         this.position = "null"; // Position on the field
-        this.stats = new Stats();
+        
         this.mood = rng.random() * 0.5 + rng.random() * 0.5
         this.hunger = 1;
         this.hungerRate = rng.random() * 0.1 + rng.random() * 0.1;
@@ -48,7 +51,7 @@ class BaseballPlayer {
         this.thwackiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.hitScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.hitScoreDeviation = 1 + rng.random() + rng.random();
-        this.currentSeasonStats = new Stats();
+        this.stats = new Stats(); // current season only
         this.lifetimeStats = new Stats();
     }
 
@@ -102,8 +105,11 @@ class BaseballPlayer {
     }
 
     setHungerDown() {
-        if (this.hunger > 0.01) {
-            this.hunger *= this.hungerRate
+        if (this.hunger > 0.01 && this.hungerRate < 1) {
+            this.hunger *= this.hungerRate;
+        }
+        else if (this.hunger > 0.01 && this.hungerRate >= 1) {
+            this.hunger *= 0.5;
         }
     }
 
@@ -113,5 +119,12 @@ class BaseballPlayer {
 
     getHittingAptitude(){
         return (this.hitScoreAverage + this.thwackiness) / (this.hitScoreDeviation + Math.abs(5 - this.swinginess));
+    }
+
+    getEra(){
+        if(this.stats.gamesPitched == 0){
+            return -1;
+        }
+        return this.stats.runsAllowed / this.stats.gamesPitched;
     }
 }
