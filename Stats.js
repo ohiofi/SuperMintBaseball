@@ -1,6 +1,7 @@
 class Stats {
     // Constructor to initialize statistics
     constructor() {
+        this.teamLocation = "null";
         this.gamesPlayed = 0;
         this.wins = 0;
         this.losses = 0;
