@@ -99,10 +99,11 @@ class Name {
 
   static catchphraseEndings = ["", "", "", "", "", "", "", "", "", "", " Today", " Tomorrow", " Forever", " for All", " Always", " for Now", "-ish", " Fun", ", Dude!", " to the Extreme", " and Love", " and Business", " and Family", " and Beyond", " and More"];
 
-  static teamRoles = ["Catcher",
+  static playerPositions = ["Catcher",
     "First Baseman",
     "Second Baseman",
     "Third Baseman",
+    "Baseman",
     "Shortstop",
     "Left Fielder",
     "Center Fielder",
@@ -115,13 +116,19 @@ class Name {
     "Team Mascot",
     "Utility Infielder",
     "Equipment Manager",
+    "Pinch Hitter",
+    "Pinch Runner",
+    "Phantom ballplayer",
+    "Big Whiffer",
     "Coach",
     "Batboy",
     "Batgirl",
+    "Batman",
     "1st Base",
     "2nd Base",
     "3rd Base",
     "Team Captain",
+    "Mendoza Line",
     "Wicketkeeper",
     "Batter",
     "Bowler",
@@ -165,6 +172,7 @@ class Name {
     "Color Commentator",
     "Benchwarmer",
     "Underdog",
+    "Tight End",
     "null"
   ]
   // static methods
@@ -354,6 +362,14 @@ class Name {
 
 
     return `${halfAdjective}${halfNoun}: ${catchphrase}`;
+  }
+
+  static getCharSum(someString){
+    let sum = 0;
+    for (var i = 0; i < someString.length; i++){
+      sum += someString.charCodeAt(i);
+    }
+    return sum;
   }
 
 } // end of class
