@@ -55,7 +55,7 @@ class BaseballTeam {
 
   addPlayer(newPlayer) {
     newPlayer.teamName = this.place
-    newPlayer.stats.teamLoc = this.getPlace()
+    newPlayer.stats.teamLocation= this.getPlace()
     this.players.push(newPlayer)
     this.setup()
   }
@@ -354,7 +354,7 @@ class BaseballTeam {
   setup() {
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].teamName = this.place
-      this.players[i].stats.teamLoc = this.place
+      this.players[i].stats.teamLocation = this.place
     }
     this.setPositions()
     
@@ -365,8 +365,11 @@ class BaseballTeam {
   }
 
   setHungerDown() {
-    if (this.hunger > 0.01) {
-      this.hunger *= this.hungerRate
+    if (this.hunger > 0.01 && this.hungerRate < 1) {
+      this.hunger *= this.hungerRate;
+    }
+    else if (this.hunger > 0.01 && this.hungerRate >= 1) {
+        this.hunger *= 0.5;
     }
   }
 
@@ -413,7 +416,7 @@ class BaseballTeam {
     //# fill in with random position names
     for (let eachPlayer of this.players) {
       if (eachPlayer.position == null) {
-        eachPlayer.position = Name.randomItem(Name.teamRoles);
+        eachPlayer.position = eachPlayer.getDefaultPosition();
       }
     }
 
