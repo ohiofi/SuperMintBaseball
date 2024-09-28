@@ -127,4 +127,8 @@ class BaseballPlayer {
         }
         return this.stats.runsAllowed / this.stats.gamesPitched;
     }
+
+    getDefaultPosition(){
+        return Name.playerPositions[Name.getCharSum(this.firstName+this.lastName) % Name.playerPositions.length]
+    }
 }
