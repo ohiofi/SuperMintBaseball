@@ -120,6 +120,7 @@ class Name {
     "Pinch Runner",
     "Phantom ballplayer",
     "Big Whiffer",
+    "Ghost Runner",
     "Coach",
     "Batboy",
     "Batgirl",
