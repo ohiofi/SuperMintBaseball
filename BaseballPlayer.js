@@ -40,11 +40,12 @@ class BaseballPlayer {
         this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
         this.teamName = "null"; // Team name
         this.position = "null"; // Position on the field
-        
-        this.mood = rng.random() * 0.5 + rng.random() * 0.5
+        this.age = Math.floor(rng.random() * 3) + 21; // Starting age is 21, 22, or 23
         this.hunger = 1;
         this.hungerRate = rng.random() * 0.1 + rng.random() * 0.1;
-        this.exhaustion = rng.random() + rng.random();
+        this.attitude = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.pitchScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.pitchScoreDeviation = 1 + rng.random() + rng.random();
         this.swinginess = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -65,17 +66,42 @@ class BaseballPlayer {
         return `${this.jerseyNumber} ${this.fullname} / ${this.position}\n`;
     }
 
+    /* 
+        Tiredness is a negative value that hurts performance.
+        Factors:
+        - age
+        - time
+        - mood
+        - attitude
+    */
+    getTiredness(pitchNumber){
+        let ageFactor = Math.abs(25 - this.age) * 0.1;
+        let timeFactor = pitchNumber * (10 - this.healthiness) * 0.005;
+        let moodFactor = Math.abs(Math.sin(pitchNumber * (10 - this.balance) * 0.5) * (10 - this.balance) * 0.5); // cycles from 0...(10 - this.balance) * 0.5
+        let attitudeFactor = (10 - this.attitude) * 0.1;
+        //return [moodFactor , ageFactor , timeFactor , attitudeFactor];
+        return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
+    }
+
     // Pitching methods
 
+    /*
+        getPitchScore
+
+    */
     getPitchScore(pitchNumber) {
-        let tiredness = pitchNumber * this.exhaustion * 0.01;
+        let tiredness = this.getTiredness(pitchNumber);
         return BaseballPlayer.normalizeToTen(this.pitchScoreAverage + Math.sin(pitchNumber) * this.pitchScoreDeviation + this.hunger - tiredness);
     }
 
     // Batting methods
 
+    /*
+        isSwingingBat
+
+    */
     isSwingingBat(pitchNumber, pitchScore) {
-        let tiredness = pitchNumber * this.exhaustion * 0.01;
+        let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // player's prefer to swing at better pitches aka higher pitch scores
         if (pitchScore >= (10 - this.swinginess) + tiredness || this.swinginess + this.hunger > rng.random() * 10 + tiredness) {
@@ -85,7 +111,7 @@ class BaseballPlayer {
     }
 
     isContactingBall(pitchNumber, pitchScore) {
-        let tiredness = pitchNumber * this.exhaustion * 0.01;
+        let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // the lower the pitch score, the easier to hit
         if (pitchScore <= this.thwackiness - tiredness || this.thwackiness + this.hunger > rng.random() * 10 + tiredness) {
