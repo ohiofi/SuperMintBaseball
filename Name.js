@@ -28,6 +28,13 @@ class Name {
   static teamNameList = [
     "Alligators", "Amphibians", "Ants", "Apes", "Auks", "Baboons", "Badgers", "Barracudas", "Bass", "Bats", "Bears", "Beavers", "Bees", "Beetles", "Birds", "Bitterns", "Blackbirds", "Bloodhounds", "Bobolinks", "Bugs", "Bullfinches", "Bullocks", "Butterflies", "Buzzards", "Camels", "Capons", "Capuchins", "Cardinals", "Carnivores", "Carp", "Caterpillars", "Cats", "Cattle", "Cheetahs", "Chickadees", "Chickens", "Cicadas", "Civets", "Clams", "Cobras", "Cockroaches", "Coots", "Cormorants", "Cows", "Coyotes", "Crabs", "Cranes", "Crickets", "Crocodiles", "Crows", "Crustaceans", "Curlews", "Dalmations", "Deer", "Dinosaurs", "Dodos", "Dogs", "Dolphins", "Donkeys", "Doves", "Ducks", "Eagles", "Eels", "Elephants", "Elk", "Emus", "Falcons", "Ferrets", "Finches", "Fish", "Flamingoes", "Fleas", "Flickers", "Flies", "Foxes", "Frogs", "Geese", "Giraffes", "Gnats", "Gnus", "Goats", "Goldfinches", "Gorillas", "Goshawks", "Grackles", "Grasshoppers", "Greyhounds", "Gulls", "Hares", "Hawks", "Hedgehogs", "Herbivores", "Herons", "Hippos", "Hornets", "Horses", "Hummingbirds", "Hyenas", "Iguanas", "Impalas", "Insects", "Jaguars", "Jays", "Juncos", "Kangaroos", "Lapwings", "Larks", "Leeches", "Lemmings", "Leopards", "Lions", "Lizards", "Lobsters", "Locusts", "Magpies", "Mallards", "Mammals", "Martens", "Mews", "Mice", "Minnows", "Mites", "Mockingbirds", "Moles", "Mollusks", "Monkeys", "Moths", "Mudhens", "Mules", "Nightingales", "Otters", "Owls", "Oxen", "Oysters", "Panthers", "Parrots", "Peacocks", "Pelicans", "Penguins", "People", "Pigeons", "Pigs", "Polecats", "Porcupines", "Porpoises", "Prairie Dogs", "Primates", "Ptarmigans", "Pythons", "Rabbits", "Raccoons", "Rats", "Rattlesnakes", "Ravens", "Reindeer", "Reptiles", "Rhinoceroses", "Robins", "Rodents", "Roebucks", "Rooks", "Ruffs", "Salamanders", "Sandpipers", "Sardines", "Scorpions", "Seabirds", "Seals", "Sharks", "Sheep", "Sheldrakes", "Shrimp", "Skylarks", "Slugs", "Snails", "Snakes", "Sparrows", "Spiders", "Squid", "Squirrels", "Starfish", "Starlings", "Stingrays", "Stoats", "Storks", "Swallows", "Swans", "Swifts", "Termites", "Ticks", "Tigers", "Toads", "Tortoises", "Turkeys", "Turtles", "Vipers", "Vultures", "Walruses", "Wasps", "Weasels", "Whales", "Widgeons", "Wolves", "Wombats", "Woodcocks", "Woodpeckers", "Worms", "Wrens", "Zebras", "Arthurs", "Avengers", "Barbarians", "Bards", "Beliebers", "Biebers", "Bronies", "Caesars", "Caspers", "Chandlers", "Cleric", "Connors", "Coopers", "Cosplayers", "Creepers", "Decembers", "Dexters", "Druids", "Elders", "Elmers", "Esthers", "Evokers", "Furbies", "Furries", "Googlers", "Goombas", "Grovers", "Himalayas", "Homers", "Juggalos", "Jupiters", "Karens", "Koopas", "Larpers", "Luthers", "Novembers", "Octobers", "Octoroks", "Oscars", "Paladins", "Pallbearers", "Pillagers", "Pokemón", "Rangers", "Ravagers", "Reuters", "Sawyers", "Septembers", "Slimers", "Skypers", "Sorcerers", "Stalfos", "Storm Troopers", "Streamers", "Striders", "Taylor", "Trekkies", "Trevors", "Tuckers", "Twitchers", "Tylers", "Vaders", "Vampire", "Victors", "Walters", "Warlocks", "Wilburs", "Withers", "Wizards", "Yelpers", "Yoinkers", "Yonkers", "Aardvarks", "Accountants", "Acres", "Actors", "Actors", "Actuaries", "Adders", "Adjudicators", "Administrative Assistants", "Advertising Managers", "Advertising Sales Agents", "Aerobics Instructors", "Aerospace Engineers", "Afters", "Agents", "Agricultural Engineers", "Air Conditioning Installers", "Air Traffic Controllers", "Airline Pilots", "Alligators", "Alpacas", "Altars", "Ambulance Drivers", "Anchors", "Anesthesiologists", "Anglers", "Animators", "Answers", "Anteaters", "Antelopes", "Anthropologists", "Antlers", "Apes", "Arbitrators", "Archeologists", "Archers", "Architects", "Armadillos", "Armors", "Art Teachers", "Artists", "Assemblers", "Astronomers", "Athletes", "Attendants", "Auditors", "Authors", "Authors", "Avatars", "Baboons", "Backers", "Badgers", "Baes", "Bagpipers", "Bailiffs", "Bakers", "Bakers", "Ballers", "Ballers", "Bangers", "Bankers", "Barbacks", "Barbers", "Barbers", "Barkers", "Barristers", "Bats", "Bazaars", "Beakers", "Bears", "Beavers", "Beavers", "Beepers", "Bellhops", "Benders", "Bffs", "Bidders", "Bikers", "Biographers", "Bisons", "Biters", "Blasters", "Blenders", "Blinkers", "Blisters", "Bloopers", "Blotters", "Blowers", "Boars", "Boaters", "Boilermakers", "Boogers", "Bloomers", "Boomers", "Bookers", "Bookkeepers", "Borers", "Bots", "Boxers", "Breakers", "Brickmasons", "Brothers", "Buffalos", "Bulgurs", "Bulls", "Burgers", "Butchers", "Buyers", "Cabinetmakers", "Callers", "Camels", "Canaries", "Capers", "Capybaras", "Cardboards", "Carpenters", "Carpenters", "Cartographers", "Cashiers", "Casters", "Catchers", "Catchers", "Cats", "Catters", "Caviars", "Cedars", "Cellars", "Censors", "Centaurs", "Chambers", "Chameleons", "Chapters", "Charters", "Chauffeurs", "Cheapers", "Cheaters", "Checkers", "Cheerleaders", "Cheesers", "Cheetahs", "Chefs", "Chemists", "Chimpanzees", "Chinchillas", "Chipmunks", "Chiropractors", "Choirs", "Choreographers", "Cleaners", "Clovers", "Clusters", "Cobblers", "Coder", "Coffees", "Collars", "Colors", "Composers", "Computers", "Concierges", "Condors", "Conservators", "Cooks", "Coopers", "Coppers", "Cougars", "Cougars", "Counselors", "Couriers", "Couriers", "Covfefes", "Cows", "Coyotes", "Craters", "Critters", "Crocodiles", "Crows", "Crusaders", "Curators", "Cursors", "Daddies", "Daggers", "Dancers", "Datas", "Daughters", "Deers", "Demons", "Dentists", "Detectives", "Detours", "Dictators", "Dietitians", "Diners", "Dingos", "Dippers", "Directors", "Dishwashers", "Dispatchers", "Doctors", "Doggies", "Doggos", "Dogs", "Dogwhisperers", "Dollars", "Donkeys", "Dozers", "Drafters", "Drapers", "Dressmakers", "Drivers", "Dromedaries", "Droolers", "Droppers", "Drummers", "Dryers", "Duckers", "Dyers", "Eclairs", "Economists", "Editors", "Elders", "Electricians", "Elephants", "Elephants", "Elks", "Embers", "Enders", "Engineers", "Equator", "Etchers", "Ewes", "Factors", "Fakers", "Fathers", "Favors", "Ferrets", "Ferriers", "Fevers", "Fibbers", "Fibres", "Fighters", "Finches", "Finers", "Fishes", "Fixers", "Flavors", "Fletchers", "Flexers", "Floppers", "Flowers", "Fluters", "Fowlers", "Foxes", "Fractures", "Friars", "Froggers", "Frogs", "Fubars", "Futures", "Gamers", "Gators", "Gazelles", "Geezers", "Gestures", "Gila Monsters", "Giraffes", "Givers", "Glamours", "Gliders", "Glovers", "Gnus", "Goats", "Goers", "Golfers", "Goners", "Gophers", "Gophers", "Gorillas", "Gorillas", "Governors", "Grizzly Bears", "Ground Hogs", "Growers", "Guinea Pigs", "Guitars", "Gunners", "Hackers", "Hamsters", "Hangars", "Harbors", "Hatters", "Hedgehogs", "Hikers", "Hippies", "Hippopotamuses", "Hobbits", "Hoers", "Hogs", "Hoppers", "Horrors", "Horses", "Howlers", "Huggers", "Humors", "Hungers", "Hunters", "Hyenas", "Ibexes", "Iguanas", "Illustrators", "Impalas", "Indoors", "Influencers", "Inspectors", "Instructors", "Intruders", "Invaders", "Jackals", "Jaggers", "Jaguars", "Jailers", "Janitors", "Joggers", "Jokers", "Judges", "Jugglers", "Juniors", "Junipers", "Jurors", "Kangaroos", "Koalas", "Lambs", "Laters", "Lavenders", "Lawyers", "Lawyers", "Layers", "Leavers", "Legislators", "Lemurs", "Leopards", "Liars", "Librarians", "Lifeguards", "Liners", "Lions", "Livers", "Lizards", "Llamas", "Locksmiths", "Losers", "Lovers", "Lumbers", "Lynxes", "Makers", "Mandrills", "Mappers", "Marmosets", "Masters", "Mayors", "Memoirs", "Middleschoolers", "Millers", "Miners", "Minks", "Mirrors", "Mixers", "Models", "Molars", "Molders", "Moles", "Mongooses", "Monitors", "Monkeys", "Monsters", "Moose", "Moppers", "Morticians", "Mothers", "Motors", "Mountain Goats", "Mouses", "Mowers", "Mules", "Musicians", "Muskrats", "Mustangs", "Mylars", "Mynah Birds", "Mythbusters", "Namers", "Nectars", "Neighbors", "Newts", "Noobs", "Nudists", "Oaters", "Ocelots", "Offers", "Officers", "Opossums", "Opticians", "Optometrists", "Orangutans", "Orcs", "Orderlies", "Orthodontists", "Orthotists", "Oryxes", "Others", "Otters", "Otters", "Otters", "Outfielders", "Oxen", "Oysters", "Pagers", "Painter", "Pandas", "Panthers", "Panthers", "Papers", "Parakeets", "Paralegals", "Paramedics", "Parlors", "Parrots", "Pastors", "Pavers", "Payers", "Pediatricians", "Pedicurists", "Peddlers", "Pewters", "Pharmacists", "Photographers", "Physicians", "Piers", "Pigs", "Pillars", "Pipers", "Pipers", "Pizzas", "Plasterers", "Platypuses", "Plumbers", "Plumbers", "Plyers", "Podiatrists", "Pokers", "Polar Bears", "Polars", "Poplars", "Porcupines", "Porpoises", "Postmasters", "Powers", "Prairie Dogs", "Preppers", "Preppies", "Presidents", "Proctors", "Producers", "Proofreaders", "Pulsars", "Pumas", "Puppies", "Puppers", "Purveyors", "Quakers", "Quasars", "Rabbits", "Raccoons", "Racers", "Rafters", "Raiders", "Rakers", "Rams", "Ranchers", "Rangers", "Rats", "Razors", "Realtors", "Referees", "Reindeers", "Reindeers", "Reporters", "Reptiles", "Rhinoceroses", "Riders", "Riders", "Rippers", "Roosters", "Ropers", "Rulers", "Rumours", "Runners", "Sabres", "Sailors", "Sailors", "Salamanders", "Salamanders", "Samplers", "Sandlers", "Schoolers", "Scissors", "Seals", "Sectors", "Seeders", "Sensors", "Sewers", "Shampooers", "Sharkers", "Sheeps", "Showers", "Shrews", "Silver Foxes", "Sisters", "Sitars", "Sitters", "Skunks", "Slackers", "Slappers", "Slayers", "Sliders", "Slimes", "Sloths", "Smartphones", "Snakers", "Snakes", "Sneakers", "Soldiers", "Sonars", "Sparklers", "Speakers", "Spiders", "Spiers", "Spitters", "Spoilers", "Sponsors", "Sprinklers", "Squirrels", "Stans", "Statisticians", "Steamfitters", "Stickers", "Stinkers", "Stonemasons", "Strikers", "Suitors", "Suitors", "Sulfurs", "Summers", "Supers", "Surfers", "Surgeons", "Surveyors", "Tables", "Tailors", "Takers", "Tanners", "Tapers", "Tapers", "Tapirs", "Tartars", "Taters", "Teachers", "Telemarketers", "Tenors", "Terrors", "Tigers", "Tigers", "Tiggers", "Timbers", "Tinkers", "Toads", "Toners", "Tractors", "Traders", "Translator", "Trappers", "Tremors", "Trimmers", "Trolls", "Tuckers", "Tumors", "Tuners", "Turtles", "Tutors", "Tweeters", "Typists", "Ulcers", "Umpires", "Umpires", "Undertakers", "Upholsterers", "Ushers", "Vampires", "Vectors", "Vespers", "Veterinarians", "Vigors", "Visiters", "Visors", "Voters", "Waders", "Waiters", "Waiters", "Waitresses", "Walkers", "Walruses", "Warthogs", "Weasels", "Weavers", "Weezers", "Weighers", "Welders", "Whalers", "Whales", "Wheelers", "Whiners", "Whippers", "Whisperers", "Whoppers", "Wielders", "Wildcats", "Wilders", "Wincers", "Windsors", "Winkers", "Winners", "Winters", "Wolverines", "Wolves", "Wombats", "Wonders", "Woodchucks", "Woodworkers", "Woofers", "Workers", "Wowsers", "Writers", "Yakkers", "Yaks", "Yardmasters", "Yodlers", "Yonders", "Youngsters", "Yowlers", "Zanders", "Zappers", "Zappers", "Zebras", "Zebras", "Zingers", "Zippers", "Zithers", "Zombies", "Zoologist", "Zoomers", "Algae", "Alumni", "Axes", "Babies", "Bacteria", "Banjos", "Boxes", "Bus Drivers", "Buzzers", "Cacti", "Candies", "Children", "Cleaners", "Concertos", "Daisies", "Dice", "Dishes", "Epochs", "Feet", "Fungi", "Graffiti", "Halves", "Hooves", "Hypotheses", "Knives", "Larvae", "Messes", "Monarchs", "Nebulas", "Nuclei", "Parentheses", "Patches", "Potatoes", "Proctologists", "Quizzes", "Radii", "Scarves", "Stimuli", "Stomachs", "Studios", "Swine", "Syllabi", "Thieves", "Teeth", "Telemarketers", "Tomatoes", "Wives", "Yards", "Zoos"
   ];
+  static adStart = [
+    "Brought to you by ", "Supported by ", "Presented by ", 
+    "Sponsored by ",  "Made possible by ",  "This segment is brought to you by ", 
+    "Thanks to our sponsor, ",  "In association with ",  "Powered by ", 
+    "With special thanks to ",  "Developed by ",  "Special thanks to our sponsor ", 
+    "Thanks to ",  "Supported in part by ", "Thank you to our sponsor ", "Special thank to "
+];
   static companyNames = [
     "Solutions", "Technologies", "Concepts", "Systems",
     "Products", "Services", "Ideas", "Strategies",
@@ -49,7 +56,7 @@ class Name {
     "Advancing the ", "Illuminating Your ",
     "Enhancing the ", "Nurturing a Better ",
     "Driving the Future of ", "Harnessing the Power of ",
-    "Leaders in ", "First in ", "Get the ", "Don't be ", "Just ", "Get ", "", "110% ",
+    "Leaders in ", "First in ", "Get the ", "Don't be ", "Just ", "Get ", "", "100% ",
     "Experience the ", "Stay Ahead with ",
     "The Power of ", "Focus on ",
     "Your Source for ", "Setting the Standard for ",
@@ -60,10 +67,26 @@ class Name {
     "Annihilate ",
     "Obliterate ",
     "Ruin ",
+    "Overthrow ",
     "Devastate ",
     "Wreck ",
-    "Dismantle ",
-    "Eradicate ", "You're One-Stop Shop For "
+    "Dismantle ", "Emasculate ",
+    "Destabilize ",
+    "Diminish ",
+    "Undermine ",
+    "Subdue ",
+    "Suppress ",
+    "Humiliate ",
+    "Belittle ",
+    "Disempower ",
+    "Dethrone ",
+    "Deflate ",
+    "Discourage ",
+    "Dishearten ",
+    "Reduce ",
+    "Invalidate ",
+    "Deter ",
+    "Eradicate ", "You're One-Stop Shop For ", "Made for ", "Designed for ", "Built for ", "Think ", 
   ];
 
   static catchphraseMiddles = [
@@ -76,28 +99,41 @@ class Name {
     "Evolution", "Growth", "Progress",
     "Ambition", "Momentum", "Exploration",
     "Discovery", "Transformation", "Evil", "Wickedness",
-    "Malevolence",
-    "Sin",
-    "Iniquity",
-    "Villainy",
-    "Depravity",
-    "Corruption",
-    "Malice",
-    "Immorality",
-    "Wrongdoing",
-    "Deception",
-    "Fraud",
-    "Dishonesty",
-    "Trickery",
-    "Duplicity",
-    "Scam",
-    "Betrayal",
-    "Subterfuge",
-    "Lies", "Scum",
-    "Falsification", "Nature", "Health", "Family", "Business", "Money"
+    "Malevolence", "Sin", "Iniquity", "Villainy",
+    "Depravity","Corruption", "Malice", "Immorality", "Wrongdoing",
+    "Deception", "Fraud","Dishonesty",
+    "Trickery", "Duplicity","Scam","Betrayal",
+    "Subterfuge","Lies", "Scum",
+    "Falsification", "Nature", "Health", "Family", "Business", "Money", "Capitalism", "Democracy", "Community", "Civilization", "Republic",
+    "Liberty","Society","Humanism","Justice","Sustainability","Equality","Citizenship"
   ];
 
-  static catchphraseEndings = ["", "", "", "", "", "", "", "", "", "", " Today", " Tomorrow", " Forever", " for All", " Always", " for Now", "-ish", " Fun", ", Dude!", " to the Extreme", " and Love", " and Business", " and Family", " and Beyond", " and More"];
+  static catchphraseEndings = ["", "", "", "", "", "", "", "", "", "", " in the USA", " Today", " Tomorrow", " Forever", " for All", " Always", " for Now", "-ish", " Fun", ", Dude!", ", Bro!", " to the Extreme", " and Love", " of Business", " and Family", " and Beyond", " and More",
+    " for Everyone",
+    " at Heart",
+    " with Style",
+    " like Never Before",
+    " in Style",
+    " to the Max",
+    " to the Core",
+    " with Passion",
+    " on Steroids",
+    " for the Win",
+    " and Adventure",
+    " and Happiness",
+    " and Joy",
+    " and Fun",
+    " in Every Step",
+    " and the Future",
+    " for the Brave",
+    " with Flair",
+    " to the Moon",
+    " like a Boss",
+    " and Unity",
+    " and Peace",
+    " with Purpose",
+    " and Energy"
+  ];
 
   static playerPositions = ["Catcher",
     "First Baseman",
@@ -118,7 +154,7 @@ class Name {
     "Equipment Manager",
     "Pinch Hitter",
     "Pinch Runner",
-    "Phantom ballplayer",
+    "Phantom Ballplayer",
     "Big Whiffer",
     "Ghost Runner",
     "Coach",
@@ -174,6 +210,44 @@ class Name {
     "Benchwarmer",
     "Underdog",
     "Tight End",
+    "Field Technician",
+    "Field Engineer",
+    "Field Consultant",
+    "Field Service Manager",
+    "Field Operations Specialist",
+    "Field Research Scientist",
+    "Field Data Analyst",
+    "Field Hand",
+    "Base Coordinator",
+    "Base Supervisor",
+    "Base Logistics Manager",
+    "Base Administrator",
+    "Base Services Coordinator",
+    "Base Compliance Officer",
+    "Debaser",
+    "Hitmaker",
+    "Hitman",
+    "Hit and Run Analyst",
+    "Bat Research Engineer",
+    "Bat Conservation Officer",
+    "Bat Habitat Manager",
+    "Banjo Hitter",
+    "Butcher",
+    "Catbird Seat",
+    "Comeback Kid",
+    "Corner Outfielder",
+    "Diamond Appraiser",
+    "Diamond Cutter",
+    "Diamond Polisher",
+    "Park Ranger",
+    "Park Patrol Officer",
+    "Park Naturalist",
+    "Strike Force Supervisor",
+    "Strike Planning Consultant",
+    "Strike Negotiation Specialist",
+    "Glove Distribution Technician",
+    "Glover",
+    "Striker",
     "null"
   ]
   // static methods
@@ -353,7 +427,8 @@ class Name {
     }
   };
 
-  static generateCompanyName() {
+  static generateAd() {
+    let starter = Name.randomItem(Name.adStart);
     const noun = Name.randomItem(Name.companyNames);
     let adj = Name.randomItem(Name.adjList);
     let halfAdjective = adj.charAt(0).toUpperCase() + adj.slice(1, Math.ceil(adj.length / 2));
@@ -361,13 +436,12 @@ class Name {
 
     let catchphrase = Name.randomItem(Name.catchphraseBeginnings) + Name.randomItem(Name.catchphraseMiddles) + Name.randomItem(Name.catchphraseEndings);
 
-
-    return `${halfAdjective}${halfNoun}: ${catchphrase}`;
+    return `AD: ${starter}${halfAdjective}${halfNoun}™ - ${catchphrase}`;
   }
 
-  static getCharSum(someString){
+  static getCharSum(someString) {
     let sum = 0;
-    for (var i = 0; i < someString.length; i++){
+    for (var i = 0; i < someString.length; i++) {
       sum += someString.charCodeAt(i);
     }
     return sum;
