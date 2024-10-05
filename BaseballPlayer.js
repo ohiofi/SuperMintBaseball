@@ -43,15 +43,20 @@ class BaseballPlayer {
         this.age = Math.floor(rng.random() * 3) + 21; // Starting age is 21, 22, or 23
         this.hunger = 1;
         this.hungerRate = rng.random() * 0.1 + rng.random() * 0.1;
-        this.attitude = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        // tiredness
         this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
-        this.pitchScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
-        this.pitchScoreDeviation = 1 + rng.random() + rng.random();
+        // pitching
+        this.pitchStrength = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.pitchAccuracy = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        // batting
+        // reliability
         this.swinginess = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.thwackiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
-        this.hitScoreAverage = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
-        this.hitScoreDeviation = 1 + rng.random() + rng.random();
+        this.hittingPower = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        this.hittingReliability = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        // defense
+        this.teamwork = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.stats = new Stats(); // current season only
         this.lifetimeStats = new Stats();
     }
@@ -67,31 +72,34 @@ class BaseballPlayer {
     }
 
     /* 
-        Tiredness is a negative value that hurts performance.
+        Tiredness is a negative value that hurts performance. Generally becomes increasingly negative over the course of a game.
         Factors:
         - age
-        - time
-        - mood
-        - attitude
+        - mood (aka balance)
+        - healthiness
+        - pitchNumber
     */
     getTiredness(pitchNumber){
         let ageFactor = Math.abs(25 - this.age) * 0.1;
-        let timeFactor = pitchNumber * (10 - this.healthiness) * 0.005;
         let moodFactor = Math.abs(Math.sin(pitchNumber * (10 - this.balance) * 0.5) * (10 - this.balance) * 0.5); // cycles from 0...(10 - this.balance) * 0.5
-        let attitudeFactor = (10 - this.attitude) * 0.1;
-        //return [moodFactor , ageFactor , timeFactor , attitudeFactor];
-        return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
+        //return [moodFactor , ageFactor , timeFactor];
+        //return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
+        return -1 * (ageFactor + moodFactor)/this.healthiness * pitchNumber * 0.1;
     }
 
     // Pitching methods
 
     /*
         getPitchScore
-
+        Factors:
+        - pitchStrength
+        - pitchAccuracy
+        - tiredness
     */
     getPitchScore(pitchNumber) {
         let tiredness = this.getTiredness(pitchNumber);
-        return BaseballPlayer.normalizeToTen(this.pitchScoreAverage + Math.sin(pitchNumber) * this.pitchScoreDeviation + this.hunger - tiredness);
+        let accuracyFactor = Math.abs(Math.sin(pitchNumber * (10 - this.pitchAccuracy) * 0.5) * (10 - this.pitchAccuracy) * 0.5); // cycles from 0...(10 - this.pitchAccuracy) * 0.5
+        return BaseballPlayer.normalizeToTen(this.pitchStrength + accuracyFactor + this.hunger - tiredness);
     }
 
     // Batting methods
