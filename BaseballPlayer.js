@@ -50,12 +50,12 @@ class BaseballPlayer {
         this.pitchStrength = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.pitchAccuracy = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         // batting
-        // reliability
         this.swinginess = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.thwackiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.hittingPower = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
-        this.hittingReliability = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
+        
         // defense
+        this.reliability = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.teamwork = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.stats = new Stats(); // current season only
         this.lifetimeStats = new Stats();
@@ -72,10 +72,10 @@ class BaseballPlayer {
     }
 
     /* 
-        Tiredness is a negative value that hurts performance. Generally becomes increasingly negative over the course of a game.
+        Tiredness is a value that hurts performance. Generally grows over the course of a game.
         Factors:
         - age
-        - mood (aka balance)
+        - mood (which is basically 10 - balance)
         - healthiness
         - pitchNumber
     */
@@ -84,7 +84,7 @@ class BaseballPlayer {
         let moodFactor = Math.abs(Math.sin(pitchNumber * (10 - this.balance) * 0.5) * (10 - this.balance) * 0.5); // cycles from 0...(10 - this.balance) * 0.5
         //return [moodFactor , ageFactor , timeFactor];
         //return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
-        return -1 * (ageFactor + moodFactor)/this.healthiness * pitchNumber * 0.1;
+        return (ageFactor + moodFactor)/this.healthiness * pitchNumber * 0.1;
     }
 
     // Pitching methods
@@ -93,45 +93,65 @@ class BaseballPlayer {
         getPitchScore
         Factors:
         - pitchStrength
-        - pitchAccuracy
+        - wobbliness (which is basically 10 - pitchAccuracy)
         - tiredness
     */
     getPitchScore(pitchNumber) {
         let tiredness = this.getTiredness(pitchNumber);
-        let accuracyFactor = Math.abs(Math.sin(pitchNumber * (10 - this.pitchAccuracy) * 0.5) * (10 - this.pitchAccuracy) * 0.5); // cycles from 0...(10 - this.pitchAccuracy) * 0.5
-        return BaseballPlayer.normalizeToTen(this.pitchStrength + accuracyFactor + this.hunger - tiredness);
+        let wobblinessFactor = Math.abs(Math.sin(pitchNumber * (10 - this.pitchAccuracy) * 0.5) * (10 - this.pitchAccuracy) * 0.5); // cycles from 0...(10 - this.pitchAccuracy) * 0.5
+        return BaseballPlayer.normalizeToTen(this.pitchStrength - wobblinessFactor + this.hunger - tiredness);
     }
 
     // Batting methods
 
     /*
         isSwingingBat
-
+        Factors:
+        - pitchScore
+        - swinginess
+        - hunger
+        - tiredness
     */
     isSwingingBat(pitchNumber, pitchScore) {
         let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // player's prefer to swing at better pitches aka higher pitch scores
-        if (pitchScore >= (10 - this.swinginess) + tiredness || this.swinginess + this.hunger > rng.random() * 10 + tiredness) {
+        if (pitchScore >= (10 - this.swinginess) - tiredness - this.hunger && this.swinginess - tiredness + this.hunger  > rng.random() * 5 + rng.random() * 5 ) {
             return true;
         }
         return false;
     }
 
+    /*
+        isContactingBall
+        Factors:
+        - pitchScore
+        - thwackiness
+        - hunger
+        - tiredness
+    */
     isContactingBall(pitchNumber, pitchScore) {
         let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // the lower the pitch score, the easier to hit
-        if (pitchScore <= this.thwackiness - tiredness || this.thwackiness + this.hunger > rng.random() * 10 + tiredness) {
+        if (pitchScore <= this.thwackiness - tiredness + this.hunger && this.thwackiness - tiredness + this.hunger  > rng.random() * 6 + rng.random() * 6 ) {
             return true;
         }
         return false;
     }
 
+    /*
+        getHitScore
+        Factors:
+        - pitchScore
+        - hittingPower
+        - hunger
+        - tiredness
+    */
     getHitScore(pitchNumber, pitchScore) {
-        let tiredness = pitchNumber * this.exhaustion * 0.01;
+        let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
-        return BaseballPlayer.normalizeToTen(this.hitScoreAverage * pitchScore * 0.1 + Math.sin(pitchNumber) * this.hitScoreDeviation + this.hunger - tiredness);
+        return BaseballPlayer.normalizeToTen(this.hittingPower * pitchScore * 0.15 + this.hunger - tiredness);
     }
 
     setHungerUp() {
