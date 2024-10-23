@@ -42,7 +42,7 @@ class BaseballPlayer {
         this.position = "null"; // Position on the field
         this.age = Math.floor(rng.random() * 3) + 21; // Starting age is 21, 22, or 23
         this.hunger = 1;
-        this.hungerRate = rng.random() * 0.1 + rng.random() * 0.1;
+        this.hungerRate = rng.random() * 0.5 + rng.random() * 0.5;
         // tiredness
         this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -67,6 +67,11 @@ class BaseballPlayer {
     displayInfo() {
         return `Name: ${this.fullname}\nTeam: ${this.teamName}\nPosition: ${this.position}\nBatting Average: ${this.battingAverage.toFixed(3)}\nHome Runs: ${this.homeRuns}`;
     }
+
+    getName(){
+        return this.teamName + " " + this.lastName;
+    }
+
     getSummary() {
         return `${this.jerseyNumber} ${this.fullname} / ${this.position}\n`;
     }
@@ -93,7 +98,7 @@ class BaseballPlayer {
         getPitchScore
         Factors:
         - pitchStrength
-        - wobbliness (which is basically 10 - pitchAccuracy)
+        - wobbliness (which is 10 - pitchAccuracy)
         - tiredness
     */
     getPitchScore(pitchNumber) {
@@ -115,8 +120,8 @@ class BaseballPlayer {
     isSwingingBat(pitchNumber, pitchScore) {
         let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
-        // player's prefer to swing at better pitches aka higher pitch scores
-        if (pitchScore >= (10 - this.swinginess) - tiredness - this.hunger && this.swinginess - tiredness + this.hunger  > rng.random() * 5 + rng.random() * 5 ) {
+        // players prefer to swing at better pitches aka higher pitch scores
+        if (pitchScore + this.hunger >= (10 - this.swinginess) - tiredness && this.swinginess + this.hunger - tiredness  > rng.random() * 5 + rng.random() * 5 ) {
             return true;
         }
         return false;
@@ -134,7 +139,7 @@ class BaseballPlayer {
         let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
         // the lower the pitch score, the easier to hit
-        if (pitchScore <= this.thwackiness - tiredness + this.hunger && this.thwackiness - tiredness + this.hunger  > rng.random() * 6 + rng.random() * 6 ) {
+        if (pitchScore <= this.thwackiness + this.hunger - tiredness && this.thwackiness + this.hunger - tiredness > rng.random() * 6 + rng.random() * 6 ) {
             return true;
         }
         return false;
@@ -151,7 +156,20 @@ class BaseballPlayer {
     getHitScore(pitchNumber, pitchScore) {
         let tiredness = this.getTiredness(pitchNumber);
         pitchScore = BaseballPlayer.normalizeToTen(pitchScore);
-        return BaseballPlayer.normalizeToTen(this.hittingPower * pitchScore * 0.15 + this.hunger - tiredness);
+        // the easiest pitch to hit is 5 (out of 10)
+        return BaseballPlayer.normalizeToTen(this.hittingPower + this.hunger - tiredness - Math.abs(pitchScore - 5));
+    }
+    /*
+        getDefenseScore
+        Factors:
+        - reliability
+        - teamwork
+        - hunger
+        - tiredness
+    */
+    getDefenseScore(pitchNumber) {
+        let tiredness = this.getTiredness(pitchNumber);
+        return BaseballPlayer.normalizeToTen((this.reliability + this.teamwork) / 2 + this.hunger - tiredness);
     }
 
     setHungerUp() {
