@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Baseball</title>
-<script src="MersenneTwister.js"></script> 
+  <head>
+    <title>Baseball</title>
+    <!-- Minified version -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/simpledotcss/simple.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="MersenneTwister.js"></script>
 
-<script src="Name.js"></script> 
-<script src="Stats.js"></script> 
-<script src="BaseballPlayer.js"></script> 
-<script src="BaseballTeam.js"></script> 
-<script src="BaseballGame.js"></script> 
-<script src="Season.js"></script> 
-<script src="League.js"></script> 
-<script src="script.js"></script> 
-
-</head>
-<body>
-
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-<div class="slidecontainer">
-    Speed: <input type="range" min="1" max="5000" value="2000" class="slider" id="speedSlider">
-  </div>
-
-</body>
-</html> 
+    <script src="Name.js"></script>
+    <script src="Stats.js"></script>
+    <script src="BaseballPlayer.js"></script>
+    <script src="BaseballTeam.js"></script>
+    <script src="BaseballGame.js"></script>
+    <script src="Season.js"></script>
+    <script src="League.js"></script>
+    
+  </head>
+  <body>
+    <h1>This is a Heading</h1>
+    <p>This is a paragraph.</p>
+    <div class="slidecontainer">
+      Speed:
+      <input
+        type="range"
+        min="1"
+        max="5000"
+        value="2000"
+        class="slider"
+        id="speedSlider"
+      />
+    </div>
+    <div id="messageContainer">
+      
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
