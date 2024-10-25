@@ -18,7 +18,7 @@ class BaseballTeam {
   static teamCount = 0;
   //alert(Name.teamNameList);
   //Name.shuffle(Name.teamNameList);
-  static teamNameList = Name.teamNameList;
+  //static teamNameList = Name.teamNameList;
   //random.seed(10) not possible to seed in vanilla JS
 
   static teamPlaceList = [];
@@ -27,12 +27,14 @@ class BaseballTeam {
   constructor() {
     this.teamIdNumber = 10 + (BaseballTeam.teamCount++)
     this.jerseyNumberList = []
-    this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
-    while (this.place in BaseballTeam.teamPlaceList) {
-      this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
-    }
-    BaseballTeam.teamPlaceList.push(this.place)
-    this.name = BaseballTeam.teamNameList.splice(Math.floor(rng.random() * BaseballTeam.teamNameList.length),1)[0];
+    // this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
+    // while (this.place in BaseballTeam.teamPlaceList) {
+    //   this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
+    // }
+    //BaseballTeam.teamPlaceList.push(this.place)
+    this.colorScheme = Name.colorCombos.splice(Math.floor(rng.random() * Name.colorCombos.length),1)[0];
+    this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length),1)[0];
+    this.name = Name.teamNameList.splice(Math.floor(rng.random() * Name.teamNameList.length),1)[0];
 
     
     this.mood = rng.random() * 0.5 + rng.random() * 0.5
@@ -42,20 +44,20 @@ class BaseballTeam {
     //for i in range(Team.playersPerTeam):
     for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
       let temp = new BaseballPlayer()
-      temp.teamName = this.place
+      temp.teamName = this.colorScheme + this.place
       temp.jerseyNumber = this.getJerseyNumber()
       this.players.push(temp)
     }
     
-    this.stats = new Stats(this.place, this.name)
-    this.dailyStats = new Stats(this.place, this.name)
+    this.stats = new Stats(this.colorScheme + this.place, this.name)
+    this.dailyStats = new Stats(this.colorScheme + this.place, this.name)
     this.xp = 0
     this.setup();
     this.batterUpNumber = -1;
   }
 
   addPlayer(newPlayer) {
-    newPlayer.teamName = this.place
+    newPlayer.teamName = this.colorScheme + this.place
     newPlayer.stats.teamLocation= this.getPlace()
     this.players.push(newPlayer)
     this.setup()
@@ -113,15 +115,15 @@ class BaseballTeam {
   }
 
   getFullName() {
-    return this.place.toUpperCase() + " " + this.name
+    return this.colorScheme + this.place.toUpperCase() + " " + this.name
   }
 
   getFullPlace() {
-    return this.place.toUpperCase()
+    return this.colorScheme + this.place.toUpperCase()
   }
 
   getName() {
-    return this.place + " " + this.name
+    return this.colorScheme + this.place + " " + this.name
   }
 
   getNextBatter(){
@@ -352,29 +354,35 @@ class BaseballTeam {
 
   setup() {
     for (let i = 0; i < this.players.length; i++) {
-      this.players[i].teamName = this.place
-      this.players[i].stats.teamLocation = this.place
+      this.players[i].teamName = this.colorScheme + this.place
+      this.players[i].stats.teamLocation = this.colorScheme + this.place
     }
     this.setPositions()
     
   }
 
   setHungerUp() {
-    this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
+    //this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
+    for(let eachPlayer of this.players){
+      eachPlayer.setHungerUp();
+    }
   }
 
   setHungerDown() {
-    if (this.hunger > 0.01 && this.hungerRate < 1) {
-      this.hunger *= this.hungerRate;
-    }
-    else if (this.hunger > 0.01 && this.hungerRate >= 1) {
-        this.hunger *= 0.5;
+    // if (this.hunger > 0.01 && this.hungerRate < 1) {
+    //   this.hunger *= this.hungerRate;
+    // }
+    // else if (this.hunger > 0.01 && this.hungerRate >= 1) {
+    //     this.hunger *= 0.5;
+    // }
+    for(let eachPlayer of this.players){
+      eachPlayer.setHungerDown();
     }
   }
 
   toString() {
     let result = ""
-    result += this.place + " " + this.name + " --- Team Grade: " + (this.getTeamGrade()) + "\n"
+    result += this.colorScheme + this.place + " " + this.name + " --- Team Grade: " + (this.getTeamGrade()) + "\n"
     result += (this.getPlayerList())
     return result
   }
@@ -428,7 +436,7 @@ class BaseballTeam {
 
 
   resetSeasonStats() {
-    this.stats = new Stats(this.place, this.name)
+    this.stats = new Stats(this.colorScheme + this.place, this.name)
   }
 
   updateXp() {

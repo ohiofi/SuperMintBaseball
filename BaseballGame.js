@@ -82,11 +82,11 @@ class BaseballGame {
                             this.nextBatter();
                         }
                         
-                    } else if (hitScore / defenseScore <= 1) {
+                    } else if (hitScore / defenseScore <= 1.5) {
                         console.log(this.batter.getName() + " hits a SINGLE")
-                    } else if (hitScore / defenseScore <= 2) {
+                    } else if (hitScore / defenseScore <= 2.5) {
                         console.log(this.batter.getName() + " hits a DOUBLE")
-                    } else if (hitScore / defenseScore <= 3) {
+                    } else if (hitScore / defenseScore <= 3.5) {
                         console.log(this.batter.getName() + " hits a TRIPLE")
                     } else {
                         console.log(this.batter.getName() + " hits a HOME RUN!")
