@@ -46,17 +46,17 @@ function startMessageInterval(speed,bgame) {
 
     // Set a new interval
     timeIntervalId = setInterval(() => {
-        showBlockMessage(bgame.nextPitch(),bgame.getName());
+        showBlockMessage(bgame.next(),bgame.getName());
         //showBlockMessage("This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!".substring(parseInt(Math.random()*("This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!".length))));
     }, speed);
 }
 
 // Set initial interval
-startMessageInterval(2000, bgame);
+startMessageInterval(5100 - parseInt(document.getElementById('speedSlider').value, 10), bgame);
 
 // Change interval based on user input
 document.getElementById('speedSlider').onchange = function() {
-    const newInterval = 5200 - parseInt(document.getElementById('speedSlider').value, 10);
+    const newInterval = 5100 - parseInt(document.getElementById('speedSlider').value, 10);
   
     if (!isNaN(newInterval) && newInterval > 0) {
         startMessageInterval(newInterval,bgame);
