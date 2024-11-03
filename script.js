@@ -4,7 +4,7 @@ rng = new MersenneTwister(parseInt(2024));
 let timeIntervalId;
 let bgame = new BaseballGame();
 
-function showBlockMessage(message, gameName){
+function showGameMessage(message, gameName){
   const container = document.getElementById('messageContainer');
 
     // Create a new div for the message
@@ -46,7 +46,13 @@ function startMessageInterval(speed,bgame) {
 
     // Set a new interval
     timeIntervalId = setInterval(() => {
-        showBlockMessage(bgame.next(),bgame.getName());
+        let gameMessage = bgame.next();
+        if(gameMessage == null){
+          clearInterval(timeIntervalId);
+        }else{
+          showGameMessage(gameMessage,bgame.getName());
+        }
+        
         //showBlockMessage("This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!".substring(parseInt(Math.random()*("This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!This is a new message!".length))));
     }, speed);
 }
