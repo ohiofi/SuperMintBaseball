@@ -42,7 +42,7 @@ class BaseballPlayer {
         this.position = "null"; // Position on the field
         this.age = Math.floor(rng.random() * 3) + 21; // Starting age is 21, 22, or 23
         this.hunger = 1;
-        this.hungerRate = rng.random() * 0.5 + rng.random() * 0.5;
+        this.hungerRate = rng.random() * 1.1 + rng.random() * 1.1;
         // tiredness
         this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -70,6 +70,10 @@ class BaseballPlayer {
 
     getName(){
         return this.teamName + " " + this.lastName;
+    }
+
+    getFullName(){
+        return this.teamName + " " + this.firstName + " " + this.lastName;
     }
 
     getSummary() {
