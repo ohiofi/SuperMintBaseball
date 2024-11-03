@@ -6,6 +6,7 @@ body {
     padding: 0;
     background: none;
     border: 1px solid hsl(228, 5%, 15%);
+    margin:0px;
   }
   input[type="range"]:hover {
     border: 1px solid var(--border);
@@ -20,15 +21,15 @@ body {
     top: -0.1em;
     
   }
-  sub.leftBaseIndicator{
-    /* left:0.21em; */
-  }
+  /* sub.leftBaseIndicator{
+    
+  } */
   sup.centerBaseIndicator{
-    right:0.22em;
+    right:0.37em;
   }
   sub.rightBaseIndicator{
     /* right:0.21em; */
-    right:0.44em;
+    right:0.74em;
   }
 
   /* social media message */
@@ -50,7 +51,7 @@ body {
   }
   .username {
     font-weight: bold;
-    color: #1da1f2; /* Twitter blue */
+    /* color: #1da1f2; Twitter blue */
   }
   .timestamp {
     color: #657786; /* grey */
