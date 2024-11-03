@@ -12,7 +12,23 @@ const BaseballGameState = {
 
 class BaseballGame {
 
-    static pitchDescriptions = ["~w~i~l~d~", "bad", "meh", "nice", "Cool", "Hot", "GREAT", "MINT CONDITION"];
+    static useAOrAn(nextWord){
+        if("aeiou".indexOf(nextWord.toLowerCase().charAt(0)) != -1){
+            return "an";
+        }else{
+            return "a";
+        }
+    }
+
+    //static pitchDescriptions = ["~w~i~l~d~", "bad", "meh", "nice", "Cool", "Hot", "GREAT", ];
+    static pitchDescriptions = 
+    [
+        "mint condition++","excellent++", "outstanding++", "exceptional++", "superior++", "impressive++",
+        "good+", "competent+", "strong+", "reliable+", "admirable+",
+        "average", "satisfactory", "adequate", "mediocre", "passable",
+        "meh-", "deficient-", "insufficient-", "inadequate-", "weak-",
+        "flailing--", "unacceptable--", "unsatisfactory--", "lacking--", "inferior--", "wild--"
+    ]
 
     constructor() {
         this.homeTeam = new BaseballTeam();
@@ -49,23 +65,18 @@ class BaseballGame {
                 result = "PLAY BALL!";
                 break;
             case BaseballGameState.TOP_OF_THE_INNING:
-                this.offenseTeam = this.awayTeam;
-                this.defenseTeam = this.homeTeam;
-                this.inning++;
-                this.threeOutsCleanup()
                 this.gameState++;
-                result = "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+                result = this.setupNextInning(this.awayTeam,this.homeTeam)
                 break;
             case BaseballGameState.AWAY_PLAYER_STEPS_UP_TO_BAT:
                 this.gameState++;
                 this.nextBatter();
-                result = this.batter.getFullName() + " steps up to bat for the " + this.offenseTeam.getName();
+                result = this.batter.getFullName() + " steps up to bat for the " + this.offenseTeam.getName() + this.getBaseStatus();
                 break;
             case BaseballGameState.AWAY_PLAYER_AT_BAT:
                 result = this.nextPitch();
                 if (this.count.outs >= 3) {
                     this.gameState = BaseballGameState.BOTTOM_OF_THE_INNING;
-                    // this.threeOutsCleanup();
                 } else if (this.count.strikes >= 3) {
                     this.gameState = BaseballGameState.AWAY_PLAYER_STEPS_UP_TO_BAT;
                     this.threeStrikesCleanup();
@@ -73,19 +84,20 @@ class BaseballGame {
                     this.gameState = BaseballGameState.AWAY_PLAYER_STEPS_UP_TO_BAT;
                     this.fourBallsCleanup();
                 }
+                // check if game is over early
+                if (this.count.outs >= 3 && this.inning >= 9 && this.homeScore > this.awayScore) {
+                    this.gameState = BaseballGameState.END_OF_GAME;
+                    break;
+                }
                 break;
             case BaseballGameState.BOTTOM_OF_THE_INNING:
-                this.offenseTeam = this.homeTeam;
-                this.defenseTeam = this.awayTeam;
-                this.pitcher = this.awayTeam.getPitcher();
-                this.threeOutsCleanup()
                 this.gameState++;
-                result = "Bottom of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+                result = this.setupNextInning(this.homeTeam,this.awayTeam)
                 break;
             case BaseballGameState.HOME_PLAYER_STEPS_UP_TO_BAT:
                 this.gameState++;
                 this.nextBatter();
-                result = this.batter.getFullName() + " steps up to bat for the " + this.offenseTeam.getName();
+                result = this.batter.getFullName() + " steps up to bat for the " + this.offenseTeam.getName() + this.getBaseStatus();
                 break;
             case BaseballGameState.HOME_PLAYER_AT_BAT:
                 result = this.nextPitch();
@@ -96,7 +108,7 @@ class BaseballGame {
                     this.gameState = BaseballGameState.HOME_PLAYER_STEPS_UP_TO_BAT;
                     this.fourBallsCleanup();
                 }
-
+                // check if game is over
                 if (this.count.outs >= 3 && this.inning >= 9 && this.awayScore != this.homeScore) {
                     this.gameState = BaseballGameState.END_OF_GAME;
                 } else if (this.count.outs >= 3) {
@@ -117,17 +129,32 @@ class BaseballGame {
         //return result + "<br>gameState is "+this.gameState
     }
 
-
+    setupNextInning(offense,defense){
+        this.offenseTeam = offense;
+        this.defenseTeam = defense;
+        
+        this.threeOutsCleanup()
+        if(offense == this.awayTeam){
+            this.inning++;
+            return "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+        }else{
+            return "Bottom of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+        }
+    }
 
     getName() {
+        let result = "";
         if (!this.hasGameStarted) {
             return this.awayTeam.getName() + " @ " + this.homeTeam.getName();
         }
-        let result = this.inning + "▲ ";
-        if(this.offenseTeam == this.homeTeam){
-            result = this.inning + "▼ "
+        if(this.inning != 0 && this.isGameOver == false){
+            result = this.inning + "▲ ";
+            if(this.offenseTeam == this.homeTeam){
+                result = this.inning + "▼ "
+            }
+        } else if(this.isGameOver){
+            result = "FINAL SCORE: "
         }
-        
         return result + this.awayTeam.getName() + ": " + this.awayScore + " " + this.homeTeam.getName() + ": " + this.homeScore;
     }
 
@@ -135,9 +162,19 @@ class BaseballGame {
         this.batter = this.offenseTeam.getNextBatter();
     }
 
+    getPitchDescription(pitchScore){
+        return BaseballGame.pitchDescriptions[Math.floor((BaseballGame.pitchDescriptions.length - 1) - pitchScore * (BaseballGame.pitchDescriptions.length - 1) / 10)];
+    }
+
     nextPitch() {
         this.pitchNumber++;
-        return this.atBat();
+        let result = "";
+        this.pitcher = this.defenseTeam.getPitcher();
+        let pitchScore = this.pitcher.getPitchScore(this.pitchNumber);
+        
+
+        result += this.pitcher.getName() + " throws "+BaseballGame.useAOrAn(this.getPitchDescription(pitchScore))+" " + this.getPitchDescription(pitchScore) + " pitch"
+        return this.atBat(pitchScore, result);
     }
 
     resetTheCount() {
@@ -268,20 +305,12 @@ class BaseballGame {
     }
 
 
-    atBat() {
-        let result = "";
-        this.pitcher = this.defenseTeam.getPitcher();
-        let pitchScore = this.pitcher.getPitchScore(this.pitchNumber);
-        let pitchDescription = BaseballGame.pitchDescriptions[Math.floor(pitchScore * BaseballGame.pitchDescriptions.length / 10)];
-
-
-        //console.log(this.pitcher.getName() + " throws a " + pitchDescription + " pitch");
-        result += this.pitcher.getName() + " throws a " + pitchDescription + " pitch"
+    atBat(pitchScore, result) {
         //console.log("[pitchScore = " + pitchScore + "]")
         if (this.batter.isSwingingBat(this.pitchNumber, pitchScore)) {
             // batter swings
             //console.log(this.batter.getName() + " swings")
-            result += "<br>" + this.batter.getName() + " swings";
+            // result += "<br>" + this.batter.getName() + " swings";
             if (this.batter.isContactingBall(this.pitchNumber, pitchScore)) {
                 // makes contact
                 let hitScore = this.batter.getHitScore(this.pitchNumber, pitchScore);
@@ -290,7 +319,7 @@ class BaseballGame {
                 // 50% of weak hits are foul
                 if (hitScore <= 2.5 && rng.random() > 0.5) {
                     //console.log(this.batter.getName() + " hits a foul ball");
-                    result += " and hits a foul ball"
+                    result += "<br>" + this.batter.getName() + " hits a foul ball"
                     if (this.count.strikes < 2) {
                         this.count.strikes++;
                     }
@@ -302,42 +331,42 @@ class BaseballGame {
                     let defenseScore = defender.getDefenseScore(this.pitchNumber);
                     //console.log("[defenseScore = " + defenseScore + "]")
                     if (defenseScore >= hitScore) {
-                        result += " and hits a fly ball"
+                        result += "<br>" + this.batter.getName() + " hits a fly ball. "
                         //console.log(defender.getName() + " makes the catch. OUT!")
                         this.count.outs++;
-                        result += "<br>" + defender.getName() + " makes the catch. " + this.getOuts()
+                        result += defender.getName() + " makes the catch. " + this.getOuts()
                         defender.setHungerDown()
                         this.batter.setHungerUp()
                         
                         if (this.count.outs < 3) {
                             result += this.advanceBaseRunners(1)
                         }
-                        this.gameState--;
-                        return result;
-                    } else if (hitScore / defenseScore <= 1.5) {
+                        //this.gameState--;
+                        //return result;
+                    } else if (hitScore / defenseScore <= 1.999) {
                         //console.log(this.batter.getName() + " hits a SINGLE")
-                        result += " and hits a SINGLE"
+                        result += "<br>" + this.batter.getName() + " hits a SINGLE"
                         result += this.advanceBaseRunners(1)
                         this.onBase[0] = this.batter;
                         this.pitcher.setHungerUp()
                         defender.setHungerUp()
                         this.batter.setHungerDown()
-                    } else if (hitScore / defenseScore <= 2.5) {
-                        result += " and hits a DOUBLE"
+                    } else if (hitScore / defenseScore <= 2.999) {
+                        result += "<br>" + this.batter.getName() + " hits a DOUBLE"
                         result += this.advanceBaseRunners(2)
                         this.onBase[1] = this.batter;
                         this.pitcher.setHungerUp()
                         defender.setHungerUp()
                         this.batter.setHungerDown()
-                    } else if (hitScore / defenseScore <= 3.5) {
-                        result += " and hits a TRIPLE"
+                    } else if (hitScore / defenseScore <= 3.999) {
+                        result += "<br>" + this.batter.getName() + " hits a TRIPLE"
                         result += this.advanceBaseRunners(3)
                         this.onBase[2] = this.batter;
                         this.pitcher.setHungerUp()
                         defender.setHungerUp()
                         this.batter.setHungerDown()
                     } else {
-                        result += " and hits a HOME RUN!"
+                        result += "<br>" + this.batter.getName() + " hits a HOME RUN!"
                         this.incrementScore();
                         result += this.advanceBaseRunners(4)
                         this.pitcher.setHungerUp()
@@ -352,35 +381,40 @@ class BaseballGame {
                 // swinging but doesn't make contact
                 //console.log("STRIKE Swinging");
                 this.count.strikes++;
-                result += "<br>" + "STRIKE Swinging, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getName() + " gets a STRIKE swinging, " + this.count.balls + "-" + this.count.strikes
 
                 if (this.count.strikes >= 3) {
                     this.count.outs++;
-                    result += "<br>" + this.batter.getName() + " STRIKES OUT Swinging. " + this.getOuts()
-                    return result;
+                    result += "<br>" + this.batter.getName() + " STRIKES OUT swinging. " + this.getOuts()
+                    this.threeStrikesCleanup()
+                    //return result;
                 }
             }
         } else {
             //console.log(this.batter.getName() + " is looking")
-            result += "<br>" + this.batter.getName() + " is looking"
+            // result += "<br>" + this.batter.getName() + " is looking"
             // batter doesn't swing
             if (pitchScore > 5) {
                 //console.log("STRIKE Looking");
                 this.count.strikes++;
-                result += "<br>" + "STRIKE Looking, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getName() + " gets a STRIKE looking, " + this.count.balls + "-" + this.count.strikes
 
                 if (this.count.strikes >= 3) {
                     this.count.outs++
-                    result += "<br>" + this.batter.getName() + " STRIKES OUT Looking. " + this.getOuts()
-                    return result;
+                    result += "<br>" + this.batter.getName() + " STRIKES OUT looking. " + this.getOuts()
+                    this.threeStrikesCleanup()
+                    //return result;
                 }
             } else {
                 //console.log("BALL Looking")
                 this.count.balls++;
-                result += "<br>" + "BALL Looking, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getName() + " is looking. BALL looking, " + this.count.balls + "-" + this.count.strikes
+                this.pitcher.setHungerUp()
                 if (this.count.balls >= 4) {
+                    this.gameState--;
                     result += ". Take your base."
                     result += this.walkAndAdvanceBaseRunners()
+                    this.fourBallsCleanup()
                 }
             }
         }
