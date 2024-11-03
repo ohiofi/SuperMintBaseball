@@ -114,17 +114,22 @@ class BaseballTeam {
     return this.playbook[playType][Math.floor(rng.random() * this.playbook[playType].length)]
   }
 
+  getName() {
+    return this.colorScheme + this.place.toUpperCase() + " " + this.name
+  }
+
   getFullName() {
     return this.colorScheme + this.place.toUpperCase() + " " + this.name
   }
 
-  getFullPlace() {
+  getPlace() {
     return this.colorScheme + this.place.toUpperCase()
   }
 
-  getName() {
-    return this.colorScheme + this.place + " " + this.name
-  }
+
+  
+
+  
 
   getNextBatter(){
     this.batterUpNumber++;
@@ -138,9 +143,7 @@ class BaseballTeam {
     return this.pitcher;
   }
 
-  getPlace() {
-    return this.place
-  }
+  
 
 
   getPlayerList() {
@@ -219,78 +222,6 @@ class BaseballTeam {
     return Math.round(total / this.players.length * 100) / 100
   }
 
-  // //# kicker accuracy lower is better
-  // //# max kicker accuracy is 15.38, average is about 26
-  // getKickerAccuracy() {
-  //   return 1 / (this.k.kicking + 1) * 200 + 12 - this.k.acceleration
-  // }
-
-  // //# kicker power higher is better
-  // //# max is 1.0, average is 0.58
-  // getKickerPower() {
-  //   return (this.k.kicking + this.k.acceleration) / 24
-  // }
-
-  // getOffensePassPlayTotal(offensePlay, clock) {
-  //   let passingBoost = 1.0
-  //   let weigh = {
-  //     "qbThrowing": 2.4,
-  //     "qbStrength": 1.3,
-  //     "wrCatching": 1.1,
-  //     "playCleverness": 0.7,
-  //     "hunger": 0.5
-  //   }
-  //   //# max offTotal is ~52
-  //   let result = this.qb.throwing * weigh["qbThrowing"] * passingBoost
-  //   result += this.qb.strength * weigh["qbStrength"] * passingBoost
-  //   result += this.wr.catching * weigh["wrCatching"] * passingBoost
-  //   result += offensePlay.cleverness * weigh["playCleverness"]
-  //   result += this.qb.getMood(clock)
-  //   result += this.wr.getMood(clock) + this.getMood(clock)
-  //   result += this.hunger * weigh["hunger"]
-  //   return result
-  // }
-
-  // getOffenseRunPlayTotal(offensePlay, player, clock) {
-  //   let rushingBoost = 1.0
-  //   let weigh = {
-  //     "pSpeed": 1.1,
-  //     "pAgility": 1.0,
-  //     "pAcceleration": 0.7,
-  //     "playCleverness": 0.6,
-  //     "hunger": 0.5
-  //   }
-  //   //# max offTotal is ~??
-  //   let result = player.speed * weigh["pSpeed"] * rushingBoost
-  //   result += player.agility * weigh["pAgility"] * rushingBoost
-  //   result += player.acceleration * weigh["pAcceleration"] * rushingBoost
-  //   result += offensePlay.cleverness * weigh["playCleverness"]
-  //   result += player.getMood(clock)
-  //   result += this.getMood(clock)
-  //   result += this.hunger * weigh["hunger"]
-  //   return result
-  // }
-
-  // getDefenseGrade() {
-  //   return this.defenseGrade
-  // }
-
-  // getDefensePlayTotal(offensePlay, defenseTelepathy, clock) {
-  //   let weigh = {
-  //     "defTelepathy": 1.2,
-  //     "defGrade": 2.0,
-  //     "defStyle": 3.0,
-  //     "hunger": 1.2
-  //   }
-  //   //# max defTotal is ~50
-  //   let result = defenseTelepathy * 6 * weigh["defTelepathy"]
-  //   result += this.defenseGrade * weigh["defGrade"]
-  //   result += this.getStyleGrade(
-  //     offensePlay.style) * 12 * weigh["defStyle"]
-  //   result += this.getMood(clock)
-  //   result += this.hunger * weigh["hunger"]
-  //   return result
-  // }
 
   getPlayerStats() {
     let result = ""
