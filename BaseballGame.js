@@ -20,9 +20,7 @@ class BaseballGame {
         }
     }
 
-    //static pitchDescriptions = ["~w~i~l~d~", "bad", "meh", "nice", "Cool", "Hot", "GREAT", ];
-    static pitchDescriptions = 
-    [
+    static pitchDescriptions = [
         "mint condition++","excellent++", "outstanding++", "exceptional++", "superior++", "impressive++",
         "good+", "competent+", "strong+", "reliable+", "admirable+",
         "average", "satisfactory", "adequate", "mediocre", "passable",
@@ -47,14 +45,14 @@ class BaseballGame {
         this.awayScore = 0;
         this.inning = 0;
         this.hasGameStarted = false;
-        this.isGameOver = false;
+        this.done = false;
         this.gameState = BaseballGameState.PLAY_BALL;
         this.onBase = [null, null, null];
     }
 
     next() {
         let result = "";
-        if (this.isGameOver) {
+        if (this.done) {
             return null;
         }
 
@@ -121,7 +119,7 @@ class BaseballGame {
                 result = "Inning "+this.inning+" is now an Outing."
                 break
             case BaseballGameState.END_OF_GAME:
-                this.isGameOver = true;
+                this.done = true;
                 result = this.getName();
         }
         //console.log(this)
@@ -147,12 +145,12 @@ class BaseballGame {
         if (!this.hasGameStarted) {
             return this.awayTeam.getName() + " @ " + this.homeTeam.getName();
         }
-        if(this.inning != 0 && this.isGameOver == false){
+        if(this.inning != 0 && this.done == false){
             result = this.inning + "▲ ";
             if(this.offenseTeam == this.homeTeam){
                 result = this.inning + "▼ "
             }
-        } else if(this.isGameOver){
+        } else if(this.done){
             result = "FINAL SCORE: "
         }
         return result + this.awayTeam.getName() + ": " + this.awayScore + " " + this.homeTeam.getName() + ": " + this.homeScore;
