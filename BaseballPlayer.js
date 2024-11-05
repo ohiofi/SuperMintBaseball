@@ -40,9 +40,9 @@ class BaseballPlayer {
         this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
         this.teamName = "null"; // Team name
         this.position = "null"; // Position on the field
-        this.age = Math.floor(rng.random() * 3) + 21; // Starting age is 21, 22, or 23
+        this.age = Math.floor(rng.random() * 10) + 21; // age range is [21...30]
         this.hunger = 1;
-        this.hungerRate = rng.random() * 0.75 + rng.random() * 0.75;
+        this.hungerRate = rng.random() * 0.5 + rng.random() * 0.5;
         // tiredness
         this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -89,11 +89,11 @@ class BaseballPlayer {
         - pitchNumber
     */
     getTiredness(pitchNumber){
-        let ageFactor = Math.abs(25 - this.age) * 0.1;
+        let ageFactor = Math.abs(25 - this.age) * 0.3;
         let moodFactor = Math.abs(Math.sin(pitchNumber * (10 - this.balance) * 0.5) * (10 - this.balance) * 0.5); // cycles from 0...(10 - this.balance) * 0.5
         //return [moodFactor , ageFactor , timeFactor];
         //return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
-        return (ageFactor + moodFactor)/this.healthiness * pitchNumber * 0.1;
+        return BaseballPlayer.normalizeToTen((ageFactor + moodFactor)/this.healthiness * pitchNumber/500 * 100);
     }
 
     // Pitching methods
@@ -190,11 +190,11 @@ class BaseballPlayer {
     }
 
     getPitchingAptitude(){
-        return this.pitchScoreAverage / this.pitchScoreDeviation;
+        return (this.getPitchScore(0) + this.getPitchScore(100) + this.getPitchScore(200) + this.getPitchScore(300))/4;
     }
 
     getHittingAptitude(){
-        return (this.hitScoreAverage + this.thwackiness) / (this.hitScoreDeviation + Math.abs(5 - this.swinginess));
+        return (this.getHitScore(0) + this.getHitScore(100)+ this.getHitScore(200)+ this.getHitScore(300))/4;
     }
 
     getEra(){

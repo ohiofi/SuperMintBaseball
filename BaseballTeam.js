@@ -78,41 +78,41 @@ class BaseballTeam {
     return result
   }
 
-  getPlaybook() {
-    let result = "-----Playbook-----"
-    let count = 1
-    //for each in this.playbook["pass"]:
-    for (let each of this.playbook["pass"]) {
-      result += '\n' + (count) + '. ' + (each)
-      count += 1
-    }
-    //for each in this.playbook["run"]:
-    for (let each of this.playbook["run"]) {
-      result += '\n' + (count) + '. ' + (each)
-      count += 1
-    }
-    return result
-  }
+  // getPlaybook() {
+  //   let result = "-----Playbook-----"
+  //   let count = 1
+  //   //for each in this.playbook["pass"]:
+  //   for (let each of this.playbook["pass"]) {
+  //     result += '\n' + (count) + '. ' + (each)
+  //     count += 1
+  //   }
+  //   //for each in this.playbook["run"]:
+  //   for (let each of this.playbook["run"]) {
+  //     result += '\n' + (count) + '. ' + (each)
+  //     count += 1
+  //   }
+  //   return result
+  // }
 
-  getOffensePlay(down, toFirstDown) {
-    let playType;
-    let preferredPlayType = this.preferredPlayOrder[(down - 1)];
-    //# if LONG 75+% chance of pass
-    if (toFirstDown > 10) {
-      playType = ["pass", "pass", "pass", "pass", "pass", "pass", "run",
-        preferredPlayType
-      ][Math.floor(rng.random() * 8)]
-    } else if (toFirstDown <= 3) {
-      //# if SHORT 75+% chance of run
-      playType = ["pass", "run", "run", "run", "run", "run", "run",
-        preferredPlayType
-      ][Math.floor(rng.random() * 8)]
-    } else {
-      //# 75% chance of preferredPlayType
-      playType = ["pass", "run", preferredPlayType, preferredPlayType][Math.floor(rng.random() * 4)]
-    }
-    return this.playbook[playType][Math.floor(rng.random() * this.playbook[playType].length)]
-  }
+  // getOffensePlay(down, toFirstDown) {
+  //   let playType;
+  //   let preferredPlayType = this.preferredPlayOrder[(down - 1)];
+  //   //# if LONG 75+% chance of pass
+  //   if (toFirstDown > 10) {
+  //     playType = ["pass", "pass", "pass", "pass", "pass", "pass", "run",
+  //       preferredPlayType
+  //     ][Math.floor(rng.random() * 8)]
+  //   } else if (toFirstDown <= 3) {
+  //     //# if SHORT 75+% chance of run
+  //     playType = ["pass", "run", "run", "run", "run", "run", "run",
+  //       preferredPlayType
+  //     ][Math.floor(rng.random() * 8)]
+  //   } else {
+  //     //# 75% chance of preferredPlayType
+  //     playType = ["pass", "run", preferredPlayType, preferredPlayType][Math.floor(rng.random() * 4)]
+  //   }
+  //   return this.playbook[playType][Math.floor(rng.random() * this.playbook[playType].length)]
+  // }
 
   getName() {
     return this.colorScheme + this.place.toUpperCase() + " " + this.name
@@ -175,18 +175,18 @@ class BaseballTeam {
     return Math.round(total / this.players.length * 100) / 100
   }
 
-  getStyleGrade(style) {
-    let total = 0
-    for (let each of this.players) {
-      if (each.isAsleep()) {
-        continue
-      }
-      if (each.style == style) {
-        total += 1
-      }
-    }
-    return Math.round(total / this.players.length * 100) / 100
-  }
+  // getStyleGrade(style) {
+  //   let total = 0
+  //   for (let each of this.players) {
+  //     if (each.isAsleep()) {
+  //       continue
+  //     }
+  //     if (each.style == style) {
+  //       total += 1
+  //     }
+  //   }
+  //   return Math.round(total / this.players.length * 100) / 100
+  // }
 
   getWinRatio() {
     if (this.stats.gamesPlayed == 0) {

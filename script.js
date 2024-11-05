@@ -3,8 +3,9 @@ rng = new MersenneTwister(parseInt(2024));
 
 let timeIntervalId;
 let bgame = new BaseballGame();
-
+// let count = 0
 function showGameMessage(message, gameName){
+  // console.log(++count);
   const container = document.getElementById('messageContainer');
 
     // Create a new div for the message
@@ -26,7 +27,7 @@ function showGameMessage(message, gameName){
 
     // Append the new post to the container
     container.appendChild(postDiv);
-  
+
   
 
     // Scroll to the bottom only if the user is already at the bottom
@@ -58,11 +59,11 @@ function startMessageInterval(speed,bgame) {
 }
 
 // Set initial interval
-startMessageInterval(5100 - parseInt(document.getElementById('speedSlider').value, 10), bgame);
+startMessageInterval(5050 - parseInt(document.getElementById('speedSlider').value, 10), bgame);
 
 // Change interval based on user input
 document.getElementById('speedSlider').onchange = function() {
-    const newInterval = 5100 - parseInt(document.getElementById('speedSlider').value, 10);
+    const newInterval = 5050 - parseInt(document.getElementById('speedSlider').value, 10);
   
     if (!isNaN(newInterval) && newInterval > 0) {
         startMessageInterval(newInterval,bgame);

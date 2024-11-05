@@ -1,79 +1,84 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Baseball</title>
-    <!-- Minified version -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/simpledotcss/simple.min.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="MersenneTwister.js"></script>
 
-    <script src="Name.js"></script>
-    <script src="Stats.js"></script>
-    <script src="BaseballPlayer.js"></script>
-    <script src="BaseballTeam.js"></script>
-    <script src="BaseballGame.js"></script>
-    <script src="Season.js"></script>
-    <script src="League.js"></script>
-    
-  </head>
-  <body>
-    <div class="newsTickerContainer">
-      <div class="newsTickerItem">
-        <!--  Put you content here    -->
-        1
-      </div>
-    
-      <div class="newsTickerItem">
-        2
-      </div>
-    
-      <div class="newsTickerItem">
-        3
-      </div>
-    
-      <div class="newsTickerItem">
-        4
-      </div>
-    
-      <div class="newsTickerItem">
-        5
-      </div>
-    
-      <div class="newsTickerItem">
-        6
-      </div>
-    
-      <div class="newsTickerItem">
-        7
-      </div>
-    
-      <div class="newsTickerItem">
-        8
-      </div>
-    
-    
+<head>
+  <title>Baseball</title>
+  <!-- Minified version -->
+  <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="MersenneTwister.js"></script>
+
+  <script src="BaseballGameStates/BaseballGameState.js"></script>
+
+  <script src="BaseballGameStates/AwayPlayerAtBat.js"></script>
+  <script src="BaseballGameStates/AwayPlayerStepsUpToBat.js"></script>
+  <script src="BaseballGameStates/BottomOfTheInning.js"></script>
+  <script src="BaseballGameStates/EndOfGame.js"></script>
+  <script src="BaseballGameStates/HomePlayerAtBat.js"></script>
+  <script src="BaseballGameStates/HomePlayerStepsUpToBat.js"></script>
+  <script src="BaseballGameStates/InningIsNowAnOuting.js"></script>
+  <script src="BaseballGameStates/PlayBall.js"></script>
+  <script src="BaseballGameStates/TopOfTheInning.js"></script>
+
+  <script src="Name.js"></script>
+  <script src="Stats.js"></script>
+  <script src="BaseballPlayer.js"></script>
+  <script src="BaseballTeam.js"></script>
+  <script src="BaseballGame.js"></script>
+  <script src="Season.js"></script>
+  <script src="League.js"></script>
+
+</head>
+
+<body>
+  <div class="newsTickerContainer">
+    <div class="newsTickerItem">
+      <!--  Put you content here    -->
+      1
     </div>
-        
-     
-    <h1>This is a Heading</h1>
-    <p>This is a paragraph.</p>
-    <div class="slidecontainer">
-      Speed:
-      <input
-        type="range"
-        min="1"
-        max="5000"
-        value="2000"
-        class="slider"
-        id="speedSlider"
-      />
+
+    <div class="newsTickerItem">
+      2
     </div>
-    <div id="messageContainer">
-      
+
+    <div class="newsTickerItem">
+      3
     </div>
-    <script src="script.js"></script>
-  </body>
+
+    <div class="newsTickerItem">
+      4
+    </div>
+
+    <div class="newsTickerItem">
+      5
+    </div>
+
+    <div class="newsTickerItem">
+      6
+    </div>
+
+    <div class="newsTickerItem">
+      7
+    </div>
+
+    <div class="newsTickerItem">
+      8
+    </div>
+
+
+  </div>
+
+
+  <h1>This is a Heading</h1>
+  <p>This is a paragraph.</p>
+  <div class="slidecontainer">
+    Speed:
+    <input type="range" min="1" max="5000" value="2000" class="slider" id="speedSlider" />
+  </div>
+  <div id="messageContainer">
+
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>
