@@ -19,6 +19,21 @@ https://en.wikipedia.org/wiki/State_pattern
 // }
 
 class BaseballGame {
+    #homeTeam;
+    #awayTeam;
+    #pitchNumber;
+    #defenseTeam;
+    #offenseTeam;
+    #batter;
+    #pitcher;
+    #count;
+    #score;
+    #inning;
+    #hasGameStarted;
+    #done;
+    #gameState;
+    #onBase;
+
 
     static useAOrAn(nextWord) {
         if ("aeiou".indexOf(nextWord.toLowerCase().charAt(0)) != -1) {
@@ -206,8 +221,8 @@ class BaseballGame {
         }
     }
 
-    getAwayTeam() {
-        return this.awayTeam;
+    getAwayTeamName() {
+        return this.awayTeam.getName();
     }
 
     getBalls(){
@@ -237,12 +252,12 @@ class BaseballGame {
         return result;
     }
 
-    getBatter(){
-        return this.batter;
+    getBatterName(){
+        return this.batter.getName();
     }
 
-    getHomeTeam() {
-        return this.homeTeam;
+    getHomeTeamName() {
+        return this.homeTeam.getName();
     }
 
     getInning() {
@@ -360,29 +375,31 @@ class BaseballGame {
         this.hasGameStarted = true;
     }
 
-    setOffenseTeam(team) {
-        if (team instanceof BaseballTeam && [this.awayTeam, this.homeTeam].includes(team)) {
-            this.offenseTeam = team;
-            if (team == this.homeTeam) {
+    setOffenseTeam(teamString) {
+        if ( (typeof teamString === 'string' || teamString instanceof String) && [this.awayTeam.getName(), this.homeTeam.getName()].includes(teamString)) {
+            
+            if (teamString == this.homeTeam.getName()) {
+                this.offenseTeam = this.homeTeam;
                 this.defenseTeam = this.awayTeam;
-            } else if (team == this.awayTeam) {
+            } else if (teamString == this.awayTeam.getName()) {
+                this.offenseTeam = this.awayTeam;
                 this.defenseTeam = this.homeTeam;
             }
         }
     }
 
-    setupNextInning(offense, defense) {
-        this.offenseTeam = offense;
-        this.defenseTeam = defense;
+    // setupNextInning(offense, defense) {
+    //     this.offenseTeam = offense;
+    //     this.defenseTeam = defense;
 
-        this.threeOutsCleanup()
-        if (offense == this.awayTeam) {
-            this.inning++;
-            return "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
-        } else {
-            return "Bottom of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
-        }
-    }
+    //     this.threeOutsCleanup()
+    //     if (offense == this.awayTeam) {
+    //         this.inning++;
+    //         return "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+    //     } else {
+    //         return "Bottom of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
+    //     }
+    // }
 
     threeOutsCleanup() {
         if (this.count.outs >= 3) {

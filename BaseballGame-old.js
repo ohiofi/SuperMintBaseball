@@ -229,7 +229,7 @@ class BaseballGame {
         }
     }
 
-    getAwayTeam() {
+    getAwayTeamName() {
         return this.awayTeam;
     }
 
@@ -264,7 +264,7 @@ class BaseballGame {
         return this.batter;
     }
 
-    getHomeTeam() {
+    getHomeTeamName() {
         return this.homeTeam;
     }
 

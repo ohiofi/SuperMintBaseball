@@ -89,11 +89,11 @@ class BaseballPlayer {
         - pitchNumber
     */
     getTiredness(pitchNumber){
-        let ageFactor = Math.abs(25 - this.age) * 0.3;
+        let ageFactor = Math.abs(25 - this.age) * 0.5;
         let moodFactor = Math.abs(Math.sin(pitchNumber * (10 - this.balance) * 0.5) * (10 - this.balance) * 0.5); // cycles from 0...(10 - this.balance) * 0.5
         //return [moodFactor , ageFactor , timeFactor];
         //return -1 * (moodFactor + ageFactor + timeFactor + attitudeFactor);
-        return BaseballPlayer.normalizeToTen((ageFactor + moodFactor)/this.healthiness * pitchNumber/500 * 100);
+        return BaseballPlayer.normalizeToTen((ageFactor + moodFactor)/this.healthiness * pitchNumber/500 * 50);
     }
 
     // Pitching methods
@@ -108,7 +108,7 @@ class BaseballPlayer {
     getPitchScore(pitchNumber) {
         let tiredness = this.getTiredness(pitchNumber);
         let wobblinessFactor = Math.abs(Math.sin(pitchNumber * (10 - this.pitchAccuracy) * 0.5) * (10 - this.pitchAccuracy) * 0.5); // cycles from 0...(10 - this.pitchAccuracy) * 0.5
-        return BaseballPlayer.normalizeToTen(this.pitchStrength - wobblinessFactor + this.hunger - tiredness);
+        return BaseballPlayer.normalizeToTen(this.pitchStrength - wobblinessFactor + this.hunger - tiredness * 2);
     }
 
     // Batting methods

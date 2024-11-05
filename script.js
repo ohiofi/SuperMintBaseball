@@ -39,7 +39,7 @@ function showGameMessage(message, gameName){
 }
 
 function startMessageInterval(speed,bgame) {
-    
+  showGameMessage(bgame.next(),bgame.getName());
     // Clear any existing interval
     if (timeIntervalId) {
         clearInterval(timeIntervalId);

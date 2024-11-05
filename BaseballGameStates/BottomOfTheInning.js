@@ -13,8 +13,8 @@ class BottomOfTheInning extends BaseballGameState{
     }
 
     setupBottomInning(baseballGame) {
-        baseballGame.setOffenseTeam(baseballGame.getHomeTeam());
+        baseballGame.setOffenseTeam(baseballGame.getHomeTeamName());
         baseballGame.threeOutsCleanup()
-        return "Bottom of inning " + baseballGame.getInning() + ", " + baseballGame.getHomeTeam().getName() + " batting.";
+        return "Bottom of inning " + baseballGame.getInning() + ", " + baseballGame.getHomeTeamName() + " batting.";
     }
 }

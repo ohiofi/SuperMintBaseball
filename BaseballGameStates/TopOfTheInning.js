@@ -13,9 +13,9 @@ class TopOfTheInning extends BaseballGameState{
     }
 
     setupTopInning(baseballGame) {
-        baseballGame.setOffenseTeam(baseballGame.getAwayTeam());
+        baseballGame.setOffenseTeam(baseballGame.getAwayTeamName());
         baseballGame.threeOutsCleanup();
         baseballGame.incrementInning();
-        return "Top of inning " + baseballGame.getInning() + ", " + baseballGame.getAwayTeam().getName() + " batting.";
+        return "Top of inning " + baseballGame.getInning() + ", " + baseballGame.getAwayTeamName() + " batting.";
     }
 }
