@@ -4,6 +4,15 @@ rng = new MersenneTwister(parseInt(2024));
 let timeIntervalId;
 let bgame = new BaseballGame();
 // let count = 0
+
+function showView(viewName) {
+  let els = document.getElementsByClassName("view");
+  Array.from(els).forEach((el) => {
+      el.classList.add("hide")
+  });
+  document.getElementById(viewName).classList.remove("hide")
+}
+
 function showGameMessage(message, gameName){
   // console.log(++count);
   const container = document.getElementById('messageContainer');
@@ -32,8 +41,10 @@ function showGameMessage(message, gameName){
 
     // Scroll to the bottom only if the user is already at the bottom
     if (isScrolledToBottom) {
+        jumpBtn.classList.add("hide");
         container.scrollTop = container.scrollHeight;
     } else {
+      jumpBtn.classList.remove("hide");
         container.scrollTop = previousScrollTop;
     }
 }
@@ -81,6 +92,7 @@ document.getElementById('speedSlider').onchange = function() {
   
       for (var i = 0; i < slide.length; i++) {
         var x = slide[i];
+        x.innerText = bgame.getName();
         x.classList.toggle('sliding-now');
       }
   
