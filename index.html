@@ -67,17 +67,46 @@
 
 
   </div>
+  <p>
+    <span id="showPage1Btn" onclick="showView('page1')">Page 1</span> | 
+    <span id="showPage2Btn" onclick="showView('page2')">Page 2</span> | 
+    <span id="showPage3Btn" onclick="showView('page3')">Page 3</span>
+  </p>
 
+  <div id="lotOfPages">
 
-  <h1>This is a Heading</h1>
-  <p>This is a paragraph.</p>
-  <div class="slidecontainer">
-    Speed:
-    <input type="range" min="1" max="5000" value="2000" class="slider" id="speedSlider" />
+    <div class="view" id="page1">
+      <h1>Welcome Page 1</h1>
+      <h1>This is a Heading</h1>
+      <p>This is a paragraph.</p>
+    </div>
+
+    <div class="view hide" id="page2">
+      <h1>All Games Page 2</h1>
+      <p>This is a paragraph.</p>
+    </div>
+
+    <div class="view hide" id="page3">
+      <h1>Single Game Page 3</h1>
+      <div class="slidecontainer">
+        Speed:
+        <input type="range" min="1" max="5000" value="2000" class="slider" id="speedSlider" />
+        <span id="jumpBtn" class="hide" onclick="messageContainer.scrollTo(0,messageContainer.scrollHeight)">Jump To
+          Newest Update</span>
+      </div>
+      <div id="messageContainer">
+
+      </div>
+    </div>
+
   </div>
-  <div id="messageContainer">
 
-  </div>
+
+
+
+
+
+
   <script src="script.js"></script>
 </body>
 
