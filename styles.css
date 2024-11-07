@@ -1,91 +1,119 @@
+html,
 body {
-    background-color: hsl(228, 5%, 15%);
-    color: hsl(228, 5%, 80%);
-  }
-  input[type="range"] {
-    padding: 0;
-    background: none;
-    border: 1px solid hsl(228, 5%, 15%);
-    margin:0px;
-  }
-  input[type="range"]:hover {
-    border: 1px solid var(--border);
-  }
-  .baseIndicator{
-    font-size: 2em;
-  }
-  sub.baseIndicator{
-    bottom: -0.1em;
-  }
-  sup.baseIndicator{
-    top: -0.1em;
-    
-  }
-  /* sub.leftBaseIndicator{
+  
+  margin-top: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: hsl(228, 5%, 15%);
+  color: hsl(228, 5%, 80%);
+
+}
+
+.hide {
+  display: none;
+}
+
+input[type="range"] {
+  padding: 0;
+  background: none;
+  border: 1px solid hsl(228, 5%, 15%);
+  margin: 0px;
+}
+
+input[type="range"]:hover {
+  border: 1px solid var(--border);
+}
+
+.baseIndicator {
+  font-size: 2em;
+}
+
+sub.baseIndicator {
+  bottom: -0.1em;
+}
+
+sup.baseIndicator {
+  top: -0.1em;
+
+}
+
+/* sub.leftBaseIndicator{
     
   } */
-  sup.centerBaseIndicator{
-    right:0.37em;
-  }
-  sub.rightBaseIndicator{
-    /* right:0.21em; */
-    right:0.74em;
+sup.centerBaseIndicator {
+  right: 0.37em;
+}
+
+sub.rightBaseIndicator {
+  /* right:0.21em; */
+  right: 0.74em;
+}
+
+/* social media message */
+#messageContainer {
+  max-height: 70vh;
+  /* Set the height of the scrollable container */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: hsl(228, 5%, 20%);
+  font-family: Arial, sans-serif;
+}
+
+.post {
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 5px 0;
+  background-color: hsl(228, 5%, 10%);
+}
+
+.username {
+  font-weight: bold;
+  /* color: #1da1f2; Twitter blue */
+}
+
+.timestamp {
+  color: #657786;
+  /* grey */
+  font-size: 12px;
+}
+
+/* news ticker */
+.newsTickerContainer {
+  overflow-y: hidden;
+  max-height: calc(1em);
+  width: 100vw;
+  margin: auto;
+}
+
+.newsTickerItem {
+  margin-bottom: 0em;
+  overflow: hidden;
+  height: 1em;
+  color: #fff;
+  font-size: 1em;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1em;
+  /* background-color: rgb(110, 110, 110); */
+}
+
+.newsTickerItem.sliding-now {
+  animation: up 2s linear infinite forwards;
+  animation-delay: 3s;
+}
+
+@keyframes up {
+  from {
+    transform: translateY(0);
   }
 
-  /* social media message */
-  #messageContainer {
-    max-height: 70vh; /* Set the height of the scrollable container */
-    overflow-y: auto; /* Enable vertical scrolling */
-    border: 1px solid #e1e8ed;
-    border-radius: 8px;
-    padding: 10px;
-    background-color: hsl(228, 5%, 20%);
-    font-family: Arial, sans-serif;
+  to {
+    transform: translateY(calc(-1em));
   }
-  .post {
-    border: 1px solid #e1e8ed;
-    border-radius: 8px;
-    padding: 5px;
-    margin: 5px 0;
-    background-color: hsl(228, 5%, 10%);
-  }
-  .username {
-    font-weight: bold;
-    /* color: #1da1f2; Twitter blue */
-  }
-  .timestamp {
-    color: #657786; /* grey */
-    font-size: 12px;
-  }
-  /* news ticker */
-  .newsTickerContainer {
-    overflow-y: hidden;
-    max-height: calc(1em);
-    width: 10vw;
-    margin: auto;
-  }
-  .newsTickerItem {
-    margin-bottom: 0em;
-    overflow: hidden;
-    height: 1em;
-    color: #fff;
-    font-size: 1em;
-    text-align: left;
-    vertical-align: middle;
-    line-height: 1em;
-    background-color: rgb(110, 110, 110);
-  }
-  
-  .newsTickerItem.sliding-now {
-    animation: up 2s linear infinite forwards;
-    animation-delay: 3s;
-  }
-  
-  @keyframes up {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(calc(-1em));
-    }
-  }
+}
