@@ -98,6 +98,13 @@ class BaseballGame {
             result += "<br>" + this.onBase[2].getName() + " SCORES!";
             this.incrementScore();
             this.onBase[2] = null;
+            const myEvent = new CustomEvent('HomeRun', {
+                detail: {
+                  message: 'Hello from the custom event!'
+                }
+              });
+              // Dispatch the event on an element (e.g., the document)
+            document.dispatchEvent(myEvent);
         }
         if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
             result += "<br>" + this.onBase[1].getName() + " SCORES!";
@@ -177,6 +184,7 @@ class BaseballGame {
                 this.count.strikes++;
             }
         } else {
+            
             let defender = this.defenseTeam.getRandomPlayer();
             let defenseScore = defender.getDefenseScore(this.pitchNumber);
             if (defenseScore >= hitScore) {
@@ -212,6 +220,7 @@ class BaseballGame {
                 this.batter.setHungerDown()
             } else {
                 result += "<br>" + this.batter.getName() + " hits a HOME RUN!"
+                
                 this.incrementScore();
                 result += this.advanceBaseRunners(4)
                 this.pitcher.setHungerUp()
@@ -264,6 +273,10 @@ class BaseballGame {
             " / S: " + this.count.strikes +
             " / O: " + this.count.outs
         return result;
+    }
+
+    getBatterFullName(){
+        return this.batter.getFullName();
     }
 
     getBatterName(){

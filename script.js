@@ -5,6 +5,23 @@ let timeIntervalId;
 let bgame = new BaseballGame();
 // let count = 0
 
+function addAlert(message, type) {
+  // Create the div element
+  const alertDiv = document.createElement('div');
+  // Add the appropriate Bootstrap classes
+  alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'mx-5', 'w-25', 'my-0'); 
+  // Add the message to the div
+  alertDiv.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+  // Append the div to the body
+  document.getElementById("alertContainer").appendChild(alertDiv);
+}
+
+// CUSTOM EVENT LISTENERS
+document.addEventListener('HomeRun', (event) => {
+  addAlert('Home Run!', 'success');
+  console.log(event.detail.message); // Output: 'Hello from the custom event!'
+});
+
 function showView(viewName) {
   let els = document.getElementsByClassName("view");
   Array.from(els).forEach((el) => {
@@ -41,10 +58,10 @@ function showGameMessage(message, gameName){
 
     // Scroll to the bottom only if the user is already at the bottom
     if (isScrolledToBottom) {
-        jumpBtn.classList.add("hide");
+        document.getElementById("messageJumpButton").classList.add("hide");
         container.scrollTop = container.scrollHeight;
     } else {
-      jumpBtn.classList.remove("hide");
+      document.getElementById("messageJumpButton").classList.remove("hide");
         container.scrollTop = previousScrollTop;
     }
 }
