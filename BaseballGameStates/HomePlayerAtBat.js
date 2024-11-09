@@ -1,4 +1,8 @@
 class HomePlayerAtBat extends BaseballGameState {
+    constructor(){
+        super();
+    this.name = "HomePlayerAtBat"
+    }
 
     handle(baseballGame) {
         let result = baseballGame.nextPitch();

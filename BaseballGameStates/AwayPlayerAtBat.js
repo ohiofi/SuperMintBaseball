@@ -1,5 +1,8 @@
 class AwayPlayerAtBat extends BaseballGameState {
-
+    constructor() {
+        super();
+        this.name = "AwayPlayerAtBat";
+    }
     handle(baseballGame) {
         let result = baseballGame.nextPitch();
         if (baseballGame.getOuts() >= 3) {

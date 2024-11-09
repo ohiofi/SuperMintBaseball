@@ -1,4 +1,8 @@
 class PlayBall extends BaseballGameState{
+    constructor(){
+        super();
+    this.name = "PlayBall";
+    }
 
     handle(baseballGame){
         this.nextState(baseballGame);

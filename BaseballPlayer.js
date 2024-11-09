@@ -1,5 +1,12 @@
 class BaseballPlayer {
 
+    static restructure(jsonObject){
+        Object.setPrototypeOf(jsonObject, BaseballPlayer.prototype);
+        jsonObject.stats = Stats.restructure(jsonObject.stats);
+        jsonObject.lifetimeStats = Stats.restructure(jsonObject.lifetimeStats);
+        return jsonObject;
+    }
+
     static debug() {
         let temp = new BaseballPlayer();
         temp.pitchScoreAverage = 7;

@@ -1,6 +1,8 @@
 class EndOfGame extends BaseballGameState{
-
-
+    constructor(){
+        super();
+    this.name = "EndOfGame";
+    }
     handle(baseballGame){
         baseballGame.setGameOver();
         return baseballGame.getName();

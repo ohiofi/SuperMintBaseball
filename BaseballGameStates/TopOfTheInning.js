@@ -1,4 +1,12 @@
 class TopOfTheInning extends BaseballGameState{
+
+    constructor(){
+        super();
+        this.name = "TopOfTheInning";
+    }
+    
+
+
     handle(baseballGame){
         this.nextState(baseballGame);
         return this.setupTopInning(baseballGame)

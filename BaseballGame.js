@@ -34,6 +34,20 @@ class BaseballGame {
     #gameState;
     #onBase;
 
+    static restructure(jsonObject){
+        Object.setPrototypeOf(jsonObject, BaseballGame.prototype);
+        jsonObject.homeTeam = BaseballTeam.restructure(jsonObject.homeTeam);
+        jsonObject.awayTeam = BaseballTeam.restructure(jsonObject.awayTeam);
+        jsonObject.defenseTeam = BaseballTeam.restructure(jsonObject.defenseTeam);
+        jsonObject.offenseTeam = BaseballTeam.restructure(jsonObject.offenseTeam);
+        if(jsonObject.batter != null) jsonObject.batter = BaseballPlayer.restructure(jsonObject.batter);
+        jsonObject.pitcher = BaseballPlayer.restructure(jsonObject.pitcher);
+        jsonObject.gameState = BaseballGameState.restructure(jsonObject.gameState);
+        if(jsonObject.onBase[0] != null) jsonObject.onBase[0] = BaseballPlayer.restructure(jsonObject.onBase[0]);
+        if(jsonObject.onBase[1] != null) jsonObject.onBase[1] = BaseballPlayer.restructure(jsonObject.onBase[1]);
+        if(jsonObject.onBase[2] != null) jsonObject.onBase[2] = BaseballPlayer.restructure(jsonObject.onBase[2]);
+        return jsonObject;
+    }
 
     static useAOrAn(nextWord) {
         if ("aeiou".indexOf(nextWord.toLowerCase().charAt(0)) != -1) {
@@ -58,7 +72,7 @@ class BaseballGame {
         this.defenseTeam = this.homeTeam;
         this.offenseTeam = this.awayTeam;
         this.batter = null;
-        this.pitcher = null;
+        this.pitcher = this.homeTeam.getPitcher();
         this.count = {
             balls: 0,
             strikes: 0,
@@ -271,7 +285,7 @@ class BaseballGame {
         }
         if (this.inning != 0 && this.done == false) {
             result = this.inning + "▲ ";
-            if (this.offenseTeam == this.homeTeam) {
+            if (this.offenseTeam.getName() == this.homeTeam.getName()) {
                 result = this.inning + "▼ "
             }
         } else if (this.done) {
@@ -316,7 +330,7 @@ class BaseballGame {
     }
 
     incrementScore() {
-        if (this.offenseTeam == this.awayTeam) {
+        if (this.offenseTeam.getName() == this.awayTeam.getName()) {
             this.score.away++;
         } else {
             this.score.home++;

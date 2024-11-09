@@ -1,4 +1,8 @@
 class InningIsNowAnOuting extends BaseballGameState{
+    constructor(){
+        super();
+    this.name = "InningIsNowAnOuting";
+    }
 
     handle(baseballGame){
         this.nextState(baseballGame);

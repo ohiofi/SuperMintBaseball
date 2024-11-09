@@ -1,5 +1,8 @@
 class AwayPlayerStepsUpToBat extends BaseballGameState{
-
+    constructor(){
+        super();
+    this.name = "AwayPlayerStepsUpToBat"
+    }
     handle(baseballGame){
         this.nextState(baseballGame);
         baseballGame.nextBatter();

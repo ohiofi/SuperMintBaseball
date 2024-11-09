@@ -1,5 +1,5 @@
 //let seed = prompt("Type a number");
-rng = new MersenneTwister(parseInt(2024));
+let rng = new MersenneTwister(parseInt(2024));
 
 let timeIntervalId;
 let bgame = new BaseballGame();

@@ -1,4 +1,10 @@
 class Stats {
+
+  static restructure(jsonObject){
+    Object.setPrototypeOf(jsonObject, Stats.prototype);
+    return jsonObject;
+}
+
     // Constructor to initialize statistics
     constructor() {
         this.teamLocation = "null";
