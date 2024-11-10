@@ -2,6 +2,7 @@
 let rng = new MersenneTwister(parseInt(2024));
 
 let timeIntervalId;
+let league = new League(10);
 let bgame = new BaseballGame();
 // let count = 0
 
@@ -87,11 +88,11 @@ function startMessageInterval(speed,bgame) {
 }
 
 // Set initial interval
-startMessageInterval(5050 - parseInt(document.getElementById('speedSlider').value, 10), bgame);
+startMessageInterval(5005 - parseInt(document.getElementById('speedSlider').value, 10), bgame);
 
 // Change interval based on user input
 document.getElementById('speedSlider').onchange = function() {
-    const newInterval = 5050 - parseInt(document.getElementById('speedSlider').value, 10);
+    const newInterval = 5005 - parseInt(document.getElementById('speedSlider').value, 10);
   
     if (!isNaN(newInterval) && newInterval > 0) {
         startMessageInterval(newInterval,bgame);

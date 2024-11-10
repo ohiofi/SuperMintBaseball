@@ -1,5 +1,7 @@
 class BaseballTeam {
 
+  static idCounter = 0;
+
   static restructure(jsonObject){
     Object.setPrototypeOf(jsonObject, BaseballTeam.prototype);
     if(jsonObject.pitcher != null) jsonObject.pitcher = Object.setPrototypeOf(jsonObject.pitcher, BaseballPlayer.prototype);
@@ -7,6 +9,7 @@ class BaseballTeam {
     for(let i=0; i<jsonObject.players.length;i++){
       jsonObject.players[i] = Object.setPrototypeOf(jsonObject.players[i], BaseballPlayer.prototype);
     }
+    this.setup();
     return jsonObject;
 }
   
@@ -23,7 +26,6 @@ class BaseballTeam {
   }
 
   //# teamNameList = json.loads(requests.get('https://raw.githubusercontent.com/dariusk/corpora/master/data/humans/firstNames.json').text)["firstNames"]
-  static teamCount = 0;
   //alert(Name.teamNameList);
   //Name.shuffle(Name.teamNameList);
   //static teamNameList = Name.teamNameList;
@@ -33,7 +35,7 @@ class BaseballTeam {
   static playersPerTeam = 9;
 
   constructor() {
-    this.teamIdNumber = 10 + (BaseballTeam.teamCount++)
+    this.teamIdNumber = BaseballTeam.idCounter++;
     this.jerseyNumberList = []
     // this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
     // while (this.place in BaseballTeam.teamPlaceList) {
@@ -52,7 +54,11 @@ class BaseballTeam {
     this.players = []
     //for i in range(Team.playersPerTeam):
     for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
-      let temp = new BaseballPlayer()
+      let temp = new BaseballPlayer();
+      let potentialPlayer2 = new BaseballPlayer();
+      if(temp.getOverallAptitude() < potentialPlayer2.getOverallAptitude()){
+        temp = potentialPlayer2;
+      }
       temp.teamName = this.colorScheme + this.place
       temp.jerseyNumber = this.getJerseyNumber()
       this.players.push(temp)
@@ -62,7 +68,7 @@ class BaseballTeam {
     this.dailyStats = new Stats(this.colorScheme + this.place, this.name)
     this.xp = 0
     this.setup();
-    this.batterUpNumber = -1;
+    this.batterUpNumber = 0;
   }
 
   addPlayer(newPlayer) {
@@ -70,6 +76,13 @@ class BaseballTeam {
     newPlayer.stats.teamLocation= this.getPlace()
     this.players.push(newPlayer)
     this.setup()
+  }
+
+  equals(otherObject){
+    return this.teamIdNumber === otherObject.teamIdNumber &&
+    this.name === otherObject.name &&
+    this.place === otherObject.place &&
+    this.colorScheme === otherObject.colorScheme
   }
 
 
@@ -141,8 +154,7 @@ class BaseballTeam {
   
 
   getNextBatter(){
-    this.batterUpNumber++;
-    return this.players[this.batterUpNumber % this.players.length];
+    return this.players[this.batterUpNumber++ % this.players.length];
   }
 
   getPitcher(){

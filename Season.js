@@ -7,6 +7,15 @@
 
 class Season {
 
+  static restructure(jsonObject) {
+    Object.setPrototypeOf(jsonObject, Season.prototype);
+    for (let i = 0; i < jsonObject.teams.length; i++) {
+      jsonObject.teams[i] = Object.setPrototypeOf(jsonObject.teams[i], BaseballTeam.prototype);
+    }
+    
+    return jsonObject;
+  }
+
     ////# static methods
     //@staticmethod
     static recursive2DArrayPlayoffSort(myArray) {
@@ -43,9 +52,9 @@ class Season {
       this.standings = {}
       //# history is a 2Darray of Game objects. Weeks > Games
       //# this.history = [[]]
-      //# schedule is a 3Darray of Teams. Weeks > Days > Teams
+      //# schedule is a 3Darray of Teams. Day Array > Game Array > Teams
       this.schedule = []
-      //# playoffSchedule is a 3Darray of Teams. Weeks > Days > Teams
+      //# playoffSchedule is a 3Darray of Teams. Day Array > Game Array > Teams
       this.playoffSchedule = null
       this.teams = teamArray
       //for each in this.teams:

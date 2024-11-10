@@ -1,5 +1,7 @@
 class BaseballPlayer {
 
+    static idCounter = 0;
+
     static restructure(jsonObject){
         Object.setPrototypeOf(jsonObject, BaseballPlayer.prototype);
         jsonObject.stats = Stats.restructure(jsonObject.stats);
@@ -41,15 +43,16 @@ class BaseballPlayer {
 
     // Constructor to initialize player attributes
     constructor() {
+        this.playerIdNumber = BaseballPlayer.idCounter++;
         this.firstName = Name.create_first_name(); // Player's name
         this.lastName = Name.create_last_name();
         this.jerseyNumber = 0;
         this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
         this.teamName = "null"; // Team name
         this.position = "null"; // Position on the field
-        this.age = Math.floor(rng.random() * 10) + 21; // age range is [21...30]
+        this.age = Math.floor(rng.random() * 11) + 20; // age range is [20...30] inclusive
         this.hunger = 1;
-        this.hungerRate = rng.random() * 0.5 + rng.random() * 0.5;
+        this.hungerRate = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         // tiredness
         this.healthiness = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.balance = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -74,6 +77,13 @@ class BaseballPlayer {
     displayInfo() {
         return `Name: ${this.fullname}\nTeam: ${this.teamName}\nPosition: ${this.position}\nBatting Average: ${this.battingAverage.toFixed(3)}\nHome Runs: ${this.homeRuns}`;
     }
+
+    equals(otherObject){
+        return this.playerIdNumber === otherObject.playerIdNumber &&
+        this.firstName === otherObject.firstName &&
+        this.lastName === otherObject.lastName &&
+        this.jerseyNumber === otherObject.jerseyNumber
+      }
 
     getName(){
         return this.teamName + " " + this.lastName;
@@ -110,6 +120,7 @@ class BaseballPlayer {
         Factors:
         - pitchStrength
         - wobbliness (which is 10 - pitchAccuracy)
+        - hunger
         - tiredness
     */
     getPitchScore(pitchNumber) {
@@ -184,24 +195,32 @@ class BaseballPlayer {
     }
 
     setHungerUp() {
-        this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
+        this.hunger += rng.random() * this.hungerRate * 0.1 + rng.random() * this.hungerRate * 0.1
     }
 
     setHungerDown() {
-        if (this.hunger > 0.01 && this.hungerRate < 1) {
-            this.hunger *= this.hungerRate;
-        }
-        else if (this.hunger > 0.01 && this.hungerRate >= 1) {
+        if (this.hunger > 0.01) {
             this.hunger *= 0.5;
         }
+        else{
+            this.hunger = 0.01;
+        }
+    }
+
+    getDefenseAptitude(){
+        return (this.reliability + this.teamwork)/2;
     }
 
     getPitchingAptitude(){
-        return (this.getPitchScore(0) + this.getPitchScore(100) + this.getPitchScore(200) + this.getPitchScore(300))/4;
+        return (this.pitchAccuracy + this.pitchStrength + this.hungerRate)/3;
     }
 
     getHittingAptitude(){
-        return (this.getHitScore(0) + this.getHitScore(100)+ this.getHitScore(200)+ this.getHitScore(300))/4;
+        return (this.swinginess + this.thwackiness + this.hittingPower)/3;
+    }
+
+    getOverallAptitude(){
+        return (this.getDefenseAptitude() + this.getPitchingAptitude() + this.getHittingAptitude())/3;
     }
 
     getEra(){
