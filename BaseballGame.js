@@ -30,7 +30,7 @@ class BaseballGame {
     #count;
     #score;
     #inning;
-    #hasGameStarted;
+    #hasStarted;
     #done;
     #gameState;
     #onBase;
@@ -69,6 +69,8 @@ class BaseballGame {
     ]
 
     constructor() {
+        this.hasStarted = false;
+        this.done = false;
         this.gameIdNumber = BaseballGame.idCounter++;
         this.homeTeam = new BaseballTeam();
         this.awayTeam = new BaseballTeam();
@@ -87,8 +89,7 @@ class BaseballGame {
             home: 0
         }
         this.inning = 0;
-        this.hasGameStarted = false;
-        this.done = false;
+        
         this.gameState = new PlayBall();
         this.onBase = [null, null, null];
     }
@@ -305,7 +306,7 @@ class BaseballGame {
 
     getName() {
         let result = "";
-        if (!this.hasGameStarted) {
+        if (!this.hasStarted) {
             return this.awayTeam.getName() + " @ " + this.homeTeam.getName();
         }
         if (this.inning != 0 && this.done == false) {
@@ -411,7 +412,7 @@ class BaseballGame {
     }
 
     setGameStarted() {
-        this.hasGameStarted = true;
+        this.hasStarted = true;
     }
 
     setOffenseTeam(teamNameString) {
