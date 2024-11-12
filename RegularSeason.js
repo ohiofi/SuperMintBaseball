@@ -34,6 +34,36 @@ class RegularSeason{
         return false
       }
 
+      doGame() {
+        let temp;
+        let awayTeam;
+        let homeTeam;
+        let weeksInSchedule = this.schedule.length
+        //# console.log("Week " + (this.currentWeek) + " Day " + (this.currentDay))
+        let today = this.schedule[this.currentWeek %
+          weeksInSchedule][this.currentDay]
+        if (this.currentWeek % 2 == 0) {
+          awayTeam = today[0]
+          homeTeam = today[1]
+        } else {
+          awayTeam = today[1]
+          homeTeam = today[0]
+        }
+        temp = new Game(awayTeam, homeTeam)
+        temp.generate(1)
+        console.log("" + temp.getFinalScore())
+        //# add win to standings
+        this.standings[temp.winningTeam.getName()]["wins"] += 1
+        this.standings[temp.losingTeam.getName()]["losses"] += 1
+        //# increase day/week
+        this.currentDay += 1
+        if (this.currentDay >= this.schedule[this.currentWeek % weeksInSchedule].length) {
+          this.currentWeek += 1
+          this.currentDay = 0
+          //#this.history.push([])
+        }
+      }
+
       getSeasonSchedule() {
         let weeksInSchedule = this.schedule.length
         for (let weekCounter of range(weeksInSchedule)) {
