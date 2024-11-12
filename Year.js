@@ -32,12 +32,9 @@ class Year {
       this.state = YearStates.PRESEASON;
       this.numberOfTeams = teamArray.length
       
-      //# history is a 2Darray of Game objects. Weeks > Games
-      //# this.history = [[]]
-      //# schedule is a 3Darray of Teams. Day Array > Game Array > Teams
-      this.regularSeasonSchedule = []
-      //# playoffSchedule is a 3Darray of Teams. Day Array > Game Array > Teams
-      this.playoffSchedule = null
+      this.regularSeason = RegularSeason(teamArray);
+      this.playoffs = null;
+      
       this.teams = teamArray
       //for each in this.teams:
       for (let each of this.teams) {
@@ -46,64 +43,13 @@ class Year {
           "losses": 0
         }
       }
-      this.currentWeek = 0
-      this.currentDay = 0
-      this.currentPlayoffWeek = 0
-      this.currentPlayoffDay = 0
-      this.playoffsComplete = false
+      this.currentDay = 0;
+      this.regularSeasonComplete = false;
+      this.playoffsComplete = false;
       
-    }
-  
-  
-    arePlayoffsOver() {
-      return this.playoffsComplete
-    }
-  
+    }    
   
     
-  
-  
-    
-  
-  
-    
-  
-  
-    
-  
-  
-    
-  
-  
-    doGame() {
-      let temp;
-      let awayTeam;
-      let homeTeam;
-      let weeksInSchedule = this.schedule.length
-      //# console.log("Week " + (this.currentWeek) + " Day " + (this.currentDay))
-      let today = this.schedule[this.currentWeek %
-        weeksInSchedule][this.currentDay]
-      if (this.currentWeek % 2 == 0) {
-        awayTeam = today[0]
-        homeTeam = today[1]
-      } else {
-        awayTeam = today[1]
-        homeTeam = today[0]
-      }
-      temp = new Game(awayTeam, homeTeam)
-      temp.generate(1)
-      console.log("" + temp.getFinalScore())
-      //# add win to standings
-      this.standings[temp.winningTeam.getName()]["wins"] += 1
-      this.standings[temp.losingTeam.getName()]["losses"] += 1
-      //# increase day/week
-      this.currentDay += 1
-      if (this.currentDay >= this.schedule[this.currentWeek % weeksInSchedule].length) {
-        this.currentWeek += 1
-        this.currentDay = 0
-        //#this.history.push([])
-      }
-    }
   
     doWeek() {
       console.log("\nWeek " + (this.currentWeek))
