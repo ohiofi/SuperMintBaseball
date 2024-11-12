@@ -29,6 +29,35 @@ class League {
     this.seasons = [new Season(this.teams)]
   }
 
+  getPlayer(someObject){
+    for (let i = 0; i < this.teams.length; i++){
+      for (let j = 0; j < this.teams.players.length; j++){
+        if(this.teams[i].players[j].equals(someObject)){
+          return this.teams[i].players[j];
+        }
+      }
+    }
+    // check the free agents
+    for (let i = 0; i < this.freeAgentList.length; i++){
+      if(this.freeAgentList[i].equals(someObject)){
+        return this.freeAgentList[i];
+      }
+    }
+    return null;
+  }
+
+  getTeam(someObject){
+    for (let i = 0; i < this.teams.length; i++){
+      if(this.teams[i].equals(someObject)){
+        return this.teams[i];
+      }
+    }
+    return null;
+  }
+
+
+
+
   doSeason() {
     let weeksInSchedule = this.seasons[this.currentSeason].schedule.length
     let playEveryTeamXTimes = 1
