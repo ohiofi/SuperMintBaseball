@@ -42,7 +42,9 @@ class PlayoffTournament{
         this.hasStarted = false;
         this.done = false;
         this.teams = teams;
-        this.standings = standings
+        this.standings = standings;
+        //# playoffSchedule is a 3Darray of Teams. Day Array > Game Array > Teams
+        this.playoffSchedule = [[]];
     }
 
     getPlayoffScore(awayTeam, homeTeam, playoffGame) {
