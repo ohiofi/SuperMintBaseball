@@ -48,21 +48,27 @@ class Year {
       this.playoffsComplete = false;
       
     }    
+
+
+
+    doRegularSeason(){
+      // check if all of today's games are over
+    }
   
     
   
-    doWeek() {
-      console.log("\nWeek " + (this.currentWeek))
-      let weeksInSchedule = this.schedule.length
-      //# if this.currentWeek % this.numberOfTeams == 0 && this.currentDay == 0:
-      //#   this.setSchedule()
-      //for i in range(this.schedule[this.currentWeek%(weeksInSchedule)].length){
-      for (let i = 0; i < this.schedule[this.currentWeek % (weeksInSchedule)].length; i++) {
-        this.doGame()
-      }
-      //# console.log("Week "+str(this.currentWeek)+" Standings")
-      //# this.getStandings()
-    }
+    // doWeek() {
+    //   console.log("\nWeek " + (this.currentWeek))
+    //   let weeksInSchedule = this.schedule.length
+    //   //# if this.currentWeek % this.numberOfTeams == 0 && this.currentDay == 0:
+    //   //#   this.setSchedule()
+    //   //for i in range(this.schedule[this.currentWeek%(weeksInSchedule)].length){
+    //   for (let i = 0; i < this.schedule[this.currentWeek % (weeksInSchedule)].length; i++) {
+    //     this.doGame()
+    //   }
+    //   //# console.log("Week "+str(this.currentWeek)+" Standings")
+    //   //# this.getStandings()
+    // }
   
     getStandings() {
       let result = ""
@@ -236,5 +242,26 @@ class Year {
   
       }
       return resultString
+    }
+
+    isTodayDone(){
+      if(this.state == YearStates.REGULAR_SEASON){
+        this.regularSeason.isTodayDone()
+      }
+      else if(this.playoffs != null && this.state == YearStates.PLAYOFF_TOURNAMENT){
+        this.playoffs.isTodayDone()
+      }
+      
+    }
+
+    next(){
+      switch(this.state){
+        case YearStates.PRESEASON:
+          break
+        case YearStates.REGULAR_SEASON:
+          break
+        case YearStates.PLAYOFF_TOURNAMENT:
+          break
+      }
     }
   }
