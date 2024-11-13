@@ -8,7 +8,7 @@ class RegularSeason{
     constructor(teamsArray){
         this.hasStarted = false;
         this.done = false;
-        this.currentDay = 0;
+        
         this.teams = teamsArray;
         this.standings = {}
         // schedule is a 3Darray of Teams. Day Array > Game Array > Team Objects
