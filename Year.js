@@ -26,26 +26,20 @@ class Year {
    
   
     constructor(teamArray) {
-      this.yearIdNumber = idCounter++;
+      this.yearIdNumber = Year.idCounter++;
       this.hasStarted = false;
       this.done = false;
       this.state = YearStates.PRESEASON;
       this.numberOfTeams = teamArray.length
       
-      this.regularSeason = RegularSeason(teamArray);
-      this.playoffs = null;
+      this.regularSeasonSchedule = new RegularSeasonSchedule(teamArray);
+      this.playoffSchedulechedule = null;
       
       this.teams = teamArray
-      //for each in this.teams:
-      for (let each of this.teams) {
-        this.standings[each.getName()] = {
-          "wins": 0,
-          "losses": 0
-        }
-      }
+      
       this.currentDay = 0;
-      this.regularSeasonComplete = false;
-      this.playoffsComplete = false;
+      this.regularSeasonScheduleComplete = false;
+      this.playoffScheduleComplete = false;
       
     }    
 
@@ -114,11 +108,11 @@ class Year {
       let temp, today, winTeam;
       let awayTeam;
       let homeTeam;
-      if (this.playoffSchedule == null) {
+      if (this.playoffSchedulechedule == null) {
         this.schedulePlayoffWeekOne()
       }
       console.log("Playoff Week " + (this.currentPlayoffWeek) + " Day " + (this.currentPlayoffDay))
-      today = this.playoffSchedule[this.currentPlayoffWeek][this.currentPlayoffDay]
+      today = this.playoffSchedulechedule[this.currentPlayoffWeek][this.currentPlayoffDay]
       if (today[0]["rank"] < today[1]["rank"]) {
         awayTeam = today[1]
         homeTeam = today[0]
@@ -139,21 +133,21 @@ class Year {
         winTeam = awayTeam
       }
       //# if not final round
-      if (this.currentPlayoffWeek < this.playoffSchedule.length - 1) {
+      if (this.currentPlayoffWeek < this.playoffSchedulechedule.length - 1) {
         //# add to next week's schedule
-        this.playoffSchedule[this.currentPlayoffWeek + 1][Math.floor(this.currentPlayoffDay / 2)].push(winTeam)
+        this.playoffSchedulechedule[this.currentPlayoffWeek + 1][Math.floor(this.currentPlayoffDay / 2)].push(winTeam)
         console.log(this.getPlayoffBracket())
         //# increase day/week
         this.currentPlayoffDay += 1
         //# if day >= number of games this week
-        if (this.currentPlayoffDay >= this.playoffSchedule[this.currentPlayoffWeek].length) {
+        if (this.currentPlayoffDay >= this.playoffSchedulechedule[this.currentPlayoffWeek].length) {
           this.currentPlayoffWeek += 1
           this.currentPlayoffDay = 0
         }
       } else {
         //# this WAS the final round
         console.log("* * * PLAYOFF CHAMPS: " + winTeam["team"].getFullName() + " * * *")
-        this.playoffsComplete = true
+        this.playoffScheduleComplete = true
       }
     }
   
@@ -246,10 +240,10 @@ class Year {
 
     isTodayDone(){
       if(this.state == YearStates.REGULAR_SEASON){
-        this.regularSeason.isTodayDone()
+        this.regularSeasonSchedule.isTodayDone()
       }
-      else if(this.playoffs != null && this.state == YearStates.PLAYOFF_TOURNAMENT){
-        this.playoffs.isTodayDone()
+      else if(this.playoffSchedule != null && this.state == YearStates.PLAYOFF_TOURNAMENT){
+        this.playoffSchedule.isTodayDone()
       }
       
     }
