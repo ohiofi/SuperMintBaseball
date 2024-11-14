@@ -2,8 +2,8 @@
 let rng = new MersenneTwister(parseInt(2024));
 
 let timeIntervalId;
-let league = new League(10);
-let bgame = new BaseballGame();
+let league = new League(9);
+let bgame = new BaseballGame(new BaseballTeam(), new BaseballTeam());
 // let count = 0
 
 function addAlert(message, type) {
