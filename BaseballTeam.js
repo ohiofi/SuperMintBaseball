@@ -43,7 +43,11 @@ class BaseballTeam {
     // }
     //BaseballTeam.teamPlaceList.push(this.place)
     this.colorScheme = Name.colorCombos.splice(Math.floor(rng.random() * Name.colorCombos.length),1)[0];
-    this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length),1)[0];
+    this.place = "unknown place"
+    if(Name.placeList.length > 0){
+      this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length),1)[0];
+    }
+    
     this.name = Name.teamNameList.splice(Math.floor(rng.random() * Name.teamNameList.length),1)[0];
     this.pitcher = null;
     this.slugger = null;
