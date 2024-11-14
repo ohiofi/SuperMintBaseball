@@ -25,8 +25,8 @@ class League {
       let temp = new BaseballTeam();
       this.teams.push(temp)
     }
-    this.currentSeason = 0
-    this.seasons = [new Season(this.teams)]
+    this.currentYear = 0
+    this.year = [new Year(this.teams)]
   }
 
   getPlayer(someObject){
