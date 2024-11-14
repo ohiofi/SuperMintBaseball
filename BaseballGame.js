@@ -68,12 +68,12 @@ class BaseballGame {
         "flailing--", "unacceptable--", "unsatisfactory--", "lacking--", "inferior--", "wild--"
     ]
 
-    constructor() {
+    constructor(awayTeamObject, homeTeamObject) {
         this.hasStarted = false;
         this.done = false;
         this.gameIdNumber = BaseballGame.idCounter++;
-        this.homeTeam = new BaseballTeam();
-        this.awayTeam = new BaseballTeam();
+        this.homeTeam = homeTeamObject;
+        this.awayTeam = awayTeamObject;
         this.pitchNumber = 0;
         this.defenseTeam = this.homeTeam;
         this.offenseTeam = this.awayTeam;
