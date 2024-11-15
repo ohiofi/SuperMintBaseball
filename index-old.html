@@ -14,8 +14,80 @@
 </head>
 
 <body>
-  <div id="root" class="container"></div>
+  <div id="root" class="container">
+  <div id="alertContainer" class="mt-5"></div>
+  <div id="newsTickerContainer" class="text-center">
+    <div class="newsTickerItem text-center">
+      <!--  Put you content here    -->
+      1
+    </div>
+
+    <div class="newsTickerItem text-center">
+      2
+    </div>
+
+    <div class="newsTickerItem text-center">
+      3
+    </div>
+
+    <div class="newsTickerItem text-center">
+      4
+    </div>
+
+    <div class="newsTickerItem text-center">
+      5
+    </div>
+
+    <div class="newsTickerItem text-center">
+      6
+    </div>
+
+    <div class="newsTickerItem text-center">
+      7
+    </div>
+
+    <div class="newsTickerItem text-center">
+      8
+    </div>
+
+
+  </div>
+  <p>
+    <span id="showPage1Btn" onclick="showPage('page1')">Page 1</span> | 
+    <span id="showPage2Btn" onclick="showPage('page2')">Page 2</span> | 
+    <span id="showPage3Btn" onclick="showPage('page3')">Page 3</span>
+  </p>
  
+
+  <div id="pageContainer">
+
+    <div class="page" id="page1">
+      <h1>Welcome Page 1</h1>
+      <h1>This is a Heading</h1>
+      <p>This is a paragraph.</p>
+    </div>
+
+    <div class="page hide" id="page2">
+      <h1>All Games Page 2</h1>
+      <p>This is a paragraph.</p>
+    </div>
+
+    <div class="page hide" id="page3">
+      <h1>Single Game Page 3</h1>
+      <div class="slidecontainer">
+        Speed:
+        <input type="range" min="1" max="5000" value="2000" class="slider" id="speedSlider" />
+        <!-- <span id="jumpBtn" class="hide" onclick="messageContainer.scrollTo(0,messageContainer.scrollHeight)">Jump To
+          Newest Update</span> -->
+      </div>
+      <div id="messageContainer" class="rounded-3">
+        <div id="messageJumpButton" class="rounded-3 w-25 mx-auto bg-warning text-center" onclick="jumpToNewestMessage()">Jump To
+          Newest Update</div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -45,12 +117,6 @@
   
   <script src="Year.js"></script>
   <script src="League.js"></script>
-  <script src="User.js"></script>
-  <script src="Game.js"></script>
-  <script src="Model.js"></script>
-  <script src="View.js"></script>
-  <script src="Controller.js"></script>
-
   <script src="script.js"></script>
 </body>
 

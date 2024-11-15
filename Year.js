@@ -7,7 +7,8 @@
 const YearStates = {
   PRESEASON:0,
   REGULAR_SEASON: 1,
-  PLAYOFF_TOURNAMENT: 2
+  PLAYOFF_TOURNAMENT: 2,
+  POSTSEASON:3
 }
 
 class Year {
@@ -29,7 +30,7 @@ class Year {
       this.yearIdNumber = Year.idCounter++;
       this.hasStarted = false;
       this.done = false;
-      this.state = YearStates.PRESEASON;
+      this.state = YearStates.REGULAR_SEASON;
       this.numberOfTeams = teamArray.length
       
       this.regularSeasonSchedule = new RegularSeasonSchedule(teamArray);
@@ -63,6 +64,12 @@ class Year {
     //   //# console.log("Week "+str(this.currentWeek)+" Standings")
     //   //# this.getStandings()
     // }
+
+    getScores(){
+      if(this.state === YearStates.REGULAR_SEASON){
+        return this.regularSeasonSchedule.getDaySchedule(this.currentDay)
+      }
+    }
   
     getStandings() {
       let result = ""
@@ -153,90 +160,90 @@ class Year {
   
   
   
-    getQBRanking(limit = 0) {
-      let resultString = ""
-      let result = []
-      let count;
-      //for each in this.teams:
-      for (let each of this.teams) {
-        result.push({
-          name: each.qb.teamName + " " + each.qb.firstName + " " + each.qb.lastName,
-          rating: each.qb.stats.getPasserRating()
-        })
-      }
-      //result = dict(sorted(result.items(), key = lambda item: item[1], reverse = true))
-      result.sort(function(a, b) {
-        return b.rating - a.rating
-      })
-      count = 1
-      if (limit < 1) {
-        limit = this.teams.length
-      }
-      resultString += ("Quarterback Ranking\n")
-      for (let each of result) {
-        resultString += ("  " + (count) + ". " + each.name + ": " + (Math.round(each.rating * 100) / 100) + "\n")
-        count += 1
-        if (count > limit) {
-          break
-        }
-        //#console.log(result)
+    // getQBRanking(limit = 0) {
+    //   let resultString = ""
+    //   let result = []
+    //   let count;
+    //   //for each in this.teams:
+    //   for (let each of this.teams) {
+    //     result.push({
+    //       name: each.qb.teamName + " " + each.qb.firstName + " " + each.qb.lastName,
+    //       rating: each.qb.stats.getPasserRating()
+    //     })
+    //   }
+    //   //result = dict(sorted(result.items(), key = lambda item: item[1], reverse = true))
+    //   result.sort(function(a, b) {
+    //     return b.rating - a.rating
+    //   })
+    //   count = 1
+    //   if (limit < 1) {
+    //     limit = this.teams.length
+    //   }
+    //   resultString += ("Quarterback Ranking\n")
+    //   for (let each of result) {
+    //     resultString += ("  " + (count) + ". " + each.name + ": " + (Math.round(each.rating * 100) / 100) + "\n")
+    //     count += 1
+    //     if (count > limit) {
+    //       break
+    //     }
+    //     //#console.log(result)
   
-      }
-      return resultString
-    }
+    //   }
+    //   return resultString
+    // }
   
 
   
   
-    getTopQB() {
-      let result = []
-      //for each in this.teams:
-      for (let each of this.teams) {
-        result.push({
-          rating: each.qb.stats.getPasserRating(),
-          object: each.qb
-        })
-      }
-      result.sort(function(a, b) {
-        return b.rating - a.rating
-      })
-      return result[0].object
-    }
+    // getTopQB() {
+    //   let result = []
+    //   //for each in this.teams:
+    //   for (let each of this.teams) {
+    //     result.push({
+    //       rating: each.qb.stats.getPasserRating(),
+    //       object: each.qb
+    //     })
+    //   }
+    //   result.sort(function(a, b) {
+    //     return b.rating - a.rating
+    //   })
+    //   return result[0].object
+    // }
   
-    getMVPRanking(limit = 3) {
-      let resultString = ""
-      let result = []
-      let count = 1;
-      //for eachTeam in this.teams:
-      for (let eachTeam of this.teams) {
-        //for eachPlayer in eachTeam.players:
-        for (let eachPlayer of eachTeam.players) {
-          result.push({
-            name: eachPlayer.teamName + " " + eachPlayer.firstName + " " + eachPlayer.lastName,
-            rating: eachPlayer.stats.getMVPRating()
-          })
-        }
-      }
-      //console.log(result)
-      //result = dict(sorted(result.items(), key = lambda item: item[1], reverse = true))
-      result.sort(function(a, b) {
-        return b.rating - a.rating
-      })
-      //console.log(result)
-      if (limit < 1) {
-        limit = this.teams.length
-      }
-      resultString += ("MVP Ranking\n")
-      for (let each of result) {
-        resultString += ("  " + (count) + ". " + each.name + ": " + (Math.round(each.rating * 100) / 100) + "\n")
-        count += 1
-        if (count > limit) {
-          break
-        }
+    // getMVPRanking(limit = 3) {
+    //   let resultString = ""
+    //   let result = []
+    //   let count = 1;
+    //   //for eachTeam in this.teams:
+    //   for (let eachTeam of this.teams) {
+    //     //for eachPlayer in eachTeam.players:
+    //     for (let eachPlayer of eachTeam.players) {
+    //       result.push({
+    //         name: eachPlayer.teamName + " " + eachPlayer.firstName + " " + eachPlayer.lastName,
+    //         rating: eachPlayer.stats.getMVPRating()
+    //       })
+    //     }
+    //   }
+    //   //console.log(result)
+    //   //result = dict(sorted(result.items(), key = lambda item: item[1], reverse = true))
+    //   result.sort(function(a, b) {
+    //     return b.rating - a.rating
+    //   })
+    //   //console.log(result)
+    //   if (limit < 1) {
+    //     limit = this.teams.length
+    //   }
+    //   resultString += ("MVP Ranking\n")
+    //   for (let each of result) {
+    //     resultString += ("  " + (count) + ". " + each.name + ": " + (Math.round(each.rating * 100) / 100) + "\n")
+    //     count += 1
+    //     if (count > limit) {
+    //       break
+    //     }
   
-      }
-      return resultString
-    }
+    //   }
+    //   return resultString
+    // }
 
     isTodayDone(){
       if(this.state == YearStates.REGULAR_SEASON){
@@ -256,6 +263,12 @@ class Year {
           break
         case YearStates.PLAYOFF_TOURNAMENT:
           break
+      }
+    }
+
+    nextGameMessages(){
+      if(this.state === YearStates.REGULAR_SEASON){
+        return this.regularSeasonSchedule.nextGameMessages(this.currentDay)
       }
     }
   }

@@ -26,7 +26,7 @@ class League {
       this.teams.push(temp)
     }
     this.currentYear = 0
-    this.year = [new Year(this.teams)]
+    this.years = [new Year(this.teams)]
   }
 
   getPlayer(someObject){
@@ -44,6 +44,10 @@ class League {
       }
     }
     return null;
+  }
+
+  getScores(){
+    return this.years[this.currentYear].getScores();
   }
 
   getTeam(someObject){
@@ -102,5 +106,9 @@ class League {
       return True
     }
     return False
+  }
+
+  nextGameMessages(){
+    return this.years[this.currentYear].nextGameMessages();
   }
 }

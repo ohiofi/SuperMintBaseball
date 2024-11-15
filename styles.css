@@ -35,6 +35,8 @@ input[type="range"]:hover {
   border: 1px solid var(--border);
 }
 
+
+
 .baseIndicator {
   font-size: 2em;
 }
@@ -61,7 +63,7 @@ sub.rightBaseIndicator {
 }
 
 /* social media message */
-#messageContainer {
+.messageContainer {
   max-height: 70vh;
   /* Set the height of the scrollable container */
   overflow-y: auto;
@@ -74,9 +76,10 @@ sub.rightBaseIndicator {
   position: relative;
 }
 
-#messageJumpButton {
+.messageJumpButton {
   position: sticky;
   top:0px;
+  color:black;
 }
 
 .post {
@@ -99,7 +102,7 @@ sub.rightBaseIndicator {
 }
 
 /* news ticker */
-.newsTickerContainer {
+#newsTickerContainer {
   overflow-y: hidden;
   max-height: calc(1em);
   width: 100%;
