@@ -13,7 +13,7 @@ class Game{
     }
 
     getScores(){
-        return this.league.getScores()
+        return this.league.getScores();
     }
 
     nextGameMessages(){

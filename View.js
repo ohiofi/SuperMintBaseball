@@ -5,10 +5,16 @@ class View {
     this.newsTickerContainer = this.createElement("div", "newsTickerContainer", "text-center");
     this.tickerItems = [];
     this.pageMenuBar = this.createElement("ul", null, "pagination");
+    this.addHomeMenuBarItem()
+    this.addTvMenuBarItem()
     this.pageContainer = this.createElement("div", "pageContainer");
+    this.homePage;
+    this.standingsPage;
     this.gamePages = [];
     this.gameListGroup = this.createElement("div", "gameListGroup", "list-group");
     this.gameListGroupItems = [];
+    this.gameWidgetContainer = this.createElement("div", "game-widget-container", "container");
+    this.gameWidgetItems = [];
     this.app.append(this.alertContainer,this.newsTickerContainer, this.pageMenuBar,this.pageContainer)
   }
 
@@ -72,14 +78,57 @@ class View {
     
   }
 
-
+  addGameWidget(gameMessage){
+      const widget = this.createElement("div", null, ["game-widget","shadow","bg-black","rounded-2","row","mb-4"]);
+      // left
+      const gameWidgetLeft = this.createElement("div", "gameWidgetScore", ["col-lg","px-4","pt-4","py-lg-4","text-white"]);
+      const gameWidgetScoreInning = this.createElement("div", "gameWidgetScoreInning","pb-1")
+      gameWidgetScoreInning.textContent = gameMessage.inning;
+      const gameWidgetAwayLine = this.createElement("div", "gameWidgetAwayLine", "row");
+      const gameWidgetAwayName = this.createElement("div","gameWidgetAwayName",["col-10","text-start"])
+      gameWidgetAwayName.innerHTML = gameMessage.awayTeam;
+      const gameWidgetAwayScore = this.createElement("div","gameWidgetAwayScore",["col-2","text-end","h3","font-monospace"])
+      gameWidgetAwayScore.textContent = gameMessage.score.away;
+      gameWidgetAwayLine.append(gameWidgetAwayName,gameWidgetAwayScore)
+      const gameWidgetHomeLine = this.createElement("div", "gameWidgetHomeLine", "row");
+      const gameWidgetHomeName = this.createElement("span","gameWidgetHomeName",["col-10","text-start"])
+      gameWidgetHomeName.innerHTML = gameMessage.homeTeam;
+      const gameWidgetHomeScore = this.createElement("span","gameWidgetHomeScore",["col-2","text-end","h3","font-monospace"])
+      gameWidgetHomeScore.textContent = gameMessage.score.home;
+      gameWidgetHomeLine.append(gameWidgetHomeName,gameWidgetHomeScore)
+      gameWidgetLeft.append(gameWidgetScoreInning,gameWidgetAwayLine,gameWidgetHomeLine)
+      // center
+      const gameWidgetCenter = this.createElement("div", null, ["col-lg","m-0","px-0","py-lg-4","text-white","row"]);
+      const gameWidgetBaseIcons = this.createElement("div", null, ["col-4","col-lg-12","m-0","p-0","ps-lg-3","pt-lg-4","text-white","text-center"]);
+      gameWidgetBaseIcons.innerHTML = gameMessage.baseIcons;
+      const gameWidgetCountContainer = this.createElement("div", null, ["col-8","col-lg-12","m-0","p-0","text-white","row","row-cols-lg-6"]);
+      const count0 = this.createElement("div", null, ["col","font-monospace","text-end"]);
+      count0.textContent = "B:";
+      const count1 = this.createElement("div", null, ["col","font-monospace","text-start"]);
+      count1.textContent = "0";
+      const count2 = this.createElement("div", null, ["col","font-monospace","text-end"]);
+      count2.textContent = "S:";
+      const count3 = this.createElement("div", null, ["col","font-monospace","text-start"]);
+      count3.textContent = "0";
+      const count4 = this.createElement("div", null, ["col","font-monospace","text-end"]);
+      count4.textContent = "O:";
+      const count5 = this.createElement("div", null, ["col","font-monospace","text-start"]);
+      count5.textContent = "0";
+      gameWidgetCountContainer.append(count0,count1,count2,count3,count4,count5)
+      gameWidgetCenter.append(gameWidgetBaseIcons,gameWidgetCountContainer)
+      // right
+      const gameWidgetRight = this.createElement("div", null, ["col-lg","px-4","pb-4","py-lg-4","text-white","lh-lg"]);
+      gameWidgetRight.innerHTML = gameMessage.log;
+      widget.append(gameWidgetLeft,gameWidgetCenter,gameWidgetRight)
+      return widget;
+  }
  
   
 
   addHomeMenuBarItem() {
     const menuItem = this.createElement("li", null, "page-item");
     const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"])
-    menuLink.textContent = "Home";
+    menuLink.textContent = "🏠";
     menuLink.addEventListener('click', event => {
       const els = document.getElementsByClassName("page");
       Array.from(els).forEach((el) => {
@@ -93,16 +142,16 @@ class View {
   }
 
   addHomePage(game){
-    const page = this.createElement("div","homePage","page");
+    this.homePage = this.createElement("div","homePage","page");
     const heading = this.createElement("h1", null, null);
-    heading.textContent = "Welcome"
-    page.append(heading);
+    heading.textContent = "Play Ball"
+    this.homePage.append(heading);
     
     const scores = game.getScores()
     for (let i = 0; i < scores.length; i++) {
       
-      this.gameListGroupItems[i] = this.createElement("a", null, ["p-3","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
-      this.gameListGroupItems[i].textContent = "Game " + i + ": " + scores[i];
+      this.gameListGroupItems[i] = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
+      this.gameListGroupItems[i].innerHTML = "Game " + i + ": " + scores[i];
       this.gameListGroupItems[i].addEventListener('click', event => {
         const els = document.getElementsByClassName("page");
         Array.from(els).forEach((el) => {
@@ -113,15 +162,30 @@ class View {
         container.scrollTop = container.scrollHeight
       });
       this.gameListGroup.append(this.gameListGroupItems[i]);
-      page.append(this.gameListGroup);
+      this.homePage.append(this.gameListGroup);
     }
-    this.pageContainer.append(page);
+    this.pageContainer.append(this.homePage);
+  }
+
+  addLiveGamesPage(game){
+    this.liveGamesPage = this.createElement("div","liveGamesPage",["page","hide"]);
+    const heading = this.createElement("h3", null, null);
+    heading.textContent = "Live Games"
+    this.liveGamesPage.append(heading);
+    const liveGamesContainer = this.createElement("div","liveGamesContainer","container");
+    const gameMessages = game.nextGameMessages()
+    for (let i = 0; i < gameMessages.length; i++) {
+      this.gameWidgetItems[i] = this.addGameWidget(gameMessages[i])
+      liveGamesContainer.append(this.gameWidgetItems[i]);
+      this.liveGamesPage.append(liveGamesContainer);
+    }
+    this.pageContainer.append(this.liveGamesPage);
   }
 
   addPageMenuBarItems(game) {
     
     //<li class="page-item"><a class="page-link" href="#">1</a></li>
-    this.addHomeMenuBarItem()
+    
     const scores = game.getScores();
     for (let i = 0; i < scores.length; i++) {
       const menuItem = this.createElement("li", null, "page-item");
@@ -184,10 +248,26 @@ class View {
     const scores = game.getScores();
     for(let i=0;i<scores.length;i++){
       this.tickerItems[i] = this.createElement("div", null, ["newsTickerItem","text-end"]);
-      this.tickerItems[i].textContent = scores[i];
+      this.tickerItems[i].innerHTML = scores[i];
       
       this.newsTickerContainer.append(this.tickerItems[i]);
     }
+  }
+
+  addTvMenuBarItem() {
+    const menuItem = this.createElement("li", null, "page-item");
+    const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"])
+    menuLink.textContent = "🏟️";
+    menuLink.addEventListener('click', event => {
+      const els = document.getElementsByClassName("page");
+      Array.from(els).forEach((el) => {
+        el.classList.add("hide")
+      });
+      document.getElementById("liveGamesPage").classList.remove("hide");
+      
+    })
+    menuItem.append(menuLink);
+    this.pageMenuBar.append(menuItem);
   }
 
   // bindPageMenuBar(handler) {
@@ -237,20 +317,38 @@ class View {
     // document.getElementById(pageName).children[1].scrollTo(0,document.getElementById(pageName).children[1].scrollHeight)
   }
 
-  updateGameListGroupItems(gameMessages) {
-    // const scores = game.getScores();
-    // for(let i=0;i<scores.length;i++){
-    //   this.gameListGroupItems[i].textContent = "Game " + i + ": " + scores[i];
-    // }
-    for(let i=0;i<gameMessages.length;i++){
-      this.gameListGroupItems[i].innerHTML = gameMessages[i].name + "<br>" + gameMessages[i].text; 
+  updateGameListGroupItems(scores) {
+    for(let i=0;i<scores.length;i++){
+      this.gameListGroupItems[i].innerHTML = scores[i]; 
     }
   }
 
-  updateTickerItems(game) {
-    const scores = game.getScores();
+  updateGameWidgetItems(gameMessages) {
+    for(let i=0;i<gameMessages.length;i++){
+      //this.gameWidgetItems[i].innerHTML = gameMessages[i].name + "<br>" + gameMessages[i].text; 
+      
+      const gameWidgetLeft = this.gameWidgetItems[i].children[0]
+      gameWidgetLeft.children[0].textContent = gameMessages[i].inning;
+      gameWidgetLeft.children[1].children[1].textContent = gameMessages[i].score.away;
+      gameWidgetLeft.children[2].children[1].textContent = gameMessages[i].score.home;
+      
+      const gameWidgetBaseIcons = this.gameWidgetItems[i].children[1].children[0]
+      gameWidgetBaseIcons.innerHTML = gameMessages[i].baseIcons;
+      
+      const gameWidgetCountContainer = this.gameWidgetItems[i].children[1].children[1]
+      gameWidgetCountContainer.children[1].textContent = gameMessages[i].count.balls;
+      gameWidgetCountContainer.children[3].textContent = gameMessages[i].count.strikes;
+      gameWidgetCountContainer.children[5].textContent = gameMessages[i].count.outs;
+      
+      const gameWidgetRight = this.gameWidgetItems[i].children[2]
+      gameWidgetRight.innerHTML = gameMessages[i].log;
+      
+    }
+  }
+
+  updateTickerItems(scores) {
     for(let i=0;i<scores.length;i++){
-      this.tickerItems[i].textContent = scores[i];
+      this.tickerItems[i].innerHTML = scores[i];
       // this.newsTickerContainer.append(this.tickerItems[i]);
     }
   }

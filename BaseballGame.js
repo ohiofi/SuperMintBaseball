@@ -37,18 +37,18 @@ class BaseballGame {
 
     static idCounter = 0;
 
-    static restructure(jsonObject){
+    static restructure(jsonObject) {
         Object.setPrototypeOf(jsonObject, BaseballGame.prototype);
         jsonObject.homeTeam = BaseballTeam.restructure(jsonObject.homeTeam);
         jsonObject.awayTeam = BaseballTeam.restructure(jsonObject.awayTeam);
         jsonObject.defenseTeam = BaseballTeam.restructure(jsonObject.defenseTeam);
         jsonObject.offenseTeam = BaseballTeam.restructure(jsonObject.offenseTeam);
-        if(jsonObject.batter != null) jsonObject.batter = BaseballPlayer.restructure(jsonObject.batter);
+        if (jsonObject.batter != null) jsonObject.batter = BaseballPlayer.restructure(jsonObject.batter);
         jsonObject.pitcher = BaseballPlayer.restructure(jsonObject.pitcher);
         jsonObject.gameState = BaseballGameState.restructure(jsonObject.gameState);
-        if(jsonObject.onBase[0] != null) jsonObject.onBase[0] = BaseballPlayer.restructure(jsonObject.onBase[0]);
-        if(jsonObject.onBase[1] != null) jsonObject.onBase[1] = BaseballPlayer.restructure(jsonObject.onBase[1]);
-        if(jsonObject.onBase[2] != null) jsonObject.onBase[2] = BaseballPlayer.restructure(jsonObject.onBase[2]);
+        if (jsonObject.onBase[0] != null) jsonObject.onBase[0] = BaseballPlayer.restructure(jsonObject.onBase[0]);
+        if (jsonObject.onBase[1] != null) jsonObject.onBase[1] = BaseballPlayer.restructure(jsonObject.onBase[1]);
+        if (jsonObject.onBase[2] != null) jsonObject.onBase[2] = BaseballPlayer.restructure(jsonObject.onBase[2]);
         return jsonObject;
     }
 
@@ -69,6 +69,7 @@ class BaseballGame {
     ]
 
     constructor(awayTeamObject, homeTeamObject) {
+        this.name = awayTeamObject.getName() + " @ " + homeTeamObject.getName();
         this.hasStarted = false;
         this.done = false;
         this.gameIdNumber = BaseballGame.idCounter++;
@@ -89,7 +90,7 @@ class BaseballGame {
             home: 0
         }
         this.inning = 0;
-        
+
         this.gameState = new PlayBall();
         this.onBase = [null, null, null];
     }
@@ -106,10 +107,10 @@ class BaseballGame {
             this.onBase[2] = null;
             const myEvent = new CustomEvent('HomeRun', {
                 detail: {
-                  message: 'Hello from the custom event!'
+                    message: 'Hello from the custom event!'
                 }
-              });
-              // Dispatch the event on an element (e.g., the document)
+            });
+            // Dispatch the event on an element (e.g., the document)
             document.dispatchEvent(myEvent);
         }
         if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
@@ -177,16 +178,15 @@ class BaseballGame {
                 }
             }
         }
-        result += this.getBaseStatus();
         return result;
     }
 
-    equals(otherObject){
+    equals(otherObject) {
         return this.gameIdNumber === otherObject.gameIdNumber &&
-        this.homeTeam.equals(otherObject.homeTeam) &&
-        this.awayTeam.equals(otherObject.awayTeam) &&
-        this.jerseyNumber === otherObject.jerseyNumber
-      }
+            this.homeTeam.equals(otherObject.homeTeam) &&
+            this.awayTeam.equals(otherObject.awayTeam) &&
+            this.jerseyNumber === otherObject.jerseyNumber
+    }
 
     flyBall(hitScore) {
         let result = "";
@@ -197,7 +197,7 @@ class BaseballGame {
                 this.count.strikes++;
             }
         } else {
-            
+
             let defender = this.defenseTeam.getRandomPlayer();
             let defenseScore = defender.getDefenseScore(this.pitchNumber);
             if (defenseScore >= hitScore) {
@@ -233,7 +233,7 @@ class BaseballGame {
                 this.batter.setHungerDown()
             } else {
                 result += "<br>" + this.batter.getName() + " hits a HOME RUN!"
-                
+
                 this.incrementScore();
                 result += this.advanceBaseRunners(4)
                 this.pitcher.setHungerUp()
@@ -261,39 +261,43 @@ class BaseballGame {
         return this.awayTeam.getName();
     }
 
-    getBalls(){
+    getBalls() {
         return this.count.balls;
     }
 
-    getBaseStatus() {
+    getBaseIcons() {
         let result = "<br>"
         if (this.onBase[2] != null) {
-            result += "<sub class='baseIndicator leftBaseIndicator'>⬥</sub>"
+            result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
         } else {
-            result += "<sub class='baseIndicator leftBaseIndicator'>⬦</sub>"
+            result += "<sub class='baseIcon leftBaseIcon'>⬦</sub>"
         }
         if (this.onBase[1] != null) {
-            result += "<sup class='baseIndicator centerBaseIndicator'>⬥</sup>"
+            result += "<sup class='baseIcon centerbaseIcon'>⬥</sup>"
         } else {
-            result += "<sup class='baseIndicator centerBaseIndicator'>⬦</sup>"
+            result += "<sup class='baseIcon centerbaseIcon'>⬦</sup>"
         }
         if (this.onBase[0] != null) {
-            result += "<sub class='baseIndicator rightBaseIndicator'>⬥</sub>"
+            result += "<sub class='baseIcon rightBaseIcon'>⬥</sub>"
         } else {
-            result += "<sub class='baseIndicator rightBaseIndicator'>⬦</sub>"
+            result += "<sub class='baseIcon rightBaseIcon'>⬦</sub>"
         }
-        result += "" + "B: " + this.count.balls +
-            " / S: " + this.count.strikes +
-            " / O: " + this.count.outs
+
         return result;
     }
 
-    getBatterFullName(){
+    getBatterFullName() {
         return this.batter.getFullName();
     }
 
-    getBatterName(){
+    getBatterName() {
         return this.batter.getName();
+    }
+
+    getCountString() {
+        return "B: " + this.count.balls +
+            "<br>S: " + this.count.strikes +
+            "<br>O: " + this.count.outs
     }
 
     getHomeTeamName() {
@@ -303,25 +307,25 @@ class BaseballGame {
     getInning() {
         return this.inning;
     }
-
-    getName() {
-        let result = "";
-        if (!this.hasStarted) {
-            return this.awayTeam.getName() + " @ " + this.homeTeam.getName();
-        }
-        if (this.inning != 0 && this.done == false) {
+    getInningString() {
+        let result = ""
+        if (this.inning == 0){
+            result = "🔜"
+        }else if (this.inning != 0 && this.done == false) {
             result = this.inning + "▲ ";
             if (this.offenseTeam.equals(this.homeTeam)) {
                 result = this.inning + "▼ "
             }
         } else if (this.done) {
-            result = "FINAL SCORE: "
+            result = "FINAL: "
         }
-        return result + this.awayTeam.getName() + ": " + this.score.away + " " + this.homeTeam.getName() + ": " + this.score.home;
+        return result;
     }
 
-    getOuts(){
-            return this.count.outs;
+
+
+    getOuts() {
+        return this.count.outs;
     }
 
     getOutsString() {
@@ -336,16 +340,30 @@ class BaseballGame {
         return BaseballGame.pitchDescriptions[Math.floor((BaseballGame.pitchDescriptions.length - 1) - pitchScore * (BaseballGame.pitchDescriptions.length - 1) / 10)];
     }
 
-    getScore(){
-        return {
-            away:this.score.away, 
-            home:this.score.home
+    // getScore(){
+    //     return {
+    //         away:this.score.away, 
+    //         home:this.score.home
+    //     }
+    // }
+    getScore(hasBreaks) {
+        let result = "";
+        if (!this.hasStarted && hasBreaks) {
+            return this.awayTeam.getName() + "<br>@<br>" + this.homeTeam.getName();
         }
+        if (!this.hasStarted) {
+            return this.awayTeam.getName() + " @ " + this.homeTeam.getName();
+        }
+        result += this.getInningString()
+        if (hasBreaks) {
+            return result + "<br>" + this.awayTeam.getName() + ": " + this.score.away + "<br>" + this.homeTeam.getName() + ": " + this.score.home;
+        }
+        return result + this.awayTeam.getName() + ": " + this.score.away + " " + this.homeTeam.getName() + ": " + this.score.home;
     }
 
-    getStrikes(){
+    getStrikes() {
         return this.count.strikes;
-}
+    }
 
     hasNext() {
         return !this.done;
@@ -363,7 +381,7 @@ class BaseballGame {
         }
     }
 
-    isGameOver(){
+    isGameOver() {
         return this.done;
     }
 
@@ -371,7 +389,9 @@ class BaseballGame {
         if (this.done) {
             return null;
         }
-        return this.gameState.handle(this);
+        // const log = 
+
+        return new BaseballGameMessage(this,this.gameState.handle(this))
     }
 
     nextBatter() {
@@ -407,7 +427,7 @@ class BaseballGame {
         }
     }
 
-    setGameOver(){
+    setGameOver() {
         this.done = true;
     }
 
@@ -416,8 +436,8 @@ class BaseballGame {
     }
 
     setOffenseTeam(teamNameString) {
-        if ( (typeof teamNameString === 'string' || teamNameString instanceof String) && [this.awayTeam.getName(), this.homeTeam.getName()].includes(teamNameString)) {
-            
+        if ((typeof teamNameString === 'string' || teamNameString instanceof String) && [this.awayTeam.getName(), this.homeTeam.getName()].includes(teamNameString)) {
+
             if (teamNameString === this.homeTeam.getName()) {
                 this.offenseTeam = this.homeTeam;
                 this.defenseTeam = this.awayTeam;
@@ -479,9 +499,9 @@ class BaseballGame {
         return result;
     }
 
-    
 
-    
+
+
 
 
 

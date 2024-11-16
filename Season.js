@@ -1,22 +1,22 @@
-// A league has multiple years
-// A year is a finite state machine that progresses thru preseason, regular season, and playoff tournament
-// A year has 1 FreeAgentRelease, 1 DraftCeremony, 1 RegularSeason, and 1 PlayoffTournament
-// A year has lists of the year's top pitchers and the year's top hitters/sluggers
+// A league has multiple Seasons
+// A Season is a finite state machine that progresses thru preseason, regular season, and playoff tournament
+// A Season has 1 FreeAgentRelease, 1 DraftCeremony, 1 RegularSeason, and 1 PlayoffTournament
+// A Season has lists of the Season's top pitchers and the Season's top hitters/sluggers
 
 
-const YearStates = {
+const SeasonStates = {
   PRESEASON:0,
   REGULAR_SEASON: 1,
   PLAYOFF_TOURNAMENT: 2,
   POSTSEASON:3
 }
 
-class Year {
+class Season {
 
   static idCounter = 0;
 
   static restructure(jsonObject) {
-    Object.setPrototypeOf(jsonObject, Year.prototype);
+    Object.setPrototypeOf(jsonObject, Season.prototype);
     for (let i = 0; i < jsonObject.teams.length; i++) {
       jsonObject.teams[i] = Object.setPrototypeOf(jsonObject.teams[i], BaseballTeam.prototype);
     }
@@ -27,10 +27,10 @@ class Year {
    
   
     constructor(teamArray) {
-      this.yearIdNumber = Year.idCounter++;
+      this.seasonIdNumber = Season.idCounter++;
       this.hasStarted = false;
       this.done = false;
-      this.state = YearStates.REGULAR_SEASON;
+      this.state = SeasonStates.REGULAR_SEASON;
       this.numberOfTeams = teamArray.length
       
       this.regularSeasonSchedule = new RegularSeasonSchedule(teamArray);
@@ -66,8 +66,8 @@ class Year {
     // }
 
     getScores(){
-      if(this.state === YearStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.getDaySchedule(this.currentDay)
+      if(this.state === SeasonStates.REGULAR_SEASON){
+        return this.regularSeasonSchedule.getScores(this.currentDay)
       }
     }
   
@@ -246,10 +246,10 @@ class Year {
     // }
 
     isTodayDone(){
-      if(this.state == YearStates.REGULAR_SEASON){
+      if(this.state == SeasonStates.REGULAR_SEASON){
         this.regularSeasonSchedule.isTodayDone()
       }
-      else if(this.playoffSchedule != null && this.state == YearStates.PLAYOFF_TOURNAMENT){
+      else if(this.playoffSchedule != null && this.state == SeasonStates.PLAYOFF_TOURNAMENT){
         this.playoffSchedule.isTodayDone()
       }
       
@@ -257,17 +257,17 @@ class Year {
 
     next(){
       switch(this.state){
-        case YearStates.PRESEASON:
+        case SeasonStates.PRESEASON:
           break
-        case YearStates.REGULAR_SEASON:
+        case SeasonStates.REGULAR_SEASON:
           break
-        case YearStates.PLAYOFF_TOURNAMENT:
+        case SeasonStates.PLAYOFF_TOURNAMENT:
           break
       }
     }
 
     nextGameMessages(){
-      if(this.state === YearStates.REGULAR_SEASON){
+      if(this.state === SeasonStates.REGULAR_SEASON){
         return this.regularSeasonSchedule.nextGameMessages(this.currentDay)
       }
     }

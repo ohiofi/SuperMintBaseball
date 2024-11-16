@@ -240,19 +240,19 @@ class BaseballGame {
     getBaseStatus() {
         let result = "<br>"
         if (this.onBase[2] != null) {
-            result += "<sub class='baseIndicator leftBaseIndicator'>⬥</sub>"
+            result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
         } else {
-            result += "<sub class='baseIndicator leftBaseIndicator'>⬦</sub>"
+            result += "<sub class='baseIcon leftBaseIcon'>⬦</sub>"
         }
         if (this.onBase[1] != null) {
-            result += "<sup class='baseIndicator centerBaseIndicator'>⬥</sup>"
+            result += "<sup class='baseIcon centerbaseIcon'>⬥</sup>"
         } else {
-            result += "<sup class='baseIndicator centerBaseIndicator'>⬦</sup>"
+            result += "<sup class='baseIcon centerbaseIcon'>⬦</sup>"
         }
         if (this.onBase[0] != null) {
-            result += "<sub class='baseIndicator rightBaseIndicator'>⬥</sub>"
+            result += "<sub class='baseIcon rightBaseIcon'>⬥</sub>"
         } else {
-            result += "<sub class='baseIndicator rightBaseIndicator'>⬦</sub>"
+            result += "<sub class='baseIcon rightBaseIcon'>⬦</sub>"
         }
         result += "" + "B: " + this.count.balls +
             " / S: " + this.count.strikes +

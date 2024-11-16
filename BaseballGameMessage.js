@@ -1,15 +1,21 @@
 class BaseballGameMessage{
-    constructor(name,text){
-        this.name = name;
-        this.text = text;
+    constructor(game,log){
+        this.name = game.name;
+        this.inning = game.getInningString();
+        this.homeTeam = game.homeTeam.getName();
+        this.awayTeam = game.awayTeam.getName();
+        this.score = game.score;
+        this.baseIcons = game.getBaseIcons();
+        this.count = game.count;
+        this.log = log;
     }
 
     add(otherObject){
         if (typeof otherObject === 'string') {
-            this.text += otherObject;
+            this.log += otherObject;
         }
         else if (BaseballGameMessage.prototype.isPrototypeOf(otherObject)) {
-            this.text += otherObject.text;
+            this.log += otherObject.log;
         }
     }
 }

@@ -2,7 +2,7 @@ html,
 body {
   
   margin-top: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 body {
@@ -18,6 +18,13 @@ body {
     width: 100%;
     z-index:9999; 
     border-radius:0px
+}
+
+.game-widget{
+  /* line-height: 2.5ex;
+  /* height: 7.5ex; */
+  /* overflow: scroll; */
+  /*margin-bottom: 25px; */
 }
 
 .hide {
@@ -37,27 +44,30 @@ input[type="range"]:hover {
 
 
 
-.baseIndicator {
+.baseIcon {
   font-size: 2em;
 }
 
-sub.baseIndicator {
-  bottom: -0.391em;
+sub.baseIcon {
+  /* bottom: -0.391em; */
+  /* bottom:0em; */
+  top: -0.391em;
 }
 
-sup.baseIndicator {
-  /* top: -0.1em; */
-  top:0em;
+sup.baseIcon {
+  top: -0.782em;
+  /* top: -0.391em; */
+  /* top:0em; */
 }
 
-/* sub.leftBaseIndicator{
+/* sub.leftBaseIcon{
     
   } */
-sup.centerBaseIndicator {
+sup.centerbaseIcon {
   right: 0.37em;
 }
 
-sub.rightBaseIndicator {
+sub.rightBaseIcon {
   /* right:0.21em; */
   right: 0.74em;
 }

@@ -6,7 +6,7 @@ class AwayPlayerStepsUpToBat extends BaseballGameState{
     handle(baseballGame){
         this.nextState(baseballGame);
         baseballGame.nextBatter();
-        return baseballGame.getBatterFullName() + " steps up to bat for the " + baseballGame.getAwayTeamName() + baseballGame.getBaseStatus();
+        return baseballGame.getBatterFullName() + " steps up to bat for the " + baseballGame.getAwayTeamName();
     }
 
     nextState(baseballGame){

@@ -79,7 +79,17 @@ class RegularSeasonSchedule extends Schedule {
     }
     return result;
   }
-
+  getScores(dayNumber) {
+    let result = [];
+    if (dayNumber == null) {
+      dayNumber = 0
+    }
+    //console.log("Day " + (dayNumber))
+    for (let eachGame of this.schedule[dayNumber]) {
+      result.push(eachGame.getScore())
+    }
+    return result;
+  }
   
 
   getSeasonSchedule() {
@@ -95,7 +105,7 @@ class RegularSeasonSchedule extends Schedule {
   nextGameMessages(dayNumber){
     let resultArray = [];
     for (let eachGame of this.schedule[dayNumber]) {
-      resultArray.push(new BaseballGameMessage(eachGame.getName(),eachGame.next()))
+      resultArray.push(eachGame.next())
     }
     return resultArray
   }

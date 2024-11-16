@@ -141,7 +141,7 @@ class BaseballTeam {
   // }
 
   getName() {
-    return this.colorScheme + this.place.toUpperCase() + " " + this.name
+    return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
   }
 
   getFullName() {

@@ -5,7 +5,7 @@ class EndOfGame extends BaseballGameState{
     }
     handle(baseballGame){
         baseballGame.setGameOver();
-        return baseballGame.getName();
+        return baseballGame.getScore();
         
     }
 
