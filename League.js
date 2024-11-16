@@ -5,6 +5,8 @@
 
 class League {
 
+  static leagueIdNumberCount = 0;
+
   static restructure(jsonObject) {
     Object.setPrototypeOf(jsonObject, League.prototype);
     for (let i = 0; i < jsonObject.teams.length; i++) {
@@ -20,11 +22,27 @@ class League {
     this.numberOfTeams = numberOfTeams
     this.teams = []
     this.freeAgentList = []
-    //for i in range(this.numberOfTeams){
+    // make teams
     for (let i = 0; i < this.numberOfTeams; i++) {
-      let temp = new BaseballTeam();
-      this.teams.push(temp)
+      let tempTeam = new BaseballTeam();
+      tempTeam.leagueIdNumber = League.leagueIdNumberCount++;
+      this.teams.push(tempTeam);
+      // fill teams with players
+      for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
+        let tempPlayer = new BaseballPlayer();
+        let potentialPlayer2 = new BaseballPlayer();
+        if(tempPlayer.getOverallAptitude() < potentialPlayer2.getOverallAptitude()){
+          tempPlayer = potentialPlayer2;
+        }
+        tempPlayer.teamName = tempTeam.colorScheme + tempTeam.place
+        tempPlayer.jerseyNumber = tempTeam.getJerseyNumber()
+        tempPlayer.leagueIdNumber = League.leagueIdNumberCount++;
+        tempPlayer.teamLeagueIdNumber = tempTeam.leagueIdNumber;
+        tempTeam.players.push(tempPlayer)
+      }
+      tempTeam.setup();
     }
+    
     this.currentSeason = 0
     this.seasons = [new Season(this.teams)]
   }
@@ -54,6 +72,38 @@ class League {
     for (let i = 0; i < this.teams.length; i++){
       if(this.teams[i].equals(someObject)){
         return this.teams[i];
+      }
+    }
+    return null;
+  }
+
+  getNameableByFullName(someName){
+    // loop thru teams
+    for (let i = 0; i < this.teams.length; i++){
+      if(this.teams[i].getFullName() === someName){
+        return this.teams[i];
+      }
+      // loop thru players
+      for (let j = 0; j < this.teams[i].players.length; j++){
+        if(this.teams[i].players[j].getFullName() === someName){
+          return this.teams[i].players[j];
+        }
+      }
+    }
+    return null;
+  }
+
+  lookupLeagueId(idNum){
+    // loop thru teams
+    for (let i = 0; i < this.teams.length; i++){
+      if(this.teams[i].leagueIdNumber === idNum){
+        return this.teams[i];
+      }
+      // loop thru players
+      for (let j = 0; j < this.teams[i].players.length; j++){
+        if(this.teams[i].players[j].leagueIdNumber === idNum){
+          return this.teams[i].players[j];
+        }
       }
     }
     return null;

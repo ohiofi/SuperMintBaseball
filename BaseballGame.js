@@ -72,6 +72,7 @@ class BaseballGame {
         this.name = awayTeamObject.getName() + " @ " + homeTeamObject.getName();
         this.hasStarted = false;
         this.done = false;
+        this.finalMessage = false;
         this.gameIdNumber = BaseballGame.idCounter++;
         this.homeTeam = homeTeamObject;
         this.awayTeam = awayTeamObject;
@@ -266,7 +267,8 @@ class BaseballGame {
     }
 
     getBaseIcons() {
-        let result = "<br>"
+        // let result = "<br>"
+        let result = ""
         if (this.onBase[2] != null) {
             result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
         } else {
@@ -316,13 +318,25 @@ class BaseballGame {
             if (this.offenseTeam.equals(this.homeTeam)) {
                 result = this.inning + "▼ "
             }
-        } else if (this.done) {
-            result = "FINAL: "
+        }else if (this.inning != 0 && this.finalMessage) {
+            result = "FINAL " + this.inning + "▲ ";
+            if (this.offenseTeam.equals(this.homeTeam)) {
+                result = "FINAL " + this.inning + "▼ "
+            }
         }
         return result;
     }
 
+    getLosingTeam() {
 
+        if(this.score.home < this.score.away){
+            return this.homeTeam;
+        }
+        if(this.score.home > this.score.away){
+            return this.awayTeam;
+        }
+        return null;
+    }
 
     getOuts() {
         return this.count.outs;
@@ -365,6 +379,17 @@ class BaseballGame {
         return this.count.strikes;
     }
 
+    getWinningTeam() {
+        
+        if(this.score.home > this.score.away){
+            return this.homeTeam;
+        }
+        if(this.score.home < this.score.away){
+            return this.awayTeam;
+        }
+        return null;
+    }
+
     hasNext() {
         return !this.done;
     }
@@ -386,9 +411,7 @@ class BaseballGame {
     }
 
     next() {
-        if (this.done) {
-            return null;
-        }
+        
         // const log = 
 
         return new BaseballGameMessage(this,this.gameState.handle(this))

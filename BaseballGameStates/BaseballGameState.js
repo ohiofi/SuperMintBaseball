@@ -15,6 +15,9 @@ class BaseballGameState {
             case "EndOfGame":
                 Object.setPrototypeOf(jsonObject, EndOfGame.prototype);
                 break
+            case "FinalMessage":
+                Object.setPrototypeOf(jsonObject, FinalMessage.prototype);
+                break
             case "HomePlayerAtBat":
                 Object.setPrototypeOf(jsonObject, HomePlayerAtBat.prototype);
                 break

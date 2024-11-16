@@ -17,7 +17,7 @@ class HomePlayerAtBat extends BaseballGameState {
         }
         // check if game is over early
         if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.home != baseballGame.score.away) {
-            baseballGame.setGameState(new EndOfGame());
+            baseballGame.setGameState(new FinalMessage());
         }
         return result
     }

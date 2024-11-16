@@ -5,40 +5,41 @@ class View {
     this.newsTickerContainer = this.createElement("div", "newsTickerContainer", "text-center");
     this.tickerItems = [];
     this.pageMenuBar = this.createElement("ul", null, "pagination");
-    this.addHomeMenuBarItem()
-    this.addTvMenuBarItem()
+    this.addMenuBarItemHome()
+    this.addMenuBarItemLive()
+    
     this.pageContainer = this.createElement("div", "pageContainer");
     this.homePage;
     this.standingsPage;
     this.gamePages = [];
-    this.gameListGroup = this.createElement("div", "gameListGroup", "list-group");
-    this.gameListGroupItems = [];
+    this.homePageListGroup = this.createElement("div", "homePageListGroup", "list-group");
+    this.homePageListGroupItems = [];
     this.gameWidgetContainer = this.createElement("div", "game-widget-container", "container");
     this.gameWidgetItems = [];
     this.app.append(this.alertContainer,this.newsTickerContainer, this.pageMenuBar,this.pageContainer)
+    this.modal = document.getElementById('myModal')
   }
 
   addGameMessages(gameMessages){
-    
       for(let i=0;i<gameMessages.length;i++){
-        const container = document.getElementById("messageContainer"+i);
+        if(gameMessages[i].done){
+          continue;
+        }
+        // const container = document.getElementById("messageContainer"+i);
+        const container = this.gamePages[i].children[1];
         // Create a new div for the message
-        const postDiv = this.createElement('div',null,'post');
+        const postDiv = this.createElement('div',null,['post',"bg-111"]);
 
         const timestamp = new Date().toLocaleTimeString(); 
     
         postDiv.innerHTML = `
-            <span class="username">${gameMessages[i].name}</span> <span class="timestamp">${timestamp}</span>
-            <p>${gameMessages[i].text}</p>
+            <span class="username">${gameMessages[i].scoreString}</span> <span class="timestamp">${timestamp}</span>
+            <p>${gameMessages[i].log}</p>
+            <p class="font-monospace">${gameMessages[i].baseIcons} B: ${gameMessages[i].count.balls} S: ${gameMessages[i].count.strikes} O: ${gameMessages[i].count.outs}</p>
         `;
-      
-      
-      
-    
-        // Append the new post to the container
+
+        // Append the new post to the container while maintaining scroll
         const previousScrollTop = container.scrollTop;
-        
-        
         if(container.scrollHeight - container.clientHeight <= container.scrollTop){
           container.appendChild(postDiv);
           container.scrollTop = container.scrollHeight;
@@ -48,60 +49,57 @@ class View {
           container.scrollTop = previousScrollTop;
           container.firstChild.classList.remove("hide");
         }
-      // Check if the user is scrolled to the bottom
-      
-      // const isScrolledToBottom = document.getElementById("messageContainer"+i).scrollHeight - document.getElementById("messageContainer"+i).clientHeight <= document.getElementById("messageContainer"+i).scrollTop;
-        
-      // const previousScrollTop = document.getElementById("messageContainer"+i).scrollTop;
-      // if (!isScrolledToBottom) {
-        
-      //   document.getElementById("messageContainer"+i).scrollTop = previousScrollTop;
-      // }
-      //   // Scroll to the bottom only if the user is already at the bottom
-      //   if (isScrolledToBottom) {
-      //     console.log("you")
-      //     container.firstChild.classList.add("hide");
-      //     container.scrollTop = container.scrollHeight;
-      // } else {
-      //   container.firstChild.classList.remove("hide");
-      //     container.scrollTop = previousScrollTop;
-      // }
-      
-      
-      // if (document.getElementById("messageContainer"+i).classList.contains("scrolledToBottom")){
-      //   //container.scrollTop = container.scrollHeight;
-      //   document.getElementById("messageContainer"+i).firstChild.classList.add("hide");
-      //   document.getElementById("messageContainer"+i).scrollTop = document.getElementById("messageContainer"+i).scrollHeight
-
-      // }
     }
     
   }
 
-  addGameWidget(gameMessage){
-      const widget = this.createElement("div", null, ["game-widget","shadow","bg-black","rounded-2","row","mb-4"]);
+  addAllGamePages(game){
+    // this.addPageHome(game);
+    const scores = game.getScores();
+    for (let i = 0; i < scores.length; i++) {
+      this.gamePages[i] = this.addPageGamePage(scores[i],i)
+    }
+  }
+
+  addGameWidget(gameMessage,pageNumber){
+      const widget = this.createElement("div", null, ["game-widget","shadow","bg-111","rounded-2","row","mb-4"]);
       // left
       const gameWidgetLeft = this.createElement("div", "gameWidgetScore", ["col-lg","px-4","pt-4","py-lg-4","text-white"]);
-      const gameWidgetScoreInning = this.createElement("div", "gameWidgetScoreInning","pb-1")
+      const gameWidgetScoreInning = this.createElement("a", "gameWidgetScoreInning",["pb-1","link","link-offset-2","link-light","link-underline-opacity-25","link-underline-opacity-100-hover"])
       gameWidgetScoreInning.textContent = gameMessage.inning;
+      gameWidgetScoreInning.addEventListener('click', event => {
+        const els = document.getElementsByClassName("page");
+        Array.from(els).forEach((el) => {
+          el.classList.add("hide")
+        });
+        document.getElementById("page" + pageNumber).classList.remove("hide")
+        const container = document.getElementById("page" + pageNumber).children[1]
+        container.scrollTop = container.scrollHeight
+      });
       const gameWidgetAwayLine = this.createElement("div", "gameWidgetAwayLine", "row");
-      const gameWidgetAwayName = this.createElement("div","gameWidgetAwayName",["col-10","text-start"])
+      const gameWidgetAwayName = this.createElement("a","gameWidgetAwayName",["col-10","text-start","link","link-offset-2","link-light","link-underline-opacity-25","link-underline-opacity-100-hover"])
       gameWidgetAwayName.innerHTML = gameMessage.awayTeam;
+      // data-bs-toggle="modal" data-bs-target="#myModal"
+      gameWidgetAwayName.setAttribute('data-bs-toggle', "modal");
+      gameWidgetAwayName.setAttribute('data-bs-target',"#myModal");
+      gameWidgetAwayName.addEventListener('click', event => {
+        app.updateModal(gameMessage.awayId);
+      });
       const gameWidgetAwayScore = this.createElement("div","gameWidgetAwayScore",["col-2","text-end","h3","font-monospace"])
-      gameWidgetAwayScore.textContent = gameMessage.score.away;
+      gameWidgetAwayScore.textContent = gameMessage.scoreObject.away;
       gameWidgetAwayLine.append(gameWidgetAwayName,gameWidgetAwayScore)
       const gameWidgetHomeLine = this.createElement("div", "gameWidgetHomeLine", "row");
-      const gameWidgetHomeName = this.createElement("span","gameWidgetHomeName",["col-10","text-start"])
+      const gameWidgetHomeName = this.createElement("a","gameWidgetHomeName",["col-10","text-start","link","link-offset-2","link-light","link-underline-opacity-25","link-underline-opacity-100-hover"])
       gameWidgetHomeName.innerHTML = gameMessage.homeTeam;
       const gameWidgetHomeScore = this.createElement("span","gameWidgetHomeScore",["col-2","text-end","h3","font-monospace"])
-      gameWidgetHomeScore.textContent = gameMessage.score.home;
+      gameWidgetHomeScore.textContent = gameMessage.scoreObject.home;
       gameWidgetHomeLine.append(gameWidgetHomeName,gameWidgetHomeScore)
       gameWidgetLeft.append(gameWidgetScoreInning,gameWidgetAwayLine,gameWidgetHomeLine)
       // center
-      const gameWidgetCenter = this.createElement("div", null, ["col-lg","m-0","px-0","py-lg-4","text-white","row"]);
-      const gameWidgetBaseIcons = this.createElement("div", null, ["col-4","col-lg-12","m-0","p-0","ps-lg-3","pt-lg-4","text-white","text-center"]);
+      const gameWidgetCenter = this.createElement("div", null, ["col-lg","m-0","px-3","py-lg-4","text-white","row"]);
+      const gameWidgetBaseIcons = this.createElement("div", null, ["col-3","col-lg-12","m-0","p-0","pt-2","pb-3","ps-lg-3","pt-lg-4","text-white","text-center"]);
       gameWidgetBaseIcons.innerHTML = gameMessage.baseIcons;
-      const gameWidgetCountContainer = this.createElement("div", null, ["col-8","col-lg-12","m-0","p-0","text-white","row","row-cols-lg-6"]);
+      const gameWidgetCountContainer = this.createElement("div", null, ["col-9","col-lg-12","m-0","p-0","pt-2","pb-3","text-white","row","row-cols-lg-6"]);
       const count0 = this.createElement("div", null, ["col","font-monospace","text-end"]);
       count0.textContent = "B:";
       const count1 = this.createElement("div", null, ["col","font-monospace","text-start"]);
@@ -125,64 +123,9 @@ class View {
  
   
 
-  addHomeMenuBarItem() {
-    const menuItem = this.createElement("li", null, "page-item");
-    const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"])
-    menuLink.textContent = "🏠";
-    menuLink.addEventListener('click', event => {
-      const els = document.getElementsByClassName("page");
-      Array.from(els).forEach((el) => {
-        el.classList.add("hide")
-      });
-      document.getElementById("homePage").classList.remove("hide");
-      
-    })
-    menuItem.append(menuLink);
-    this.pageMenuBar.append(menuItem);
-  }
+  
 
-  addHomePage(game){
-    this.homePage = this.createElement("div","homePage","page");
-    const heading = this.createElement("h1", null, null);
-    heading.textContent = "Play Ball"
-    this.homePage.append(heading);
-    
-    const scores = game.getScores()
-    for (let i = 0; i < scores.length; i++) {
-      
-      this.gameListGroupItems[i] = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
-      this.gameListGroupItems[i].innerHTML = "Game " + i + ": " + scores[i];
-      this.gameListGroupItems[i].addEventListener('click', event => {
-        const els = document.getElementsByClassName("page");
-        Array.from(els).forEach((el) => {
-          el.classList.add("hide")
-        });
-        document.getElementById("page" + i).classList.remove("hide")
-        const container = document.getElementById("page" + i).children[1]
-        container.scrollTop = container.scrollHeight
-      });
-      this.gameListGroup.append(this.gameListGroupItems[i]);
-      this.homePage.append(this.gameListGroup);
-    }
-    this.pageContainer.append(this.homePage);
-  }
-
-  addLiveGamesPage(game){
-    this.liveGamesPage = this.createElement("div","liveGamesPage",["page","hide"]);
-    const heading = this.createElement("h3", null, null);
-    heading.textContent = "Live Games"
-    this.liveGamesPage.append(heading);
-    const liveGamesContainer = this.createElement("div","liveGamesContainer","container");
-    const gameMessages = game.nextGameMessages()
-    for (let i = 0; i < gameMessages.length; i++) {
-      this.gameWidgetItems[i] = this.addGameWidget(gameMessages[i])
-      liveGamesContainer.append(this.gameWidgetItems[i]);
-      this.liveGamesPage.append(liveGamesContainer);
-    }
-    this.pageContainer.append(this.liveGamesPage);
-  }
-
-  addPageMenuBarItems(game) {
+  addMenuBarItemGamePages(game) {
     
     //<li class="page-item"><a class="page-link" href="#">1</a></li>
     
@@ -190,10 +133,10 @@ class View {
     for (let i = 0; i < scores.length; i++) {
       const menuItem = this.createElement("li", null, "page-item");
       
-      const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"]);
+      const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
       // menuLink.classList.add("bg-dark")
       // menuLink.classList.add("border-0")
-      menuLink.textContent = "Game " + i;
+      menuLink.textContent = i;
       menuLink.addEventListener('click', event => {
         const els = document.getElementsByClassName("page");
         Array.from(els).forEach((el) => {
@@ -209,19 +152,36 @@ class View {
     }
   }
 
-  addPages(game){
-    this.addHomePage(game);
-    const scores = game.getScores();
-    for (let i = 0; i < scores.length; i++) {
-      this.gamePages[i] = this.createElement("div","page"+i,["page","hide"])
-      const heading = this.createElement("h1", null, null);
-      heading.textContent = "Game "+i+ ": "+scores[i];
-      this.gamePages[i].append(heading)
+  addMenuBarItemHome() {
+    const menuItem = this.createElement("li", null, "page-item");
+    const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"])
+    menuLink.textContent = "🏠";
+    menuLink.addEventListener('click', event => {
+      const els = document.getElementsByClassName("page");
+      Array.from(els).forEach((el) => {
+        el.classList.add("hide")
+      });
+      document.getElementById("homePage").classList.remove("hide");
+      
+    })
+    menuItem.append(menuLink);
+    this.pageMenuBar.append(menuItem);
+  }
+
+  addPageGamePage(score,gameNum){
+    const gamePage = this.createElement("div","page"+gameNum,["page","hide"])
+      const heading = this.createElement("h3", null, "");
+      const headingGameNumber = this.createElement("span", null, "");
+      headingGameNumber.textContent = "Game "+gameNum+ ": "
+      const headingGameScore = this.createElement("span", null, "");
+      headingGameScore.innerHTML = score;
+      heading.append(headingGameNumber,headingGameScore)
+      gamePage.append(heading)
    // <div id="messageContainer" class="rounded-3">
     //     <div id="messageJumpButton" class="rounded-3 w-25 mx-auto bg-warning text-center" onclick="jumpToNewestMessage()">Jump To
     //       Newest Update</div>
     //   </div>
-      const messageContainer = this.createElement("div","messageContainer"+i,["messageContainer","rounded-3"]);
+      const messageContainer = this.createElement("div","messageContainer"+gameNum,["messageContainer","rounded-3","bg-333"]);
       const messageJumpButton = this.createElement("div",null,["messageJumpButton","rounded-3","w-25","mx-auto","bg-warning","text-center","hide"]);
       //messageContainer.addEventListener("scroll", event => {
         //messageContainer.classList.remove("scrolledToBottom");
@@ -239,10 +199,66 @@ class View {
         //messageContainer.classList.add("scrolledToBottom");
       });
       messageContainer.append(messageJumpButton);
-      this.gamePages[i].append(messageContainer);
-      this.pageContainer.append(this.gamePages[i]);
-    }
+      gamePage.append(messageContainer);
+      this.pageContainer.append(gamePage);
+      return gamePage;
   }
+
+  addPageHome(game){
+    this.homePage = this.createElement("div","homePage","page");
+    const heading = this.createElement("h3", null, null);
+    heading.textContent = "Play Ball"
+    this.homePage.append(heading);
+    const liveGamesLink = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
+    liveGamesLink.textContent = "View Live Games";
+    liveGamesLink.addEventListener('click', event => {
+      const els = document.getElementsByClassName("page");
+      Array.from(els).forEach((el) => {
+        el.classList.add("hide")
+      });
+      document.getElementById("liveGamesPage").classList.remove("hide")
+    });
+    this.homePageListGroup.append(liveGamesLink);
+    const scores = game.getScores()
+
+    for (let i = 0; i < scores.length; i++) {
+      
+      this.homePageListGroupItems[i] = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
+      this.homePageListGroupItems[i].innerHTML = "Game " + i + ": " + scores[i];
+      //this.homePageListGroupItems[i].onclick = this.showPage("game"+i)
+      this.homePageListGroupItems[i].addEventListener('click', event => {
+        const els = document.getElementsByClassName("page");
+        Array.from(els).forEach((el) => {
+          el.classList.add("hide")
+        });
+        document.getElementById("page" + i).classList.remove("hide")
+        const container = document.getElementById("page" + i).children[1]
+        container.scrollTop = container.scrollHeight
+      });
+      this.homePageListGroup.append(this.homePageListGroupItems[i]);
+      this.homePage.append(this.homePageListGroup);
+    }
+    this.pageContainer.append(this.homePage);
+  }
+
+  addPageLiveGames(game){
+    this.liveGamesPage = this.createElement("div","liveGamesPage",["page","hide"]);
+    const heading = this.createElement("h3", null, null);
+    heading.textContent = "Live Games"
+    this.liveGamesPage.append(heading);
+    const liveGamesContainer = this.createElement("div","liveGamesContainer","container");
+    const gameMessages = game.nextGameMessages()
+    for (let i = 0; i < gameMessages.length; i++) {
+      this.gameWidgetItems[i] = this.addGameWidget(gameMessages[i],i)
+      liveGamesContainer.append(this.gameWidgetItems[i]);
+      this.liveGamesPage.append(liveGamesContainer);
+    }
+    this.pageContainer.append(this.liveGamesPage);
+  }
+
+  
+
+  
 
   addTickerItems(game) {
     const scores = game.getScores();
@@ -254,7 +270,7 @@ class View {
     }
   }
 
-  addTvMenuBarItem() {
+  addMenuBarItemLive() {
     const menuItem = this.createElement("li", null, "page-item");
     const menuLink = this.createElement("a", null, ["page-link","bg-dark","border-0"])
     menuLink.textContent = "🏟️";
@@ -317,39 +333,5 @@ class View {
     // document.getElementById(pageName).children[1].scrollTo(0,document.getElementById(pageName).children[1].scrollHeight)
   }
 
-  updateGameListGroupItems(scores) {
-    for(let i=0;i<scores.length;i++){
-      this.gameListGroupItems[i].innerHTML = scores[i]; 
-    }
-  }
-
-  updateGameWidgetItems(gameMessages) {
-    for(let i=0;i<gameMessages.length;i++){
-      //this.gameWidgetItems[i].innerHTML = gameMessages[i].name + "<br>" + gameMessages[i].text; 
-      
-      const gameWidgetLeft = this.gameWidgetItems[i].children[0]
-      gameWidgetLeft.children[0].textContent = gameMessages[i].inning;
-      gameWidgetLeft.children[1].children[1].textContent = gameMessages[i].score.away;
-      gameWidgetLeft.children[2].children[1].textContent = gameMessages[i].score.home;
-      
-      const gameWidgetBaseIcons = this.gameWidgetItems[i].children[1].children[0]
-      gameWidgetBaseIcons.innerHTML = gameMessages[i].baseIcons;
-      
-      const gameWidgetCountContainer = this.gameWidgetItems[i].children[1].children[1]
-      gameWidgetCountContainer.children[1].textContent = gameMessages[i].count.balls;
-      gameWidgetCountContainer.children[3].textContent = gameMessages[i].count.strikes;
-      gameWidgetCountContainer.children[5].textContent = gameMessages[i].count.outs;
-      
-      const gameWidgetRight = this.gameWidgetItems[i].children[2]
-      gameWidgetRight.innerHTML = gameMessages[i].log;
-      
-    }
-  }
-
-  updateTickerItems(scores) {
-    for(let i=0;i<scores.length;i++){
-      this.tickerItems[i].innerHTML = scores[i];
-      // this.newsTickerContainer.append(this.tickerItems[i]);
-    }
-  }
+  
 }

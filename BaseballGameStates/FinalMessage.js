@@ -1,16 +1,17 @@
-class EndOfGame extends BaseballGameState{
+class FinalMessage extends BaseballGameState{
     constructor(){
         super();
-    this.name = "EndOfGame";
+    this.name = "FinalMessage";
     }
     handle(baseballGame){
-        baseballGame.setGameOver();
+        baseballGame.finalMessage = true;
+        this.nextState(baseballGame)
         return baseballGame.getWinningTeam().getName()+" defeated "+baseballGame.getLosingTeam().getName()
         
     }
 
     nextState(baseballGame){
-        throw new Error("Cannot move to next state");
+        baseballGame.setGameState(new EndOfGame());
     }
 
     previousState(baseballGame){

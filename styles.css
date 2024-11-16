@@ -20,6 +20,19 @@ body {
     border-radius:0px
 }
 
+.bg-111{
+  background-color: #111;
+}
+.bg-222{
+  background-color: #222;
+}
+.bg-333{
+  background-color: #333;
+}
+.bg-444{
+  background-color: #444;
+}
+
 .game-widget{
   /* line-height: 2.5ex;
   /* height: 7.5ex; */
@@ -50,13 +63,15 @@ input[type="range"]:hover {
 
 sub.baseIcon {
   /* bottom: -0.391em; */
+  bottom: -0.1955em;
   /* bottom:0em; */
-  top: -0.391em;
+  /* top: -0.391em; */
 }
 
 sup.baseIcon {
-  top: -0.782em;
+  /* top: -0.782em; */
   /* top: -0.391em; */
+  top: -0.1955em;
   /* top:0em; */
 }
 
@@ -81,7 +96,7 @@ sub.rightBaseIcon {
   border: 1px solid #eeeeee;
   /* border-radius: 8px; */
   padding: 10px;
-  background-color: hsl(228, 5%, 20%);
+  /* background-color: hsl(228, 5%, 20%); */
   font-family: Arial, sans-serif;
   position: relative;
 }
@@ -92,12 +107,20 @@ sub.rightBaseIcon {
   color:black;
 }
 
+.page-link{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important
+}
+
+.page-link:hover{
+  border-bottom: 1px solid rgba(255, 255, 255, 1.0) !important
+}
+
 .post {
   border: 1px solid #e1e8ed;
   border-radius: 8px;
   padding: 5px;
   margin: 5px 0;
-  background-color: hsl(228, 5%, 10%);
+  /* background-color: hsl(228, 5%, 10%); */
 }
 
 .username {

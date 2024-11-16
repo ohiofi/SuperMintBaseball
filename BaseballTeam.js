@@ -35,6 +35,7 @@ class BaseballTeam {
   static playersPerTeam = 9;
 
   constructor() {
+    this.leagueIdNumber = 0;
     this.teamIdNumber = BaseballTeam.idCounter++;
     this.jerseyNumberList = []
     // this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
@@ -56,22 +57,12 @@ class BaseballTeam {
     this.hunger = 1
     this.hungerRate = 0.35
     this.players = []
-    //for i in range(Team.playersPerTeam):
-    for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
-      let temp = new BaseballPlayer();
-      let potentialPlayer2 = new BaseballPlayer();
-      if(temp.getOverallAptitude() < potentialPlayer2.getOverallAptitude()){
-        temp = potentialPlayer2;
-      }
-      temp.teamName = this.colorScheme + this.place
-      temp.jerseyNumber = this.getJerseyNumber()
-      this.players.push(temp)
-    }
+    
     
     this.stats = new Stats(this.colorScheme + this.place, this.name)
     this.dailyStats = new Stats(this.colorScheme + this.place, this.name)
     this.xp = 0
-    this.setup();
+    
     this.batterUpNumber = 0;
   }
 
@@ -145,7 +136,7 @@ class BaseballTeam {
   }
 
   getFullName() {
-    return this.colorScheme + this.place.toUpperCase() + " " + this.name
+    return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
   }
 
   getPlace() {
@@ -171,13 +162,31 @@ class BaseballTeam {
   
 
 
+  // getPlayerList() {
+  //   let result = "<div class='list-group bg-dark'>"
+  //   for (let each of this.players) {
+  //     result += '<a href="#" onclick="app.updateModal('+each.leagueIdNumber+')" class="list-group-item list-group-item-action text-light bg-dark border-secondary">' + each.fullname + each.position + '</a>'
+  //   }
+  //   return result + "</div>"
+  // }
+
   getPlayerList() {
-    let result = "-----Players-----\n"
+    let result = "";
     for (let each of this.players) {
-      result += '' + (each.getSummary()) + '\n'
+        result += `
+            <tr>
+                <td>
+                    <a href="#" onclick="app.updateModal(${each.leagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                        ${each.fullname}
+                    </a>
+                </td>
+                <td>${each.position}</td>
+            </tr>
+        `;
     }
-    return result
-  }
+    return result.trim();
+}
+
 
   getRandomPlayer() {
     return this.players[Math.floor(rng.random() * this.players.length)]
@@ -191,13 +200,14 @@ class BaseballTeam {
     // return result
   }
 
-  getTeamGrade() {
+  getTeamAptitude() {
     let total = 0
     for (let each of this.players) {
-      total += parseFloat(each.getHittingAptitude())
+      total += parseFloat(each.getBattingAptitude())
+      total += parseFloat(each.getDefenseAptitude())
     }
     total += this.pitcher.getPitchingAptitude();
-    return Math.round(total / this.players.length * 100) / 100
+    return total / (this.players.length * 2 + 1) * 100 / 100
   }
 
   // getStyleGrade(style) {
@@ -336,12 +346,59 @@ class BaseballTeam {
     }
   }
 
-  toString() {
-    let result = ""
-    result += this.colorScheme + this.place + " " + this.name + " --- Team Grade: " + (this.getTeamGrade()) + "\n"
-    result += (this.getPlayerList())
-    return result
-  }
+//   toString() {
+//     return `
+//         Team ID: ${this.teamIdNumber}<br>
+//         Place: ${this.place}<br>
+//         Team Name: ${this.name}<br>
+//         Color Scheme: ${this.colorScheme}<br>
+//         Team Aptitude: ${this.getTeamAptitude().toFixed(1)}<br>
+//         Mood: ${this.mood.toFixed(1)}<br>
+//         Hunger: ${this.hunger.toFixed(1)}<br>
+//         Hunger Rate: ${this.hungerRate.toFixed(1)}<br>
+//         XP: ${this.xp.toFixed(1)}<br>
+//         Batter Up Number: ${this.batterUpNumber}<br>
+//         Jersey Numbers: ${this.jerseyNumberList.join(", ")}<br>
+//         Stats: ${this.stats.toString()}<br>
+//         Daily Stats: ${this.dailyStats.toString()}<br>
+//         -----Players-----<br>
+//         Number of Players: ${this.players.length}<br>
+//         ${this.getPlayerList()}<br>
+//     `.trim();
+// }
+
+toString() {
+  return `
+      <table class="table table-dark table-striped table-bordered">
+          <thead>
+              <tr>
+                  <th colspan="2">Team Details</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
+              <tr><td>Place</td><td>${this.place}</td></tr>
+              <tr><td>Team Name</td><td>${this.name}</td></tr>
+              <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
+              <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
+              <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
+              <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+              <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+              <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
+              <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
+              <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
+              <tr><td>Stats</td><td>${this.stats.toString()}</td></tr>
+              <tr><td>Daily Stats</td><td>${this.dailyStats.toString()}</td></tr>
+              <tr>
+                  <th colspan="2">Players</th>
+              </tr>
+              <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
+              ${this.getPlayerList()}
+          </tbody>
+      </table>
+  `.trim();
+}
+
 
   setPositions() {
     //# reset positions
@@ -361,9 +418,9 @@ class BaseballTeam {
       }
     }
     //# find slugger
-    //this.players.sort(key=lambda x: x.getHittingAptitude(), reverse=true)
+    //this.players.sort(key=lambda x: x.getBattingAptitude(), reverse=true)
     this.players.sort(function(a, b) {
-      return b.getHittingAptitude() - a.getHittingAptitude()
+      return b.getBattingAptitude() - a.getBattingAptitude()
     });
     for (let eachPlayer of this.players) {
       if (eachPlayer.position == null) {
