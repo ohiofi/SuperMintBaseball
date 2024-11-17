@@ -135,6 +135,11 @@ class BaseballTeam {
     return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
   }
 
+  getNameWithLink(){
+    return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' + 
+    this.getName() + '</a>';
+}
+
   getFullName() {
     return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
   }

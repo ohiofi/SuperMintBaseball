@@ -26,7 +26,7 @@ class View {
           continue;
         }
         // const container = document.getElementById("messageContainer"+i);
-        const container = this.gamePages[i].children[1];
+        const container = this.gamePages[i].children[2];
         // Create a new div for the message
         const postDiv = this.createElement('div',null,['post',"bg-111"]);
 
@@ -91,6 +91,11 @@ class View {
       const gameWidgetHomeLine = this.createElement("div", "gameWidgetHomeLine", "row");
       const gameWidgetHomeName = this.createElement("a","gameWidgetHomeName",["col-10","text-start","link","link-offset-2","link-light","link-underline-opacity-25","link-underline-opacity-100-hover"])
       gameWidgetHomeName.innerHTML = gameMessage.homeTeam;
+      gameWidgetHomeName.setAttribute('data-bs-toggle', "modal");
+      gameWidgetHomeName.setAttribute('data-bs-target',"#myModal");
+      gameWidgetHomeName.addEventListener('click', event => {
+        app.updateModal(gameMessage.homeId);
+      });
       const gameWidgetHomeScore = this.createElement("span","gameWidgetHomeScore",["col-2","text-end","h3","font-monospace"])
       gameWidgetHomeScore.textContent = gameMessage.scoreObject.home;
       gameWidgetHomeLine.append(gameWidgetHomeName,gameWidgetHomeScore)
@@ -177,6 +182,9 @@ class View {
       headingGameScore.innerHTML = score;
       heading.append(headingGameNumber,headingGameScore)
       gamePage.append(heading)
+      const boxScore = this.createElement("div",null,["boxScore","bg-111"])
+      boxScore.innerHTML = `<table class="table table-dark table-striped table-bordered text-center"><thead><tr><th>Team</th><th>R</th><th>H</th><th>E</th></tr></thead><tbody><tr><td class="text-start">Away</td><td>0</td><td>0</td><td>0</td> </tr><tr><td class="text-start">Home</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>`
+      gamePage.append(boxScore)
    // <div id="messageContainer" class="rounded-3">
     //     <div id="messageJumpButton" class="rounded-3 w-25 mx-auto bg-warning text-center" onclick="jumpToNewestMessage()">Jump To
     //       Newest Update</div>
@@ -210,7 +218,7 @@ class View {
     heading.textContent = "Play Ball"
     this.homePage.append(heading);
     const liveGamesLink = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
-    liveGamesLink.textContent = "View Live Games";
+    liveGamesLink.textContent = "View Live Games ▶️";
     liveGamesLink.addEventListener('click', event => {
       const els = document.getElementsByClassName("page");
       Array.from(els).forEach((el) => {
@@ -223,10 +231,14 @@ class View {
 
     for (let i = 0; i < scores.length; i++) {
       
-      this.homePageListGroupItems[i] = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
-      this.homePageListGroupItems[i].innerHTML = "Game " + i + ": " + scores[i];
+      this.homePageListGroupItems[i] = this.createElement("span", null, ["p-1"]);
+      
+      const gameScore = this.createElement("span", null, null)
+      gameScore.innerHTML = "Game " + i + ": " + scores[i];
+      const playButton = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"])
+      playButton.innerHTML = "▶️"
       //this.homePageListGroupItems[i].onclick = this.showPage("game"+i)
-      this.homePageListGroupItems[i].addEventListener('click', event => {
+      playButton.addEventListener('click', event => {
         const els = document.getElementsByClassName("page");
         Array.from(els).forEach((el) => {
           el.classList.add("hide")
@@ -235,6 +247,7 @@ class View {
         const container = document.getElementById("page" + i).children[1]
         container.scrollTop = container.scrollHeight
       });
+      this.homePageListGroupItems[i].append(gameScore,playButton)
       this.homePageListGroup.append(this.homePageListGroupItems[i]);
       this.homePage.append(this.homePageListGroup);
     }

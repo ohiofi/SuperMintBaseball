@@ -6,4 +6,8 @@ class User{
             "💰":50
         }
     }
+
+    handleEvent(data){
+        console.log("User sees this data: "+data);
+    }
 }

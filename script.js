@@ -18,10 +18,10 @@ function addAlert(message, type) {
 }
 
 // CUSTOM EVENT LISTENERS
-// document.addEventListener('HomeRun', (event) => {
-//   addAlert('Home Run!', 'success');
-//   console.log(event.detail.message); // Output: 'Hello from the custom event!'
-// });
+document.addEventListener('HomeRun', (event) => {
+  addAlert('Home Run!', 'success');
+  console.log(event.detail.message); // Output: 'Hello from the custom event!'
+});
 
 // function showPage(pageName) {
 //   let els = document.getElementsByClassName("page");

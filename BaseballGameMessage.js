@@ -11,6 +11,7 @@ class BaseballGameMessage{
         this.baseIcons = game.getBaseIcons();
         this.count = structuredClone(game.count);
         this.log = log;
+        this.boxScoreTable = game.getBoxScoreTable()
         this.done = game.done;
     }
 

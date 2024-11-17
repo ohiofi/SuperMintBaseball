@@ -91,6 +91,11 @@ class BaseballPlayer {
         return this.teamName + " " + this.lastName;
     }
 
+    getNameWithLink(){
+        return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' + 
+        this.getName() + '</a>';
+    }
+
     getFullName(){
         return this.teamName + " " + this.firstName + " " + this.lastName;
     }

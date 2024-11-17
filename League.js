@@ -93,6 +93,10 @@ class League {
     return null;
   }
 
+  handleEvent(data){
+    console.log("League sees this data: "+data);
+  }
+
   lookupLeagueId(idNum){
     // loop thru teams
     for (let i = 0; i < this.teams.length; i++){

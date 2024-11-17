@@ -6,7 +6,8 @@ class HomePlayerStepsUpToBat extends BaseballGameState{
     handle(baseballGame){
         this.nextState(baseballGame);
         baseballGame.nextBatter();
-        return baseballGame.getBatterFullName() + " steps up to bat for the " + baseballGame.getHomeTeamName();
+        return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal('+baseballGame.batter.leagueIdNumber+');" data-bs-target="#myModal" data-bs-toggle="modal" >'+
+        baseballGame.getBatterFullName() + "</a> steps up to bat for the " + baseballGame.getHomeTeamName();
                 
     }
 

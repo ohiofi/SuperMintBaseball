@@ -6,7 +6,7 @@ class FinalMessage extends BaseballGameState{
     handle(baseballGame){
         baseballGame.finalMessage = true;
         this.nextState(baseballGame)
-        return baseballGame.getWinningTeam().getName()+" defeated "+baseballGame.getLosingTeam().getName()
+        return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()
         
     }
 

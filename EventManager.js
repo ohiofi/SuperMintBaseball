@@ -1,7 +1,8 @@
 // Observer design pattern
 // an EventManager generates/publishes Events
 // an EventManager belongs to an Editor (a BaseballTeam or BaseballPlayer or something that generates events)
-// Editor has an EventManager
+// Editor (a BaseballTeam or BaseballPlayer) has an EventManager
+// Listener subscribes to one or more EventMangers and can handleEvent(data)
 class EventManager {
     constructor() {
       this.listeners = [];
@@ -16,6 +17,6 @@ class EventManager {
     }
   
     notify(data) {
-      this.listeners.forEach((listener) => observer(data));
+      this.listeners.forEach((listener) => handleEvent(data));
     }
   }

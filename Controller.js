@@ -9,7 +9,7 @@ class Controller {
     this.view.addAllGamePages(this.model.game);
     this.view.addMenuBarItemGamePages(this.model.game)
     this.timeIntervalId;
-    this.speed = 5000;
+    this.speed = 3000;
 
 
 
@@ -40,19 +40,38 @@ class Controller {
       let gameMessages = this.model.game.nextGameMessages();
       this.updateHomePageListGroupItems(this.model.game.getScores());
       this.view.addGameMessages(gameMessages);
+      this.updateGamePageBoxScores(gameMessages)
       this.updateGamePageHeadings(this.model.game.getScores());
       this.updateGameWidgetItems(gameMessages);
 
     }, this.speed);
+    // auto dismiss alerts
+    let alert_list = document.querySelectorAll('.alert')
+            alert_list.forEach(function(alertNode) {
+              
+              let alert = bootstrap.Alert.getInstance(alertNode)
+              alert.close()
+              
+
+                
+                // setTimeout(() => {
+                //     bootstrap.Alert.getInstance(alert).close();
+                // }, 2000);
+            });
   }
 
-
+  updateGamePageBoxScores(gameMessages) {
+    for (let i = 0; i < gameMessages.length; i++) {
+      this.view.gamePages[i].children[1].innerHTML = gameMessages[i].boxScoreTable
+    }
+  }
 
   updateGamePageHeadings(scores) {
     for (let i = 0; i < scores.length; i++) {
       this.view.gamePages[i].children[0].children[1].innerHTML = scores[i]
     }
   }
+
 
   updateGameWidgetItems(gameMessages) {
     for (let i = 0; i < gameMessages.length; i++) {
@@ -79,7 +98,7 @@ class Controller {
 
   updateHomePageListGroupItems(scores) {
     for (let i = 0; i < scores.length; i++) {
-      this.view.homePageListGroupItems[i].innerHTML = scores[i];
+      this.view.homePageListGroupItems[i].children[0].innerHTML = scores[i];
     }
   }
 
