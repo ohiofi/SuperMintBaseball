@@ -5,6 +5,7 @@ class EndOfGame extends BaseballGameState{
     }
     handle(baseballGame){
         baseballGame.setGameOver();
+        
         return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()
         
     }

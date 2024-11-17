@@ -1,8 +1,8 @@
 class View {
   constructor() {
     this.app = this.getElement("#root");
-    this.alertContainer = this.createElement("div", "alertContainer", "mt-5");
-    this.newsTickerContainer = this.createElement("div", "newsTickerContainer", "text-center");
+    // this.alertContainer = this.createElement("div", "alertContainer", ["m-5"]);
+    this.newsTickerContainer = this.createElement("div", "newsTickerContainer", ["text-center","mt-4"]);
     this.tickerItems = [];
     this.pageMenuBar = this.createElement("ul", null, "pagination");
     this.addMenuBarItemHome()
@@ -12,11 +12,11 @@ class View {
     this.homePage;
     this.standingsPage;
     this.gamePages = [];
-    this.homePageListGroup = this.createElement("div", "homePageListGroup", "list-group");
+    this.homePageListGroup;
     this.homePageListGroupItems = [];
     this.gameWidgetContainer = this.createElement("div", "game-widget-container", "container");
     this.gameWidgetItems = [];
-    this.app.append(this.alertContainer,this.newsTickerContainer, this.pageMenuBar,this.pageContainer)
+    this.app.append(this.newsTickerContainer, this.pageMenuBar,this.pageContainer)
     this.modal = document.getElementById('myModal')
   }
 
@@ -120,7 +120,7 @@ class View {
       gameWidgetCountContainer.append(count0,count1,count2,count3,count4,count5)
       gameWidgetCenter.append(gameWidgetBaseIcons,gameWidgetCountContainer)
       // right
-      const gameWidgetRight = this.createElement("div", null, ["col-lg","px-4","pb-4","py-lg-4","text-white","lh-lg"]);
+      const gameWidgetRight = this.createElement("div", null, ["col-lg","px-4","pb-4","py-lg-4","text-white","lh-sm"]);
       gameWidgetRight.innerHTML = gameMessage.log;
       widget.append(gameWidgetLeft,gameWidgetCenter,gameWidgetRight)
       return widget;
@@ -148,7 +148,7 @@ class View {
           el.classList.add("hide")
         });
         document.getElementById("page" + i).classList.remove("hide")
-        const container = document.getElementById("page" + i).children[1]
+        const container = document.getElementById("page" + i).children[2]
         container.scrollTop = container.scrollHeight
       });
       menuItem.append(menuLink);
@@ -175,16 +175,16 @@ class View {
 
   addPageGamePage(score,gameNum){
     const gamePage = this.createElement("div","page"+gameNum,["page","hide"])
-      const heading = this.createElement("h3", null, "");
+      const heading = this.createElement("h3", null,"pb-4");
       const headingGameNumber = this.createElement("span", null, "");
       headingGameNumber.textContent = "Game "+gameNum+ ": "
       const headingGameScore = this.createElement("span", null, "");
       headingGameScore.innerHTML = score;
       heading.append(headingGameNumber,headingGameScore)
       gamePage.append(heading)
-      const boxScore = this.createElement("div",null,["boxScore","bg-111"])
-      boxScore.innerHTML = `<table class="table table-dark table-striped table-bordered text-center"><thead><tr><th>Team</th><th>R</th><th>H</th><th>E</th></tr></thead><tbody><tr><td class="text-start">Away</td><td>0</td><td>0</td><td>0</td> </tr><tr><td class="text-start">Home</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>`
-      gamePage.append(boxScore)
+      const boxScoreTable = this.createElement("div",null,["boxScore","pb-4"])
+      boxScoreTable.innerHTML = `<table class="table table-dark table-striped table-bordered text-center my-5"><thead><tr><th>Team</th><th>R</th><th>H</th><th>E</th></tr></thead><tbody><tr><td class="text-start">Away</td><td>0</td><td>0</td><td>0</td> </tr><tr><td class="text-start">Home</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>`
+      gamePage.append(boxScoreTable)
    // <div id="messageContainer" class="rounded-3">
     //     <div id="messageJumpButton" class="rounded-3 w-25 mx-auto bg-warning text-center" onclick="jumpToNewestMessage()">Jump To
     //       Newest Update</div>
@@ -214,11 +214,22 @@ class View {
 
   addPageHome(game){
     this.homePage = this.createElement("div","homePage","page");
-    const heading = this.createElement("h3", null, null);
+    const heading = this.createElement("h3", null,"pb-4");
     heading.textContent = "Play Ball"
     this.homePage.append(heading);
-    const liveGamesLink = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
-    liveGamesLink.textContent = "View Live Games ▶️";
+    this.homePageListGroup = this.createElement("div", "homePageListGroup", ["list-group"]);
+    const liveGamesSpan  = this.createElement("span", null, ["p-1"]);
+    const liveGamesPlayButton = this.createElement("a", null, ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"])
+    liveGamesPlayButton.innerHTML = "▶️"
+    liveGamesPlayButton.addEventListener('click', event => {
+      const els = document.getElementsByClassName("page");
+      Array.from(els).forEach((el) => {
+        el.classList.add("hide")
+      });
+      document.getElementById("liveGamesPage").classList.remove("hide")
+    });
+    const liveGamesLink = this.createElement("a", null, ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"]);
+    liveGamesLink.textContent = "View Live Games ";
     liveGamesLink.addEventListener('click', event => {
       const els = document.getElementsByClassName("page");
       Array.from(els).forEach((el) => {
@@ -226,16 +237,17 @@ class View {
       });
       document.getElementById("liveGamesPage").classList.remove("hide")
     });
-    this.homePageListGroup.append(liveGamesLink);
+    liveGamesSpan.append(liveGamesPlayButton,liveGamesLink)
+    this.homePageListGroup.append(liveGamesSpan);
     const scores = game.getScores()
 
     for (let i = 0; i < scores.length; i++) {
       
       this.homePageListGroupItems[i] = this.createElement("span", null, ["p-1"]);
       
-      const gameScore = this.createElement("span", null, null)
+      const gameScore = this.createElement("span", null, ["p-2"])
       gameScore.innerHTML = "Game " + i + ": " + scores[i];
-      const playButton = this.createElement("a", null, ["p-1","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"])
+      const playButton = this.createElement("a", null, ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"])
       playButton.innerHTML = "▶️"
       //this.homePageListGroupItems[i].onclick = this.showPage("game"+i)
       playButton.addEventListener('click', event => {
@@ -247,7 +259,7 @@ class View {
         const container = document.getElementById("page" + i).children[1]
         container.scrollTop = container.scrollHeight
       });
-      this.homePageListGroupItems[i].append(gameScore,playButton)
+      this.homePageListGroupItems[i].append(playButton, gameScore)
       this.homePageListGroup.append(this.homePageListGroupItems[i]);
       this.homePage.append(this.homePageListGroup);
     }
@@ -256,7 +268,7 @@ class View {
 
   addPageLiveGames(game){
     this.liveGamesPage = this.createElement("div","liveGamesPage",["page","hide"]);
-    const heading = this.createElement("h3", null, null);
+    const heading = this.createElement("h3", null,"pb-4");
     heading.textContent = "Live Games"
     this.liveGamesPage.append(heading);
     const liveGamesContainer = this.createElement("div","liveGamesContainer","container");
@@ -266,7 +278,9 @@ class View {
       liveGamesContainer.append(this.gameWidgetItems[i]);
       this.liveGamesPage.append(liveGamesContainer);
     }
+    
     this.pageContainer.append(this.liveGamesPage);
+    return gameMessages
   }
 
   

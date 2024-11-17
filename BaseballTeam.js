@@ -60,10 +60,21 @@ class BaseballTeam {
     
     
     this.stats = new Stats(this.colorScheme + this.place, this.name)
-    this.dailyStats = new Stats(this.colorScheme + this.place, this.name)
+    this.lifetimeStats = new Stats(this.colorScheme + this.place, this.name)
     this.xp = 0
     
     this.batterUpNumber = 0;
+    this.manager = new StatsEventManager();
+  }
+
+  addLoss(){
+    this.stats.losses++;
+    this.stats.gamesPlayed++;
+    this.lifetimeStats.losses++;
+    this.lifetimeStats.gamesPlayed++;
+    for(let eachPlayer of this.players){
+      eachPlayer.addWin()
+    }
   }
 
   addPlayer(newPlayer) {
@@ -71,6 +82,16 @@ class BaseballTeam {
     newPlayer.stats.teamLocation= this.getPlace()
     this.players.push(newPlayer)
     this.setup()
+  }
+
+  addWin(){
+    this.stats.wins++;
+    this.stats.gamesPlayed++;
+    this.lifetimeStats.wins++;
+    this.lifetimeStats.gamesPlayed++;
+    for(let eachPlayer of this.players){
+      eachPlayer.addWin()
+    }
   }
 
   equals(otherObject){
@@ -95,41 +116,6 @@ class BaseballTeam {
     return result
   }
 
-  // getPlaybook() {
-  //   let result = "-----Playbook-----"
-  //   let count = 1
-  //   //for each in this.playbook["pass"]:
-  //   for (let each of this.playbook["pass"]) {
-  //     result += '\n' + (count) + '. ' + (each)
-  //     count += 1
-  //   }
-  //   //for each in this.playbook["run"]:
-  //   for (let each of this.playbook["run"]) {
-  //     result += '\n' + (count) + '. ' + (each)
-  //     count += 1
-  //   }
-  //   return result
-  // }
-
-  // getOffensePlay(down, toFirstDown) {
-  //   let playType;
-  //   let preferredPlayType = this.preferredPlayOrder[(down - 1)];
-  //   //# if LONG 75+% chance of pass
-  //   if (toFirstDown > 10) {
-  //     playType = ["pass", "pass", "pass", "pass", "pass", "pass", "run",
-  //       preferredPlayType
-  //     ][Math.floor(rng.random() * 8)]
-  //   } else if (toFirstDown <= 3) {
-  //     //# if SHORT 75+% chance of run
-  //     playType = ["pass", "run", "run", "run", "run", "run", "run",
-  //       preferredPlayType
-  //     ][Math.floor(rng.random() * 8)]
-  //   } else {
-  //     //# 75% chance of preferredPlayType
-  //     playType = ["pass", "run", preferredPlayType, preferredPlayType][Math.floor(rng.random() * 4)]
-  //   }
-  //   return this.playbook[playType][Math.floor(rng.random() * this.playbook[playType].length)]
-  // }
 
   getName() {
     return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
@@ -164,16 +150,7 @@ class BaseballTeam {
     return this.pitcher;
   }
 
-  
 
-
-  // getPlayerList() {
-  //   let result = "<div class='list-group bg-dark'>"
-  //   for (let each of this.players) {
-  //     result += '<a href="#" onclick="app.updateModal('+each.leagueIdNumber+')" class="list-group-item list-group-item-action text-light bg-dark border-secondary">' + each.fullname + each.position + '</a>'
-  //   }
-  //   return result + "</div>"
-  // }
 
   getPlayerList() {
     let result = "";
@@ -205,6 +182,10 @@ class BaseballTeam {
     // return result
   }
 
+  getStats() {
+    return this.getFullName() + "\n" + (this.stats)
+  }
+
   getTeamAptitude() {
     let total = 0
     for (let each of this.players) {
@@ -215,18 +196,8 @@ class BaseballTeam {
     return total / (this.players.length * 2 + 1) * 100 / 100
   }
 
-  // getStyleGrade(style) {
-  //   let total = 0
-  //   for (let each of this.players) {
-  //     if (each.isAsleep()) {
-  //       continue
-  //     }
-  //     if (each.style == style) {
-  //       total += 1
-  //     }
-  //   }
-  //   return Math.round(total / this.players.length * 100) / 100
-  // }
+  
+
 
   getWinRatio() {
     if (this.stats.gamesPlayed == 0) {
@@ -251,71 +222,10 @@ class BaseballTeam {
     return result
   }
 
-  getDefenseGrade() {
-    let total = 0
-    for (let each of this.players) {
-      if (each.isAsleep()) {
-        continue
-      }
-      total += each.getDefenseGrade()
-    }
-    return Math.round(total / this.players.length * 100) / 100
-  }
 
 
-  getPlayerStats() {
-    let result = ""
-    for (let each of this.players) {
-      result += each.getFullStats()
-    }
-    return result
-  }
 
-  getPlayerToTrade() {
-    for (let i = 0; i < this.players.length; i++) {
-      result = this.getRandomPlayer()
-      if (result.position == null) {
-        return result
-      }
-    }
-    return this.players[this.players.length]
-  }
 
-  // getPlayerWithHigh(attributeString = null) {
-  //   //for i in range(12,0,-1):
-  //   for (let i = 12; i >= 0; i--) {
-  //     let randPlayer = this.players[Math.floor(rng.random() * this.players.length)]
-  //     if (randPlayer.isAsleep()) {
-  //       continue
-  //     }
-  //     if (randPlayer[attributeString] >= i) {
-  //       return randPlayer
-  //     }
-  //   }
-  //   return this.players[Math.floor(rng.random() * this.players.length)]
-  // }
-
-  // getPlayerWithLow(attributeString = null) {
-  //   //for i in range(0,13,1):
-  //   for (let i = 0; i < 13; i++) {
-  //     randPlayer = random.choice(this.players)
-  //     if (randPlayer.isAsleep()) {
-  //       continue
-  //     }
-  //     if (randPlayer[attributeString] <= i) {
-  //       return randPlayer
-  //     }
-  //   }
-  //   return random.choice(this.players)
-  // }
-
-  getMood(clock) {
-    return Math.sin(this.mood * clock)
-  }
-
-  getTeamStats() {
-    return this.getFullName() + "\n" + (this.stats)
-  }
 
   removePlayer(formerPlayer) {
     formerPlayer.teamName = null
@@ -323,14 +233,11 @@ class BaseballTeam {
     this.setup()
   }
 
-  setup() {
-    for (let i = 0; i < this.players.length; i++) {
-      this.players[i].teamName = this.colorScheme + this.place
-      this.players[i].stats.teamLocation = this.colorScheme + this.place
-    }
-    this.setPositions()
-    
+  resetSeasonStats() {
+    this.stats = new Stats(this.colorScheme + this.place, this.name)
   }
+
+
 
   setHungerUp() {
     //this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
@@ -350,60 +257,6 @@ class BaseballTeam {
       eachPlayer.setHungerDown();
     }
   }
-
-//   toString() {
-//     return `
-//         Team ID: ${this.teamIdNumber}<br>
-//         Place: ${this.place}<br>
-//         Team Name: ${this.name}<br>
-//         Color Scheme: ${this.colorScheme}<br>
-//         Team Aptitude: ${this.getTeamAptitude().toFixed(1)}<br>
-//         Mood: ${this.mood.toFixed(1)}<br>
-//         Hunger: ${this.hunger.toFixed(1)}<br>
-//         Hunger Rate: ${this.hungerRate.toFixed(1)}<br>
-//         XP: ${this.xp.toFixed(1)}<br>
-//         Batter Up Number: ${this.batterUpNumber}<br>
-//         Jersey Numbers: ${this.jerseyNumberList.join(", ")}<br>
-//         Stats: ${this.stats.toString()}<br>
-//         Daily Stats: ${this.dailyStats.toString()}<br>
-//         -----Players-----<br>
-//         Number of Players: ${this.players.length}<br>
-//         ${this.getPlayerList()}<br>
-//     `.trim();
-// }
-
-toString() {
-  return `
-      <table class="table table-dark table-striped table-bordered">
-          <thead>
-              <tr>
-                  <th colspan="2">Team Details</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
-              <tr><td>Place</td><td>${this.place}</td></tr>
-              <tr><td>Team Name</td><td>${this.name}</td></tr>
-              <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
-              <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
-              <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
-              <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-              <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
-              <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
-              <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
-              <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
-              <tr><td>Stats</td><td>${this.stats.toString()}</td></tr>
-              <tr><td>Daily Stats</td><td>${this.dailyStats.toString()}</td></tr>
-              <tr>
-                  <th colspan="2">Players</th>
-              </tr>
-              <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
-              ${this.getPlayerList()}
-          </tbody>
-      </table>
-  `.trim();
-}
-
 
   setPositions() {
     //# reset positions
@@ -447,15 +300,65 @@ toString() {
 
   }
 
-
-
-
-
-
-
-  resetSeasonStats() {
-    this.stats = new Stats(this.colorScheme + this.place, this.name)
+  setup() {
+    for (let i = 0; i < this.players.length; i++) {
+      this.players[i].teamName = this.colorScheme + this.place
+      this.players[i].stats.teamLocation = this.colorScheme + this.place
+    }
+    this.setPositions()
+    
   }
+
+toString() {
+  return `
+      <table class="table table-dark table-striped table-bordered">
+          <thead>
+              <tr>
+                  <th colspan="2">Team Details</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
+              <tr><td>Place</td><td>${this.place}</td></tr>
+              <tr><td>Team Name</td><td>${this.name}</td></tr>
+              <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
+              <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
+              <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
+              <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+              <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+              <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
+              <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
+              <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
+             
+              <tr>
+                  <th colspan="2">Players</th>
+              </tr>
+              <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
+              ${this.getPlayerList()}
+              
+          </tbody>
+      </table>
+      <details>
+        <summary>Stats</summary>
+          ${this.stats.toString()}
+      </details>
+      <details>
+        <summary>Lifetime Stats</summary>
+          ${this.lifetimeStats.toString()}
+      </details>
+  `.trim();
+}
+
+
+  
+
+
+
+
+
+
+
+
 
   updateXp() {
     this.xp += this.dailyXp

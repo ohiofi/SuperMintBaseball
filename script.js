@@ -6,21 +6,37 @@ const app = new Controller(new Model(), new View())
 // let bgame = new BaseballGame(new BaseballTeam(), new BaseballTeam());
 // let count = 0
 
-function addAlert(message, type) {
-  // Create the div element
-  const alertDiv = document.createElement('div');
-  // Add the appropriate Bootstrap classes
-  alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'mx-5', 'w-25', 'my-0'); 
-  // Add the message to the div
-  alertDiv.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-  // Append the div to the body
-  document.getElementById("alertContainer").appendChild(alertDiv);
+function addAlert(message, type) { 
+    // const cont = 
+    //     document.getElementById('alertContainer');
+    // while (cont.firstChild) {
+    //     cont.removeChild(cont.firstChild);
+    // }
+    // const aDiv = document.createElement('div');
+    // aDiv.classList.
+    //     add('alert', 'alert-' + 
+    //         type, 'alert-dismissible', 
+    //         'fade', 'show', 'w-25','float-end');
+    // aDiv.setAttribute('role', 'alert');
+    // aDiv.innerHTML = message + 
+    // `<button type="button"
+    //     class="btn-close" data-bs-dismiss="alert"
+    //     aria-label="Close">
+    // </button>`;
+    // cont.appendChild(aDiv);
+    // setTimeout(function () {
+    //     aDiv.classList.remove('show');
+    //     aDiv.remove();
+    // }, 3000);
+    // app.view.newsTickerContainer.innerHTML =  "BREAKING NEWS: " + message;
+    app.model.game.newsTicker.setBreakingNews(message);
+    
 }
 
 // CUSTOM EVENT LISTENERS
 document.addEventListener('HomeRun', (event) => {
-  addAlert('Home Run!', 'success');
-  console.log(event.detail.message); // Output: 'Hello from the custom event!'
+  addAlert('Home Run! '+new Date(), 'success');
+ 
 });
 
 // function showPage(pageName) {

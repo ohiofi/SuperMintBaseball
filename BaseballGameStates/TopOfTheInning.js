@@ -21,11 +21,11 @@ class TopOfTheInning extends BaseballGameState{
     }
 
     setupTopInning(baseballGame) {
-        
-        baseballGame.setOffenseTeam(baseballGame.getAwayTeamName());
+        baseballGame.setInningTop(true);
+        baseballGame.setOffenseTeam();
         baseballGame.threeOutsCleanup();
         baseballGame.incrementInning();
-        baseballGame.setInningTop(true);
+        
         // check if new inning needs added to box score
         if(baseballGame.getInning() > baseballGame.boxScore.away.innings.length){
             baseballGame.boxScore.away.innings.push(0);
@@ -33,6 +33,6 @@ class TopOfTheInning extends BaseballGameState{
         // return "Top of inning " + baseballGame.getInning() + ', <a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal('+baseballGame.awayTeam.leagueIdNumber+');" data-bs-target="#myModal" data-bs-toggle="modal" >'+
         // baseballGame.getAwayTeamName() + "</a> batting.";
         return "Top of inning " + baseballGame.getInning() + ', ' +
-        baseballGame.awayTeam.getNameWithLink() + " batting.";
+        baseballGame.offenseTeam.getNameWithLink() + " batting.";
     }
 }

@@ -52,6 +52,9 @@ class BaseballPlayer {
         this.teamName = "null"; // Team name
         this.teamLeagueIdNumber = 0;
         this.position = "null"; // Position on the field
+        this.tattoos = Name.webSafeEmojiCodes[Name.getCharSum(this.firstName) % Name.webSafeEmojiCodes.length] + 
+                        Name.webSafeEmojiCodes[Name.getCharSum(this.lastName) % Name.webSafeEmojiCodes.length];
+
         this.age = Math.floor(rng.random() * 11) + 20; // age range is [20...30] inclusive
         this.hunger = 1;
         this.hungerRate = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -71,8 +74,23 @@ class BaseballPlayer {
         this.teamwork = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.stats = new Stats(); // current season only
         this.lifetimeStats = new Stats();
+        this.manager = new StatsEventManager();
     }
 
+    addLoss(){
+        this.stats.losses++;
+        this.stats.gamesPlayed++;
+        this.lifetimeStats.losses++;
+        this.lifetimeStats.gamesPlayed++;
+
+      }
+
+    addWin(){
+        this.stats.wins++;
+        this.stats.gamesPlayed++;
+        this.lifetimeStats.wins++;
+        this.lifetimeStats.gamesPlayed++;
+      }
 
 
     // Method to display player information
@@ -260,6 +278,7 @@ class BaseballPlayer {
                     </td></tr>
                     <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
                     <tr><td>Position</td><td>${this.position}</td></tr>
+                    <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
                     <tr><td>Age</td><td>${this.age}</td></tr>
                     <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
                     <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
@@ -286,6 +305,14 @@ class BaseballPlayer {
                     <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
                 </tbody>
             </table>
+            <details>
+        <summary>Stats</summary>
+          ${this.stats.toString()}
+      </details>
+      <details>
+        <summary>Lifetime Stats</summary>
+          ${this.lifetimeStats.toString()}
+      </details>
         `.trim();
     }
     

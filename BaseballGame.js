@@ -521,7 +521,7 @@ class BaseballGame {
         this.isTopOfInning = isTop === true;
     }
 
-    setOffenseTeam(teamNameString) {
+    setOffenseTeam() {
         // if ((typeof teamNameString === 'string' || teamNameString instanceof String) && [this.awayTeam.getName(), this.homeTeam.getName()].includes(teamNameString)) {
 
         //     if (teamNameString === this.homeTeam.getName()) {
@@ -533,11 +533,11 @@ class BaseballGame {
         //     }
         // }
         if (this.isTopOfInning) {
-            this.offenseTeam = this.homeTeam;
-            this.defenseTeam = this.awayTeam;
-        } else {
             this.offenseTeam = this.awayTeam;
             this.defenseTeam = this.homeTeam;
+        } else {
+            this.offenseTeam = this.homeTeam;
+            this.defenseTeam = this.awayTeam;
         }
     }
 

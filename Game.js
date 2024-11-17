@@ -10,6 +10,7 @@ class Game{
     constructor(){
         this.users = [];
         this.league = new League(12);
+        this.newsTicker = new NewsTicker();
     }
 
     getScores(){

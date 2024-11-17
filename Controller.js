@@ -5,11 +5,13 @@ class Controller {
     this.view.addTickerItems(this.model.game);
     //this.view.addPageMenuBarItems(this.model.game);
     this.view.addPageHome(this.model.game)
-    this.view.addPageLiveGames(this.model.game);
+    const gameMessages = this.view.addPageLiveGames(this.model.game);
     this.view.addAllGamePages(this.model.game);
+    this.view.addGameMessages(gameMessages)
     this.view.addMenuBarItemGamePages(this.model.game)
     this.timeIntervalId;
     this.speed = 3000;
+    
 
 
 
@@ -18,16 +20,8 @@ class Controller {
 
     this.newsTickerInterval = setInterval(() => {
       // app.view.updateHomePageListGroupItems(app.model.game);
-      this.updateTickerItems(this.model.game.getScores());
-      let parent = document.getElementById('newsTickerContainer');
-      let slide = parent.querySelectorAll('.newsTickerItem');
-      for (let i = 0; i < slide.length; i++) {
-        slide[i].classList.toggle('sliding-now');
-      }
-      setTimeout(function () {
-        parent.appendChild(slide[0]);
-      }, 5000);
-
+      this.model.game.newsTicker.update(this.model.game.getScores());
+      this.model.game.newsTicker.show();
     }, 5000);
 
 
@@ -45,19 +39,7 @@ class Controller {
       this.updateGameWidgetItems(gameMessages);
 
     }, this.speed);
-    // auto dismiss alerts
-    let alert_list = document.querySelectorAll('.alert')
-            alert_list.forEach(function(alertNode) {
-              
-              let alert = bootstrap.Alert.getInstance(alertNode)
-              alert.close()
-              
-
-                
-                // setTimeout(() => {
-                //     bootstrap.Alert.getInstance(alert).close();
-                // }, 2000);
-            });
+    
   }
 
   updateGamePageBoxScores(gameMessages) {
@@ -98,11 +80,12 @@ class Controller {
 
   updateHomePageListGroupItems(scores) {
     for (let i = 0; i < scores.length; i++) {
-      this.view.homePageListGroupItems[i].children[0].innerHTML = scores[i];
+      this.view.homePageListGroupItems[i].children[1].innerHTML = scores[i];
     }
   }
 
   updateModal(idNumber) {
+    console.log("updateModal "+idNumber)
     const object = this.model.game.league.lookupLeagueId(idNumber);
     if (object === null) throw new Error("updateModal could not find " + idNumber);
     // modal > modal-dialog > modal-content > modal-header
@@ -114,12 +97,7 @@ class Controller {
 
   }
 
-  updateTickerItems(scores) {
-    for (let i = 0; i < scores.length; i++) {
-      this.view.tickerItems[i].innerHTML = scores[i];
-      // this.newsTickerContainer.append(this.tickerItems[i]);
-    }
-  }
+  
 
 
 

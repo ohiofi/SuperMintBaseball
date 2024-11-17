@@ -25,6 +25,7 @@ class League {
     // make teams
     for (let i = 0; i < this.numberOfTeams; i++) {
       let tempTeam = new BaseballTeam();
+      tempTeam.manager.subscribe(this.handleEvent);
       tempTeam.leagueIdNumber = League.leagueIdNumberCount++;
       this.teams.push(tempTeam);
       // fill teams with players
@@ -39,6 +40,7 @@ class League {
         tempPlayer.leagueIdNumber = League.leagueIdNumberCount++;
         tempPlayer.teamLeagueIdNumber = tempTeam.leagueIdNumber;
         tempTeam.players.push(tempPlayer)
+        tempPlayer.manager.subscribe(this.handleEvent);
       }
       tempTeam.setup();
     }
@@ -94,7 +96,16 @@ class League {
   }
 
   handleEvent(data){
-    console.log("League sees this data: "+data);
+    switch(data.eventType){
+      case StatsEventType.GAME_WINNER:
+        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addWin()
+        break
+      case StatsEventType.GAME_LOSER:
+        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addLoss()
+        break
+    }
+      
+
   }
 
   lookupLeagueId(idNum){

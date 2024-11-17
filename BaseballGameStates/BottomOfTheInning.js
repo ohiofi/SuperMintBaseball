@@ -17,14 +17,15 @@ class BottomOfTheInning extends BaseballGameState{
     }
 
     setupBottomInning(baseballGame) {
-        baseballGame.setOffenseTeam(baseballGame.getHomeTeamName());
-        baseballGame.threeOutsCleanup()
         baseballGame.setInningTop(false);
+        baseballGame.setOffenseTeam();
+        baseballGame.threeOutsCleanup()
+        
         // check if new inning needs added to box score
         if(baseballGame.getInning() > baseballGame.boxScore.home.innings.length){
             baseballGame.boxScore.home.innings.push(0);
         }
         return "Bottom of inning " + baseballGame.getInning() + ', ' +
-        baseballGame.homeTeam.getNameWithLink() + " batting.";
+        baseballGame.offenseTeam.getNameWithLink() + " batting.";
     }
 }
