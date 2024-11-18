@@ -2,7 +2,7 @@ class View {
   constructor() {
     this.app = this.getElement("#root");
     // this.alertContainer = this.createElement("div", "alertContainer", ["m-5"]);
-    this.newsTickerContainer = this.createElement("div", "newsTickerContainer", ["text-center","mt-4"]);
+    this.newsTickerContainer = this.createElement("div", "newsTickerContainer", ["mt-4"]);
     this.tickerItems = [];
     this.pageMenuBar = this.createElement("ul", null, "pagination");
     this.addMenuBarItemHome()
@@ -173,6 +173,20 @@ class View {
     this.pageMenuBar.append(menuItem);
   }
 
+
+  addNewsTickerItems(game) {
+    const newsTickerRibbon = this.createElement("p", "newsTickerRibbon", null);
+    const scores = game.getScores();
+    // add TWICE as many items as there are games
+    for(let i=0;i<scores.length * 2;i++){
+      this.tickerItems[i] = this.createElement("span", null, ["newsTickerItem"]);
+      this.tickerItems[i].innerHTML = scores[i % scores.length];
+      
+      newsTickerRibbon.append(this.tickerItems[i]);
+    }
+    this.newsTickerContainer.append(newsTickerRibbon);
+  }
+
   addPageGamePage(score,gameNum){
     const gamePage = this.createElement("div","page"+gameNum,["page","hide"])
       const heading = this.createElement("h3", null,"pb-4");
@@ -287,15 +301,6 @@ class View {
 
   
 
-  addTickerItems(game) {
-    const scores = game.getScores();
-    for(let i=0;i<scores.length;i++){
-      this.tickerItems[i] = this.createElement("div", null, ["newsTickerItem","text-end"]);
-      this.tickerItems[i].innerHTML = scores[i];
-      
-      this.newsTickerContainer.append(this.tickerItems[i]);
-    }
-  }
 
   addMenuBarItemLive() {
     const menuItem = this.createElement("li", null, "page-item");

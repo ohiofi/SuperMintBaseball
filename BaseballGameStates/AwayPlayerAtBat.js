@@ -22,6 +22,7 @@ class AwayPlayerAtBat extends BaseballGameState {
     }
 
     nextState(baseballGame) {
+        
         baseballGame.setGameState(new BottomOfTheInning());
     }
 

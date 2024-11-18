@@ -112,7 +112,7 @@ class BaseballGame {
         }
     }
 
-    advanceBaseRunners(numberToAdvance) {
+    advanceBaseRunners(numberToAdvance,isSacrificeFly) {
         let result = "";
         if (numberToAdvance == null) {
             numberToAdvance = 0;
@@ -122,18 +122,17 @@ class BaseballGame {
             this.pitcher.setHungerUp()
             this.incrementScore();
             this.onBase[2] = null;
-            const myEvent = new CustomEvent('HomeRun', {
-                detail: {
-                    message: 'Hello from the custom event!'
-                }
-            });
-            // Dispatch the event on an element (e.g., the document)
-            document.dispatchEvent(myEvent);
+            if(isSacrificeFly){
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            }
         }
         if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
             result += "<br>" + this.onBase[1].getNameWithLink() + " SCORES!";
             this.incrementScore();
             this.onBase[1] = null;
+            if(isSacrificeFly){
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            }
         } else if (this.onBase[1] != null && numberToAdvance == 1) { // SECOND BASE RUNNER advances
             this.onBase[1 + numberToAdvance] = this.onBase[1];
             this.onBase[1] = null;
@@ -142,9 +141,13 @@ class BaseballGame {
             result += "<br>" + this.onBase[0].getNameWithLink() + " SCORES!";
             this.incrementScore();
             this.onBase[0] = null;
+            if(isSacrificeFly){
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            }
         } else if (this.onBase[0] != null && numberToAdvance >= 1) { // FIRST BASE RUNNER advances
             this.onBase[0 + numberToAdvance] = this.onBase[0];
             this.onBase[0] = null;
+            
         }
         return result;
     }
@@ -223,9 +226,8 @@ class BaseballGame {
                 result += defender.getNameWithLink() + " makes the catch. " + this.getOutsString()
                 defender.setHungerDown()
                 this.batter.setHungerUp()
-
                 if (this.count.outs < 3) {
-                    result += this.advanceBaseRunners(1)
+                    result += this.advanceBaseRunners(1,true)
                 }
             } else if (hitScore / defenseScore <= 1.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a SINGLE"
@@ -234,6 +236,9 @@ class BaseballGame {
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.SINGLES,this.offenseTeam,this.batter)
+                )
             } else if (hitScore / defenseScore <= 2.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a DOUBLE"
                 result += this.advanceBaseRunners(2)
@@ -241,6 +246,9 @@ class BaseballGame {
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.DOUBLES,this.offenseTeam,this.batter)
+                )
             } else if (hitScore / defenseScore <= 3.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a TRIPLE"
                 result += this.advanceBaseRunners(3)
@@ -248,6 +256,9 @@ class BaseballGame {
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.TRIPLES,this.offenseTeam,this.batter)
+                )
             } else {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a HOME RUN!"
 
@@ -256,6 +267,12 @@ class BaseballGame {
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.HOME_RUNS,this.offenseTeam,this.batter)
+                )
+                this.pitcher.manager.notify(
+                    new StatsEvent(StatsEventType.HOME_RUNS_ALLOWED,this.offenseTeam,this.batter)
+                )
             }
             this.gameState.previousState(this);
             this.count.balls = 0;

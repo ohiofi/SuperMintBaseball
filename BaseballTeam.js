@@ -2,17 +2,17 @@ class BaseballTeam {
 
   static idCounter = 0;
 
-  static restructure(jsonObject){
+  static restructure(jsonObject) {
     Object.setPrototypeOf(jsonObject, BaseballTeam.prototype);
-    if(jsonObject.pitcher != null) jsonObject.pitcher = Object.setPrototypeOf(jsonObject.pitcher, BaseballPlayer.prototype);
-    if(jsonObject.slugger != null) jsonObject.slugger = Object.setPrototypeOf(jsonObject.slugger, BaseballPlayer.prototype);
-    for(let i=0; i<jsonObject.players.length;i++){
+    if (jsonObject.pitcher != null) jsonObject.pitcher = Object.setPrototypeOf(jsonObject.pitcher, BaseballPlayer.prototype);
+    if (jsonObject.slugger != null) jsonObject.slugger = Object.setPrototypeOf(jsonObject.slugger, BaseballPlayer.prototype);
+    for (let i = 0; i < jsonObject.players.length; i++) {
       jsonObject.players[i] = Object.setPrototypeOf(jsonObject.players[i], BaseballPlayer.prototype);
     }
     this.setup();
     return jsonObject;
-}
-  
+  }
+
   static debug() {
     let temp = new BaseballTeam();
     temp.players = []
@@ -43,62 +43,134 @@ class BaseballTeam {
     //   this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
     // }
     //BaseballTeam.teamPlaceList.push(this.place)
-    this.colorScheme = Name.colorCombos.splice(Math.floor(rng.random() * Name.colorCombos.length),1)[0];
+    this.colorScheme = Name.colorCombos.splice(Math.floor(rng.random() * Name.colorCombos.length), 1)[0];
     this.place = "unknown place"
-    if(Name.placeList.length > 0){
-      this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length),1)[0];
+    if (Name.placeList.length > 0) {
+      this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length), 1)[0];
     }
-    
-    this.name = Name.teamNameList.splice(Math.floor(rng.random() * Name.teamNameList.length),1)[0];
+
+    this.name = Name.teamNameList.splice(Math.floor(rng.random() * Name.teamNameList.length), 1)[0];
     this.pitcher = null;
     this.slugger = null;
-    
+
     this.mood = rng.random() * 0.5 + rng.random() * 0.5
     this.hunger = 1
     this.hungerRate = 0.35
     this.players = []
-    
-    
+
+
     this.stats = new Stats(this.colorScheme + this.place, this.name)
     this.lifetimeStats = new Stats(this.colorScheme + this.place, this.name)
     this.xp = 0
-    
+
     this.batterUpNumber = 0;
     this.manager = new StatsEventManager();
   }
 
-  addLoss(){
+  addAtBats() {
+    this.stats.atBats++;
+    this.lifetimeStats.atBats++;
+  }
+  addBasesOnBalls() {
+    this.stats.basesOnBalls++;
+    this.lifetimeStats.basesOnBalls++;
+  }
+  addDoubles() {
+    this.stats.doubles++;
+    this.lifetimeStats.doubles++;
+    this.addHits();
+    this.addTotalBases(2)
+  }
+  addHits() {
+    this.stats.hits++;
+    this.lifetimeStats.hits++;
+  }
+  addHomeRuns() {
+    this.stats.homeRuns++;
+    this.lifetimeStats.homeRuns++;
+    this.addHits();
+    this.addTotalBases(4)
+  }
+  addHomeRunsAllowed() {
+    this.stats.homeRunsAllowed++;
+    this.lifetimeStats.homeRunsAllowed++;
+  }
+  addInningsPitched() {
+    this.stats.inningsPitched++;
+    this.lifetimeStats.inningsPitched++;
+  }
+  addLoss() {
     this.stats.losses++;
     this.stats.gamesPlayed++;
     this.lifetimeStats.losses++;
     this.lifetimeStats.gamesPlayed++;
-    for(let eachPlayer of this.players){
-      eachPlayer.addWin()
+    for (let eachPlayer of this.players) {
+      eachPlayer.addLoss()
     }
   }
-
-  addPlayer(newPlayer) {
-    newPlayer.teamName = this.colorScheme + this.place
-    newPlayer.stats.teamLocation= this.getPlace()
-    this.players.push(newPlayer)
-    this.setup()
+  addRunsAllowed() {
+    this.stats.runsAllowed++;
+    this.lifetimeStats.runsAllowed++;
   }
-
-  addWin(){
+  addSacrificeFlies() {
+    this.stats.sacrificeFlies++;
+    this.lifetimeStats.sacrificeFlies++;
+    this.addHits();
+    this.addTotalBases(1)
+  }
+  addSingles() {
+    this.stats.singles++;
+    this.lifetimeStats.singles++;
+    this.addHits();
+    this.addTotalBases(1)
+  }
+  addStrikeoutsAtBat() {
+    this.stats.strikeoutsAtBat++;
+    this.lifetimeStats.strikeoutsAtBat++;
+  }
+  addStrikeoutsThrown() {
+    this.stats.strikeoutsThrown++;
+    this.lifetimeStats.strikeoutsThrown++;
+  }
+  addTotalBases(num) {
+    this.stats.totalBases += num;
+    this.lifetimeStats.totalBases += num;
+  }
+  addTriples() {
+    this.stats.triples++;
+    this.lifetimeStats.triples++;
+    this.addHits();
+    this.addTotalBases(3)
+  }
+  addWalksAllowed() {
+    this.stats.walksAllowed++;
+    this.lifetimeStats.walksAllowed++;
+  }
+  addWin() {
     this.stats.wins++;
     this.stats.gamesPlayed++;
     this.lifetimeStats.wins++;
     this.lifetimeStats.gamesPlayed++;
-    for(let eachPlayer of this.players){
+    for (let eachPlayer of this.players) {
       eachPlayer.addWin()
     }
   }
 
-  equals(otherObject){
+
+  addPlayer(newPlayer) {
+    newPlayer.teamName = this.colorScheme + this.place
+    newPlayer.stats.teamLocation = this.getPlace()
+    this.players.push(newPlayer)
+    this.setup()
+  }
+
+
+
+  equals(otherObject) {
     return this.teamIdNumber === otherObject.teamIdNumber &&
-    this.name === otherObject.name &&
-    this.place === otherObject.place &&
-    this.colorScheme === otherObject.colorScheme
+      this.name === otherObject.name &&
+      this.place === otherObject.place &&
+      this.colorScheme === otherObject.colorScheme
   }
 
 
@@ -121,10 +193,10 @@ class BaseballTeam {
     return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
   }
 
-  getNameWithLink(){
-    return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' + 
-    this.getName() + '</a>';
-}
+  getNameWithLink() {
+    return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' +
+      this.getName() + '</a>';
+  }
 
   getFullName() {
     return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
@@ -135,16 +207,16 @@ class BaseballTeam {
   }
 
 
-  
 
-  
 
-  getNextBatter(){
+
+
+  getNextBatter() {
     return this.players[this.batterUpNumber++ % this.players.length];
   }
 
-  getPitcher(){
-    if(this.pitcher == null){
+  getPitcher() {
+    if (this.pitcher == null) {
       this.setup();
     }
     return this.pitcher;
@@ -155,7 +227,7 @@ class BaseballTeam {
   getPlayerList() {
     let result = "";
     for (let each of this.players) {
-        result += `
+      result += `
             <tr>
                 <td>
                     <a href="#" onclick="app.updateModal(${each.leagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
@@ -167,7 +239,7 @@ class BaseballTeam {
         `;
     }
     return result.trim();
-}
+  }
 
 
   getRandomPlayer() {
@@ -196,7 +268,7 @@ class BaseballTeam {
     return total / (this.players.length * 2 + 1) * 100 / 100
   }
 
-  
+
 
 
   getWinRatio() {
@@ -241,7 +313,7 @@ class BaseballTeam {
 
   setHungerUp() {
     //this.hunger += rng.random() * this.hungerRate + rng.random() * this.hungerRate
-    for(let eachPlayer of this.players){
+    for (let eachPlayer of this.players) {
       eachPlayer.setHungerUp();
     }
   }
@@ -253,7 +325,7 @@ class BaseballTeam {
     // else if (this.hunger > 0.01 && this.hungerRate >= 1) {
     //     this.hunger *= 0.5;
     // }
-    for(let eachPlayer of this.players){
+    for (let eachPlayer of this.players) {
       eachPlayer.setHungerDown();
     }
   }
@@ -265,7 +337,7 @@ class BaseballTeam {
     }
     //# find pitcher
     //this.players.sort(key=lambda x: x.getPitchingAptitude(), reverse=true)
-    this.players.sort(function(a, b) {
+    this.players.sort(function (a, b) {
       return b.getPitchingAptitude() - a.getPitchingAptitude()
     });
     for (let eachPlayer of this.players) {
@@ -277,7 +349,7 @@ class BaseballTeam {
     }
     //# find slugger
     //this.players.sort(key=lambda x: x.getBattingAptitude(), reverse=true)
-    this.players.sort(function(a, b) {
+    this.players.sort(function (a, b) {
       return b.getBattingAptitude() - a.getBattingAptitude()
     });
     for (let eachPlayer of this.players) {
@@ -306,11 +378,11 @@ class BaseballTeam {
       this.players[i].stats.teamLocation = this.colorScheme + this.place
     }
     this.setPositions()
-    
+
   }
 
-toString() {
-  return `
+  toString() {
+    return `
       <table class="table table-dark table-striped table-bordered">
           <thead>
               <tr>
@@ -347,10 +419,10 @@ toString() {
           ${this.lifetimeStats.toString()}
       </details>
   `.trim();
-}
+  }
 
 
-  
+
 
 
 

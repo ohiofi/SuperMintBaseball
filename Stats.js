@@ -13,6 +13,9 @@ class Stats {
     this.homeRuns = 0;
     this.atBats = 0;
     this.hits = 0;
+    this.singles = 0;
+    this.doubles = 0;
+    this.triples = 0;
     this.basesOnBalls = 0;
     this.sacrificeFlies = 0;
     this.totalBases = 0;
@@ -22,8 +25,6 @@ class Stats {
     // pitcher stuff
     this.inningsPitched = 0
     this.strikeoutsThrown = 0;
-    this.pitchesThrown = 0;
-    this.gamesPitched = 0;
     this.runsAllowed = 0;
     this.homeRunsAllowed = 0;
     this.walksAllowed = 0;
@@ -51,7 +52,7 @@ displayStats() {
   }
 
   getEarnedRunAverage() {
-    return this.inningsPitched > 0 ? ((this.runsAllowed / this.inningsPitched) * 9).toFixed(3) : -1;
+    return this.inningsPitched > 0 ? ((this.runsAllowed / this.inningsPitched) * 9).toFixed(3) : 999;
   }
 
   

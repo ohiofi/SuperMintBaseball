@@ -2,7 +2,7 @@ class Controller {
   constructor(model, view) {
     this.model = model
     this.view = view
-    this.view.addTickerItems(this.model.game);
+    this.view.addNewsTickerItems(this.model.game);
     //this.view.addPageMenuBarItems(this.model.game);
     this.view.addPageHome(this.model.game)
     const gameMessages = this.view.addPageLiveGames(this.model.game);
@@ -10,7 +10,7 @@ class Controller {
     this.view.addGameMessages(gameMessages)
     this.view.addMenuBarItemGamePages(this.model.game)
     this.timeIntervalId;
-    this.speed = 3000;
+    this.speed = 100;
     
 
 
@@ -19,7 +19,6 @@ class Controller {
     // News Ticker
 
     this.newsTickerInterval = setInterval(() => {
-      // app.view.updateHomePageListGroupItems(app.model.game);
       this.model.game.newsTicker.update(this.model.game.getScores());
       this.model.game.newsTicker.show();
     }, 5000);
