@@ -92,12 +92,12 @@ sub.rightBaseIcon {
 }
 
 /* social media message */
-.messageContainer {
+.messageFeedContainer {
   max-height: 50vh;
   /* Set the height of the scrollable container */
   overflow-y: auto;
   /* Enable vertical scrolling */
-  border: 1px solid #eeeeee;
+  /* border: 1px solid #eeeeee; */
   /* border-radius: 8px; */
   padding: 10px;
   /* background-color: hsl(228, 5%, 20%); */
@@ -120,10 +120,10 @@ sub.rightBaseIcon {
 }
 
 .post {
-  border: 1px solid #e1e8ed;
+  /* border: 1px solid #e1e8ed; */
   border-radius: 8px;
-  padding: 5px;
-  margin: 5px 0;
+  padding: 10px;
+  margin: 10px 0px 0px;
   /* background-color: hsl(228, 5%, 10%); */
 }
 

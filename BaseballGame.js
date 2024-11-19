@@ -437,18 +437,11 @@ class BaseballGame {
     //     }
     // }
     getScore() {
-        let result = "";
-        // if (!this.hasStarted && hasBreaks) {
-        //     return this.awayTeam.getName() + "<br>@<br>" + this.homeTeam.getName();
-        // }
+
         if (!this.hasStarted) {
             return this.awayTeam.getNameWithLink() + " @ " + this.homeTeam.getNameWithLink();
         }
-        result += this.getInningString()
-        // if (hasBreaks) {
-        //     return result + "<br>" + this.awayTeam.getName() + ": " + this.score.away + "<br>" + this.homeTeam.getName() + ": " + this.score.home;
-        // }
-        return result + this.awayTeam.getNameWithLink() + ": " + this.score.away + " " + this.homeTeam.getNameWithLink() + ": " + this.score.home;
+        return "<span class='pe-4'>"+this.getInningString() + "</span><span class='pe-4'>" + this.awayTeam.getNameWithLink() + ":&nbsp;" + this.score.away + "</span><span class='pe-4'>" + this.homeTeam.getNameWithLink() + ":&nbsp;" + this.score.home + "</span>";
     }
 
     getStrikes() {

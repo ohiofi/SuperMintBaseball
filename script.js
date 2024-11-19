@@ -70,7 +70,7 @@ document.addEventListener('HomeRun', (event) => {
 // }
 
 function jumpToNewestMessage(){
-  messageContainer.scrollTo(0,messageContainer.scrollHeight);
+  messageFeedContainer.scrollTo(0,messageFeedContainer.scrollHeight);
   document.getElementById("messageJumpButton").classList.add("hide");
 }
 
