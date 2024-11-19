@@ -29,10 +29,10 @@ class View {
     this.pageContainer = View.createElement("div", "pageContainer");
     
     this.homePage = new HomePage();
-    this.pageContainer.append(this.homePage.page);
+    this.pageContainer.append(this.homePage.render());
     
     this.liveGamesPage = new LiveGamesPage();
-    this.pageContainer.append(this.liveGamesPage.page);
+    this.pageContainer.append(this.liveGamesPage.render());
 
     this.standingsPage;
 
@@ -83,7 +83,7 @@ class View {
     const scores = game.getScores();
     for (let i = 0; i < scores.length; i++) {
       this.singleGamePages[i] = new SingleGamePage(i,scores[i]);
-      this.pageContainer.append(this.singleGamePages[i].page);
+      this.pageContainer.append(this.singleGamePages[i].render());
     }
   }
 

@@ -54,11 +54,11 @@ class Season {
   
     // doWeek() {
     //   console.log("\nWeek " + (this.currentWeek))
-    //   let weeksInSchedule = this.schedule.length
+    //   let weeksInSchedule = this.days.length
     //   //# if this.currentWeek % this.numberOfTeams == 0 && this.currentDay == 0:
     //   //#   this.setSchedule()
-    //   //for i in range(this.schedule[this.currentWeek%(weeksInSchedule)].length){
-    //   for (let i = 0; i < this.schedule[this.currentWeek % (weeksInSchedule)].length; i++) {
+    //   //for i in range(this.days[this.currentWeek%(weeksInSchedule)].length){
+    //   for (let i = 0; i < this.days[this.currentWeek % (weeksInSchedule)].length; i++) {
     //     this.doGame()
     //   }
     //   //# console.log("Week "+str(this.currentWeek)+" Standings")
@@ -116,7 +116,7 @@ class Season {
       let awayTeam;
       let homeTeam;
       if (this.playoffSchedulechedule == null) {
-        this.schedulePlayoffWeekOne()
+        this.daysPlayoffWeekOne()
       }
       console.log("Playoff Week " + (this.currentPlayoffWeek) + " Day " + (this.currentPlayoffDay))
       today = this.playoffSchedulechedule[this.currentPlayoffWeek][this.currentPlayoffDay]

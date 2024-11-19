@@ -1,7 +1,7 @@
 class GameWidget{
     constructor(pageNumber, gameMessage){
        
-            this.widget = View.createElement("div", null, ["game-widget", "shadow", "bg-111", "rounded-2", "row", "mb-4"]);
+            this.root = View.createElement("div", null, ["game-widget", "shadow", "bg-111", "rounded-2", "row", "mb-4"]);
             // left
             this.left = View.createElement("div", "gameWidget"+pageNumber+"Left", ["col-lg", "px-4", "pt-4", "py-lg-4", "text-white"]);
             this.leftInning = View.createElement("a", "gameWidget"+pageNumber+"LeftInning", 
@@ -52,7 +52,7 @@ class GameWidget{
             this.center.append(this.baseIcons, this.countContainer)
             // right
             this.right = View.createElement("div", null, ["col-lg", "px-4", "pb-4", "py-lg-4", "text-white", "lh-sm"],gameMessage.log);
-            this.widget.append(this.left, this.center, this.right)
+            this.root.append(this.left, this.center, this.right)
 
         
     }
@@ -68,5 +68,9 @@ class GameWidget{
         this.outs.innerHTML = gameMessage.count.outs;
         
         this.right.innerHTML = gameMessage.log;
+    }
+
+    render(){
+        return this.root;
     }
 }

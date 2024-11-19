@@ -1,9 +1,9 @@
 class HomePage {
     constructor(){
-        this.page = View.createElement("div","homePage","page");
+        this.root = View.createElement("div","homePage","page");
 
         this.headline = View.createElement("h3", "homePageHeadline","pb-4","Play Ball");
-        this.page.append(this.headline);
+        this.root.append(this.headline);
 
         this.listGroupPlayIcon = "◆";
         this.listGroup = View.createElement("div", "listGroup", ["list-group"]);
@@ -39,7 +39,7 @@ class HomePage {
         });
         this.liveGamesSpan.append(this.liveGamesPlayButton,this.liveGamesLink)
         this.listGroup.append(this.liveGamesSpan);
-        this.page.append(this.listGroup)
+        this.root.append(this.listGroup)
 
     }
 
@@ -67,7 +67,11 @@ class HomePage {
             });
             this.listGroupSpans[i].append(playButton, this.listGroupScores[i])
             this.listGroup.append(this.listGroupSpans[i]);
-            this.page.append(this.listGroup);
+            this.root.append(this.listGroup);
         }
+    }
+
+    render(){
+        return this.root;
     }
 }

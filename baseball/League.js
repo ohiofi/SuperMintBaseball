@@ -181,7 +181,7 @@ class League {
 
 
   doSeason() {
-    let weeksInSchedule = this.seasons[this.currentSeason].schedule.length
+    let weeksInSchedule = this.seasons[this.currentSeason].days.length
     let playEveryTeamXTimes = 1
     //for i in range(weeksInSchedule * playEveryTeamXTimes){
     for (let i = 0; i < weeksInSchedule * playEveryTeamXTimes; i++) {

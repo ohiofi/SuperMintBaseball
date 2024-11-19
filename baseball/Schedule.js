@@ -5,8 +5,8 @@ class Schedule {
         this.done = false;
         this.teams = teams;
         this.standings = {};
-        //# playoffSchedule is a 3Darray of Teams. Day Array > Game Array > Teams
-        this.playoffSchedule = [[]];
+        // this.days is a 2Darray. Each inner array represents a day. Each day contains 1 or more Games.
+        this.days = [[]];
         this.day = 0;
     }    
     

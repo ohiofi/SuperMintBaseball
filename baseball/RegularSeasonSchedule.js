@@ -1,6 +1,6 @@
 //
 // A RegularSeasonSchedule has standings for the teams https://en.wikipedia.org/wiki/Standings_(sports)
-// A RegularSeasonSchedule has a schedule
+// A RegularSeasonSchedule has a 2D array with da
 
 
 class RegularSeasonSchedule extends Schedule {
@@ -21,7 +21,7 @@ class RegularSeasonSchedule extends Schedule {
   didTheseTeamsAlreadyPlay(team1, team2) {
     let timesPlayed = 0
     //# check each day
-    for (let day of this.schedule) {
+    for (let day of this.days) {
       //# check each day
       for (let game of day) {
         if ((team1.equals(game.awayTeam) && team2.equals(game.homeTeam)) ||
@@ -42,9 +42,9 @@ class RegularSeasonSchedule extends Schedule {
     let temp;
     let awayTeam;
     let homeTeam;
-    let daysInSchedule = this.schedule.length
+    let daysInSchedule = this.days.length
     //# console.log("Week " + (this.currentWeek) + " Day " + (this.currentDay))
-    let today = this.schedule[this.currentWeek %
+    let today = this.days[this.currentWeek %
       daysInSchedule][this.currentDay]
     if (this.currentWeek % 2 == 0) {
       awayTeam = today[0]
@@ -61,7 +61,7 @@ class RegularSeasonSchedule extends Schedule {
     this.standings[temp.losingTeam.getName()]["losses"] += 1
     //# increase day/week
     this.currentDay += 1
-    if (this.currentDay >= this.schedule[this.currentWeek % daysInSchedule].length) {
+    if (this.currentDay >= this.days[this.currentWeek % daysInSchedule].length) {
       this.currentWeek += 1
       this.currentDay = 0
       //#this.history.push([])
@@ -74,7 +74,7 @@ class RegularSeasonSchedule extends Schedule {
       dayNumber = 0
     }
     //console.log("Day " + (dayNumber))
-    for (let eachGame of this.schedule[dayNumber]) {
+    for (let eachGame of this.days[dayNumber]) {
       result.push(eachGame.getName())
     }
     return result;
@@ -85,7 +85,7 @@ class RegularSeasonSchedule extends Schedule {
       dayNumber = 0
     }
     //console.log("Day " + (dayNumber))
-    for (let eachGame of this.schedule[dayNumber]) {
+    for (let eachGame of this.days[dayNumber]) {
       result.push(eachGame.getScore())
     }
     return result;
@@ -95,7 +95,7 @@ class RegularSeasonSchedule extends Schedule {
   getSeasonSchedule() {
 
     let result = "";
-    let daysInSchedule = this.schedule.length
+    let daysInSchedule = this.days.length
     for (let i = 0; i < daysInSchedule; i++) {
       result += "Day " + i + "\n  " + this.getDaySchedule(i);
     }
@@ -104,7 +104,7 @@ class RegularSeasonSchedule extends Schedule {
 
   nextGameMessages(dayNumber){
     let resultArray = [];
-    for (let eachGame of this.schedule[dayNumber]) {
+    for (let eachGame of this.days[dayNumber]) {
       resultArray.push(eachGame.next())
     }
     return resultArray
@@ -120,7 +120,7 @@ class RegularSeasonSchedule extends Schedule {
 
   isTeamScheduledThisDay(someTeam, dayNum) {
     //# check each game in current week
-    for (let eachGame of this.schedule[dayNum]) {
+    for (let eachGame of this.days[dayNum]) {
       if (someTeam.equals(eachGame.awayTeam) || someTeam.equals(eachGame.homeTeam)) {
         return true
       }
@@ -129,7 +129,7 @@ class RegularSeasonSchedule extends Schedule {
   }
 
   setSchedule() {
-    this.schedule = [
+    this.days = [
       []
     ];
     //# possibleGames = array of all unique permutations
@@ -156,16 +156,16 @@ class RegularSeasonSchedule extends Schedule {
         //# if both teams not scheduled this day
         if (!this.isTeamScheduledThisDay(eachGame.awayTeam, dayCounter) && !this.isTeamScheduledThisDay(eachGame.homeTeam, dayCounter)) {
           //# add to the schedule
-          this.schedule[dayCounter].push(eachGame)
+          this.days[dayCounter].push(eachGame)
           //# break while true
           break
           //# else
         } else {
           //# try next day
           dayCounter += 1
-          if (dayCounter >= this.schedule.length) {
+          if (dayCounter >= this.days.length) {
             //# add a new day
-            this.schedule.push([])
+            this.days.push([])
           }
         }
       }
