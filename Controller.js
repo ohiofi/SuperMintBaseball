@@ -2,13 +2,13 @@ class Controller {
   constructor(model, view) {
     this.model = model
     this.view = view
-    this.view.addNewsTickerItems(this.model.game);
-    //this.view.addPageMenuBarItems(this.model.game);
-    this.view.homePage.addlistGroupScores(this.model.game)
-    this.view.addAllSingleGamePages(this.model.game);
-    this.view.addMenuBarItemSingleGamePages(this.model.game);
+    this.view.addNewsTickerItems(this.model.world);
+    //this.view.addPageMenuBarItems(this.model.world);
+    this.view.homePage.addlistGroupScores(this.model.world)
+    this.view.addAllSingleGamePages(this.model.world);
+    this.view.addMenuBarItemSingleGamePages(this.model.world);
 
-    const gameMessages = this.model.game.nextGameMessages();
+    const gameMessages = this.model.world.nextGameMessages();
     
     this.view.liveGamesPage.addGameWidgets(gameMessages);
     this.view.addGameMessages(gameMessages);
@@ -23,8 +23,8 @@ class Controller {
     // News Ticker
 
     this.newsTickerInterval = setInterval(() => {
-      this.model.game.newsTicker.update(this.model.game.getScores());
-      this.model.game.newsTicker.show();
+      this.model.world.newsTicker.update(this.model.world.getScores());
+      this.model.world.newsTicker.show();
     }, 5000);
 
 
@@ -34,11 +34,11 @@ class Controller {
 
     // Set a new interval
     this.gameMessageInterval = setInterval(() => {
-      let gameMessages = this.model.game.nextGameMessages();
-      this.updateHomePageListGroupItems(this.model.game.getScores());
+      let gameMessages = this.model.world.nextGameMessages();
+      this.updateHomePageListGroupItems(this.model.world.getScores());
       this.view.addGameMessages(gameMessages);
       this.updateGamePageBoxScores(gameMessages)
-      this.updateGamePageHeadings(this.model.game.getScores());
+      this.updateGamePageHeadings(this.model.world.getScores());
       this.updateGameWidgetItems(gameMessages);
 
     }, this.speed);
@@ -74,7 +74,7 @@ class Controller {
 
   updateModal(idNumber) {
     console.log("updateModal "+idNumber)
-    const object = this.model.game.league.lookupLeagueId(idNumber);
+    const object = this.model.world.league.lookupLeagueId(idNumber);
     if (object === null) throw new Error("updateModal could not find " + idNumber);
     // modal > modal-dialog > modal-content > modal-header
     const modalTitle = this.view.modal.children[0].children[0].children[0].children[0];

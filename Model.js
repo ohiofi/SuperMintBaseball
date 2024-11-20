@@ -2,7 +2,7 @@ class Model {
     constructor() {
         // The state of the model
         //this.game = JSON.parse(localStorage.getItem('savedGame')) || new Game();
-        this.game = new Game();
+        this.world = new World();
     }
 
     addUser() {

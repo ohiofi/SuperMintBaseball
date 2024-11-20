@@ -211,3 +211,72 @@ sub.rightBaseIcon {
     transform: translate(-50%, 0);
   }
 }
+
+.tradingCard {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  display:inline-block;
+}
+.tradingCardContents {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+	border-radius:5px;
+/*   background: url(https://source.unsplash.com/300x300/?cat) 50% 50% / cover no-repeat; */
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  transition: 0.4s ease;
+}
+.tradingCardHoverPoint {
+  position: absolute;
+  z-index: 2;
+  width: calc(100% / 2);
+  height: calc(100% / 2);
+}
+.tradingCardHoverPoint:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+
+.tradingCardHoverPoint:nth-child(2) {
+  top: 0;
+  right: 0;
+}
+
+.tradingCardHoverPoint:nth-child(3) {
+  bottom: 0;
+  left: 0;
+}
+
+.tradingCardHoverPoint:nth-child(4) {
+  bottom: 0;
+  right: 0;
+}
+.tradingCardHoverPoint:nth-child(1):hover ~ .tradingCardContents {
+  box-shadow: 7px 7px 50px rgba(0, 0, 0, .3);
+
+  transform-origin: right top;
+  transform: perspective(1000px) rotateX(3deg) rotateY(-3deg) rotateZ(0.2deg);
+}
+
+.tradingCardHoverPoint:nth-child(2):hover ~ .tradingCardContents {
+  box-shadow: -7px 7px 50px rgba(0, 0, 0, .3);
+  transform-origin: left top;
+  transform: perspective(1000px) rotateX(3deg) rotateY(3deg) rotateZ(-0.2deg);
+}
+
+
+.tradingCardHoverPoint:nth-child(3):hover ~ .tradingCardContents {
+  box-shadow: 7px -7px 50px rgba(0, 0, 0, .3);
+  transform-origin: right bottom;
+  transform: perspective(1000px) rotateX(-3deg) rotateY(-3deg) rotateZ(-0.2deg);
+}
+
+.tradingCardHoverPoint:nth-child(4):hover ~ .tradingCardContents {
+  box-shadow: -7px -7px 50px rgba(0, 0, 0, .3);
+  transform-origin: left bottom;
+  transform: perspective(1000px) rotateX(-3deg) rotateY(3deg) rotateZ(0.2deg);
+}
+

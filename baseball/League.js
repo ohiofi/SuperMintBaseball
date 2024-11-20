@@ -98,63 +98,63 @@ class League {
   handleEvent(data) {
     switch (data.eventType) {
       case StatsEventType.GAME_WINNER:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addWin()
-        app.model.game.newsTicker.setBreakingNews(data.team.getName() + " win! ");
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addWin()
+        app.model.world.newsTicker.setBreakingNews(data.team.getName() + " win! ");
         break
       case StatsEventType.GAME_LOSER:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addLoss()
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addLoss()
         break
       case StatsEventType.AT_BATS:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addAtBats()
-        app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addAtBats()
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addAtBats()
+        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addAtBats()
         break
       case StatsEventType.SINGLES:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addSingles()
-        app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addSingles()
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addSingles()
+        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addSingles()
         break
       case StatsEventType.DOUBLES:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addDoubles()
-        app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addDoubles()
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addDoubles()
+        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addDoubles()
         break
       case StatsEventType.TRIPLES:
-        app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addTriples()
-        app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addTriples()
+        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addTriples()
+        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addTriples()
         break
       case StatsEventType.HOME_RUNS:
-          app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRuns()
-          app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRuns()
+          app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRuns()
+          app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRuns()
           break
       case StatsEventType.BASES_ON_BALLS:
-            app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addBasesOnBalls()
-            app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addBasesOnBalls()
+            app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addBasesOnBalls()
+            app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addBasesOnBalls()
             break
       case StatsEventType.SACRIFICE_FLIES:
-              app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addSacrificeFlies()
-              app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addSacrificeFlies()
+              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addSacrificeFlies()
+              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addSacrificeFlies()
               break
       case StatsEventType.STRIKEOUTS_AT_BAT:
-              app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeoutsAtBat()
-              app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeoutsAtBat()
+              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeoutsAtBat()
+              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeoutsAtBat()
               break
       case StatsEventType.INNINGS_PITCHED:
-                app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addInningsPitched()
-                app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addInningsPitched()
+                app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addInningsPitched()
+                app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addInningsPitched()
                 break
       case StatsEventType.STRIKEOUTS_THROWN:
-            app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeOutsThrown()
-            app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeOutsThrown()
+            app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeOutsThrown()
+            app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeOutsThrown()
             break
       case StatsEventType.RUNS_ALLOWED:
-              app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addRunsAllowed()
-              app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addRunsAllowed()
               break
       case StatsEventType.HOME_RUNS_ALLOWED:
-              app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRunsAllowed()
-              app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRunsAllowed()
               break
       case StatsEventType.WALKS_ALLOWED:
-                app.model.game.league.lookupLeagueId(data.team.leagueIdNumber).addWalksAllowed()
-                app.model.game.league.lookupLeagueId(data.player.leagueIdNumber).addWalksAllowed()
+                app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addWalksAllowed()
+                app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addWalksAllowed()
                 break
     }
 

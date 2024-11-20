@@ -14,7 +14,7 @@ class LiveGamesPage {
         for (let i = 0; i < gameMessages.length; i++) {
             this.widgets[i] = new GameWidget(i, gameMessages[i])
             
-            widgetsContainer.append(this.widgets[i].widget);
+            widgetsContainer.append(this.widgets[i].render());
             this.root.append(this.widgetsContainer);
         }
 

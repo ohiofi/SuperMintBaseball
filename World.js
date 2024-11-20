@@ -1,4 +1,4 @@
-const GameStates = {
+const WorldStates = {
     SETUP: 0,
     MORNING: 1,
     AFTERNOON: 2,
@@ -6,7 +6,7 @@ const GameStates = {
     NIGHT: 4
 }
 
-class Game{
+class World{
     constructor(){
         this.users = [];
         this.league = new League(12);

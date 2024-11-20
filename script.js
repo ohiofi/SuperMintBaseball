@@ -29,7 +29,7 @@ function addAlert(message, type) {
     //     aDiv.remove();
     // }, 3000);
     // app.view.newsTickerContainer.innerHTML =  "BREAKING NEWS: " + message;
-    app.model.game.newsTicker.setBreakingNews(message);
+    app.model.world.newsTicker.setBreakingNews(message);
     
 }
 
