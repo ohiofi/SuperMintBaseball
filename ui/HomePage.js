@@ -44,12 +44,12 @@ class HomePage {
     }
 
     addlistGroupScores(game){
-        const scores = game.getScores()
+        const scores = game.getGameDetails()
         for (let i = 0; i < scores.length; i++) {
           
             this.listGroupSpans[i] = View.createElement("span", "listGroupSpan"+i, ["p-1"]);
 
-            this.listGroupScores[i] = View.createElement("span", "listGroupScore"+i, ["p-2"],"Game " + i + ": " + scores[i]);
+            this.listGroupScores[i] = View.createElement("span", "listGroupScore"+i, ["p-2"],"Game " + i + ": " + scores[i].scoreString);
             const playButton = View.createElement(
                 "a", 
                 "playButton"+i, 

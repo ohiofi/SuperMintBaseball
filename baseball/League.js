@@ -66,8 +66,8 @@ class League {
     return null;
   }
 
-  getScores() {
-    return this.seasons[this.currentSeason].getScores();
+  getGameDetails() {
+    return this.seasons[this.currentSeason].getGameDetails();
   }
 
   getTeam(someObject) {
@@ -77,6 +77,80 @@ class League {
       }
     }
     return null;
+  }
+
+  getStandingsTablePitchers(topN) {
+    // Copy the original array to avoid modifying the original 
+    const dataCopy = [...dataArray];
+    dataCopy.sort((a, b) => b.stats.wins - a.stats.wins);
+    // Handle ties
+    let rank = 1;
+    let previousWins = null;
+    let tieRank = 1;
+    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Name</th><th>Wins</th></tr></thead><tbody>';
+    let count = 0;
+    for (let i = 0; i < dataCopy.length; i++) {
+      const player = dataCopy[i];
+      // If the player wins are the same as the previous one, they share the rank
+      if (player.wins !== previousWins) {
+        rank = tieRank;  // New rank for the current player
+        previousWins = player.wins;  // Update previous wins
+      } else {
+        tieRank++;  // Update the tie rank if wins are the same
+      }
+      table += `
+        <tr>
+          <td>${rank}</td>
+          <td>${player.name}</td>
+          <td>${player.wins}</td>
+        </tr>
+      `;
+      count++;
+      if (count >= topN) {
+        break;
+      }
+    }
+    // Close the table tags
+    table += '</tbody></table>';
+    // Return the generated HTML table
+    return table;
+  }
+
+  getStandingsTableTeams() {
+    // Copy the original array to avoid modifying the original 
+    const dataCopy = [...dataArray];
+    dataCopy.sort((a, b) => b.stats.wins - a.stats.wins);
+    // Handle ties
+    let rank = 1;
+    let previousWins = null;
+    let tieRank = 1;
+    // Create the table element
+    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Name</th><th>Wins</th></tr></thead><tbody>';
+    // Variable to track the number of players added
+    let count = 0;
+    // Iterate over the sorted data and generate rows, but stop after 'topN' players
+    for (let i = 0; i < dataCopy.length; i++) {
+      const player = dataCopy[i];
+      // If the player wins are the same as the previous one, they share the rank
+      if (player.wins !== previousWins) {
+        rank = tieRank;  // New rank for the current player
+        previousWins = player.wins;  // Update previous wins
+      } else {
+        tieRank++;  // Update the tie rank if wins are the same
+      }
+      // Add a table row for the player with their rank
+      table += `
+        <tr>
+          <td>${rank}</td>
+          <td>${player.name}</td>
+          <td>${player.wins}</td>
+        </tr>
+      `;
+    }
+    // Close the table tags
+    table += '</tbody></table>';
+    // Return the generated HTML table
+    return table;
   }
 
   getNameableByFullName(someName) {
@@ -98,64 +172,69 @@ class League {
   handleEvent(data) {
     switch (data.eventType) {
       case StatsEventType.GAME_WINNER:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addWin()
-        app.model.world.newsTicker.setBreakingNews(data.team.getName() + " win! ");
+        const winningTeam = app.model.world.league.lookupLeagueId(data.teamId)
+        winningTeam.addWin()
+        app.model.world.newsTicker.setBreakingNews(winningTeam.getName() + " win! ");
         break
       case StatsEventType.GAME_LOSER:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addLoss()
+        app.model.world.league.lookupLeagueId(data.teamId).addLoss()
         break
       case StatsEventType.AT_BATS:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addAtBats()
-        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addAtBats()
+        app.model.world.league.lookupLeagueId(data.teamId).addAtBats()
+        app.model.world.league.lookupLeagueId(data.playerId).addAtBats()
         break
       case StatsEventType.SINGLES:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addSingles()
-        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addSingles()
+        app.model.world.league.lookupLeagueId(data.teamId).addSingles()
+        app.model.world.league.lookupLeagueId(data.playerId).addSingles()
         break
       case StatsEventType.DOUBLES:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addDoubles()
-        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addDoubles()
+        app.model.world.league.lookupLeagueId(data.teamId).addDoubles()
+        app.model.world.league.lookupLeagueId(data.playerId).addDoubles()
         break
       case StatsEventType.TRIPLES:
-        app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addTriples()
-        app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addTriples()
+        app.model.world.league.lookupLeagueId(data.teamId).addTriples()
+        app.model.world.league.lookupLeagueId(data.playerId).addTriples()
         break
       case StatsEventType.HOME_RUNS:
-          app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRuns()
-          app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRuns()
+          app.model.world.league.lookupLeagueId(data.teamId).addHomeRuns()
+          app.model.world.league.lookupLeagueId(data.playerId).addHomeRuns()
           break
       case StatsEventType.BASES_ON_BALLS:
-            app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addBasesOnBalls()
-            app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addBasesOnBalls()
+            app.model.world.league.lookupLeagueId(data.teamId).addBasesOnBalls()
+            app.model.world.league.lookupLeagueId(data.playerId).addBasesOnBalls()
             break
       case StatsEventType.SACRIFICE_FLIES:
-              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addSacrificeFlies()
-              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addSacrificeFlies()
+              app.model.world.league.lookupLeagueId(data.teamId).addSacrificeFlies()
+              app.model.world.league.lookupLeagueId(data.playerId).addSacrificeFlies()
               break
       case StatsEventType.STRIKEOUTS_AT_BAT:
-              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeoutsAtBat()
-              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeoutsAtBat()
+              app.model.world.league.lookupLeagueId(data.teamId).addStrikeoutsAtBat() 
+              app.model.world.league.lookupLeagueId(data.playerId).addStrikeoutsAtBat()
               break
       case StatsEventType.INNINGS_PITCHED:
-                app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addInningsPitched()
-                app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addInningsPitched()
+                app.model.world.league.lookupLeagueId(data.teamId).addInningsPitched()
+                app.model.world.league.lookupLeagueId(data.playerId).addInningsPitched()
                 break
       case StatsEventType.STRIKEOUTS_THROWN:
-            app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addStrikeOutsThrown()
-            app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addStrikeOutsThrown()
+            app.model.world.league.lookupLeagueId(data.teamId).addStrikeoutsThrown() 
+            app.model.world.league.lookupLeagueId(data.playerId).addStrikeoutsThrown()
             break
       case StatsEventType.RUNS_ALLOWED:
-              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addRunsAllowed()
-              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.teamId).addRunsAllowed() //
+              app.model.world.league.lookupLeagueId(data.playerId).addRunsAllowed()
               break
       case StatsEventType.HOME_RUNS_ALLOWED:
-              app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addHomeRunsAllowed()
-              app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addHomeRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.teamId).addHomeRunsAllowed()
+              app.model.world.league.lookupLeagueId(data.playerId).addHomeRunsAllowed()
               break
       case StatsEventType.WALKS_ALLOWED:
-                app.model.world.league.lookupLeagueId(data.team.leagueIdNumber).addWalksAllowed()
-                app.model.world.league.lookupLeagueId(data.player.leagueIdNumber).addWalksAllowed()
+                app.model.world.league.lookupLeagueId(data.teamId).addWalksAllowed()
+                app.model.world.league.lookupLeagueId(data.playerId).addWalksAllowed()
                 break
+      case StatsEventType.RUNS_SCORED:
+                  app.model.world.league.lookupLeagueId(data.teamId).addRunsScored()
+                  app.model.world.league.lookupLeagueId(data.playerId).addRunsScored()
+                  break
     }
 
 

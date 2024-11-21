@@ -1,5 +1,5 @@
 //let seed = prompt("Type a number");
-let rng = new MersenneTwister(parseInt(2024));
+const rng = new MersenneTwister(parseInt(2024));
 const app = new Controller(new Model(), new View())
 
 // let league = new League(9);

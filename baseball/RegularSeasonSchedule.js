@@ -79,14 +79,14 @@ class RegularSeasonSchedule extends Schedule {
     }
     return result;
   }
-  getScores(dayNumber) {
+  getGameDetails(dayNumber) {
     let result = [];
     if (dayNumber == null) {
       dayNumber = 0
     }
     //console.log("Day " + (dayNumber))
     for (let eachGame of this.days[dayNumber]) {
-      result.push(eachGame.getScore())
+      result.push(eachGame.getGameDetails())
     }
     return result;
   }

@@ -7,10 +7,10 @@ class FinalMessage extends BaseballGameState{
         baseballGame.finalMessage = true;
         this.nextState(baseballGame)
         baseballGame.getWinningTeam().manager.notify(
-            new StatsEvent(StatsEventType.GAME_WINNER,baseballGame.getWinningTeam())
+            new StatsEvent(StatsEventType.GAME_WINNER,baseballGame.getWinningTeam().leagueIdNumber)
         )
         baseballGame.getLosingTeam().manager.notify(
-            new StatsEvent(StatsEventType.GAME_LOSER,baseballGame.getLosingTeam())
+            new StatsEvent(StatsEventType.GAME_LOSER,baseballGame.getLosingTeam().leagueIdNumber)
         )
         return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()
         

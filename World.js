@@ -13,8 +13,8 @@ class World{
         this.newsTicker = new NewsTicker();
     }
 
-    getScores(){
-        return this.league.getScores();
+    getGameDetails(){
+        return this.league.getGameDetails();
     }
 
     nextGameMessages(){
