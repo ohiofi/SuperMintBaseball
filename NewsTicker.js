@@ -26,7 +26,7 @@ class NewsTicker {
         if(this.breakingNewsItems.length > 0 && this.breakingNewsItems[0].flaggedForRemoval){
             this.breakingNewsItems.shift()
         } else if(this.breakingNewsItems.length > 0 && !this.breakingNewsItems[0].flaggedForRemoval){
-            this.breakingNewsItems.flagged = true;
+            this.breakingNewsItems.flaggedForRemoval = true;
         }
 
     }
