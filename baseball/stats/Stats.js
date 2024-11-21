@@ -76,7 +76,7 @@ displayStats() {
       .join("");
 
     return `
-      <table class="table table-dark table-striped table-bordered">
+      <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
         <tbody>
           ${rows}
         </tbody>

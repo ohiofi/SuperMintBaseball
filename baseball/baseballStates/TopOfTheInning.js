@@ -32,7 +32,7 @@ class TopOfTheInning extends BaseballGameState{
         if(baseballGame.getInning() > baseballGame.boxScore.away.innings.length){
             baseballGame.boxScore.away.innings.push(0);
         }
-        // return "Top of inning " + baseballGame.getInning() + ', <a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal('+baseballGame.awayTeam.leagueIdNumber+');" data-bs-target="#myModal" data-bs-toggle="modal" >'+
+        // return "Top of inning " + baseballGame.getInning() + ', <a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update('+baseballGame.awayTeam.leagueIdNumber+');" data-bs-target="#statsModal" data-bs-toggle="modal" >'+
         // baseballGame.getAwayTeamName() + "</a> batting.";
         return "Top of inning " + baseballGame.getInning() + ', ' +
         baseballGame.offenseTeam.getNameWithLink() + " batting.";

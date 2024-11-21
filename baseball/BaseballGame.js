@@ -301,22 +301,37 @@ class BaseballGame {
 
     getBaseIcons() {
         // let result = "<br>"
-        let result = ""
+        let result = "";
         if (this.onBase[2] != null) {
-            result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
+            result += "⬥"
         } else {
-            result += "<sub class='baseIcon leftBaseIcon'>⬦</sub>"
+            result += "⬦"
         }
         if (this.onBase[1] != null) {
-            result += "<sup class='baseIcon centerbaseIcon'>⬥</sup>"
+            result += "⬥"
         } else {
-            result += "<sup class='baseIcon centerbaseIcon'>⬦</sup>"
+            result += "⬦"
         }
         if (this.onBase[0] != null) {
-            result += "<sub class='baseIcon rightBaseIcon'>⬥</sub>"
+            result += "⬥"
         } else {
-            result += "<sub class='baseIcon rightBaseIcon'>⬦</sub>"
+            result += "⬦"
         }
+        // if (this.onBase[2] != null) {
+        //     result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
+        // } else {
+        //     result += "<sub class='baseIcon leftBaseIcon'>⬦</sub>"
+        // }
+        // if (this.onBase[1] != null) {
+        //     result += "<sup class='baseIcon centerbaseIcon'>⬥</sup>"
+        // } else {
+        //     result += "<sup class='baseIcon centerbaseIcon'>⬦</sup>"
+        // }
+        // if (this.onBase[0] != null) {
+        //     result += "<sub class='baseIcon rightBaseIcon'>⬥</sub>"
+        // } else {
+        //     result += "<sub class='baseIcon rightBaseIcon'>⬦</sub>"
+        // }
 
         return result;
     }

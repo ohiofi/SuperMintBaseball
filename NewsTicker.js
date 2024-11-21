@@ -1,49 +1,50 @@
 class NewsTicker {
+
     constructor() {
         this.items = [];
-        this.breakingNewsCountdown = 0; // return to regular news when countdown reaches 0
-        this.breakingNewsItem = "";
+        this.breakingNewsItems = [];
         this.parentDiv;
         this.slideDivs;
-        this.slideCounter = 0;
-        
+
     }
     // should occur on a fixed schedule, slides the ticker, decrements breaking news countdown
     show() {
-        
+
         this.parentDiv = document.getElementById('newsTickerContainer').children[0];
         this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
-        
+
         for (let i = 0; i < this.slideDivs.length; i++) {
-            if (this.breakingNewsCountdown > 0) {
-                this.slideDivs[i].innerHTML = this.breakingNewsItem;
-            }else{
+            if (this.breakingNewsItems.length > 0) {
+                this.slideDivs[i].innerHTML = this.breakingNewsItems[0].text;
+                
+            } else {
                 this.slideDivs[i].innerHTML = this.items[i];
             }
             //this.slideDivs[i].style.top = (this.slideCounter % this.slideDivs.length * -1) + "em"; 
-        //     this.slideDivs[i].style.left = (this.slideCounter % this.slideDivs.length * -100) + "vw"; 
+            //     this.slideDivs[i].style.left = (this.slideCounter % this.slideDivs.length * -100) + "vw"; 
         }
-        
-        if(this.breakingNewsCountdown > 0){
-            this.breakingNewsCountdown--;
-        }else{
-            this.slideCounter++;
+        if(this.breakingNewsItems.length > 0 && this.breakingNewsItems[0].flaggedForRemoval){
+            this.breakingNewsItems.shift()
+        } else if(this.breakingNewsItems.length > 0 && !this.breakingNewsItems[0].flaggedForRemoval){
+            this.breakingNewsItems.flagged = true;
         }
-        
-        
 
     }
     // can happen out of schedule
     setBreakingNews(someString) {
-        this.breakingNewsCountdown = 2;
-        this.breakingNewsItem = '<span class="text-white">'+someString+'</span>';
+
+        this.breakingNewsItems.push({
+            text: '<span class="text-white">' + someString + '</span>',
+            flaggedForRemoval: false
+        });
         this.parentDiv = document.getElementById('newsTickerContainer');
         this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
-        
+
         for (let i = 0; i < this.slideDivs.length; i++) {
-            this.slideDivs[i].innerHTML = this.breakingNewsItem;
+            this.slideDivs[i].innerHTML = this.breakingNewsItems[0].text;
         }
     }
+
 
     // can happen out of schedule
     update(myArray) {

@@ -14,7 +14,7 @@ class Controller {
     this.view.addGameMessages(gameMessages);
     
     this.timeIntervalId;
-    this.speed = 1000;
+    this.speed = 3000;
     
 
 
@@ -25,7 +25,7 @@ class Controller {
     this.newsTickerInterval = setInterval(() => {
       this.model.world.newsTicker.update(this.model.world.getScores());
       this.model.world.newsTicker.show();
-    }, 5000);
+    }, 1000);
 
 
 
@@ -72,18 +72,6 @@ class Controller {
     }
   }
 
-  updateModal(idNumber) {
-    console.log("updateModal "+idNumber)
-    const object = this.model.world.league.lookupLeagueId(idNumber);
-    if (object === null) throw new Error("updateModal could not find " + idNumber);
-    // modal > modal-dialog > modal-content > modal-header
-    const modalTitle = this.view.modal.children[0].children[0].children[0].children[0];
-    // modal > modal-dialog > modal-content > modal-body
-    const modalBody = this.view.modal.children[0].children[0].children[1];
-    modalTitle.innerHTML = object.getFullName();
-    modalBody.innerHTML = object.toString();
-
-  }
 
   
 

@@ -14,28 +14,29 @@ class GameWidget{
                     el.classList.add("hide")
                 });
                 document.getElementById("page" + pageNumber).classList.remove("hide")
-                const container = document.getElementById("page" + pageNumber).children[1];
+                const container = document.getElementById("page" + pageNumber).children[2];
                 container.scrollTop = container.scrollHeight
             });
             this.awayLine = View.createElement("div", "gameWidget"+pageNumber+"AwayLine", "row");
             this.awayName = View.createElement("a", "gameWidget"+pageNumber+"AwayName", 
                 ["col-10", "text-start", "link", "link-offset-2", "link-light", "link-underline-opacity-25", "link-underline-opacity-100-hover"],gameMessage.awayTeam);
-            // data-bs-toggle="modal" data-bs-target="#myModal"
+            // data-bs-toggle="modal" data-bs-target="#statsModal"
             this.awayName.setAttribute('data-bs-toggle', "modal");
-            this.awayName.setAttribute('data-bs-target', "#myModal");
+            this.awayName.setAttribute('data-bs-target', "#statsModal");
             this.awayName.addEventListener('click', event => {
-                app.updateModal(gameMessage.awayId);
+                app.view.modal.update(gameMessage.awayId);
             });
             this.awayScore = View.createElement("div", "gameWidget"+pageNumber+"AwayScore", 
                 ["col-2", "text-end", "h3", "font-monospace"],gameMessage.scoreObject.away);
             this.awayLine.append(this.awayName, this.awayScore)
+
             this.homeLine = View.createElement("div", "gameWidget"+pageNumber+"HomeLine", "row");
             this.homeName = View.createElement("a", "gameWidget"+pageNumber+"HomeName", 
                 ["col-10", "text-start", "link", "link-offset-2", "link-light", "link-underline-opacity-25", "link-underline-opacity-100-hover"],gameMessage.homeTeam);
             this.homeName.setAttribute('data-bs-toggle', "modal");
-            this.homeName.setAttribute('data-bs-target', "#myModal");
+            this.homeName.setAttribute('data-bs-target', "#statsModal");
             this.homeName.addEventListener('click', event => {
-                app.updateModal(gameMessage.homeId);
+                app.view.modal.update(gameMessage.homeId);
             });
             this.homeScore = View.createElement("span", "gameWidget"+pageNumber+"HomeScore", ["col-2", "text-end", "h3", "font-monospace"],gameMessage.scoreObject.home);
             this.homeLine.append(this.homeName, this.homeScore)
@@ -54,39 +55,9 @@ class GameWidget{
             this.center.append(this.baseIcons, this.countContainer)
             // right
             this.right = View.createElement("div", null, ["col-lg", "px-4", "pb-4", "py-lg-4", "text-white", "lh-sm"],gameMessage.log);
-            //this.root.append(this.left, this.center, this.right)
-            //this.root = View.createElement("div",null,"gameWidget");
-            this.root.innerHTML = `
-           
-             <!-- Left Section -->
-             <div class="col-lg px-4 pt-4 text-white">
-               <a class="inning link"></a>
-               <div class="away-line row">
-                 <a class="away-name col-10 text-start link">Away Team</a>
-                 <div class="away-score col-2 text-end h3 font-monospace"></div>
-               </div>
-               <div class="home-line row">
-                 <a class="home-name col-10 text-start link">Home Team</a>
-                 <div class="home-score col-2 text-end h3 font-monospace"></div>
-               </div>
-             </div>
-     
-             <!-- Center Section -->
-             <div class="col-lg m-0 px-3 text-white row">
-               <div class="base-icons col-3 text-center"></div>
-               <div class="count-container col-9 row">
-                 <div class="balls-label col font-monospace text-end">B:</div>
-                 <div class="balls col font-monospace text-start">0</div>
-                 <div class="strikes-label col font-monospace text-end">S:</div>
-                 <div class="strikes col font-monospace text-start">0</div>
-                 <div class="outs-label col font-monospace text-end">O:</div>
-                 <div class="outs col font-monospace text-start">0</div>
-               </div>
-             </div>
-     
-             <!-- Right Section -->
-             <div class="col-lg px-4 pb-4 text-white lh-sm log"></div>
-           `
+            this.root.append(this.left, this.center, this.right)
+
+
         
     }
 

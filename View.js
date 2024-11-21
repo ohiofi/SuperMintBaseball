@@ -40,8 +40,10 @@ class View {
     
     this.gameWidgetContainer = View.createElement("div", "game-widget-container", "container");
     this.gameWidgetItems = [];
-    this.app.append(this.newsTickerContainer, this.pageMenuBar,this.pageContainer)
-    this.modal = document.getElementById('myModal')
+    this.modal = new StatsModal();
+    this.app.append(this.newsTickerContainer, this.pageMenuBar,this.pageContainer,this.modal.render())
+    
+    
   }
 
   // adds the individual "posts" that show up in the feed on each Game Page
@@ -52,27 +54,28 @@ class View {
         }
         
         const container = this.singleGamePages[i].messageFeedContainer;
-        // Create a new div for the message
-        const postDiv = View.createElement('div',null,['post',"bg-111"]);
+        // // Create a new div for the message
+        // const postDiv = View.createElement('div',null,['post',"bg-111"]);
 
-        const timestamp = new Date().toLocaleTimeString(); 
+        // const timestamp = new Date().toLocaleTimeString(); 
     
-        postDiv.innerHTML = `
-            <span class="username">${gameMessages[i].scoreString}</span> <span class="timestamp">${timestamp}</span>
-            <p>${gameMessages[i].log}</p>
-            <p class="font-monospace">${gameMessages[i].baseIcons} B: ${gameMessages[i].count.balls} S: ${gameMessages[i].count.strikes} O: ${gameMessages[i].count.outs}</p>
-        `;
+        // postDiv.innerHTML = `
+        //     <span class="username">${gameMessages[i].scoreString}</span> <span class="timestamp">${timestamp}</span>
+        //     <p>${gameMessages[i].log}</p>
+        //     <p class="font-monospace">${gameMessages[i].baseIcons} B: ${gameMessages[i].count.balls} S: ${gameMessages[i].count.strikes} O: ${gameMessages[i].count.outs}</p>
+        // `;
+        const postDiv = new GamePost(gameMessages[i])
 
         // Append the new post to the container while maintaining scroll
         const previousScrollTop = container.scrollTop;
         if(container.scrollHeight - container.clientHeight <= container.scrollTop){
-          container.appendChild(postDiv);
+          container.appendChild(postDiv.render());
           container.scrollTop = container.scrollHeight;
-          container.firstChild.classList.add("hide");
+          this.singleGamePages[i].messageJumpButton.classList.add("hide");
         }else{
-          container.appendChild(postDiv);
+          container.appendChild(postDiv.render());
           container.scrollTop = previousScrollTop;
-          container.firstChild.classList.remove("hide");
+          this.singleGamePages[i].messageJumpButton.classList.remove("hide");
         }
     }
     

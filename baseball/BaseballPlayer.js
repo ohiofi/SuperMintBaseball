@@ -176,7 +176,7 @@ class BaseballPlayer {
     }
 
     getNameWithLink() {
-        return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' +
+        return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
             this.getName() + '</a>';
     }
 
@@ -327,17 +327,18 @@ class BaseballPlayer {
     // }
     toString() {
         return `
-            <table class="table table-dark table-striped table-bordered">
-                <thead>
+            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+              
+                    
+               
+                
                     <tr>
-                        <th colspan="2">Player Details</th>
+                        <th colspan="2" class="text-center">Player Details</th>
                     </tr>
-                </thead>
-                <tbody>
                     <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
                     <tr><td>Full Name</td><td>${this.fullname}</td></tr>
                     <tr><td>Team Name</td><td>
-                    <a href="#" onclick="app.updateModal(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                    <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
                          ${this.teamName}
                     </a>
                    
@@ -346,35 +347,43 @@ class BaseballPlayer {
                     <tr><td>Position</td><td>${this.position}</td></tr>
                     <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
                     <tr><td>Age</td><td>${this.age}</td></tr>
+            </table>
+
+            <details>
+        <summary>Stats</summary>
+          ${this.stats.toString()}
+      </details>
+            
+            <details>
+            <summary>Attributes</summary>
+            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
                     <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
                     <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
                     <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
                     <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
                     <tr>
-                        <th colspan="2">Pitching Attributes</th>
+                        <th colspan="2" class="text-center">Pitching Attributes</th>
                     </tr>
                     <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
                     <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
                     <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
                     <tr>
-                        <th colspan="2">Batting Attributes</th>
+                        <th colspan="2" class="text-center">Batting Attributes</th>
                     </tr>
                     <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
                     <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
                     <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
                     <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
                     <tr>
-                        <th colspan="2">Defense Attributes</th>
+                        <th colspan="2" class="text-center">Defense Attributes</th>
                     </tr>
                     <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
                     <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
                     <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
-                </tbody>
+                
             </table>
-            <details>
-        <summary>Stats</summary>
-          ${this.stats.toString()}
-      </details>
+            </details>
+            
       <details>
         <summary>Lifetime Stats</summary>
           ${this.lifetimeStats.toString()}

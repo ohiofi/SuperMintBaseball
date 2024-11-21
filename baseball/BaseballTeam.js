@@ -194,7 +194,7 @@ class BaseballTeam {
   }
 
   getNameWithLink() {
-    return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.updateModal(' + this.leagueIdNumber + ');" data-bs-target="#myModal" data-bs-toggle="modal" >' +
+    return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
       this.getName() + '</a>';
   }
 
@@ -230,7 +230,7 @@ class BaseballTeam {
       result += `
             <tr>
                 <td>
-                    <a href="#" onclick="app.updateModal(${each.leagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                    <a href="#" onclick="app.view.modal.update(${each.leagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
                         ${each.fullname}
                     </a>
                 </td>
@@ -375,49 +375,43 @@ class BaseballTeam {
   setup() {
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].teamName = this.colorScheme + this.place
-      this.players[i].stats.teamLocation = this.colorScheme + this.place
     }
     this.setPositions()
-
   }
 
   toString() {
     return `
-      <table class="table table-dark table-striped table-bordered">
-          <thead>
-              <tr>
-                  <th colspan="2">Team Details</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
-              <tr><td>Place</td><td>${this.place}</td></tr>
-              <tr><td>Team Name</td><td>${this.name}</td></tr>
-              <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
-              <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
-              <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
-              <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-              <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
-              <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
-              <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
-              <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
-             
-              <tr>
-                  <th colspan="2">Players</th>
-              </tr>
-              <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
-              ${this.getPlayerList()}
-              
-          </tbody>
-      </table>
-      <details>
-        <summary>Stats</summary>
-          ${this.stats.toString()}
-      </details>
-      <details>
-        <summary>Lifetime Stats</summary>
-          ${this.lifetimeStats.toString()}
-      </details>
+        <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+            <tr>
+                <th colspan="2" class="text-center">Players</th>
+            </tr>
+            ${this.getPlayerList()}
+            <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
+        </table>
+        <details>
+            <summary>Stats</summary>
+            ${this.stats.toString()}
+        </details>
+        <details>
+            <summary>Info</summary>
+            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
+                <tr><td>Place</td><td>${this.place}</td></tr>
+                <tr><td>Team Name</td><td>${this.name}</td></tr>
+                <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
+                <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
+                <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
+                <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+                <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+                <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
+                <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
+                <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
+            </table>
+        </details>
+        <details>
+            <summary>Lifetime Stats</summary>
+            ${this.lifetimeStats.toString()}
+        </details>
   `.trim();
   }
 

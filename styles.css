@@ -79,16 +79,38 @@ sup.baseIcon {
   /* top:0em; */
 }
 
-/* sub.leftBaseIcon{
-    
-  } */
-sup.centerbaseIcon {
-  right: 0.37em;
+sub.gameWidgetLeftBase{
+  /* right: -0.37em; */
+  /* right: -0.48em; */
+  right:-0.28em
+}
+sup.gameWidgetCenterBase {
+  /* right: 0.37em; */
+  right:0.24em
+}
+sub.gameWidgetRightBase {
+  /* right:0.21em; */
+  /* right: 0.74em; */
+  /* right: 0.37em; */
+  /* right: 0.48em; */
+  right:0.78em
 }
 
-sub.rightBaseIcon {
+sub.gamePostLeftBase{
+  /* right: -0.37em; */
+  /* right: -0.48em; */
+  right:-0.24em
+}
+sup.gamePostCenterBase {
+  /* right: 0.37em; */
+  right:0.24em
+}
+sub.gamePostRightBase {
   /* right:0.21em; */
-  right: 0.74em;
+  /* right: 0.74em; */
+  /* right: 0.37em; */
+  /* right: 0.48em; */
+  right:0.74em
 }
 
 /* social media message */

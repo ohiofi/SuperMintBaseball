@@ -110,12 +110,12 @@ class GameWidget extends HTMLElement {
   
     _onAwayNameClick() {
       const awayId = this.getAttribute('away-id');
-      app.updateModal(awayId);
+      app.view.modal.update(awayId);
     }
   
     _onHomeNameClick() {
       const homeId = this.getAttribute('home-id');
-      app.updateModal(homeId);
+      app.view.modal.update(homeId);
     }
   
     update(gameMessage) {
