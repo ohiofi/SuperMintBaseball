@@ -19,21 +19,21 @@ https://en.wikipedia.org/wiki/State_pattern
 // }
 
 class BaseballGame {
-    #gameIdNumber;
-    #homeTeam;
-    #awayTeam;
-    #pitchNumber;
-    #defenseTeam;
-    #offenseTeam;
-    #batter;
-    #pitcher;
-    #count;
-    #score;
-    #inning;
-    #hasStarted;
-    #done;
-    #gameState;
-    #onBase;
+    // #gameIdNumber;
+    // #homeTeam;
+    // #awayTeam;
+    // #pitchNumber;
+    // #defenseTeam;
+    // #offenseTeam;
+    // #batter;
+    // #pitcher;
+    // #count;
+    // #score;
+    // #inning;
+    // #hasStarted;
+    // #done;
+    // #gameState;
+    // #onBase;
 
     static idCounter = 0;
 
@@ -95,14 +95,14 @@ class BaseballGame {
         this.gameState = new PlayBall();
         this.onBase = [null, null, null];
         this.boxScore = {
-            away:{
+            away: {
                 name: this.awayTeam.getNameWithLink(),
                 innings: [0],
                 runs: 0, // Runs
                 hits: 0, // Hits
                 errors: 0  // Errors
             },
-            home:{
+            home: {
                 name: this.homeTeam.getNameWithLink(),
                 innings: [],
                 runs: 0, // Runs
@@ -112,7 +112,7 @@ class BaseballGame {
         }
     }
 
-    advanceBaseRunners(numberToAdvance,isSacrificeFly) {
+    advanceBaseRunners(numberToAdvance, isSacrificeFly) {
         let result = "";
         if (numberToAdvance == null) {
             numberToAdvance = 0;
@@ -121,17 +121,21 @@ class BaseballGame {
             result += "<br>" + this.onBase[2].getNameWithLink() + " SCORES!";
             this.pitcher.setHungerUp()
             this.incrementScore();
+            this.onBase[2].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[2].leagueIdNumber));
+            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             this.onBase[2] = null;
-            if(isSacrificeFly){
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            if (isSacrificeFly) {
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
             }
         }
         if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
             result += "<br>" + this.onBase[1].getNameWithLink() + " SCORES!";
             this.incrementScore();
+            this.onBase[1].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[1].leagueIdNumber));
+            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             this.onBase[1] = null;
-            if(isSacrificeFly){
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            if (isSacrificeFly) {
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
             }
         } else if (this.onBase[1] != null && numberToAdvance == 1) { // SECOND BASE RUNNER advances
             this.onBase[1 + numberToAdvance] = this.onBase[1];
@@ -140,14 +144,16 @@ class BaseballGame {
         if (this.onBase[0] != null && numberToAdvance >= 3) { // FIRST BASE RUNNER SCORES
             result += "<br>" + this.onBase[0].getNameWithLink() + " SCORES!";
             this.incrementScore();
+            this.onBase[0].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[0].leagueIdNumber));
+            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             this.onBase[0] = null;
-            if(isSacrificeFly){
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES,this.offenseTeam,this.batter))
+            if (isSacrificeFly) {
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
             }
         } else if (this.onBase[0] != null && numberToAdvance >= 1) { // FIRST BASE RUNNER advances
             this.onBase[0 + numberToAdvance] = this.onBase[0];
             this.onBase[0] = null;
-            
+
         }
         return result;
     }
@@ -170,7 +176,9 @@ class BaseballGame {
                 if (this.count.strikes >= 3) {
                     this.count.outs++;
                     result += " " + this.batter.getNameWithLink() + " STRIKES OUT swinging. " + this.getOutsString()
-                    this.threeStrikesCleanup()
+                    this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
+                    this.threeStrikesCleanup();
                     this.gameState.previousState(this);
                 }
             }
@@ -182,7 +190,9 @@ class BaseballGame {
 
                 if (this.count.strikes >= 3) {
                     this.count.outs++
-                    result += " " + this.batter.getNameWithLink() + " STRIKES OUT looking. " + this.getOutsString()
+                    result += " " + this.batter.getNameWithLink() + " STRIKES OUT looking. " + this.getOutsString();
+                    this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     this.threeStrikesCleanup()
                     this.gameState.previousState(this);
                 }
@@ -193,6 +203,8 @@ class BaseballGame {
                 if (this.count.balls >= 4) {
                     this.gameState.previousState(this);
                     result += ". Take your base."
+                    this.batter.manager.notify(new StatsEvent(StatsEventType.BASES_ON_BALLS, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.pitcher.manager.notify(new StatsEvent(StatsEventType.WALKS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     result += this.walkAndAdvanceBaseRunners()
                     this.fourBallsCleanup()
                 }
@@ -227,7 +239,7 @@ class BaseballGame {
                 defender.setHungerDown()
                 this.batter.setHungerUp()
                 if (this.count.outs < 3) {
-                    result += this.advanceBaseRunners(1,true)
+                    result += this.advanceBaseRunners(1, true)
                 }
             } else if (hitScore / defenseScore <= 1.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a SINGLE"
@@ -237,7 +249,7 @@ class BaseballGame {
                 defender.setHungerUp()
                 this.batter.setHungerDown()
                 this.batter.manager.notify(
-                    new StatsEvent(StatsEventType.SINGLES,this.offenseTeam,this.batter)
+                    new StatsEvent(StatsEventType.SINGLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else if (hitScore / defenseScore <= 2.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a DOUBLE"
@@ -247,7 +259,7 @@ class BaseballGame {
                 defender.setHungerUp()
                 this.batter.setHungerDown()
                 this.batter.manager.notify(
-                    new StatsEvent(StatsEventType.DOUBLES,this.offenseTeam,this.batter)
+                    new StatsEvent(StatsEventType.DOUBLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else if (hitScore / defenseScore <= 3.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a TRIPLE"
@@ -257,7 +269,7 @@ class BaseballGame {
                 defender.setHungerUp()
                 this.batter.setHungerDown()
                 this.batter.manager.notify(
-                    new StatsEvent(StatsEventType.TRIPLES,this.offenseTeam,this.batter)
+                    new StatsEvent(StatsEventType.TRIPLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a HOME RUN!"
@@ -268,11 +280,13 @@ class BaseballGame {
                 defender.setHungerUp()
                 this.batter.setHungerDown()
                 this.batter.manager.notify(
-                    new StatsEvent(StatsEventType.HOME_RUNS,this.offenseTeam,this.batter)
+                    new StatsEvent(StatsEventType.HOME_RUNS, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
                 this.pitcher.manager.notify(
-                    new StatsEvent(StatsEventType.HOME_RUNS_ALLOWED,this.offenseTeam,this.batter)
+                    new StatsEvent(StatsEventType.HOME_RUNS_ALLOWED, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
+                this.batter.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             }
             this.gameState.previousState(this);
             this.count.balls = 0;
@@ -349,12 +363,12 @@ class BaseballGame {
             this.boxScore.away.innings.length,
             this.boxScore.home.innings.length
         );
-    
+
         const inningsHeaders = Array.from({ length: maxInnings }, (_, i) => `<th>${i + 1}</th>`).join("");
-    
-        const formatInnings = (innings, max) => 
+
+        const formatInnings = (innings, max) =>
             Array.from({ length: max }, (_, i) => `<td>${innings[i] ?? ""}</td>`).join("");
-    
+
         return `
             <table class="table table-dark table-striped table-bordered text-center">
                 <thead>
@@ -385,12 +399,16 @@ class BaseballGame {
             </table>
         `.trim();
     }
-    
+
 
     getCountString() {
         return "B: " + this.count.balls +
             "<br>S: " + this.count.strikes +
             "<br>O: " + this.count.outs
+    }
+
+    getGameDetails(){
+        return new BaseballGameMessage(this,"");
     }
 
     getHomeTeamName() {
@@ -402,14 +420,14 @@ class BaseballGame {
     }
     getInningString() {
         let result = ""
-        if (this.inning == 0){
+        if (this.inning == 0) {
             result = "🔜"
-        }else if (this.inning != 0 && this.done == false) {
+        } else if (this.inning != 0 && this.done == false) {
             result = this.inning + "▲ ";
             if (this.offenseTeam.equals(this.homeTeam)) {
                 result = this.inning + "▼ "
             }
-        }else if (this.inning != 0 && this.finalMessage) {
+        } else if (this.inning != 0 && this.finalMessage) {
             result = "FINAL " + this.inning + "▲ ";
             if (this.offenseTeam.equals(this.homeTeam)) {
                 result = "FINAL " + this.inning + "▼ "
@@ -420,10 +438,10 @@ class BaseballGame {
 
     getLosingTeam() {
 
-        if(this.score.home < this.score.away){
+        if (this.score.home < this.score.away) {
             return this.homeTeam;
         }
-        if(this.score.home > this.score.away){
+        if (this.score.home > this.score.away) {
             return this.awayTeam;
         }
         return null;
@@ -456,7 +474,7 @@ class BaseballGame {
         if (!this.hasStarted) {
             return this.awayTeam.getNameWithLink() + " @ " + this.homeTeam.getNameWithLink();
         }
-        return "<span class='pe-4'>"+this.getInningString() + "</span><span class='pe-4'>" + this.awayTeam.getNameWithLink() + ":&nbsp;" + this.score.away + "</span><span class='pe-4'>" + this.homeTeam.getNameWithLink() + ":&nbsp;" + this.score.home + "</span>";
+        return "<span class='pe-4'>" + this.getInningString() + "</span><span class='pe-4'>" + this.awayTeam.getNameWithLink() + ":&nbsp;" + this.score.away + "</span><span class='pe-4'>" + this.homeTeam.getNameWithLink() + ":&nbsp;" + this.score.home + "</span>";
     }
 
     getStrikes() {
@@ -464,11 +482,11 @@ class BaseballGame {
     }
 
     getWinningTeam() {
-        
-        if(this.score.home > this.score.away){
+
+        if (this.score.home > this.score.away) {
             return this.homeTeam;
         }
-        if(this.score.home < this.score.away){
+        if (this.score.home < this.score.away) {
             return this.awayTeam;
         }
         return null;
@@ -495,10 +513,7 @@ class BaseballGame {
     }
 
     next() {
-        
-        // const log = 
-
-        return new BaseballGameMessage(this,this.gameState.handle(this))
+        return new BaseballGameMessage(this, this.gameState.handle(this))
     }
 
     nextBatter() {
@@ -542,7 +557,7 @@ class BaseballGame {
         this.hasStarted = true;
     }
 
-    setInningTop(isTop){
+    setInningTop(isTop) {
         this.isTopOfInning = isTop === true;
     }
 

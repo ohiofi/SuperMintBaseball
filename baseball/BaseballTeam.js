@@ -112,6 +112,10 @@ class BaseballTeam {
     this.stats.runsAllowed++;
     this.lifetimeStats.runsAllowed++;
   }
+  addRunsScored() {
+    this.stats.runsScored++;
+    this.lifetimeStats.runsScored++;
+  }
   addSacrificeFlies() {
     this.stats.sacrificeFlies++;
     this.lifetimeStats.sacrificeFlies++;

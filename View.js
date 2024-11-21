@@ -18,6 +18,7 @@ class View {
   }
 
   constructor() {
+
     this.app = this.getElement("#root");
 
     this.newsTickerContainer = View.createElement("div", "newsTickerContainer", ["mt-4"]);
@@ -45,26 +46,23 @@ class View {
   }
 
   // adds the individual "posts" that show up in the feed on each Game Page
-  addGameMessages(gameMessages) {
-    for (let i = 0; i < gameMessages.length; i++) {
-      if (gameMessages[i].done) {
-        continue;
+  addGameMessages(gameNumber, gameMessage) {
+      if (gameMessage.done) {
+        return;
       }
-      const container = this.singleGamePages[i].messageFeedContainer;
-      const postDiv = new GamePost(gameMessages[i])
+      const container = this.singleGamePages[gameNumber].messageFeedContainer;
+      const postDiv = new GamePost(gameMessage)
       // Append the new post to the container while maintaining scroll
       const previousScrollTop = container.scrollTop;
       if (container.scrollHeight - container.clientHeight <= container.scrollTop) {
         container.appendChild(postDiv.render());
         container.scrollTop = container.scrollHeight;
-        this.singleGamePages[i].messageJumpButton.classList.add("hide");
+        this.singleGamePages[gameNumber].messageJumpButton.classList.add("hide");
       } else {
         container.appendChild(postDiv.render());
         container.scrollTop = previousScrollTop;
-        this.singleGamePages[i].messageJumpButton.classList.remove("hide");
+        this.singleGamePages[gameNumber].messageJumpButton.classList.remove("hide");
       }
-    }
-
   }
 
   addAllSingleGamePages(game) {
@@ -86,8 +84,6 @@ class View {
       const menuItem = View.createElement("li", null, "page-item");
 
       const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0", "link-offset-2", "link-light", "link-underline-opacity-10", "link-underline-opacity-100-hover"]);
-      // menuLink.classList.add("bg-dark")
-      // menuLink.classList.add("border-0")
       menuLink.textContent = i;
       menuLink.addEventListener('click', event => {
         const els = document.getElementsByClassName("page");
@@ -124,7 +120,7 @@ class View {
   addNewsTickerItems(game) {
     const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
     const scores = game.getScores();
-    // add TWICE as many items as there are games
+    // add 2x as many items as there are games. add 4x if only 1 or 2 games.
     let multiplier = 2;
     if (scores.length < 3) multiplier = 4
     for (let i = 0; i < scores.length * multiplier; i++) {

@@ -10,7 +10,7 @@ class NewsTicker {
     // should occur on a fixed schedule, slides the ticker, decrements breaking news countdown
     show() {
 
-        this.parentDiv = document.getElementById('newsTickerContainer').children[0];
+        this.parentDiv = document.getElementById('newsTickerContainer');
         this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
 
         for (let i = 0; i < this.slideDivs.length; i++) {
@@ -50,8 +50,11 @@ class NewsTicker {
     update(myArray) {
         this.parentDiv = document.getElementById('newsTickerContainer');
         this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
-        for (let i = 0; i < myArray.length * 2; i++) {
-            this.items[i] = myArray[i % myArray.length];
+        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
+        let multiplier = 2;
+        if (scores.length < 3) multiplier = 4;
+        for (let i = 0; i < myArray.length * multiplier; i++) {
+            this.items[i] = myArray[i % myArray.length].getScoreString();
             this.slideDivs[i].innerHTML = this.items[i];
         }
     }

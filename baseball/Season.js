@@ -65,9 +65,9 @@ class Season {
     //   //# this.getStandings()
     // }
 
-    getScores(){
+    getGameDetails(){
       if(this.state === SeasonStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.getScores(this.currentDay)
+        return this.regularSeasonSchedule.getGameDetails(this.currentDay)
       }
     }
   

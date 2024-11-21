@@ -7,10 +7,11 @@ const StatsEventType = {
     GAME_WINNER:0,
     GAME_LOSER:1,
     AT_BATS:2,
-    SINGLES:4,
-    DOUBLES:5,
-    TRIPLES:6,
-    HOME_RUNS:7,
+    SINGLES:3,
+    DOUBLES:4,
+    TRIPLES:5,
+    HOME_RUNS:6,
+    RUNS_SCORED:7,
     BASES_ON_BALLS:8,
     SACRIFICE_FLIES:10,
     STRIKEOUTS_AT_BAT:11,
@@ -25,9 +26,9 @@ const StatsEventType = {
 
 
 class StatsEvent {
-    constructor(eventType, team, player) {
+    constructor(eventType, teamId, playerId) {
       this.eventType = eventType
-      this.team = team
-      this.player = player
+      this.teamId = teamId
+      this.playerId = playerId
     }
 }
