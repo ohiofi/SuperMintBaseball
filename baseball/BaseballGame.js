@@ -245,6 +245,7 @@ class BaseballGame {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a SINGLE"
                 result += this.advanceBaseRunners(1)
                 this.onBase[0] = this.batter;
+                this.incrementHits()
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
@@ -255,6 +256,7 @@ class BaseballGame {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a DOUBLE"
                 result += this.advanceBaseRunners(2)
                 this.onBase[1] = this.batter;
+                this.incrementHits()
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
@@ -265,6 +267,7 @@ class BaseballGame {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a TRIPLE"
                 result += this.advanceBaseRunners(3)
                 this.onBase[2] = this.batter;
+                this.incrementHits()
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
@@ -273,8 +276,8 @@ class BaseballGame {
                 )
             } else {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a HOME RUN!"
-
                 this.incrementScore();
+                this.incrementHits()
                 result += this.advanceBaseRunners(4)
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
@@ -437,7 +440,6 @@ class BaseballGame {
     }
 
     getLosingTeam() {
-
         if (this.score.home < this.score.away) {
             return this.homeTeam;
         }
@@ -496,15 +498,27 @@ class BaseballGame {
         return !this.done;
     }
 
+    incrementHits() {
+        if (this.isTopOfInning) {
+            this.boxScore.away.hits++;
+        }else{
+            this.boxScore.home.hits++;
+        }
+    }
+
     incrementInning() {
         this.inning++;
     }
 
     incrementScore() {
-        if (this.offenseTeam.equals(this.awayTeam)) {
+        if (this.isTopOfInning) {
             this.score.away++;
+            this.boxScore.away.innings[this.boxScore.away.innings.length - 1]++;
+            this.boxScore.away.runs++;
         } else {
             this.score.home++;
+            this.boxScore.home.innings[this.boxScore.home.innings.length - 1]++;
+            this.boxScore.home.runs++;
         }
     }
 

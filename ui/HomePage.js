@@ -2,11 +2,15 @@ class HomePage {
     constructor(){
         this.root = View.createElement("div","homePage","page");
 
-        this.headline = View.createElement("h3", "homePageHeadline","pb-4","Play Ball");
+        this.headline = View.createElement("h3", "homePageHeadline","pb-4","Play Ball!");
         this.root.append(this.headline);
+
+        this.summary = View.createElement("p", "homePageSummar","pb-4","Today's games are currently being played");
+        this.root.append(this.summary)
 
         this.listGroupPlayIcon = "◆";
         this.listGroup = View.createElement("div", "listGroup", ["list-group"]);
+        
         this.listGroupSpans = [];
         this.listGroupScores = [];
 
@@ -40,6 +44,10 @@ class HomePage {
         this.liveGamesSpan.append(this.liveGamesPlayButton,this.liveGamesLink)
         this.listGroup.append(this.liveGamesSpan);
         this.root.append(this.listGroup)
+
+        this.standingsSection = View.createElement("div","standings");
+        
+        this.root.append(this.standingsSection)
 
     }
 

@@ -15,6 +15,9 @@ class League {
     for (let i = 0; i < jsonObject.freeAgentList.length; i++) {
       jsonObject.freeAgentList[i] = Object.setPrototypeOf(jsonObject.freeAgentList[i], BaseballPlayer.prototype);
     }
+    for (let i = 0; i < jsonObject.seasons.length; i++) {
+      jsonObject.seasons[i] = Object.setPrototypeOf(jsonObject.seasons[i], Season.prototype);
+    }
     return jsonObject;
   }
 
@@ -51,7 +54,7 @@ class League {
 
   getPlayer(someObject) {
     for (let i = 0; i < this.teams.length; i++) {
-      for (let j = 0; j < this.teams.players.length; j++) {
+      for (let j = 0; j < this.teams[i].players.length; j++) {
         if (this.teams[i].players[j].equals(someObject)) {
           return this.teams[i].players[j];
         }
@@ -79,30 +82,34 @@ class League {
     return null;
   }
 
-  getStandingsTablePitchers(topN) {
-    // Copy the original array to avoid modifying the original 
-    const dataCopy = [...dataArray];
-    dataCopy.sort((a, b) => b.stats.wins - a.stats.wins);
+  getStandingsTableBatters(topN) {
+    const dataCopy = [];
+    for (let i = 0; i < this.teams.length; i++) {
+      for (let j = 0; j < this.teams[i].players.length; j++) {
+        dataCopy.push(this.teams[i].players[j])
+      }
+    }
+    dataCopy.sort((a, b) => b.stats.getOnBasePlusSlugging() - a.stats.getOnBasePlusSlugging());
     // Handle ties
     let rank = 1;
-    let previousWins = null;
+    let previousOPS = null;
     let tieRank = 1;
-    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Name</th><th>Wins</th></tr></thead><tbody>';
+    //let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Batter Name</th><th>OPS</th></tr></thead><tbody>';
+    let table = '<thead><tr><th>Rank</th><th>Batter Name</th><th>OPS</th></tr></thead>';
     let count = 0;
     for (let i = 0; i < dataCopy.length; i++) {
       const player = dataCopy[i];
       // If the player wins are the same as the previous one, they share the rank
-      if (player.wins !== previousWins) {
+      if (player.stats.getOnBasePlusSlugging() !== previousOPS) {
         rank = tieRank;  // New rank for the current player
-        previousWins = player.wins;  // Update previous wins
-      } else {
-        tieRank++;  // Update the tie rank if wins are the same
-      }
+        previousOPS = player.stats.getOnBasePlusSlugging();  // Update previous wins
+      } 
+      tieRank++;
       table += `
         <tr>
           <td>${rank}</td>
-          <td>${player.name}</td>
-          <td>${player.wins}</td>
+          <td>${player.getNameWithLink()}</td>
+          <td>${player.stats.getOnBasePlusSlugging()}</td>
         </tr>
       `;
       count++;
@@ -116,34 +123,69 @@ class League {
     return table;
   }
 
+  getStandingsTablePitchers(topN) {
+    const dataCopy = [];
+    for(let each of this.teams){
+      dataCopy.push(each.pitcher)
+    }
+    dataCopy.sort((a, b) => a.stats.getEarnedRunAverage() - b.stats.getEarnedRunAverage());
+    // Handle ties
+    let rank = 1;
+    let previousERA = null;
+    let tieRank = 1;
+    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Pitcher Name</th><th>ERA</th></tr></thead><tbody>';
+    let count = 0;
+    for (let i = 0; i < dataCopy.length; i++) {
+      const player = dataCopy[i];
+      // If the player wins are the same as the previous one, they share the rank
+      if (player.stats.getEarnedRunAverage() !== previousERA) {
+        rank = tieRank;  // New rank for the current player
+        previousERA = player.stats.getEarnedRunAverage();  // Update previous wins
+      } 
+      tieRank++;
+      table += `
+        <tr>
+          <td>${rank}</td>
+          <td>${player.getNameWithLink()}</td>
+          <td>${player.stats.getEarnedRunAverage()}</td>
+        </tr>
+      `;
+      count++;
+      if (count >= topN) {
+        break;
+      }
+    }
+    // Close the table tags
+    //table += '</tbody></table>';
+    // Return the generated HTML table
+    return table;
+  }
+
   getStandingsTableTeams() {
     // Copy the original array to avoid modifying the original 
-    const dataCopy = [...dataArray];
+    const dataCopy = [...this.teams];
     dataCopy.sort((a, b) => b.stats.wins - a.stats.wins);
     // Handle ties
     let rank = 1;
     let previousWins = null;
     let tieRank = 1;
     // Create the table element
-    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Name</th><th>Wins</th></tr></thead><tbody>';
-    // Variable to track the number of players added
-    let count = 0;
-    // Iterate over the sorted data and generate rows, but stop after 'topN' players
+    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Team Name</th><th>Wins</th></tr></thead><tbody>';
+    // Iterate over the sorted data and generate rows
     for (let i = 0; i < dataCopy.length; i++) {
-      const player = dataCopy[i];
-      // If the player wins are the same as the previous one, they share the rank
-      if (player.wins !== previousWins) {
-        rank = tieRank;  // New rank for the current player
-        previousWins = player.wins;  // Update previous wins
-      } else {
-        tieRank++;  // Update the tie rank if wins are the same
+      const team = dataCopy[i];
+      // If the team wins are the same as the previous one, they share the rank
+      if (team.stats.wins !== previousWins) {
+        rank = tieRank;  // New rank for the current team
+        previousWins = team.stats.wins;  // Update previous wins
       }
-      // Add a table row for the player with their rank
+      tieRank++;  // Update the tie rank if wins are the same
+      // Add a table row for the team with their rank
       table += `
         <tr>
           <td>${rank}</td>
-          <td>${player.name}</td>
-          <td>${player.wins}</td>
+          <td>${team.getNameWithLink()}</td>
+          <td>${team.stats.wins}</td>
         </tr>
       `;
     }
@@ -172,75 +214,79 @@ class League {
   handleEvent(data) {
     switch (data.eventType) {
       case StatsEventType.GAME_WINNER:
-        const winningTeam = app.model.world.league.lookupLeagueId(data.teamId)
+        const winningTeam = app.model.world.league.lookup(data.teamId)
         winningTeam.addWin()
         app.model.world.newsTicker.setBreakingNews(winningTeam.getName() + " win! ");
         break
       case StatsEventType.GAME_LOSER:
-        app.model.world.league.lookupLeagueId(data.teamId).addLoss()
+        app.model.world.league.lookup(data.teamId).addLoss()
         break
       case StatsEventType.AT_BATS:
-        app.model.world.league.lookupLeagueId(data.teamId).addAtBats()
-        app.model.world.league.lookupLeagueId(data.playerId).addAtBats()
+        app.model.world.league.lookup(data.teamId).addAtBats()
+        app.model.world.league.lookup(data.playerId).addAtBats()
         break
       case StatsEventType.SINGLES:
-        app.model.world.league.lookupLeagueId(data.teamId).addSingles()
-        app.model.world.league.lookupLeagueId(data.playerId).addSingles()
+        app.model.world.league.lookup(data.teamId).addSingles()
+        app.model.world.league.lookup(data.playerId).addSingles()
         break
       case StatsEventType.DOUBLES:
-        app.model.world.league.lookupLeagueId(data.teamId).addDoubles()
-        app.model.world.league.lookupLeagueId(data.playerId).addDoubles()
+        app.model.world.league.lookup(data.teamId).addDoubles()
+        app.model.world.league.lookup(data.playerId).addDoubles()
         break
       case StatsEventType.TRIPLES:
-        app.model.world.league.lookupLeagueId(data.teamId).addTriples()
-        app.model.world.league.lookupLeagueId(data.playerId).addTriples()
+        app.model.world.league.lookup(data.teamId).addTriples()
+        app.model.world.league.lookup(data.playerId).addTriples()
         break
       case StatsEventType.HOME_RUNS:
-          app.model.world.league.lookupLeagueId(data.teamId).addHomeRuns()
-          app.model.world.league.lookupLeagueId(data.playerId).addHomeRuns()
+          app.model.world.league.lookup(data.teamId).addHomeRuns()
+          app.model.world.league.lookup(data.playerId).addHomeRuns()
           break
       case StatsEventType.BASES_ON_BALLS:
-            app.model.world.league.lookupLeagueId(data.teamId).addBasesOnBalls()
-            app.model.world.league.lookupLeagueId(data.playerId).addBasesOnBalls()
+            app.model.world.league.lookup(data.teamId).addBasesOnBalls()
+            app.model.world.league.lookup(data.playerId).addBasesOnBalls()
             break
       case StatsEventType.SACRIFICE_FLIES:
-              app.model.world.league.lookupLeagueId(data.teamId).addSacrificeFlies()
-              app.model.world.league.lookupLeagueId(data.playerId).addSacrificeFlies()
+              app.model.world.league.lookup(data.teamId).addSacrificeFlies()
+              app.model.world.league.lookup(data.playerId).addSacrificeFlies()
               break
       case StatsEventType.STRIKEOUTS_AT_BAT:
-              app.model.world.league.lookupLeagueId(data.teamId).addStrikeoutsAtBat() 
-              app.model.world.league.lookupLeagueId(data.playerId).addStrikeoutsAtBat()
+              app.model.world.league.lookup(data.teamId).addStrikeoutsAtBat() 
+              app.model.world.league.lookup(data.playerId).addStrikeoutsAtBat()
               break
       case StatsEventType.INNINGS_PITCHED:
-                app.model.world.league.lookupLeagueId(data.teamId).addInningsPitched()
-                app.model.world.league.lookupLeagueId(data.playerId).addInningsPitched()
+                app.model.world.league.lookup(data.teamId).addInningsPitched()
+                app.model.world.league.lookup(data.playerId).addInningsPitched()
                 break
       case StatsEventType.STRIKEOUTS_THROWN:
-            app.model.world.league.lookupLeagueId(data.teamId).addStrikeoutsThrown() 
-            app.model.world.league.lookupLeagueId(data.playerId).addStrikeoutsThrown()
+            app.model.world.league.lookup(data.teamId).addStrikeoutsThrown() 
+            app.model.world.league.lookup(data.playerId).addStrikeoutsThrown()
             break
       case StatsEventType.RUNS_ALLOWED:
-              app.model.world.league.lookupLeagueId(data.teamId).addRunsAllowed() //
-              app.model.world.league.lookupLeagueId(data.playerId).addRunsAllowed()
+              app.model.world.league.lookup(data.teamId).addRunsAllowed() //
+              app.model.world.league.lookup(data.playerId).addRunsAllowed()
               break
       case StatsEventType.HOME_RUNS_ALLOWED:
-              app.model.world.league.lookupLeagueId(data.teamId).addHomeRunsAllowed()
-              app.model.world.league.lookupLeagueId(data.playerId).addHomeRunsAllowed()
+              app.model.world.league.lookup(data.teamId).addHomeRunsAllowed()
+              app.model.world.league.lookup(data.playerId).addHomeRunsAllowed()
               break
       case StatsEventType.WALKS_ALLOWED:
-                app.model.world.league.lookupLeagueId(data.teamId).addWalksAllowed()
-                app.model.world.league.lookupLeagueId(data.playerId).addWalksAllowed()
+                app.model.world.league.lookup(data.teamId).addWalksAllowed()
+                app.model.world.league.lookup(data.playerId).addWalksAllowed()
                 break
       case StatsEventType.RUNS_SCORED:
-                  app.model.world.league.lookupLeagueId(data.teamId).addRunsScored()
-                  app.model.world.league.lookupLeagueId(data.playerId).addRunsScored()
+                  app.model.world.league.lookup(data.teamId).addRunsScored()
+                  app.model.world.league.lookup(data.playerId).addRunsScored()
                   break
     }
 
 
   }
 
-  lookupLeagueId(idNum) {
+  isTodayDone(){
+      return this.seasons[this.currentSeason].isTodayDone();
+  }
+
+  lookup(idNum) {
     // loop thru teams
     for (let i = 0; i < this.teams.length; i++) {
       if (this.teams[i].leagueIdNumber === idNum) {
@@ -251,6 +297,12 @@ class League {
         if (this.teams[i].players[j].leagueIdNumber === idNum) {
           return this.teams[i].players[j];
         }
+      }
+    }
+    // check free agent list
+    for (let i = 0; i < this.freeAgentList.length; i++) {
+      if (this.freeAgentList[i].leagueIdNumber === idNum) {
+        return this.freeAgentList[i];
       }
     }
     return null;

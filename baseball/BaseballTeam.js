@@ -4,6 +4,7 @@ class BaseballTeam {
 
   static restructure(jsonObject) {
     Object.setPrototypeOf(jsonObject, BaseballTeam.prototype);
+    jsonObject.manager = StatsEventManager.restructure(jsonObject.manager);
     if (jsonObject.pitcher != null) jsonObject.pitcher = Object.setPrototypeOf(jsonObject.pitcher, BaseballPlayer.prototype);
     if (jsonObject.slugger != null) jsonObject.slugger = Object.setPrototypeOf(jsonObject.slugger, BaseballPlayer.prototype);
     for (let i = 0; i < jsonObject.players.length; i++) {

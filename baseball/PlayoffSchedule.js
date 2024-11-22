@@ -37,6 +37,16 @@ class PlayoffSchedule  extends Schedule {
         }
       }
 
+      static restructure(jsonObject) {
+        Object.setPrototypeOf(jsonObject, PlayoffSchedule.prototype);
+        for (let i = 0; i < jsonObject.schedule.length; i++) {
+          for (let j = 0; j < jsonObject.schedule[i].length; j++) {
+            jsonObject.schedule[i][j] = Object.setPrototypeOf(jsonObject.schedule[i][j], Game.prototype);
+          }
+        }
+        return jsonObject;
+      }
+
 
     constructor(teams, regularSeasonStandings){
       super(teams);
@@ -132,6 +142,8 @@ class PlayoffSchedule  extends Schedule {
         }
         return output
       }
+
+      
 
       schedulePlayoffWeekOne() {
         //# generate empty playoff game array

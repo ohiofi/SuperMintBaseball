@@ -23,7 +23,7 @@ class View {
 
     this.newsTickerContainer = View.createElement("div", "newsTickerContainer", ["mt-4"]);
     this.tickerItems = [];
-    this.pageMenuBar = View.createElement("ul", null, "pagination");
+    this.pageMenuBar = View.createElement("ul", "pageMenuBar", ["pagination","border-0"]);
     this.addMenuBarItemHome()
     this.addMenuBarItemLive()
 
@@ -35,7 +35,7 @@ class View {
     this.liveGamesPage = new LiveGamesPage();
     this.pageContainer.append(this.liveGamesPage.render());
 
-    this.standingsPage;
+    
 
     this.singleGamePages = [];
 
@@ -83,8 +83,10 @@ class View {
     for (let i = 0; i < scores.length; i++) {
       const menuItem = View.createElement("li", null, "page-item");
 
-      const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0", "link-offset-2", "link-light", "link-underline-opacity-10", "link-underline-opacity-100-hover"]);
-      menuLink.textContent = i;
+      const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"]);
+      menuLink.innerHTML = `<span class="font-monospace size-48">
+    ${i}
+      </span>`
       menuLink.addEventListener('click', event => {
         const els = document.getElementsByClassName("page");
         Array.from(els).forEach((el) => {
@@ -101,9 +103,11 @@ class View {
   }
 
   addMenuBarItemHome() {
-    const menuItem = View.createElement("li", null, "page-item");
-    const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0"])
-    menuLink.textContent = "🏠";
+    const menuItem = View.createElement("li", null, ["page-item"]);
+    const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"])
+    menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
+home
+</span>`;
     menuLink.addEventListener('click', event => {
       const els = document.getElementsByClassName("page");
       Array.from(els).forEach((el) => {
@@ -116,6 +120,23 @@ class View {
     this.pageMenuBar.append(menuItem);
   }
 
+  addMenuBarItemLive() {
+    const menuItem = View.createElement("li", null, "page-item");
+    const menuLink = View.createElement("a", null, ["page-link","bg-dark","border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"])
+    menuLink.innerHTML = `<span class="material-symbols-outlined size-24">
+stadium
+</span>`;
+    menuLink.addEventListener('click', event => {
+      const els = document.getElementsByClassName("page");
+      Array.from(els).forEach((el) => {
+        el.classList.add("hide")
+      });
+      document.getElementById("liveGamesPage").classList.remove("hide");
+
+    })
+    menuItem.append(menuLink);
+    this.pageMenuBar.append(menuItem);
+  }
 
   addNewsTickerItems(game) {
     const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
@@ -134,21 +155,7 @@ class View {
 
 
 
-  addMenuBarItemLive() {
-    const menuItem = View.createElement("li", null, "page-item");
-    const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0"])
-    menuLink.textContent = "🏟️";
-    menuLink.addEventListener('click', event => {
-      const els = document.getElementsByClassName("page");
-      Array.from(els).forEach((el) => {
-        el.classList.add("hide")
-      });
-      document.getElementById("liveGamesPage").classList.remove("hide");
-
-    })
-    menuItem.append(menuLink);
-    this.pageMenuBar.append(menuItem);
-  }
+  
 
 
 

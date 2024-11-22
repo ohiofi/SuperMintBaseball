@@ -25,8 +25,9 @@ class TopOfTheInning extends BaseballGameState{
         baseballGame.setOffenseTeam();
         baseballGame.threeOutsCleanup();
         baseballGame.incrementInning();
-        baseballGame.pitcher.manager.notify(
-            new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.defenseTeam.leagueIdNumber,baseballGame.pitcher.leagueIdNumber)
+        // home team is pitching
+        baseballGame.homeTeam.pitcher.manager.notify(
+            new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.homeTeam.leagueIdNumber,baseballGame.homeTeam.pitcher.leagueIdNumber)
         )
         // check if new inning needs added to box score
         if(baseballGame.getInning() > baseballGame.boxScore.away.innings.length){

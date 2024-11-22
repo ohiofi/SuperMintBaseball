@@ -24,9 +24,9 @@ class NewsTicker {
             //     this.slideDivs[i].style.left = (this.slideCounter % this.slideDivs.length * -100) + "vw"; 
         }
         if(this.breakingNewsItems.length > 0 && this.breakingNewsItems[0].flaggedForRemoval){
-            this.breakingNewsItems.shift()
+            this.breakingNewsItems.splice(0,1);
         } else if(this.breakingNewsItems.length > 0 && !this.breakingNewsItems[0].flaggedForRemoval){
-            this.breakingNewsItems.flaggedForRemoval = true;
+            this.breakingNewsItems[0].flaggedForRemoval = true;
         }
 
     }

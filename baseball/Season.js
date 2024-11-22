@@ -247,10 +247,10 @@ class Season {
 
     isTodayDone(){
       if(this.state == SeasonStates.REGULAR_SEASON){
-        this.regularSeasonSchedule.isTodayDone()
+        return this.regularSeasonSchedule.isTodayDone()
       }
       else if(this.playoffSchedule != null && this.state == SeasonStates.PLAYOFF_TOURNAMENT){
-        this.playoffSchedule.isTodayDone()
+        return this.playoffSchedule.isTodayDone()
       }
       
     }

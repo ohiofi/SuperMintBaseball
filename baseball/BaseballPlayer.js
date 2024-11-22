@@ -6,30 +6,8 @@ class BaseballPlayer {
         Object.setPrototypeOf(jsonObject, BaseballPlayer.prototype);
         jsonObject.stats = Stats.restructure(jsonObject.stats);
         jsonObject.lifetimeStats = Stats.restructure(jsonObject.lifetimeStats);
+        jsonObject.manager = StatsEventManager.restructure(jsonObject.manager);
         return jsonObject;
-    }
-
-    static debug() {
-        let temp = new BaseballPlayer();
-        temp.pitchScoreAverage = 7;
-        temp.swingPercent = 7;
-        temp.contactPercent = 7;
-        temp.hitScoreAverage = 7;
-        temp.hitScoreDeviation = 0;
-        temp.pitchScoreDeviation = 0;
-        temp.exhaustion = 0;
-        return temp;
-    }
-
-    // Static method to compare two players based on their batting average
-    static compareByBattingAverage(player1, player2) {
-        if (player1.battingAverage > player2.battingAverage) {
-            return `${player1.name} has a higher batting average than ${player2.name}.`;
-        } else if (player1.battingAverage < player2.battingAverage) {
-            return `${player2.name} has a higher batting average than ${player1.name}.`;
-        } else {
-            return `${player1.name} and ${player2.name} have the same batting average.`;
-        }
     }
 
     // Keeps values in the range (0...10) inclusive

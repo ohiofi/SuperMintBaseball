@@ -20,8 +20,9 @@ class BottomOfTheInning extends BaseballGameState{
         baseballGame.setInningTop(false);
         baseballGame.setOffenseTeam();
         baseballGame.threeOutsCleanup()
-        baseballGame.pitcher.manager.notify(
-            new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.defenseTeam.leagueIdNumber,baseballGame.pitcher.leagueIdNumber)
+        // away team is pitching
+        baseballGame.awayTeam.pitcher.manager.notify(
+            new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.awayTeam.leagueIdNumber,baseballGame.awayTeam.pitcher.leagueIdNumber)
         )
         // check if new inning needs added to box score
         if(baseballGame.getInning() > baseballGame.boxScore.home.innings.length){

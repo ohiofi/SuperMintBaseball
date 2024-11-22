@@ -3,6 +3,7 @@
 // a StatsEventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
 // a BaseballTeam or BaseballPlayer has a StatsEventManager
 // a User or the League subscribes to one or more StatsEventManagers and can handleEvent(data)
+
 const StatsEventType = {
   GAME_WINNER:0,
   GAME_LOSER:1,
@@ -25,7 +26,14 @@ const StatsEventType = {
 }
 
 
+
 class StatsEvent {
+  
+  static restructure(jsonObject) {
+    Object.setPrototypeOf(jsonObject, StatsEvent.prototype);
+    return jsonObject;
+  }
+
   constructor(eventType, teamId, playerId) {
     this.eventType = eventType
     this.teamId = teamId

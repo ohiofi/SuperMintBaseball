@@ -113,6 +113,19 @@ sub.gamePostRightBase {
   right:0.74em
 }
 
+/* Rules for icon sizes: */
+.material-icons.size-12px { font-size: 12px !important}
+.material-icons.size-18px { font-size: 18px !important}
+.material-icons.size-24px { font-size: 24px !important} /* Default */
+.material-icons.size-36px { font-size: 36px !important}
+.material-icons.size-48px { font-size: 48px !important}
+
+.material-symbols-outlined.size-12px { font-size: 12px !important}
+.material-symbols-outlined.size-18px { font-size: 18px !important}
+.material-symbols-outlined.size-24px { font-size: 24px !important} /* Default */
+.material-symbols-outlined.size-36px { font-size: 36px !important}
+.material-symbols-outlined.size-48px { font-size: 48px !important}
+
 /* social media message */
 .messageFeedContainer {
   max-height: 50vh;
@@ -133,13 +146,7 @@ sub.gamePostRightBase {
   color:black;
 }
 
-.page-link{
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important
-}
 
-.page-link:hover{
-  border-bottom: 1px solid rgba(255, 255, 255, 1.0) !important
-}
 
 .post {
   /* border: 1px solid #e1e8ed; */
