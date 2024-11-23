@@ -3,14 +3,9 @@
 class GameWidget {
     constructor(pageNumber, gameMessage) {
         this.pageNumber = pageNumber;
-        this.root = View.createElement('div', "gameWidget"+pageNumber, [
-            'game-widget',
-            'shadow',
-            'bg-111',
-            'rounded-2',
-            'row',
-            'mb-4',
-        ]);
+        this.root = View.createElement('div', "gameWidget"+pageNumber, 
+            'game-widget bg-222 shadow rounded-2 row mb-4'
+        );
         this.root.innerHTML = `
         <!-- Left Section -->
         <div class="col-lg px-4 pt-4 py-lg-4 text-white">
@@ -49,9 +44,9 @@ class GameWidget {
     update(gameMessage) {
         document.getElementById('gameWidget' + this.pageNumber + 'Inning').textContent = gameMessage.inning;
         document.getElementById('gameWidget' + this.pageNumber + 'AwayScore').textContent =
-            gameMessage.scoreObject.away;
+            gameMessage.score.away;
         document.getElementById('gameWidget' + this.pageNumber + 'HomeScore').textContent =
-            gameMessage.scoreObject.home;
+            gameMessage.score.home;
         document.getElementById('gameWidget' + this.pageNumber + 'LeftBaseIcon').textContent =
             gameMessage.baseIcons.charAt(0);
         document.getElementById('gameWidget' + this.pageNumber + 'CenterBaseIcon').textContent =

@@ -367,20 +367,20 @@ class BaseballGame {
             this.boxScore.home.innings.length
         );
 
-        const inningsHeaders = Array.from({ length: maxInnings }, (_, i) => `<th>${i + 1}</th>`).join("");
+        const inningsHeaders = Array.from({ length: maxInnings }, (_, i) => `<th class="text-secondary">${i + 1}</th>`).join("");
 
         const formatInnings = (innings, max) =>
             Array.from({ length: max }, (_, i) => `<td>${innings[i] ?? ""}</td>`).join("");
 
         return `
-            <table class="table table-dark table-striped table-bordered text-center">
+            <table class="table table-dark table-striped table-bordered text-center shadow overflow-hidden">
                 <thead>
                     <tr>
-                        <th>Team</th>
+                        <th class="text-secondary">Team</th>
                         ${inningsHeaders}
-                        <th>R</th>
-                        <th>H</th>
-                        <th>E</th>
+                        <th class="text-secondary">R</th>
+                        <th class="text-secondary">H</th>
+                        <th class="text-secondary">E</th>
                     </tr>
                 </thead>
                 <tbody>

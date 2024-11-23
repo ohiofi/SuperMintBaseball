@@ -94,8 +94,18 @@ class League {
     let rank = 1;
     let previousOPS = null;
     let tieRank = 1;
-    //let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Batter Name</th><th>OPS</th></tr></thead><tbody>';
-    let table = '<thead><tr><th>Rank</th><th>Batter Name</th><th>OPS</th></tr></thead>';
+    //let table = '<table class="table table-striped table-dark"><thead><tr><th>#</th><th>Batter Name</th><th>OPS</th></tr></thead><tbody>';
+    let table = `
+    <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
+        <thead>
+            <tr>
+                <th class="text-secondary">#</th>
+                <th class="text-secondary">Batter Name</th>
+                <th class="text-secondary">OPS</th>
+            </tr>
+        </thead>
+        <tbody>
+  `;
     let count = 0;
     for (let i = 0; i < dataCopy.length; i++) {
       const player = dataCopy[i];
@@ -106,7 +116,7 @@ class League {
       } 
       tieRank++;
       table += `
-        <tr>
+        <tr class="overflow-hidden">
           <td>${rank}</td>
           <td>${player.getNameWithLink()}</td>
           <td>${player.stats.getOnBasePlusSlugging()}</td>
@@ -133,7 +143,17 @@ class League {
     let rank = 1;
     let previousERA = null;
     let tieRank = 1;
-    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Pitcher Name</th><th>ERA</th></tr></thead><tbody>';
+    let table = `
+    <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
+        <thead>
+            <tr>
+                <th class="text-secondary">#</th>
+                <th class="text-secondary">Pitcher Name</th>
+                <th class="text-secondary">ERA</th>
+            </tr>
+        </thead>
+        <tbody>
+  `;
     let count = 0;
     for (let i = 0; i < dataCopy.length; i++) {
       const player = dataCopy[i];
@@ -170,7 +190,17 @@ class League {
     let previousWins = null;
     let tieRank = 1;
     // Create the table element
-    let table = '<table class="table table-striped table-dark"><thead><tr><th>Rank</th><th>Team Name</th><th>Wins</th></tr></thead><tbody>';
+    let table = `
+        <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
+            <thead>
+                <tr>
+                    <th class="text-secondary">#</th>
+                    <th class="text-secondary">Team Name</th>
+                    <th class="text-secondary">Wins</th>
+                </tr>
+            </thead>
+            <tbody>
+      `;
     // Iterate over the sorted data and generate rows
     for (let i = 0; i < dataCopy.length; i++) {
       const team = dataCopy[i];

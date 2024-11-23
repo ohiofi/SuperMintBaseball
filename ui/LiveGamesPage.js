@@ -1,28 +1,25 @@
 class LiveGamesPage {
     constructor() {
-        this.root = View.createElement("div", "liveGamesPage", ["page", "hide"]);
-        this.headline = View.createElement("h3", null, "pb-4", "Live Games");
-        this.root.append(this.headline);
-
-        this.widgetsContainer = View.createElement("div", "widgetsContainer", "container");
-        this.root.append(this.widgetsContainer);
-
-        this.widgets = []
+        this.root = View.createElement("div", "liveGamesPage", "page hide");
+        this.root.innerHTML = `
+            <h3 id="liveGamesPageHeadline" class="pb-4">Live Games</h3>
+            <div class="row">
+                <div class="pageSummary col pb-4">Today's games are currently being played</div>
+                <div class="col">
+                    <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
+                </div>
+            </div>
+            <div id="widgetsContainer" class="container"></div>
+        `.trim();
+        this.widgets = [];
     }
 
     addGameWidgets(gameMessages) {
+        const widgetsContainer = this.root.querySelector('#widgetsContainer');
         for (let i = 0; i < gameMessages.length; i++) {
             this.widgets[i] = new GameWidget(i, gameMessages[i])
-            //widgetsContainer.append(this.widgets[i].render());
-            //this.widgets[i] = View.createElement("game-widget");
-            // this.widgets[i].setAttribute("page-number",i);
-            // this.widgets[i].setAttribute("away-id", gameMessages[i].awayId);
-            // this.widgets[i].setAttribute("home-id",gameMessages[i].homeId);
-            this.widgetsContainer.append(this.widgets[i].render())
-            
+            widgetsContainer.append(this.widgets[i].render())
         }
-        this.root.append(this.widgetsContainer);
-        
     }
 
     render(){

@@ -120,8 +120,8 @@ class GameWidget extends HTMLElement {
   
     update(gameMessage) {
       this.shadowRoot.querySelector('.inning').textContent = gameMessage.inning;
-      this.shadowRoot.querySelector('.away-score').textContent = gameMessage.scoreObject.away;
-      this.shadowRoot.querySelector('.home-score').textContent = gameMessage.scoreObject.home;
+      this.shadowRoot.querySelector('.away-score').textContent = gameMessage.score.away;
+      this.shadowRoot.querySelector('.home-score').textContent = gameMessage.score.home;
       this.shadowRoot.querySelector('.base-icons').innerHTML = gameMessage.baseIcons;
       this.shadowRoot.querySelector('.balls').textContent = gameMessage.count.balls;
       this.shadowRoot.querySelector('.strikes').textContent = gameMessage.count.strikes;

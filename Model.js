@@ -16,6 +16,10 @@ class Model {
         localStorage.setItem('todos', JSON.stringify(todos))
     }
 
+    next(){
+        console.log("NEXT STATE")
+    }
+
 
 
     // // Map through all todos, and replace the text of the todo with the specified id

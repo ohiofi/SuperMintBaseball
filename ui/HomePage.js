@@ -1,84 +1,78 @@
-class HomePage {
+class HomePage{
     constructor(){
         this.root = View.createElement("div","homePage","page");
+        this.root.innerHTML = `
+            <h3 id="homePageHeadline" class="pb-4">Play Ball!</h3>
+            <div class="row">
+                <div class="pageSummary col pb-4">Today's games are currently being played</div>
+                <div class="col">
+                    <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <table id="gameTable" class="pb-4 table table-dark table-striped shadow rounded-2 overflow-hidden  table-borderless">
+                        <thead>
+                            <tr class="m-0">
+                                <th class="text-secondary">Live Games</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gameTableBody">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `.trim();
+    }
+    addGameTableScores(games) {
+        const tableBody = this.root.querySelector('#gameTableBody');
+        tableBody.innerHTML = ''; // Clear any existing rows
+        // console.log(games)
+        games.forEach((gameDetails, i) => {
+            
 
-        this.headline = View.createElement("h3", "homePageHeadline","pb-4","Play Ball!");
-        this.root.append(this.headline);
+            // Create a new row for each game
+            const row = View.createElement('tr',null,"row mx-0");
 
-        this.summary = View.createElement("p", "homePageSummar","pb-4","Today's games are currently being played");
-        this.root.append(this.summary)
+            // Inning cell
+            const inningCell = View.createElement('div',null,"ps-3 py-0  col col-lg-12");
+            inningCell.textContent = gameDetails.inning || 'N/A';
 
-        this.listGroupPlayIcon = "◆";
-        this.listGroup = View.createElement("div", "listGroup", ["list-group"]);
-        
-        this.listGroupSpans = [];
-        this.listGroupScores = [];
+            // Score cell
+            const scoreCell = View.createElement('td',null,"ps-3 py-0 col-lg-12 row m-0");
 
-        this.liveGamesSpan  = View.createElement("span", "liveGamesSpan", ["p-1"]);
-        this.liveGamesPlayButton = View.createElement(
-            "a", 
-            "liveGamesPlayButton", 
-            ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"],
-            "◆"
-        );
-        this.liveGamesPlayButton.addEventListener('click', event => {
-          const els = document.getElementsByClassName("page");
-          Array.from(els).forEach((el) => {
-            el.classList.add("hide")
-          });
-          document.getElementById("liveGamesPage").classList.remove("hide")
+            const awayRow = View.createElement('div',null,"m-0 p-0 col col-lg-6 row" );
+            const awayNameCol = View.createElement('div',null,"m-0 p-0 col col-10 col-lg-9 ");
+            awayNameCol.innerHTML = gameDetails.awayNameWithLink || 'Away';
+            const awayScoreCol = View.createElement('div',null,"col col-1 col-lg-3 font-monospace");
+            awayScoreCol.innerHTML = gameDetails.score.away || '0';
+            awayRow.append(awayNameCol,awayScoreCol)
+
+            // Home cell
+            //const homeCell = View.createElement('td',null,"row");
+            const homeRow = View.createElement('td',null,"col col-lg-6 row" );
+            const homeNameCol = View.createElement('div',null,"col col-10 col-lg-9");
+            homeNameCol.innerHTML = gameDetails.homeNameWithLink || 'Home';
+            const homeScoreCol = View.createElement('div',null," col col-1  col-lg-3  font-monospace ");
+            homeScoreCol.innerHTML = gameDetails.score.home || '0';
+            homeRow.append(homeNameCol,homeScoreCol)
+
+            scoreCell.append(awayRow,homeRow)
+
+            // Append cells to the row
+            row.appendChild(inningCell);
+            row.appendChild(scoreCell);
+
+            // row.appendChild(actionCell);
+
+            // Append row to the table body
+            tableBody.appendChild(row);
         });
-        this.liveGamesLink = View.createElement(
-            "a", 
-            "liveGamesLink", 
-            ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"],
-            "Live Games"
-        );
-        this.liveGamesLink.addEventListener('click', event => {
-            const els = document.getElementsByClassName("page");
-            Array.from(els).forEach((el) => {
-                el.classList.add("hide")
-            });
-            document.getElementById("liveGamesPage").classList.remove("hide")
-        });
-        this.liveGamesSpan.append(this.liveGamesPlayButton,this.liveGamesLink)
-        this.listGroup.append(this.liveGamesSpan);
-        this.root.append(this.listGroup)
-
-        this.standingsSection = View.createElement("div","standings");
-        
-        this.root.append(this.standingsSection)
-
     }
 
-    addlistGroupScores(game){
-        const scores = game.getGameDetails()
-        for (let i = 0; i < scores.length; i++) {
-          
-            this.listGroupSpans[i] = View.createElement("span", "listGroupSpan"+i, ["p-1"]);
-
-            this.listGroupScores[i] = View.createElement("span", "listGroupScore"+i, ["p-2"],"Game " + i + ": " + scores[i].scoreString);
-            const playButton = View.createElement(
-                "a", 
-                "playButton"+i, 
-                ["p-2","link-offset-2","link-light","link-underline-opacity-10","link-underline-opacity-100-hover"],
-                this.listGroupPlayIcon
-            )
-            playButton.addEventListener('click', event => {
-                const els = document.getElementsByClassName("page");
-                Array.from(els).forEach((el) => {
-                    el.classList.add("hide")
-                });
-                document.getElementById("page" + i).classList.remove("hide")
-                const container = document.getElementById("page" + i).children[1]
-                container.scrollTop = container.scrollHeight
-            });
-            this.listGroupSpans[i].append(playButton, this.listGroupScores[i])
-            this.listGroup.append(this.listGroupSpans[i]);
-            this.root.append(this.listGroup);
-        }
+    update(gameMessages) {
     }
-
     render(){
         return this.root;
     }

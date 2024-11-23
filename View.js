@@ -1,172 +1,208 @@
 class View {
-  static createElement(tag, idName, classNames, content) {
-    const element = document.createElement(tag);
-    if (idName) {
-      element.id = idName;
+    static createElement(tag, idName, classNames, content) {
+        const element = document.createElement(tag);
+        if (idName) {
+            element.id = idName;
+        }
+        if (classNames && classNames.indexOf(' ') >= 0) {
+            classNames.split(" ").forEach((each) => {
+                if (each.length > 0) {
+                    element.classList.add(each);
+                }
+
+            });
+            // for (let each of classNames) {
+            //   element.classList.add(each);
+            // }
+        } else if (classNames) {
+            element.classList.add(classNames);
+        }
+        if (content) {
+            element.innerHTML = content;
+        }
+        return element
     }
-    if (classNames && classNames.constructor === Array) {
-      for (let each of classNames) {
-        element.classList.add(each);
-      }
-    } else if (classNames) {
-      element.classList.add(classNames);
+
+    constructor() {
+        this.app = document.querySelector("#root");
+
+        // news ticker
+        this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4");
+        this.tickerItems = [];
+
+        // menu bar
+        this.pageMenuBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
+        this.addMenuItemHome()
+        this.addMenuItemStandings()
+        this.addMenuItemLive()
+
+        this.pageContainer = View.createElement("div", "pageContainer");
+
+        // home
+        this.homePage = new HomePage();
+        this.pageContainer.append(this.homePage.render());
+
+        // standings page
+        this.standingsPage = new StandingsPage();
+        this.pageContainer.append(this.standingsPage.render());
+
+        // live games
+        this.liveGamesPage = new LiveGamesPage();
+        this.gameWidgetContainer = View.createElement("div", "game-widget-container", "container");
+        this.gameWidgetItems = [];
+        this.pageContainer.append(this.liveGamesPage.render());
+
+        // a bunch of single game pages
+        this.singleGamePages = [];
+
+        // stats modal
+        this.modal = new StatsModal();
+        this.app.append(this.newsTickerContainer, this.pageMenuBar, this.pageContainer, this.modal.render())
     }
-    if (content) {
-      element.innerHTML = content;
-    }
-    return element
-  }
-
-  constructor() {
-
-    this.app = document.querySelector("#root");
-
-    this.newsTickerContainer = View.createElement("div", "newsTickerContainer", ["mt-4"]);
-    this.tickerItems = [];
-    this.pageMenuBar = View.createElement("ul", "pageMenuBar", ["pagination","border-0"]);
-    this.addMenuBarItemHome()
-    this.addMenuBarItemLive()
-
-    this.pageContainer = View.createElement("div", "pageContainer");
-
-    this.homePage = new HomePage();
-    this.pageContainer.append(this.homePage.render());
-
-    this.liveGamesPage = new LiveGamesPage();
-    this.pageContainer.append(this.liveGamesPage.render());
 
     
 
-    this.singleGamePages = [];
-
-    this.gameWidgetContainer = View.createElement("div", "game-widget-container", "container");
-    this.gameWidgetItems = [];
-    this.modal = new StatsModal();
-    this.app.append(this.newsTickerContainer, this.pageMenuBar, this.pageContainer, this.modal.render())
-  }
-
-  // adds the individual "posts" that show up in the feed on each Game Page
-  addGameMessages(gameNumber, gameMessage) {
-      if (gameMessage.done) {
-        return;
-      }
-      const container = this.singleGamePages[gameNumber].messageFeedContainer;
-      const postDiv = new GamePost(gameMessage)
-      // Append the new post to the container while maintaining scroll
-      const previousScrollTop = container.scrollTop;
-      if (container.scrollHeight - container.clientHeight <= container.scrollTop) {
-        container.appendChild(postDiv.render());
-        container.scrollTop = container.scrollHeight;
-        this.singleGamePages[gameNumber].messageJumpButton.classList.add("hide");
-      } else {
-        container.appendChild(postDiv.render());
-        container.scrollTop = previousScrollTop;
-        this.singleGamePages[gameNumber].messageJumpButton.classList.remove("hide");
-      }
-  }
-
-  addAllSingleGamePages(game) {
-    // this.addPageHome(game);
-    const scores = game.getGameDetails();
-    for (let i = 0; i < scores.length; i++) {
-      this.singleGamePages[i] = new SingleGamePage(i, scores[i].scoreString);
-      this.pageContainer.append(this.singleGamePages[i].render());
+    addAllSingleGamePages(game) {
+        // this.addPageHome(game);
+        const scores = game.getGameDetails();
+        for (let i = 0; i < scores.length; i++) {
+            this.singleGamePages[i] = new SingleGamePage(i, scores[i].scoreString);
+            this.pageContainer.append(this.singleGamePages[i].render());
+        }
     }
-  }
 
-
-  addMenuBarItemSingleGamePages(game) {
-
-    //<li class="page-item"><a class="page-link" href="#">1</a></li>
-
-    const scores = game.getGameDetails();
-    for (let i = 0; i < scores.length; i++) {
-      const menuItem = View.createElement("li", null, "page-item");
-
-      const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"]);
-      menuLink.innerHTML = `<span class="font-monospace size-48">
-    ${i}
-      </span>`
-      menuLink.addEventListener('click', event => {
-        const els = document.getElementsByClassName("page");
-        Array.from(els).forEach((el) => {
-          el.classList.add("hide")
-        });
-        document.getElementById("page" + i).classList.remove("hide")
-        const container = document.getElementById("page" + i).children[2]
-        container.scrollTop = container.scrollHeight
-      });
-      menuItem.append(menuLink);
-      this.pageMenuBar.append(menuItem);
-
-    }
-  }
-
-  addMenuBarItemHome() {
-    const menuItem = View.createElement("li", null, ["page-item"]);
-    const menuLink = View.createElement("a", null, ["page-link", "bg-dark", "border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"])
-    menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
+    addMenuItemHome() {
+        const menuItem = View.createElement("li", "homePageMenuItem", "page-item active");
+        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+        menuLink.dataset.linkToPageId = "homePage";
+        menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
 home
 </span>`;
-    menuLink.addEventListener('click', event => {
-      const els = document.getElementsByClassName("page");
-      Array.from(els).forEach((el) => {
-        el.classList.add("hide")
-      });
-      document.getElementById("homePage").classList.remove("hide");
+        menuItem.append(menuLink);
+        this.pageMenuBar.append(menuItem);
+    }
 
-    })
-    menuItem.append(menuLink);
-    this.pageMenuBar.append(menuItem);
-  }
-
-  addMenuBarItemLive() {
-    const menuItem = View.createElement("li", null, "page-item");
-    const menuLink = View.createElement("a", null, ["page-link","bg-dark","border-0","link-light","link-opacity-25" ,"link-opacity-100-hover"])
-    menuLink.innerHTML = `<span class="material-symbols-outlined size-24">
+    addMenuItemLive() {
+        const menuItem = View.createElement("li", "liveGamesPageMenuItem", "page-item bg-transparent");
+        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+        menuLink.dataset.linkToPageId = "liveGamesPage";
+        menuLink.innerHTML = `<span class="material-symbols-outlined size-24">
 stadium
 </span>`;
-    menuLink.addEventListener('click', event => {
-      const els = document.getElementsByClassName("page");
-      Array.from(els).forEach((el) => {
-        el.classList.add("hide")
-      });
-      document.getElementById("liveGamesPage").classList.remove("hide");
-
-    })
-    menuItem.append(menuLink);
-    this.pageMenuBar.append(menuItem);
-  }
-
-  addNewsTickerItems(game) {
-    const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
-    const scores = game.getGameDetails();
-    // add 2x as many items as there are games. add 4x if only 1 or 2 games.
-    let multiplier = 2;
-    if (scores.length < 3) multiplier = 4
-    for (let i = 0; i < scores.length * multiplier; i++) {
-      this.tickerItems[i] = View.createElement("span", null, ["newsTickerItem"]);
-      this.tickerItems[i].innerHTML = scores[i % scores.length].scoreString;
-
-      newsTickerRibbon.append(this.tickerItems[i]);
+        menuItem.append(menuLink);
+        this.pageMenuBar.append(menuItem);
     }
-    this.newsTickerContainer.append(newsTickerRibbon);
-  }
+
+    addMenuItemSingleGamePages(game) {
+        const scores = game.getGameDetails();
+        for (let i = 0; i < scores.length; i++) {
+            const menuItem = View.createElement("li", "game" + i + "PageMenuItem", "page-item bg-transparent");
+            const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover");
+            menuLink.dataset.linkToPageId = "game" + i + "Page";
+            menuLink.innerHTML = `<span class="font-monospace size-48">
+    ${i}
+      </span>`;
+            menuItem.append(menuLink);
+            this.pageMenuBar.append(menuItem);
+        }
+    }
+
+    addMenuItemStandings() {
+        const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
+        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+        menuLink.dataset.linkToPageId = "standingsPage";
+        menuLink.innerHTML = `<span class="material-symbols-outlined">
+format_list_numbered
+</span>`;
+        menuItem.append(menuLink);
+        this.pageMenuBar.append(menuItem);
+    }
 
 
 
-  
 
 
+    addNewsTickerItems(game) {
+        const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
+        const scores = game.getGameDetails();
+        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
+        let multiplier = 2;
+        if (scores.length < 3) multiplier = 4
+        for (let i = 0; i < scores.length * multiplier; i++) {
+            this.tickerItems[i] = View.createElement("span", null, "newsTickerItem");
+            this.tickerItems[i].innerHTML = scores[i % scores.length].scoreString;
 
-  showPage(pageName) {
-    const els = document.getElementsByClassName("page");
-    Array.from(els).forEach((el) => {
-      el.classList.add("hide")
-    });
-    document.getElementById(pageName).classList.remove("hide");
+            newsTickerRibbon.append(this.tickerItems[i]);
+        }
+        this.newsTickerContainer.append(newsTickerRibbon);
+    }
 
-  }
+    bindContinueButtonClick(handler) {
+        const els = document.getElementsByClassName("continueButton");
+        Array.from(els).forEach((el) => {
+            el.addEventListener('click', event => {
 
+                if (event.target.localName === 'button') {
 
+                    handler()
+                }
+            })
+        })
+    }
+
+    bindMenuBarClick(handler) {
+        this.pageMenuBar.addEventListener('click', event => {
+            if (event.target.localName === 'span') {
+                //const id = event.target.parentElement.id
+                const id = event.target.parentElement.dataset.linkToPageId;
+                handler(id)
+            }
+            if (event.target.localName === 'a') {
+                //const id = event.target.parentElement.id
+                const id = event.target.dataset.linkToPageId;
+                handler(id)
+            }
+        })
+    }
+
+    showPage(pageName) {
+        const els = document.getElementsByClassName("page");
+        Array.from(els).forEach((el) => {
+            el.classList.add("hide")
+        });
+        const page = document.getElementById(pageName);
+        page.classList.remove("hide");
+
+        // switch active menu bar item
+        const items = document.getElementsByClassName("page-item");
+        Array.from(items).forEach((listItem) => {
+            listItem.classList.remove("active")
+        });
+        document.getElementById(pageName + "MenuItem").classList.add("active");
+
+        // scroll down the feed
+        const container = page.querySelector(".messageFeedContainer");
+        if (container !== null) {
+            container.scrollTop = container.scrollHeight;
+            page.querySelector(".messageJumpButton").classList.add("hide");
+        }
+    }
+
+    showTodayIsDone() {
+        this.homePage.root.querySelector("#homePageHeadline").textContent = "Today is Done";
+
+        this.standingsPage.root.querySelector("#standingsPageHeadline").textContent = "Current Standings";
+
+        this.liveGamesPage.root.querySelector("#liveGamesPageHeadline").textContent = "(Formerly) Live Games";
+
+        const items = document.getElementsByClassName("pageSummary");
+        Array.from(items).forEach((each) => {
+            each.innerHTML = `All of today's games have finished!`;
+        });
+        const btns = document.getElementsByClassName("continueButton");
+        Array.from(btns).forEach((btn) => {
+            btn.classList.remove("hide");
+        });
+
+    }
 }

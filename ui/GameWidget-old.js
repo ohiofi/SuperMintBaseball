@@ -27,7 +27,7 @@ class GameWidget{
                 app.view.modal.update(gameMessage.awayId);
             });
             this.awayScore = View.createElement("div", "gameWidget"+pageNumber+"AwayScore", 
-                ["col-2", "text-end", "h3", "font-monospace"],gameMessage.scoreObject.away);
+                ["col-2", "text-end", "h3", "font-monospace"],gameMessage.score.away);
             this.awayLine.append(this.awayName, this.awayScore)
 
             this.homeLine = View.createElement("div", "gameWidget"+pageNumber+"HomeLine", "row");
@@ -38,7 +38,7 @@ class GameWidget{
             this.homeName.addEventListener('click', event => {
                 app.view.modal.update(gameMessage.homeId);
             });
-            this.homeScore = View.createElement("span", "gameWidget"+pageNumber+"HomeScore", ["col-2", "text-end", "h3", "font-monospace"],gameMessage.scoreObject.home);
+            this.homeScore = View.createElement("span", "gameWidget"+pageNumber+"HomeScore", ["col-2", "text-end", "h3", "font-monospace"],gameMessage.score.home);
             this.homeLine.append(this.homeName, this.homeScore)
             this.left.append(this.leftInning, this.awayLine, this.homeLine)
             // center
@@ -63,8 +63,8 @@ class GameWidget{
 
     update(gameMessage){
         this.leftInning.innerHTML = gameMessage.inning;
-        this.awayScore.innerHTML = gameMessage.scoreObject.away;
-        this.homeScore.innerHTML = gameMessage.scoreObject.home;
+        this.awayScore.innerHTML = gameMessage.score.away;
+        this.homeScore.innerHTML = gameMessage.score.home;
 
         this.baseIcons.innerHTML = gameMessage.baseIcons;
         this.balls.innerHTML = gameMessage.count.balls;

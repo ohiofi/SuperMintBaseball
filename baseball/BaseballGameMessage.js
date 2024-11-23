@@ -3,10 +3,12 @@ class BaseballGameMessage{
         this.name = game.name;
         this.inning = game.getInningString();
         this.homeTeam = game.homeTeam.getName();
+        this.homeNameWithLink = game.homeTeam.getNameWithLink();
         this.homeId = game.homeTeam.leagueIdNumber;
         this.awayTeam = game.awayTeam.getName();
+        this.awayNameWithLink = game.awayTeam.getNameWithLink();
         this.awayId = game.awayTeam.leagueIdNumber;
-        this.scoreObject = structuredClone(game.score);
+        this.score = structuredClone(game.score);
         this.scoreString = game.getScore();
         this.baseIcons = game.getBaseIcons();
         this.count = structuredClone(game.count);
