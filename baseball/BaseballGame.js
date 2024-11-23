@@ -6,7 +6,7 @@ Also using the State Behavioral Design Pattern so that control is driven by
   the seperate state classes.
 https://en.wikipedia.org/wiki/State_pattern
 */
-// const BGameState = {
+// const BaseballGameState = {
 //     PLAY_BALL: 0,
 //     TOP_OF_THE_INNING: 1,
 //     AWAY_PLAYER_STEPS_UP_TO_BAT: 2,
@@ -45,7 +45,7 @@ class BaseballGame {
         jsonObject.offenseTeam = BaseballTeam.restructure(jsonObject.offenseTeam);
         if (jsonObject.batter != null) jsonObject.batter = BaseballPlayer.restructure(jsonObject.batter);
         jsonObject.pitcher = BaseballPlayer.restructure(jsonObject.pitcher);
-        jsonObject.gameState = BaseballGameState.restructure(jsonObject.gameState);
+        jsonObject.gameState = AbstractBaseballGameState.restructure(jsonObject.gameState);
         if (jsonObject.onBase[0] != null) jsonObject.onBase[0] = BaseballPlayer.restructure(jsonObject.onBase[0]);
         if (jsonObject.onBase[1] != null) jsonObject.onBase[1] = BaseballPlayer.restructure(jsonObject.onBase[1]);
         if (jsonObject.onBase[2] != null) jsonObject.onBase[2] = BaseballPlayer.restructure(jsonObject.onBase[2]);
@@ -98,16 +98,16 @@ class BaseballGame {
             away: {
                 name: this.awayTeam.getNameWithLink(),
                 innings: [0],
-                runs: 0, // Runs
-                hits: 0, // Hits
-                errors: 0  // Errors
+                runs: 0,
+                hits: 0, 
+                errors: 0  
             },
             home: {
                 name: this.homeTeam.getNameWithLink(),
                 innings: [],
-                runs: 0, // Runs
-                hits: 0, // Hits
-                errors: 0  // Errors
+                runs: 0, 
+                hits: 0, 
+                errors: 0  
             }
         }
     }
@@ -158,7 +158,7 @@ class BaseballGame {
         return result;
     }
 
-    atBat(pitchScore) {
+    getAtBat(pitchScore) {
         let result = "";
 
         if (this.batter.isSwingingBat(this.pitchNumber, pitchScore)) {
@@ -167,7 +167,7 @@ class BaseballGame {
                 // makes contact
                 let hitScore = this.batter.getHitScore(this.pitchNumber, pitchScore);
                 // foul, out, hit a single, double, triple, home run
-                result += this.flyBall(hitScore);
+                result += this.getFlyBall(hitScore);
             } else {
                 // swinging but doesn't make contact
                 this.count.strikes++;
@@ -178,7 +178,7 @@ class BaseballGame {
                     result += " " + this.batter.getNameWithLink() + " STRIKES OUT swinging. " + this.getOutsString()
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
-                    this.threeStrikesCleanup();
+                    this.setCountToZero();
                     this.gameState.previousState(this);
                 }
             }
@@ -193,7 +193,7 @@ class BaseballGame {
                     result += " " + this.batter.getNameWithLink() + " STRIKES OUT looking. " + this.getOutsString();
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
-                    this.threeStrikesCleanup()
+                    this.setCountToZero()
                     this.gameState.previousState(this);
                 }
             } else {
@@ -206,7 +206,7 @@ class BaseballGame {
                     this.batter.manager.notify(new StatsEvent(StatsEventType.BASES_ON_BALLS, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.WALKS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     result += this.walkAndAdvanceBaseRunners()
-                    this.fourBallsCleanup()
+                    this.setCountToZero()
                 }
             }
         }
@@ -220,7 +220,7 @@ class BaseballGame {
             this.jerseyNumber === otherObject.jerseyNumber
     }
 
-    flyBall(hitScore) {
+    getFlyBall(hitScore) {
         let result = "";
         // 50% of weak hits are foul
         if (hitScore <= 2.5 && rng.random() > 0.5) {
@@ -299,10 +299,18 @@ class BaseballGame {
         return result;
     }
 
-    fourBallsCleanup() {
+
+
+    setCountToZero() {
         if (this.count.balls >= 4) {
             this.batter.setHungerDown()
             this.pitcher.setHungerUp()
+            this.count.strikes = 0;
+            this.count.balls = 0;
+        }
+        if (this.count.strikes >= 3) {
+            this.batter.setHungerUp()
+            this.pitcher.setHungerDown()
             this.count.strikes = 0;
             this.count.balls = 0;
         }
@@ -334,22 +342,6 @@ class BaseballGame {
         } else {
             result += "⬦"
         }
-        // if (this.onBase[2] != null) {
-        //     result += "<sub class='baseIcon leftBaseIcon'>⬥</sub>"
-        // } else {
-        //     result += "<sub class='baseIcon leftBaseIcon'>⬦</sub>"
-        // }
-        // if (this.onBase[1] != null) {
-        //     result += "<sup class='baseIcon centerbaseIcon'>⬥</sup>"
-        // } else {
-        //     result += "<sup class='baseIcon centerbaseIcon'>⬦</sup>"
-        // }
-        // if (this.onBase[0] != null) {
-        //     result += "<sub class='baseIcon rightBaseIcon'>⬥</sub>"
-        // } else {
-        //     result += "<sub class='baseIcon rightBaseIcon'>⬦</sub>"
-        // }
-
         return result;
     }
 
@@ -465,12 +457,6 @@ class BaseballGame {
         return BaseballGame.pitchDescriptions[Math.floor((BaseballGame.pitchDescriptions.length - 1) - pitchScore * (BaseballGame.pitchDescriptions.length - 1) / 10)];
     }
 
-    // getScore(){
-    //     return {
-    //         away:this.score.away, 
-    //         home:this.score.home
-    //     }
-    // }
     getScore() {
 
         if (!this.hasStarted) {
@@ -532,6 +518,7 @@ class BaseballGame {
 
     nextBatter() {
         this.batter = this.offenseTeam.getNextBatter();
+        return this.batter;
     }
 
 
@@ -544,19 +531,13 @@ class BaseballGame {
         result += this.pitcher.getNameWithLink() + " throws ";
         result += BaseballGame.useAOrAn(this.getPitchDescription(pitchScore));
         result += " " + this.getPitchDescription(pitchScore) + " pitch"
-        return result + this.atBat(pitchScore);
+        return result + this.getAtBat(pitchScore);
     }
 
-    resetTheCount() {
-        this.count = {
-            balls: 0,
-            strikes: 0,
-            outs: 0
-        }
-    }
+
 
     setGameState(newState) {
-        if (newState instanceof BaseballGameState && !this.done) {
+        if (newState instanceof AbstractBaseballGameState && !this.done) {
             this.gameState = newState;
         } else {
             throw new Error("oof bad game state")
@@ -576,16 +557,6 @@ class BaseballGame {
     }
 
     setOffenseTeam() {
-        // if ((typeof teamNameString === 'string' || teamNameString instanceof String) && [this.awayTeam.getName(), this.homeTeam.getName()].includes(teamNameString)) {
-
-        //     if (teamNameString === this.homeTeam.getName()) {
-        //         this.offenseTeam = this.homeTeam;
-        //         this.defenseTeam = this.awayTeam;
-        //     } else if (teamNameString === this.awayTeam.getName()) {
-        //         this.offenseTeam = this.awayTeam;
-        //         this.defenseTeam = this.homeTeam;
-        //     }
-        // }
         if (this.isTopOfInning) {
             this.offenseTeam = this.awayTeam;
             this.defenseTeam = this.homeTeam;
@@ -594,38 +565,7 @@ class BaseballGame {
             this.defenseTeam = this.awayTeam;
         }
     }
-
-    // setupNextInning(offense, defense) {
-    //     this.offenseTeam = offense;
-    //     this.defenseTeam = defense;
-
-    //     this.threeOutsCleanup()
-    //     if (offense == this.awayTeam) {
-    //         this.inning++;
-    //         return "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
-    //     } else {
-    //         return "Bottom of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
-    //     }
-    // }
-
-    threeOutsCleanup() {
-        if (this.count.outs >= 3) {
-            this.resetTheCount();
-            this.onBase = [null, null, null];
-        }
-    }
-
-    threeStrikesCleanup() {
-        if (this.count.strikes >= 3) {
-            this.batter.setHungerUp()
-            this.pitcher.setHungerDown()
-            this.count.strikes = 0;
-            this.count.balls = 0;
-            // if (this.count.outs < 3) {
-            //     this.nextBatter();
-            // }
-        }
-    }
+    
 
     walkAndAdvanceBaseRunners() {
         let result = "";

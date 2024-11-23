@@ -1,5 +1,5 @@
 /* this is an "abstract" class that lists the basic methods that all baseball game states must have */
-class BaseballGameState {
+class AbstractBaseballGameState {
 
     static restructure(jsonObject){
         switch(jsonObject.name){
@@ -40,8 +40,8 @@ class BaseballGameState {
     
 
     constructor() {
-        this.name = "BaseballGameState";
-        // if (this.constructor === BaseballGameState) {
+        this.name = "AbstractBaseballGameState";
+        // if (this.constructor === AbstractBaseballGameState) {
         //     throw new Error("Class is of abstract type and can NOT be instantiated");
         // };
 

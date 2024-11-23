@@ -1,9 +1,15 @@
-class EndOfGame extends BaseballGameState{
+class EndOfGame extends AbstractBaseballGameState{
     constructor(){
         super();
     this.name = "EndOfGame";
     }
     handle(baseballGame){
+        baseballGame.count = {
+            balls: 0,
+            strikes: 0,
+            outs: 0
+        }
+        baseballGame.onBase = [null, null, null];
         baseballGame.setGameOver();
         
         return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()

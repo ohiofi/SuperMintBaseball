@@ -1,4 +1,4 @@
-class TopOfTheInning extends BaseballGameState{
+class TopOfTheInning extends AbstractBaseballGameState{
 
     constructor(){
         super();
@@ -8,6 +8,12 @@ class TopOfTheInning extends BaseballGameState{
 
 
     handle(baseballGame){
+        baseballGame.count = {
+            balls: 0,
+            strikes: 0,
+            outs: 0
+        }
+        baseballGame.onBase = [null, null, null];
         this.nextState(baseballGame);
         return this.setupTopInning(baseballGame)
     }
@@ -23,7 +29,7 @@ class TopOfTheInning extends BaseballGameState{
     setupTopInning(baseballGame) {
         baseballGame.setInningTop(true);
         baseballGame.setOffenseTeam();
-        baseballGame.threeOutsCleanup();
+        baseballGame.setCountToZero();
         baseballGame.incrementInning();
         // home team is pitching
         baseballGame.homeTeam.pitcher.manager.notify(

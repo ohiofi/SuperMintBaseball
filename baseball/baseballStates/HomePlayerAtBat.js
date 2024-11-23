@@ -1,4 +1,4 @@
-class HomePlayerAtBat extends BaseballGameState {
+class HomePlayerAtBat extends AbstractBaseballGameState {
     constructor(){
         super();
     this.name = "HomePlayerAtBat"
@@ -10,10 +10,10 @@ class HomePlayerAtBat extends BaseballGameState {
             this.nextState(baseballGame);
         } else if (baseballGame.getStrikes() >= 3) {
             this.previousState(baseballGame)
-            this.threeStrikesCleanup();
+            this.setCountToZero();
         } else if (baseballGame.getBalls() >= 4) {
             this.previousState(baseballGame)
-            this.fourBallsCleanup();
+            this.setCountToZero();
         }
         // check if game is over
         if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.home != baseballGame.score.away) {

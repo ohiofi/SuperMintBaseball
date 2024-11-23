@@ -1,4 +1,4 @@
-class AwayPlayerAtBat extends BaseballGameState {
+class AwayPlayerAtBat extends AbstractBaseballGameState {
     constructor() {
         super();
         this.name = "AwayPlayerAtBat";
@@ -9,10 +9,10 @@ class AwayPlayerAtBat extends BaseballGameState {
             this.nextState(baseballGame);
         } else if (baseballGame.getStrikes() >= 3) {
             this.previousState(baseballGame)
-            this.threeStrikesCleanup();
+            this.setCountToZero();
         } else if (baseballGame.getBalls() >= 4) {
             this.previousState(baseballGame)
-            this.fourBallsCleanup();
+            this.setCountToZero();
         }
         // check if game is over early
         if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.home > baseballGame.score.away) {

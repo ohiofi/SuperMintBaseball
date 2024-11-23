@@ -20,7 +20,7 @@ class StatsModal {
         if (object === null) throw new Error("updateModal could not find " + leagueIdNumber);
 
         document.getElementById("statsModalTitle").innerHTML = object.getFullName();
-        document.getElementById("statsModalBody").innerHTML = object.toString();
+        document.getElementById("statsModalBody").innerHTML = object.getStatsTable();
     }
     render() {
         return this.root;

@@ -280,34 +280,8 @@ class BaseballPlayer {
         }
     }
 
-    // toString() {
-    //     return `
-    //         Player ID: ${this.playerIdNumber}<br>
-    //         Full Name: ${this.fullname}<br>
-    //         Team Name: ${this.teamName}<br>
-    //         Jersey Number: ${this.jerseyNumber}<br>
-    //         Position: ${this.position}<br>
-    //         Age: ${this.age}<br>
-    //         Hunger: ${this.hunger.toFixed(1)}<br>
-    //         Hunger Rate: ${this.hungerRate.toFixed(1)}<br>
-    //         Healthiness: ${this.healthiness.toFixed(1)}<br>
-    //         Balance: ${this.balance.toFixed(1)}<br>
-    //         -----Pitching Attributes-----<br>
-    //         Pitch Strength: ${this.pitchStrength.toFixed(1)}<br>
-    //         Pitch Accuracy: ${this.pitchAccuracy.toFixed(1)}<br>
-    //         Pitching Aptitude: ${this.getPitchingAptitude().toFixed(1)}<br>
-    //         -----Batting Attributes-----<br>
-    //         Swinginess: ${this.swinginess.toFixed(1)}<br>
-    //         Thwackiness: ${this.thwackiness.toFixed(1)}<br>
-    //         Hitting Power: ${this.hittingPower.toFixed(1)}<br>
-    //         Batting Aptitude: ${this.getBattingAptitude().toFixed(1)}<br>
-    //         -----Defense Attributes-----<br>
-    //         Reliability: ${this.reliability.toFixed(1)}<br>
-    //         Teamwork: ${this.teamwork.toFixed(1)}<br>
-    //         Defense Aptitude: ${this.getDefenseAptitude().toFixed(1)}<br>
-    //     `.trim();
-    // }
-    toString() {
+
+    getStatsTable() {
         return `
             <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
               
@@ -333,7 +307,7 @@ class BaseballPlayer {
 
             <details>
         <summary>Stats</summary>
-          ${this.stats.toString()}
+          ${this.stats.getStatsTable()}
       </details>
             
             <details>
@@ -367,8 +341,8 @@ class BaseballPlayer {
             </details>
             
       <details>
-        <summary>Lifetime Stats</summary>
-          ${this.lifetimeStats.toString()}
+        <summary>Lifetime</summary>
+          ${this.lifetimeStats.getStatsTable()}
       </details>
         `.trim();
     }

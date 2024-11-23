@@ -114,7 +114,7 @@ class BaseballGame {
                 if (this.count.strikes >= 3) {
                     this.count.outs++;
                     result += "<br>" + this.batter.getName() + " STRIKES OUT swinging. " + this.getOutsString()
-                    this.threeStrikesCleanup()
+                    this.setCountToZero()
                     this.gameState--;
                     //return result;
                 }
@@ -131,7 +131,7 @@ class BaseballGame {
                 if (this.count.strikes >= 3) {
                     this.count.outs++
                     result += "<br>" + this.batter.getName() + " STRIKES OUT looking. " + this.getOutsString()
-                    this.threeStrikesCleanup()
+                    this.setCountToZero()
                     this.gameState--;
                     //return result;
                 }
@@ -144,7 +144,7 @@ class BaseballGame {
                     this.gameState--;
                     result += ". Take your base."
                     result += this.walkAndAdvanceBaseRunners()
-                    this.fourBallsCleanup()
+                    this.setCountToZero()
                 }
             }
         }
@@ -220,7 +220,7 @@ class BaseballGame {
         return result;
     }
 
-    fourBallsCleanup() {
+    setCountToZero() {
         if (this.count.balls >= 4) {
             this.batter.setHungerDown()
             this.pitcher.setHungerUp()
@@ -362,10 +362,10 @@ class BaseballGame {
                     this.gameState = BGameState.BOTTOM_OF_THE_INNING;
                 } else if (this.count.strikes >= 3) {
                     this.gameState = BGameState.AWAY_PLAYER_STEPS_UP_TO_BAT;
-                    this.threeStrikesCleanup();
+                    this.setCountToZero();
                 } else if (this.count.balls >= 4) {
                     this.gameState = BGameState.AWAY_PLAYER_STEPS_UP_TO_BAT;
-                    this.fourBallsCleanup();
+                    this.setCountToZero();
                 }
                 // check if game is over early
                 if (this.count.outs >= 3 && this.inning >= 9 && this.score.home > this.score.away) {
@@ -386,10 +386,10 @@ class BaseballGame {
                 result = this.nextPitch();
                 if (this.count.strikes >= 3) {
                     this.gameState = BGameState.HOME_PLAYER_STEPS_UP_TO_BAT;
-                    this.threeStrikesCleanup();
+                    this.setCountToZero();
                 } else if (this.count.balls >= 4) {
                     this.gameState = BGameState.HOME_PLAYER_STEPS_UP_TO_BAT;
-                    this.fourBallsCleanup();
+                    this.setCountToZero();
                 }
                 // check if game is over
                 if (this.count.outs >= 3 && this.inning >= 9 && this.score.away != this.score.home) {
@@ -438,7 +438,7 @@ class BaseballGame {
     }
 
     setGameState(newState) {
-        if (newState instanceof BaseballGameState && !this.done) {
+        if (newState instanceof AbstractBaseballGameState && !this.done) {
             this.state = newState;
         }
     }
@@ -466,7 +466,7 @@ class BaseballGame {
         this.offenseTeam = offense;
         this.defenseTeam = defense;
 
-        this.threeOutsCleanup()
+        this.setCountToZero()
         if (offense == this.awayTeam) {
             this.inning++;
             return "Top of inning " + this.inning + ", " + this.offenseTeam.getName() + " batting.";
@@ -475,14 +475,14 @@ class BaseballGame {
         }
     }
 
-    threeOutsCleanup() {
+    setCountToZero() {
         if (this.count.outs >= 3) {
             this.resetTheCount();
             this.onBase = [null, null, null];
         }
     }
 
-    threeStrikesCleanup() {
+    setCountToZero() {
         if (this.count.strikes >= 3) {
             this.batter.setHungerUp()
             this.pitcher.setHungerDown()

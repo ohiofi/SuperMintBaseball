@@ -1,4 +1,4 @@
-class PlayBall extends BaseballGameState{
+class PlayBall extends AbstractBaseballGameState{
     constructor(){
         super();
     this.name = "PlayBall";

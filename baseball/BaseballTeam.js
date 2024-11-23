@@ -384,7 +384,7 @@ class BaseballTeam {
     this.setPositions()
   }
 
-  toString() {
+  getStatsTable() {
     return `
         <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
             <tr>
@@ -395,7 +395,7 @@ class BaseballTeam {
         </table>
         <details>
             <summary>Stats</summary>
-            ${this.stats.toString()}
+            ${this.stats.getStatsTable()}
         </details>
         <details>
             <summary>Info</summary>
@@ -415,7 +415,7 @@ class BaseballTeam {
         </details>
         <details>
             <summary>Lifetime Stats</summary>
-            ${this.lifetimeStats.toString()}
+            ${this.lifetimeStats.getStatsTable()}
         </details>
   `.trim();
   }

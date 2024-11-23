@@ -1,9 +1,15 @@
-class BottomOfTheInning extends BaseballGameState{
+class BottomOfTheInning extends AbstractBaseballGameState{
     constructor(){
         super();
     this.name = "BottomOfTheInning";
     }
     handle(baseballGame){
+        baseballGame.count = {
+            balls: 0,
+            strikes: 0,
+            outs: 0
+        }
+        baseballGame.onBase = [null, null, null];
         this.nextState(baseballGame)
         return this.setupBottomInning(baseballGame)
     }
@@ -19,7 +25,7 @@ class BottomOfTheInning extends BaseballGameState{
     setupBottomInning(baseballGame) {
         baseballGame.setInningTop(false);
         baseballGame.setOffenseTeam();
-        baseballGame.threeOutsCleanup()
+        baseballGame.setCountToZero()
         // away team is pitching
         baseballGame.awayTeam.pitcher.manager.notify(
             new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.awayTeam.leagueIdNumber,baseballGame.awayTeam.pitcher.leagueIdNumber)

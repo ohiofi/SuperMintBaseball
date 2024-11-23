@@ -65,7 +65,7 @@ class Stats {
           .replace(/^./, (str) => str.toUpperCase());
   }
 
-  toString() {
+  getStatsTable() {
       const rows = Object.entries(this)
           .map(
               ([key, value]) => `
@@ -85,10 +85,4 @@ class Stats {
   `;
   }
 
-  stringFormatKey(key) {
-      // Convert camelCase to Title Case
-      return key
-          .replace(/([A-Z])/g, " $1")
-          .replace(/^./, (str) => str.toUpperCase());
-  }
 }

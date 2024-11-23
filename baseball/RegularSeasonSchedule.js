@@ -3,7 +3,7 @@
 // A RegularSeasonSchedule has a 2D array with da
 
 
-class RegularSeasonSchedule extends Schedule {
+class RegularSeasonSchedule extends AbstractSchedule {
 
   static restructure(jsonObject) {
     Object.setPrototypeOf(jsonObject, RegularSeasonSchedule.prototype);

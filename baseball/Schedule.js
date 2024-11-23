@@ -1,8 +1,8 @@
-/* this is an "abstract" class that lists the basic methods that all schedules must have */
-class Schedule {
+/* this is an "abstract" parent class that contains basic resources all schedules share */
+class AbstractSchedule {
 
     static restructure(jsonObject) {
-        Object.setPrototypeOf(jsonObject, Schedule.prototype);
+        Object.setPrototypeOf(jsonObject, AbstractSchedule.prototype);
         for (let i = 0; i < jsonObject.days.length; i++) {
           for (let j = 0; j < jsonObject.days[i].length; j++) {
             jsonObject.days[i][j] = Object.setPrototypeOf(jsonObject.days[i][j], Game.prototype);

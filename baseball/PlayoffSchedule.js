@@ -5,7 +5,7 @@
 // A PlayoffSchedule has a schedule that is a 3D array. Days > Games > Teams
 
 
-class PlayoffSchedule  extends Schedule {
+class PlayoffSchedule  extends AbstractSchedule {
      ////# static methods
     //@staticmethod
     static recursive2DArrayPlayoffSort(myArray) {

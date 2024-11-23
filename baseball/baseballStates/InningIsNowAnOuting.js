@@ -1,4 +1,4 @@
-class InningIsNowAnOuting extends BaseballGameState{
+class InningIsNowAnOuting extends AbstractBaseballGameState{
     constructor(){
         super();
         this.name = "InningIsNowAnOuting";

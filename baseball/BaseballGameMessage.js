@@ -17,7 +17,7 @@ class BaseballGameMessage{
         this.done = game.done;
     }
 
-    add(otherObject){
+    add(otherObject){ // This is never used???
         if (typeof otherObject === 'string') {
             this.log += otherObject;
         }

@@ -1,4 +1,4 @@
-class FinalMessage extends BaseballGameState{
+class FinalMessage extends AbstractBaseballGameState{
     constructor(){
         super();
     this.name = "FinalMessage";

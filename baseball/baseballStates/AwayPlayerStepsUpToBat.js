@@ -1,4 +1,4 @@
-class AwayPlayerStepsUpToBat extends BaseballGameState{
+class AwayPlayerStepsUpToBat extends AbstractBaseballGameState{
     constructor(){
         super();
     this.name = "AwayPlayerStepsUpToBat"
