@@ -2,7 +2,7 @@ class StandingsPage{
     constructor(){
         this.root = View.createElement("div","standingsPage","page hide");
         this.root.innerHTML = `
-        <h3 id="standingsPageHeadline" class="pb-4">Previous Standings</h3>
+        <h3 id="standingsPageHeadline" class="pb-4  display-6 ">Previous Standings</h3>
 
         <div class="row">
             <div class="pageSummary col pb-4">

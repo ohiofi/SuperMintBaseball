@@ -2,7 +2,7 @@ class HomePage{
     constructor(){
         this.root = View.createElement("div","homePage","page");
         this.root.innerHTML = `
-            <h3 id="homePageHeadline" class="pb-4">Play Ball!</h3>
+            <h3 id="homePageHeadline" class="pb-4  display-6 ">Play Ball!</h3>
             <div class="row">
                 <div class="pageSummary col pb-4">Today's games are currently being played</div>
                 <div class="col">

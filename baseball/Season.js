@@ -90,7 +90,7 @@ class Season {
       //# find max field width
       let fieldWidth = 0
       for (let eachTeam of myArray) {
-        fieldWidth = Math.max(fieldWidth, eachTeam.teamName.length + 1)
+        fieldWidth = Math.max(fieldWidth, eachTeam.getName().length + 1)
       }
       //# build result string
       //for each in tempList:
@@ -98,7 +98,7 @@ class Season {
         //result += "{rank:>2}. ".format(rank = count)
         result += count + ". "
         //result += ("{name:<" + (fieldWidth) + "}").format(name = each[0] + ":")
-        result += each.teamName + ": "
+        result += each.getName() + ": "
         // result += "{score:>4}".format(
         //   score = (each[1]["wins"])) + "-" + (
         //   each[1]["losses"]) + "\n"

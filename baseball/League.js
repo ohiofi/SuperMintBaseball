@@ -38,14 +38,10 @@ class League {
         if (tempPlayer.getOverallAptitude() < potentialPlayer2.getOverallAptitude()) {
           tempPlayer = potentialPlayer2;
         }
-        tempPlayer.teamName = tempTeam.colorScheme + tempTeam.place
-        tempPlayer.jerseyNumber = tempTeam.getJerseyNumber()
         tempPlayer.leagueIdNumber = League.leagueIdNumberCount++;
-        tempPlayer.teamLeagueIdNumber = tempTeam.leagueIdNumber;
-        tempTeam.players.push(tempPlayer)
+        tempTeam.addPlayer(tempPlayer)
         tempPlayer.manager.subscribe(this.handleEvent);
       }
-      tempTeam.setup();
     }
 
     this.currentSeason = 0

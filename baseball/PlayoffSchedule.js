@@ -181,7 +181,7 @@ class PlayoffSchedule  extends AbstractSchedule {
         for (let i = 0; i < Math.floor(numberOfPlayoffTeams / 2); i++) {
           //for each in this.teams:
           for (let each of this.teams) {
-            if (each.getName() == teamArray[i].teamName) {
+            if (each.getName() == teamArray[i].getName()) {
               this.playoffSchedule[week][day].splice(0, 0, {
                 "rank": i + 1,
                 "team": each
@@ -199,7 +199,7 @@ class PlayoffSchedule  extends AbstractSchedule {
         for (let i = startIndex; i < startIndex + Math.floor(numberOfPlayoffTeams / 2); i++) {
           //for each in this.teams:
           for (let each of this.teams) {
-            if (each.getName() == teamArray[i].teamName) {
+            if (each.getName() == teamArray[i].getName()) {
               this.playoffSchedule[week][day].splice(0, 0, {
                 "rank": i + 1,
                 "team": each

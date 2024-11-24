@@ -24,17 +24,134 @@ class BaseballTeam {
         return jsonObject;
     }
 
-    static debug() {
-        let temp = new BaseballTeam();
-        temp.players = [];
-        //for i in range(Team.playersPerTeam):
-        for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
-            tempPlayer = new BaseballPlayer.debug();
-            tempPlayer.teamName = temp.getPlace();
-            temp.players.push(tempPlayer);
+    static generateCrest(colorScheme,teamPlaceAbbreviation){
+        // black font with white shadow
+        let crest = `<span class="font-monospace fw-bold text-black" style="-webkit-text-stroke: 1px rgba(255,255,255,0.8);text-shadow: 1px 1px 0px rgba(255,255,255,0.8);`
+        if(rng.random() <0.5){
+            // white font with black shadow
+            crest = `<span class="font-monospace fw-bold text-white" style="-webkit-text-stroke: 1px rgba(0,0,0,0.8);text-shadow: 1px 1px 0px rgba(0,0,0,0.8);`
         }
-        return temp;
+        let randShape = Math.floor(rng.random() * 10);
+        switch(randShape) {
+            case 0:
+                // hex
+                crest += `clip-path: polygon(
+                    -50% 50%,
+                    50% 100%,
+                    150% 50%,
+                    50% 0
+                  );`
+                break;
+            case 1:
+                // streched pentagon
+                crest += `  clip-path: polygon(50% 0%,100% 45%,75% 85%, 25% 85%,0% 45%);`
+                break;
+            case 2:
+                // bottom heavy tri
+                crest += `clip-path: polygon(50% 0, 100% 85%, 0 85%);`
+                break;
+            case 3:
+                // top heavy tri
+                crest += `clip-path: polygon(
+                    0 15%, 
+                    100% 15%, 
+                    50% 100%);`
+                break;
+            case 4:
+                // penant
+                crest += `clip-path: polygon(
+                    15% 0%, 
+                    100% 50%, 
+                    15% 100%);`
+                break;
+            case 5:
+                // home plate
+                crest += `clip-path: polygon(
+                    0% 0, 
+                    100% 0, 
+                    100% 55%, 
+                    50% 100%,
+                    0% 55%
+                    );`
+                break;
+            case 6:
+                // bottom heavy trapezoid
+                crest += `clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);`
+                break;
+            case 7:
+                // top heavy trapezoid
+                crest += `clip-path: polygon(0% 0, 100% 0, 80% 100%, 20% 100%);`
+                break;
+            case 8:
+                // diamond
+                crest += `  clip-path: polygon(100% 50%,50% 100%,0% 50%,50% 0%);`
+                break;
+            case 9:
+            default:
+                // square
+                break;
+
+        }
+            
+
+       crest += `background:`;
+        let randomNum = Math.floor(rng.random() * 13);
+        switch (randomNum) {
+            case 0:
+                crest += "linear-gradient(0deg"
+                break;
+            case 1:
+                crest += "linear-gradient(45deg"
+                break;
+            case 2:
+                crest += "linear-gradient(90deg"
+                break;
+            case 3:
+                crest += "linear-gradient(135deg"
+                break;
+            case 4:
+                crest += "radial-gradient(circle at top left"
+                break;
+            case 5:
+                crest += "radial-gradient(circle at top center"
+                break;
+            case 6:
+                crest += "radial-gradient(circle at top right"
+                break;
+            case 7:
+                crest += "radial-gradient(circle at center left"
+                break;
+            case 8:
+                crest += "radial-gradient(circle at center center"
+                break;
+            case 9:
+                crest += "radial-gradient(circle at center right"
+                break;
+            case 10:
+                crest += "radial-gradient(circle at bottom left"
+                break;
+            case 11:
+                crest += "radial-gradient(circle at bottom center"
+                break;
+            case 12:
+                crest += "radial-gradient(circle at bottom right"
+                break;
+        }
+        return crest += `, ${colorScheme[0]} 50%, ${colorScheme[1]} 50%);">&nbsp;${teamPlaceAbbreviation[0]}&nbsp;</span>`
+        
     }
+
+    // static debug() {
+    //     let temp = new BaseballTeam();
+    //     temp.players = [];
+    //     //for i in range(Team.playersPerTeam):
+    //     for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
+    //         tempPlayer = new BaseballPlayer.debug();
+    //         tempPlayer.teamName = temp.getPlace();
+    //         temp.players.push(tempPlayer);
+    //     }
+    //     return temp;
+    // }
 
     //# teamNameList = json.loads(requests.get('https://raw.githubusercontent.com/dariusk/corpora/master/data/humans/firstNames.json').text)["firstNames"]
     //alert(Name.teamNameList);
@@ -59,23 +176,7 @@ class BaseballTeam {
             Math.floor(rng.random() * colorCombinations.length),
             1
         )[0];
-        this.colorSquare = `<span style="background:linear-gradient(`;
-        let randomNum = Math.floor(rng.random() * 4);
-        switch (randomNum) {
-            case 0:
-                this.colorSquare += "0"
-                break;
-            case 1:
-                this.colorSquare += "45"
-                break;
-            case 2:
-                this.colorSquare += "90"
-                break;
-            case 3:
-                this.colorSquare += "135"
-                break;
-        }
-        this.colorSquare += `deg, ${this.colorScheme[0]} 50%, ${this.colorScheme[1]} 50%);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+        
         this.place = null;
         if (Name.places.length > 0) {
             this.place = Name.places.splice(
@@ -83,8 +184,9 @@ class BaseballTeam {
                 1
             )[0];
         }
+        this.crest = BaseballTeam.generateCrest(this.colorScheme,this.place.abbreviation);
 
-        this.name = Name.teamNameList.splice(
+        this.mascot = Name.teamNameList.splice(
             Math.floor(rng.random() * Name.teamNameList.length),
             1
         )[0];
@@ -198,8 +300,12 @@ class BaseballTeam {
     }
 
     addPlayer(newPlayer) {
-        newPlayer.teamName = this.colorSquare + " " + this.place.abbreviation;
-        newPlayer.stats.teamLocation = this.getPlace();
+        newPlayer.teamPlaceAbbreviation = this.place.abbreviation;
+        newPlayer.teamMascot = this.mascot;
+        newPlayer.colorScheme = this.colorScheme;
+        newPlayer.crest = this.crest;
+        newPlayer.teamLeagueIdNumber = this.leagueIdNumber;
+        newPlayer.jerseyNumber = this.getJerseyNumber();
         this.players.push(newPlayer);
         this.setup();
     }
@@ -207,21 +313,21 @@ class BaseballTeam {
     equals(otherObject) {
         return (
             this.teamIdNumber === otherObject.teamIdNumber &&
-            this.name === otherObject.name &&
-            this.place.name === otherObject.place.name &&
-            this.colorSquare === otherObject.colorSquare
+            this.mascot === otherObject.mascot &&
+            this.getName() === otherObject.getName() &&
+            this.colorScheme === otherObject.colorScheme
         );
     }
 
     getJerseyNumber() {
-        let result = Math.ceil(rng.random() * 98);
+        let result = Math.floor(rng.random() * 98)+1;
         //# don't use while loop in case the jerseyNumberList ever fills up
         //for i in range(Team.playersPerTeam):
         for (let i = 0; i < BaseballTeam.playersPerTeam; i++) {
             if (!this.jerseyNumberList.includes(result)) {
                 break;
             }
-            result = Math.ceil(rng.random() * 98);
+            result = Math.floor(rng.random() * 98)+1;
         }
         this.jerseyNumberList.push(result);
         return result;
@@ -230,19 +336,19 @@ class BaseballTeam {
     getName() {
         return (
             "<nobr>" +
-            this.colorSquare + " " +
+            this.crest + " " +
             this.place.abbreviation.toUpperCase() +
             "</nobr> " +
-            this.name
+            this.mascot
         );
     }
 
     getNameWithLink() {
         return (
-            this.colorSquare + ' <a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' +
+            this.crest + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' +
             this.leagueIdNumber +
             ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
-            this.place.abbreviation.toUpperCase() + " " + this.name +
+            this.place.abbreviation.toUpperCase() + " " + this.mascot +
             "</a>"
         );
     }
@@ -250,15 +356,15 @@ class BaseballTeam {
     getFullName() {
         return (
             "<nobr>" +
-            this.colorSquare + " " +
+            this.crest + " " +
             this.place.name.toUpperCase() +
             "</nobr> " +
-            this.name
+            this.mascot
         );
     }
 
     getPlace() {
-        return this.colorSquare + " " + this.place.name.toUpperCase();
+        return this.crest + " " + this.place.name.toUpperCase();
     }
 
     getNextBatter() {
@@ -279,7 +385,7 @@ class BaseballTeam {
             <tr>
                 <td>
                     <a href="#" onclick="app.view.modal.update(${each.leagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
-                        ${each.fullname}
+                        ${each.firstName} "${each.nickName}" ${each.lastName}
                     </a>
                 </td>
                 <td>${each.position}</td>
@@ -339,7 +445,10 @@ class BaseballTeam {
     }
 
     removePlayer(formerPlayer) {
-        formerPlayer.teamName = null;
+        formerPlayer.teamPlaceAbbreviation = null;
+        formerPlayer.teamMascot = null;
+        formerPlayer.colorScheme = null;
+        formerPlayer.crest = null;
         this.players.remove(formerPlayer);
         this.setup();
     }
@@ -397,21 +506,24 @@ class BaseballTeam {
             }
         }
         // swap index 0 with index 3 (the cleanup hitter position)
-        let temp = this.players[0];
-        this.players[0] = this.players[3];
-        this.players[3] = temp;
-        //# fill in with random position names
-        for (let eachPlayer of this.players) {
-            if (eachPlayer.position == null) {
-                eachPlayer.position = eachPlayer.getDefaultPosition();
+        if(this.players.length >= 4){
+            let temp = this.players[0];
+            this.players[0] = this.players[3];
+            this.players[3] = temp;
+            //# fill in with random position names
+            for (let eachPlayer of this.players) {
+                if (eachPlayer.position == null) {
+                    eachPlayer.position = eachPlayer.getDefaultPosition();
+                }
             }
         }
+        
     }
 
     setup() {
-        for (let i = 0; i < this.players.length; i++) {
-            this.players[i].teamName = this.colorSquare + " " + this.place.abbreviation;
-        }
+        // for (let i = 0; i < this.players.length; i++) {
+        //     this.players[i].teamName = this.crest + " " + this.place.abbreviation;
+        // }
         this.setPositions();
     }
 
@@ -434,8 +546,8 @@ class BaseballTeam {
                 <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
                 <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name
             }</td></tr>
-                <tr><td>Team Name</td><td>${this.name}</td></tr>
-                <tr><td>Color Scheme</td><td>${this.colorSquare}</td></tr>
+                <tr><td>Team Name</td><td>${this.mascot}</td></tr>
+                <tr><td>Color Scheme</td><td>${this.crest}</td></tr>
                 <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(
                 1
             )}</td></tr>

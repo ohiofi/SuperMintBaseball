@@ -2,7 +2,7 @@ class LiveGamesPage {
     constructor() {
         this.root = View.createElement("div", "liveGamesPage", "page hide");
         this.root.innerHTML = `
-            <h3 id="liveGamesPageHeadline" class="pb-4">Live Games</h3>
+            <h3 id="liveGamesPageHeadline" class="pb-4  display-6 ">Live Games</h3>
             <div class="row">
                 <div class="pageSummary col pb-4">Today's games are currently being played</div>
                 <div class="col">

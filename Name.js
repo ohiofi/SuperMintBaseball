@@ -4010,7 +4010,7 @@ class Name {
     { name: "Ciudad de México", abbreviation: "CDMX" },
     { name: "Cleveland", abbreviation: "CLE" },
     { name: "Colorado", abbreviation: "CO" },
-    { name: "Columbus", abbreviation: "CBS" },
+    { name: "Columbus", abbreviation: "CLB" },
     { name: "Connecticut", abbreviation: "CT" },
     { name: "Core", abbreviation: "CORE" },
     { name: "Dallas", abbreviation: "DAL" },
@@ -4275,7 +4275,7 @@ class Name {
     "Capons",
     "Capuchins",
     "Capybaras",
-    "Cardboards",
+    "Cardboard",
     "Cardinals",
     "Carnivores",
     "Carp",
@@ -5097,7 +5097,7 @@ class Name {
     "Tubes",
     "Tuckers",
     "Tummyaches",
-    "Tumors",
+    "Tunnels",
     "Tuners",
     "Turkeys",
     "Turtles",
@@ -5221,12 +5221,11 @@ class Name {
   ];
 
   static webSafeEmojiCodes = [
-    "&#9917;",
-    "&#9918;",
-    "&#9971;",
-    "&#9996;",
+    "&#10024;", 
     "&#10084;",
     "&#127755;",
+    "&#127774;", 
+    "&#127790;", 
     "&#127792;",
     "&#127793;",
     "&#127794;",
@@ -5236,6 +5235,7 @@ class Name {
     "&#127799;",
     "&#127800;",
     "&#127801;",
+    "&#127801;", 
     "&#127802;",
     "&#127803;",
     "&#127804;",
@@ -5267,6 +5267,7 @@ class Name {
     "&#127829;",
     "&#127830;",
     "&#127831;",
+    "&#127831;", 
     "&#127832;",
     "&#127833;",
     "&#127834;",
@@ -5288,6 +5289,7 @@ class Name {
     "&#127850;",
     "&#127851;",
     "&#127852;",
+    "&#127852;", 
     "&#127853;",
     "&#127854;",
     "&#127855;",
@@ -5314,6 +5316,7 @@ class Name {
     "&#127922;",
     "&#127923;",
     "&#127924;",
+    "&#127928;", 
     "&#127933;",
     "&#127934;",
     "&#127935;",
@@ -5325,13 +5328,17 @@ class Name {
     "&#127941;",
     "&#127942;",
     "&#127943;",
+    "&#127947;", 
+    "&#127965;", 
     "&#127984;",
+    "&#128005;", 
     "&#128007;",
     "&#128008;",
     "&#128009;",
     "&#128010;",
     "&#128011;",
     "&#128012;",
+    "&#128012;", 
     "&#128013;",
     "&#128014;",
     "&#128015;",
@@ -5398,8 +5405,11 @@ class Name {
     "&#128076;",
     "&#128077;",
     "&#128078;",
+    "&#128080;", 
+    "&#128095;", 
     "&#128127;",
     "&#128128;",
+    "&#128139;", 
     "&#128144;",
     "&#128153;",
     "&#128154;",
@@ -5458,6 +5468,11 @@ class Name {
     "&#128232;",
     "&#128233;",
     "&#128234;",
+    "&#128241;", 
+    "&#128293;", 
+    "&#128305;", 
+    "&#128373;", 
+    "&#128483;", 
     "&#128509;",
     "&#128511;",
     "&#128520;",
@@ -5485,12 +5500,17 @@ class Name {
     "&#128661;",
     "&#128662;",
     "&#128663;",
+    "&#128676;", 
+    "&#128736;", 
     "&#129312;",
     "&#129324;",
     "&#129344;",
     "&#129373;",
+    "&#129385;", 
     "&#129389;",
+    "&#129391;",
     "&#129395;",
+    "&#129408;",
     "&#129505;",
     "&#129506;",
     "&#129507;",
@@ -5499,45 +5519,49 @@ class Name {
     "&#129510;",
     "&#129511;",
     "&#129513;",
+    "&#9917;",
+    "&#9918;",
+    "&#9971;",
+    "&#9996;"
   ];
 
-  static colorCombos = [
-    "🟥🟧",
-    "🟨🟥",
-    "🟥🟩",
-    "🟦🟥",
-    "🟥🟪",
-    "🟫🟥",
-    "🟥⬛",
-    "⬜🟥",
-    "🟧🟨",
-    "🟩🟧",
-    "🟧🟦",
-    "🟪🟧",
-    "🟧🟫",
-    "⬛🟧",
-    "🟧⬜",
-    "🟨🟩",
-    "🟦🟨",
-    "🟨🟪",
-    "🟫🟨",
-    "🟨⬛",
-    "⬜🟨",
-    "🟩🟦",
-    "🟪🟩",
-    "🟩🟫",
-    "⬛🟩",
-    "🟩⬜",
-    "🟦🟪",
-    "🟫🟦",
-    "🟦⬛",
-    "⬜🟦",
-    "🟪🟫",
-    "⬛🟪",
-    "🟪⬜",
-    "🟫⬛",
-    "⬜🟫",
-  ];
+  // static colorCombos = [
+  //   "🟥🟧",
+  //   "🟨🟥",
+  //   "🟥🟩",
+  //   "🟦🟥",
+  //   "🟥🟪",
+  //   "🟫🟥",
+  //   "🟥⬛",
+  //   "⬜🟥",
+  //   "🟧🟨",
+  //   "🟩🟧",
+  //   "🟧🟦",
+  //   "🟪🟧",
+  //   "🟧🟫",
+  //   "⬛🟧",
+  //   "🟧⬜",
+  //   "🟨🟩",
+  //   "🟦🟨",
+  //   "🟨🟪",
+  //   "🟫🟨",
+  //   "🟨⬛",
+  //   "⬜🟨",
+  //   "🟩🟦",
+  //   "🟪🟩",
+  //   "🟩🟫",
+  //   "⬛🟩",
+  //   "🟩⬜",
+  //   "🟦🟪",
+  //   "🟫🟦",
+  //   "🟦⬛",
+  //   "⬜🟦",
+  //   "🟪🟫",
+  //   "⬛🟪",
+  //   "🟪⬜",
+  //   "🟫⬛",
+  //   "⬜🟫",
+  // ];
   static adStart = [
     "Brought to you by ",
     "Supported by ",
@@ -6012,29 +6036,29 @@ class Name {
   }
 
   //@staticmethod
-  static create_nickname(firstName, lastName) {
-    // # nickname
+  static create_nickName(firstName, lastName) {
+    // # nickName
 
     let adj = Name.randomItem(Name.adjList);
-    let nickname = "";
+    let nickName = "";
     // if random.random() < 0.5:
     if (rng.random() < 0.3) {
       //   # try to match 1st + 2nd letter
       let tempAdj = Name.findLetterMatch(Name.adjList, firstName, 3);
       //   if tempAdj != None:
       if (tempAdj != null) {
-        nickname = tempAdj;
+        nickName = tempAdj;
       } else {
-        nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
+        nickName = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
       }
     } else if (rng.random() < 0.3) {
       //   adj.capitalize()
-      nickname = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
+      nickName = adj.charAt(0).toUpperCase() + adj.substring(1).toLowerCase();
     }
-    // if len(nickname) > 1:
-    if (nickname.length > 1) {
-      //   nickname += ('-',' ')[random.randint(0,1)]
-      nickname += rng.random() < 0.5 ? "-" : " ";
+    // if len(nickName) > 1:
+    if (nickName.length > 1) {
+      //   nickName += ('-',' ')[random.randint(0,1)]
+      nickName += rng.random() < 0.5 ? "-" : " ";
     }
 
     let nameA = Name.randomItem(Name.nickNameList);
@@ -6064,28 +6088,28 @@ class Name {
     } else if (rng.random() < 0.3) {
       tempNickNoun1 = firstName[0];
     }
-    nickname += tempNickNoun1;
-    // if len(nickname) < 3:
-    if (nickname.length < 3) {
+    nickName += tempNickNoun1;
+    // if len(nickName) < 3:
+    if (nickName.length < 3) {
       //   if Name.find_first_vowel(firstName) > -1:
       if (Name.find_first_vowel(firstName) > -1) {
-        nickname = firstName.substring(0, Name.find_first_vowel(firstName) + 1);
-        nickname += firstName
+        nickName = firstName.substring(0, Name.find_first_vowel(firstName) + 1);
+        nickName += firstName
           .substring(0, Name.find_first_vowel(firstName) + 1)
           .toLowerCase();
       } else {
-        nickname = firstName[0] + firstName[0];
+        nickName = firstName[0] + firstName[0];
       }
     }
-    return nickname;
+    return nickName;
   }
 
   //@staticmethod
   static create_name() {
     const firstName = Name.create_first_name();
     const lastName = Name.create_last_name();
-    const nickname = Name.create_nickname(firstName, lastName);
-    return firstName + ' "' + nickname + '" ' + lastName;
+    const nickName = Name.create_nickName(firstName, lastName);
+    return firstName + ' "' + nickName + '" ' + lastName;
   }
 
   // @staticmethod

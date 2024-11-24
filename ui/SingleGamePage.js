@@ -1,10 +1,24 @@
 class SingleGamePage {
-    constructor(gameNum, score){
+    constructor(gameNum, gameMessage){
+        this.headlineInning = null;
+        this.awayScore;
+        this.homeScore;
         this.root = View.createElement("div","game"+gameNum+"Page", "page hide" );
         this.root.innerHTML = `
-            <h3 class="pb-4 d-flex flex-wrap">
-                <span id="" class="headlineGameNumber pe-4"></span>
-                <span id="" class="headlineGameScore d-flex flex-wrap"></span>
+            <h3 class="pb-4 d-flex flex-wrap row">
+                <span class="col-6 row small col-lg-2">
+                    <span class="col-6 headlineGameNumber small fw-light"></span>
+                    <span class="col-6 headlineInning small fw-light  d-flex flex-wrap"></span>
+                </span>
+                
+                <span class="col-12 col-lg-5 row headlineAwayInfo display-6  d-flex flex-wrap">
+                    <span class="col-10 headlineAwayName d-flex flex-wrap"></span>
+                    <span class="col-2 headlineAwayScore font-monospace d-flex flex-wrap"></span>
+                </span>
+                <span class="col-12 col-lg-5 row headlineHomeInfo display-6  d-flex flex-wrap">
+                    <span class="col-10 headlineHomeName d-flex flex-wrap"></span>
+                    <span class="col-2 headlineHomeScore font-monospace d-flex flex-wrap"></span>
+                </span>
             </h3>
             <div class="row">
                 <div class="pageSummary col pb-4">Today's games are currently being played</div>
@@ -46,10 +60,17 @@ class SingleGamePage {
         `.trim();
         // Set headline values
         const headlineGameNumber = this.root.querySelector('.headlineGameNumber');
-        const headlineGameScore = this.root.querySelector('.headlineGameScore');
-
+        this.headlineInning = this.root.querySelector('.headlineInning');
         headlineGameNumber.textContent = `Game ${gameNum}: `;
-        headlineGameScore.innerHTML = score;
+        this.headlineInning.textContent = gameMessage.inning;
+        const awayName = this.root.querySelector('.headlineAwayName');
+        awayName.innerHTML = gameMessage.awayNameWithLink;
+        this.awayScore = this.root.querySelector('.headlineAwayScore');
+        this.awayScore.textContent = gameMessage.score.away;
+        const homeName = this.root.querySelector('.headlineHomeName');
+        homeName.innerHTML = gameMessage.homeNameWithLink;
+        this.homeScore = this.root.querySelector('.headlineHomeScore');
+        this.homeScore.textContent = gameMessage.score.home;
 
         // Message feed scroll logic
         const messageFeedContainer = this.root.querySelector('#messageFeedContainer');
@@ -85,7 +106,9 @@ class SingleGamePage {
 
     update(gameMessage){
         // update headlines on single game pages
-        this.root.querySelector('.headlineGameScore').innerHTML = gameMessage.scoreString;
+        this.headlineInning.textContent = gameMessage.inning;
+        this.awayScore.textContent = gameMessage.score.away;
+        this.homeScore.textContent = gameMessage.score.home;
         // update box scores
         this.root.querySelector('.boxScore').innerHTML = gameMessage.boxScoreTable;
         // add game message to single game pages

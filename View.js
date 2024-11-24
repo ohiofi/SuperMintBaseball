@@ -66,7 +66,7 @@ class View {
         // this.addPageHome(game);
         const scores = game.getGameDetails();
         for (let i = 0; i < scores.length; i++) {
-            this.singleGamePages[i] = new SingleGamePage(i, scores[i].scoreString);
+            this.singleGamePages[i] = new SingleGamePage(i, scores[i]);
             this.pageContainer.append(this.singleGamePages[i].render());
         }
     }

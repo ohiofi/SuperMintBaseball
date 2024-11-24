@@ -25,10 +25,13 @@ class BaseballPlayer {
         this.playerIdNumber = BaseballPlayer.idCounter++;
         this.firstName = Name.create_first_name(); // Player's name
         this.lastName = Name.create_last_name();
+        this.nickName = Name.create_nickName(this.firstName, this.lastName);
         this.jerseyNumber = 0;
-        this.fullname = this.firstName + ' "' + Name.create_nickname(this.firstName, this.lastName) + '" ' + this.lastName;
-        this.teamName = "null"; // Team name
+        this.teamPlaceAbbreviation = null;
+        this.teamMascot = null;
         this.teamLeagueIdNumber = 0;
+        this.crest = null;
+        this.colorScheme = null;
         this.position = "null"; // Position on the field
         this.tattoos = Name.webSafeEmojiCodes[Name.getCharSum(this.firstName) % Name.webSafeEmojiCodes.length] +
             Name.webSafeEmojiCodes[Name.getCharSum(this.lastName) % Name.webSafeEmojiCodes.length];
@@ -141,10 +144,6 @@ class BaseballPlayer {
     }
 
 
-    // Method to display player information
-    displayInfo() {
-        return `Name: ${this.fullname}\nTeam: ${this.teamName}\nPosition: ${this.position}\nBatting Average: ${this.battingAverage.toFixed(3)}\nHome Runs: ${this.homeRuns}`;
-    }
 
     equals(otherObject) {
         return this.playerIdNumber === otherObject.playerIdNumber &&
@@ -154,16 +153,16 @@ class BaseballPlayer {
     }
 
     getName() {
-        return this.teamName + " " + this.lastName;
+        return this.teamPlaceAbbreviation + " " + this.lastName;
     }
 
     getNameWithLink() {
-        return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
-            this.getName() + '</a>';
+        return this.crest + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
+        this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
     }
 
     getFullName() {
-        return this.teamName + " " + this.firstName + " " + this.lastName;
+        return this.crest + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
     }
 
     getSummary() {
@@ -284,21 +283,16 @@ class BaseballPlayer {
     getStatsTable() {
         return `
             <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-              
-                    
-               
-                
                     <tr>
                         <th colspan="2" class="text-center">Player Details</th>
                     </tr>
-                    <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
-                    <tr><td>Full Name</td><td>${this.fullname}</td></tr>
-                    <tr><td>Team Name</td><td>
-                    <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
-                         ${this.teamName}
+                    <tr><td>Team</td><td>
+                    ${this.crest} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                         ${this.teamPlaceAbbreviation} 
                     </a>
-                   
                     </td></tr>
+                    <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
+                    <tr><td>Full Name</td><td>${this.firstName} "${this.nickName}" ${this.lastName}</td></tr>
                     <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
                     <tr><td>Position</td><td>${this.position}</td></tr>
                     <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
@@ -306,45 +300,45 @@ class BaseballPlayer {
             </table>
 
             <details>
-        <summary>Stats</summary>
-          ${this.stats.getStatsTable()}
-      </details>
+                <summary>Stats</summary>
+                ${this.stats.getStatsTable()}
+            </details>
             
             <details>
             <summary>Attributes</summary>
             <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-                    <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-                    <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
-                    <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
-                    <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
-                    <tr>
-                        <th colspan="2" class="text-center">Pitching Attributes</th>
-                    </tr>
-                    <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
-                    <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
-                    <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
-                    <tr>
-                        <th colspan="2" class="text-center">Batting Attributes</th>
-                    </tr>
-                    <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
-                    <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
-                    <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
-                    <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
-                    <tr>
-                        <th colspan="2" class="text-center">Defense Attributes</th>
-                    </tr>
-                    <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
-                    <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
-                    <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
+                <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+                <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+                <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
+                <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
+                <tr>
+                    <th colspan="2" class="text-center">Pitching Attributes</th>
+                </tr>
+                <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
+                <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
+                <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
+                <tr>
+                    <th colspan="2" class="text-center">Batting Attributes</th>
+                </tr>
+                <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
+                <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
+                <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
+                <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
+                <tr>
+                    <th colspan="2" class="text-center">Defense Attributes</th>
+                </tr>
+                <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
+                <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
+                <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
                 
             </table>
             </details>
             
-      <details>
-        <summary>Lifetime</summary>
-          ${this.lifetimeStats.getStatsTable()}
-      </details>
-        `.trim();
+            <details>
+                <summary>Lifetime</summary>
+                ${this.lifetimeStats.getStatsTable()}
+            </details>
+                `.trim();
     }
 
 
