@@ -39,15 +39,15 @@ class BaseballTeam {
     this.leagueIdNumber = 0;
     this.teamIdNumber = BaseballTeam.idCounter++;
     this.jerseyNumberList = []
-    // this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
+    // this.place = Name.places[Math.floor(rng.random() * Name.places.length)]
     // while (this.place in BaseballTeam.teamPlaceList) {
-    //   this.place = Name.placeList[Math.floor(rng.random() * Name.placeList.length)]
+    //   this.place = Name.places[Math.floor(rng.random() * Name.places.length)]
     // }
     //BaseballTeam.teamPlaceList.push(this.place)
     this.colorScheme = Name.colorCombos.splice(Math.floor(rng.random() * Name.colorCombos.length), 1)[0];
-    this.place = "unknown place"
-    if (Name.placeList.length > 0) {
-      this.place = Name.placeList.splice(Math.floor(rng.random() * Name.placeList.length), 1)[0];
+    this.place = null;
+    if (Name.places.length > 0) {
+      this.place = Name.places.splice(Math.floor(rng.random() * Name.places.length), 1)[0];
     }
 
     this.name = Name.teamNameList.splice(Math.floor(rng.random() * Name.teamNameList.length), 1)[0];
@@ -60,8 +60,8 @@ class BaseballTeam {
     this.players = []
 
 
-    this.stats = new Stats(this.colorScheme + this.place, this.name)
-    this.lifetimeStats = new Stats(this.colorScheme + this.place, this.name)
+    this.stats = new Stats()
+    this.lifetimeStats = new Stats()
     this.xp = 0
 
     this.batterUpNumber = 0;
@@ -163,7 +163,7 @@ class BaseballTeam {
 
 
   addPlayer(newPlayer) {
-    newPlayer.teamName = this.colorScheme + this.place
+    newPlayer.teamName = this.colorScheme + this.place.abbreviation
     newPlayer.stats.teamLocation = this.getPlace()
     this.players.push(newPlayer)
     this.setup()
@@ -174,7 +174,7 @@ class BaseballTeam {
   equals(otherObject) {
     return this.teamIdNumber === otherObject.teamIdNumber &&
       this.name === otherObject.name &&
-      this.place === otherObject.place &&
+      this.place.name === otherObject.place.name &&
       this.colorScheme === otherObject.colorScheme
   }
 
@@ -195,7 +195,7 @@ class BaseballTeam {
 
 
   getName() {
-    return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
+    return "<nobr>" + this.colorScheme + this.place.abbreviation.toUpperCase() + "</nobr> " + this.name
   }
 
   getNameWithLink() {
@@ -204,11 +204,11 @@ class BaseballTeam {
   }
 
   getFullName() {
-    return "<nobr>" + this.colorScheme + this.place.toUpperCase() + "</nobr> " + this.name
+    return "<nobr>" + this.colorScheme + this.place.name.toUpperCase() + "</nobr> " + this.name
   }
 
   getPlace() {
-    return this.colorScheme + this.place.toUpperCase()
+    return this.colorScheme + this.place.name.toUpperCase()
   }
 
 
@@ -311,7 +311,7 @@ class BaseballTeam {
   }
 
   resetSeasonStats() {
-    this.stats = new Stats(this.colorScheme + this.place, this.name)
+    this.stats = new Stats()
   }
 
 
@@ -379,7 +379,7 @@ class BaseballTeam {
 
   setup() {
     for (let i = 0; i < this.players.length; i++) {
-      this.players[i].teamName = this.colorScheme + this.place
+      this.players[i].teamName = this.colorScheme + this.place.abbreviation
     }
     this.setPositions()
   }
@@ -401,7 +401,7 @@ class BaseballTeam {
             <summary>Info</summary>
             <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
                 <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
-                <tr><td>Place</td><td>${this.place}</td></tr>
+                <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name}</td></tr>
                 <tr><td>Team Name</td><td>${this.name}</td></tr>
                 <tr><td>Color Scheme</td><td>${this.colorScheme}</td></tr>
                 <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>

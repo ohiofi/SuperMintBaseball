@@ -115,35 +115,39 @@ sup.baseIcon {
 sub.gameWidgetLeftBase{
   /* right: -0.37em; */
   /* right: -0.48em; */
-  right:-0.28em
+  /* right:-0.28em */
+  right:-0.25em;
 }
 sup.gameWidgetCenterBase {
   /* right: 0.37em; */
-  right:0.24em
+  right:0.24em;
 }
 sub.gameWidgetRightBase {
   /* right:0.21em; */
   /* right: 0.74em; */
   /* right: 0.37em; */
   /* right: 0.48em; */
-  right:0.78em
+  /* right:0.78em */
+  right:0.73em;
 }
 
 sub.gamePostLeftBase{
   /* right: -0.37em; */
   /* right: -0.48em; */
-  right:-0.24em
+  /* right:-0.24em */
+  right:-0.26em;
 }
 sup.gamePostCenterBase {
   /* right: 0.37em; */
-  right:0.24em
+  right:0.24em;
 }
 sub.gamePostRightBase {
   /* right:0.21em; */
   /* right: 0.74em; */
   /* right: 0.37em; */
   /* right: 0.48em; */
-  right:0.74em
+  /* right:0.74em */
+  right:0.75em;
 }
 
 /* Rules for icon sizes: */
