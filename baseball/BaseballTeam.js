@@ -26,10 +26,22 @@ class BaseballTeam {
 
     static generateCrest(colorScheme,teamPlaceAbbreviation){
         // black font with white shadow
-        let crest = `<span class="font-monospace fw-bold text-black" style="-webkit-text-stroke: 1px rgba(255,255,255,0.8);text-shadow: 1px 1px 0px rgba(255,255,255,0.8);`
+        let crest = `
+            <span 
+                class="font-monospace fw-bold text-black" 
+                style=
+                "-webkit-text-stroke: 1px rgba(255,255,255,0.8);
+                text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+        `
         if(rng.random() <0.5){
             // white font with black shadow
-            crest = `<span class="font-monospace fw-bold text-white" style="-webkit-text-stroke: 1px rgba(0,0,0,0.8);text-shadow: 1px 1px 0px rgba(0,0,0,0.8);`
+            crest = `
+            <span 
+                class="font-monospace fw-bold text-white" 
+                style=
+                "-webkit-text-stroke: 1px rgba(0,0,0,0.8);
+                text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+            `
         }
         let randShape = Math.floor(rng.random() * 10);
         switch(randShape) {
