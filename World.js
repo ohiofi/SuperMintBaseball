@@ -9,7 +9,7 @@ const WorldStates = {
 class World{
     constructor(){
         this.users = [];
-        this.league = new League(parseInt(rng.random()*8 + rng.random()*8 + 12));
+        this.league = new League(22);
         this.newsTicker = new NewsTicker();
     }
 
