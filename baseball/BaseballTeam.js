@@ -24,134 +24,134 @@ class BaseballTeam {
         return jsonObject;
     }
 
-    static generateCrest(colorScheme,teamPlaceAbbreviation){
-        // black font with white shadow
-        let crest = `
-            <span 
-                class="font-monospace fw-bold text-black" 
-                style=
-                "-webkit-text-stroke: 1px rgba(255,255,255,0.8);
-                text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
-        `
-        if(rng.random() <0.5){
-            // white font with black shadow
-            crest = `
-            <span 
-                class="font-monospace fw-bold text-white" 
-                style=
-                "-webkit-text-stroke: 1px rgba(0,0,0,0.8);
-                text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
-            `
-        }
-        let randShape = Math.floor(rng.random() * 10);
-        switch(randShape) {
-            case 0:
-                // hex
-                crest += `clip-path: polygon(
-                    -50% 50%,
-                    50% 100%,
-                    150% 50%,
-                    50% 0
-                  );`
-                break;
-            case 1:
-                // streched pentagon
-                crest += `  clip-path: polygon(50% 0%,100% 45%,75% 85%, 25% 85%,0% 45%);`
-                break;
-            case 2:
-                // bottom heavy tri
-                crest += `clip-path: polygon(50% 0, 100% 85%, 0 85%);`
-                break;
-            case 3:
-                // top heavy tri
-                crest += `clip-path: polygon(
-                    0 15%, 
-                    100% 15%, 
-                    50% 100%);`
-                break;
-            case 4:
-                // penant
-                crest += `clip-path: polygon(
-                    15% 0%, 
-                    100% 50%, 
-                    15% 100%);`
-                break;
-            case 5:
-                // home plate
-                crest += `clip-path: polygon(
-                    0% 0, 
-                    100% 0, 
-                    100% 55%, 
-                    50% 100%,
-                    0% 55%
-                    );`
-                break;
-            case 6:
-                // bottom heavy trapezoid
-                crest += `clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);`
-                break;
-            case 7:
-                // top heavy trapezoid
-                crest += `clip-path: polygon(0% 0, 100% 0, 80% 100%, 20% 100%);`
-                break;
-            case 8:
-                // diamond
-                crest += `  clip-path: polygon(100% 50%,50% 100%,0% 50%,50% 0%);`
-                break;
-            case 9:
-            default:
-                // square
-                break;
+    // static generateCrest(colorScheme,teamPlaceAbbreviation){
+    //     // black font with white shadow
+    //     let crest = `
+    //         <span 
+    //             class="font-monospace fw-bold text-black" 
+    //             style=
+    //             "-webkit-text-stroke: 1px rgba(255,255,255,0.8);
+    //             text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+    //     `
+    //     if(rng.random() <0.5){
+    //         // white font with black shadow
+    //         crest = `
+    //         <span 
+    //             class="font-monospace fw-bold text-white" 
+    //             style=
+    //             "-webkit-text-stroke: 1px rgba(0,0,0,0.8);
+    //             text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+    //         `
+    //     }
+    //     let randShape = Math.floor(rng.random() * 10);
+    //     switch(randShape) {
+    //         case 0:
+    //             // hex
+    //             crest += `clip-path: polygon(
+    //                 -50% 50%,
+    //                 50% 100%,
+    //                 150% 50%,
+    //                 50% 0
+    //               );`
+    //             break;
+    //         case 1:
+    //             // streched pentagon
+    //             crest += `  clip-path: polygon(50% 0%,100% 45%,75% 85%, 25% 85%,0% 45%);`
+    //             break;
+    //         case 2:
+    //             // bottom heavy tri
+    //             crest += `clip-path: polygon(50% 0, 100% 85%, 0 85%);`
+    //             break;
+    //         case 3:
+    //             // top heavy tri
+    //             crest += `clip-path: polygon(
+    //                 0 15%, 
+    //                 100% 15%, 
+    //                 50% 100%);`
+    //             break;
+    //         case 4:
+    //             // penant
+    //             crest += `clip-path: polygon(
+    //                 15% 0%, 
+    //                 100% 50%, 
+    //                 15% 100%);`
+    //             break;
+    //         case 5:
+    //             // home plate
+    //             crest += `clip-path: polygon(
+    //                 0% 0, 
+    //                 100% 0, 
+    //                 100% 55%, 
+    //                 50% 100%,
+    //                 0% 55%
+    //                 );`
+    //             break;
+    //         case 6:
+    //             // bottom heavy trapezoid
+    //             crest += `clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);`
+    //             break;
+    //         case 7:
+    //             // top heavy trapezoid
+    //             crest += `clip-path: polygon(0% 0, 100% 0, 80% 100%, 20% 100%);`
+    //             break;
+    //         case 8:
+    //             // diamond
+    //             crest += `  clip-path: polygon(100% 50%,50% 100%,0% 50%,50% 0%);`
+    //             break;
+    //         case 9:
+    //         default:
+    //             // square
+    //             break;
 
-        }
+    //     }
             
 
-       crest += `background:`;
-        let randomNum = Math.floor(rng.random() * 13);
-        switch (randomNum) {
-            case 0:
-                crest += "linear-gradient(0deg"
-                break;
-            case 1:
-                crest += "linear-gradient(45deg"
-                break;
-            case 2:
-                crest += "linear-gradient(90deg"
-                break;
-            case 3:
-                crest += "linear-gradient(135deg"
-                break;
-            case 4:
-                crest += "radial-gradient(circle at top left"
-                break;
-            case 5:
-                crest += "radial-gradient(circle at top center"
-                break;
-            case 6:
-                crest += "radial-gradient(circle at top right"
-                break;
-            case 7:
-                crest += "radial-gradient(circle at center left"
-                break;
-            case 8:
-                crest += "radial-gradient(circle at center center"
-                break;
-            case 9:
-                crest += "radial-gradient(circle at center right"
-                break;
-            case 10:
-                crest += "radial-gradient(circle at bottom left"
-                break;
-            case 11:
-                crest += "radial-gradient(circle at bottom center"
-                break;
-            case 12:
-                crest += "radial-gradient(circle at bottom right"
-                break;
-        }
-        return crest += `, ${colorScheme[0]} 50%, ${colorScheme[1]} 50%);">&nbsp;${teamPlaceAbbreviation[0]}&nbsp;</span>`
+    //    crest += `background:`;
+    //     let randomNum = Math.floor(rng.random() * 13);
+    //     switch (randomNum) {
+    //         case 0:
+    //             crest += "linear-gradient(0deg"
+    //             break;
+    //         case 1:
+    //             crest += "linear-gradient(45deg"
+    //             break;
+    //         case 2:
+    //             crest += "linear-gradient(90deg"
+    //             break;
+    //         case 3:
+    //             crest += "linear-gradient(135deg"
+    //             break;
+    //         case 4:
+    //             crest += "radial-gradient(circle at top left"
+    //             break;
+    //         case 5:
+    //             crest += "radial-gradient(circle at top center"
+    //             break;
+    //         case 6:
+    //             crest += "radial-gradient(circle at top right"
+    //             break;
+    //         case 7:
+    //             crest += "radial-gradient(circle at center left"
+    //             break;
+    //         case 8:
+    //             crest += "radial-gradient(circle at center center"
+    //             break;
+    //         case 9:
+    //             crest += "radial-gradient(circle at center right"
+    //             break;
+    //         case 10:
+    //             crest += "radial-gradient(circle at bottom left"
+    //             break;
+    //         case 11:
+    //             crest += "radial-gradient(circle at bottom center"
+    //             break;
+    //         case 12:
+    //             crest += "radial-gradient(circle at bottom right"
+    //             break;
+    //     }
+    //     return crest += `, ${colorScheme[0]} 50%, ${colorScheme[1]} 50%);">&nbsp;${teamPlaceAbbreviation[0]}&nbsp;</span>`
         
-    }
+    // }
 
     // static debug() {
     //     let temp = new BaseballTeam();
@@ -170,6 +170,9 @@ class BaseballTeam {
     //Name.shuffle(Name.teamNameList);
     //static teamNameList = Name.teamNameList;
     //random.seed(10) not possible to seed in vanilla JS
+
+    
+
 
     static teamPlaceList = [];
     static playersPerTeam = 9;
@@ -196,7 +199,7 @@ class BaseballTeam {
                 1
             )[0];
         }
-        this.crest = BaseballTeam.generateCrest(this.colorScheme,this.place.abbreviation);
+        this.crest = new Crest(this.colorScheme,this.place.abbreviation);
 
         this.mascot = Name.teamNameList.splice(
             Math.floor(rng.random() * Name.teamNameList.length),
@@ -349,7 +352,7 @@ class BaseballTeam {
     getName() {
         return (
             "<nobr>" +
-            this.crest + " " +
+            this.crest.render() + " " +
             this.place.abbreviation.toUpperCase() +
             "</nobr> " +
             this.mascot
@@ -358,7 +361,7 @@ class BaseballTeam {
 
     getNameWithLink() {
         return (
-            this.crest + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' +
+            this.crest.render() + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' +
             this.leagueIdNumber +
             ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
             this.place.abbreviation.toUpperCase() + " " + this.mascot +
@@ -369,7 +372,7 @@ class BaseballTeam {
     getFullName() {
         return (
             "<nobr>" +
-            this.crest + " " +
+            this.crest.render() + " " +
             this.place.name.toUpperCase() +
             "</nobr> " +
             this.mascot
@@ -377,7 +380,7 @@ class BaseballTeam {
     }
 
     getPlace() {
-        return this.crest + " " + this.place.name.toUpperCase();
+        return this.crest.render() + " " + this.place.name.toUpperCase();
     }
 
     getNextBatter() {
@@ -535,7 +538,7 @@ class BaseballTeam {
 
     setup() {
         // for (let i = 0; i < this.players.length; i++) {
-        //     this.players[i].teamName = this.crest + " " + this.place.abbreviation;
+        //     this.players[i].teamName = this.crest.render() + " " + this.place.abbreviation;
         // }
         this.setPositions();
     }

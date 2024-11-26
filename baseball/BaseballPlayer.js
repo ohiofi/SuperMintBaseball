@@ -158,14 +158,14 @@ class BaseballPlayer {
     }
 
     getNameWithLink() {
-        return this.crest + `&nbsp;<a href="#" 
+        return this.crest.render() + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
-        onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >` +
+        onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >` +
         this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
     }
 
     getFullName() {
-        return this.crest + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
+        return this.crest.render(40) + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
     }
 
     getSummary() {
@@ -290,7 +290,7 @@ class BaseballPlayer {
                         <th colspan="2" class="text-center">Player Details</th>
                     </tr>
                     <tr><td>Team</td><td>
-                    ${this.crest} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                    ${this.crest.render(40)} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
                          ${this.teamPlaceAbbreviation} ${this.teamPlaceName} ${this.teamMascot}
                     </a>
                     </td></tr>
