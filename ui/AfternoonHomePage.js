@@ -1,16 +1,28 @@
-class HomePage{
+class AfternoonHomePage{
     constructor(){
         this.root = View.createElement("div","homePage","page");
         this.root.innerHTML = `
-            <h3 id="homePageHeadline" class="pb-4  display-6 ">Welcome!</h3>
+            <h3 id="homePageHeadline" class="pb-4  display-6 ">Play Ball!</h3>
             <div class="row">
-                <div class="pageSummary col pb-4">The experiment demands that you continue.</div>
+                <div class="pageSummary col pb-4">Today's games are currently being played</div>
                 <div class="col">
                     <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
                 </div>
             </div>
-            <div id="homePageCardContainer"></div>
-            
+            <div class="row">
+                <div class="col-lg-6">
+                    <table id="gameTable" class="pb-4 table table-dark table-striped shadow rounded-2 overflow-hidden  table-borderless">
+                        <thead>
+                            <tr class="m-0">
+                                <th class="text-secondary">Live Games</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gameTableBody">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         `.trim();
     }
     addGameTableScores(games) {

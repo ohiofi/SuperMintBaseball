@@ -28,6 +28,7 @@ class BaseballPlayer {
         this.nickName = Name.create_nickName(this.firstName, this.lastName);
         this.jerseyNumber = 0;
         this.teamPlaceAbbreviation = null;
+        this.teamPlaceName = null;
         this.teamMascot = null;
         this.teamLeagueIdNumber = 0;
         this.crest = null;
@@ -35,7 +36,7 @@ class BaseballPlayer {
         this.position = "null"; // Position on the field
         this.tattoos = Name.webSafeEmojiCodes[Name.getCharSum(this.firstName) % Name.webSafeEmojiCodes.length] +
             Name.webSafeEmojiCodes[Name.getCharSum(this.lastName) % Name.webSafeEmojiCodes.length];
-
+        this.profilePic = Name.profileEmojis[Name.getCharSum(this.firstName) % Name.profileEmojis.length]
         this.age = Math.floor(rng.random() * 11) + 20; // age range is [20...30] inclusive
         this.hunger = 1;
         this.hungerRate = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
@@ -157,7 +158,9 @@ class BaseballPlayer {
     }
 
     getNameWithLink() {
-        return this.crest + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' +
+        return this.crest + `&nbsp;<a href="#" 
+        class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
+        onclick="app.view.modal.update(' + this.leagueIdNumber + ');" data-bs-target="#statsModal" data-bs-toggle="modal" >` +
         this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
     }
 
@@ -288,7 +291,7 @@ class BaseballPlayer {
                     </tr>
                     <tr><td>Team</td><td>
                     ${this.crest} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
-                         ${this.teamPlaceAbbreviation} 
+                         ${this.teamPlaceAbbreviation} ${this.teamPlaceName} ${this.teamMascot}
                     </a>
                     </td></tr>
                     <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>

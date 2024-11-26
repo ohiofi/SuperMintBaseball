@@ -16,6 +16,7 @@ class StatsModal {
         `.trim();
     }
     update(leagueIdNumber) {
+        console.log("modal "+leagueIdNumber)
         const object = app.model.world.league.lookup(leagueIdNumber);
         if (object === null) throw new Error("updateModal could not find " + leagueIdNumber);
 

@@ -2,6 +2,30 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        this.view.bindMenuBarClick(this.handleShowPage)
+        document.getElementById("standingsSection").innerHTML = 
+            `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
+        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
+        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
+
+        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+
+        
+
+        const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
+        // let card1 = new TradingCard(this.model.world.league.teams[0].getPitcher(),5)
+        // let card2 = new TradingCard(this.model.world.league.teams[1].getPitcher(),5)
+        // let card3 = new TradingCard(this.model.world.league.teams[2].getPitcher(),5)
+        // cardContainer.append(card1.render(),card2.render(),card3.render());
+        let cards = [];
+        for(let i=0; i<this.model.world.league.teams.length;i++){
+            cards.push(new TradingCard(this.model.world.league.teams[i].getPitcher(),5))
+            cardContainer.append(cards[i].render())
+        }
+    }
+
+    setupAfternoonView(){
+        this.view = new AfternoonView();
         this.view.addMenuItemSingleGamePages(this.model.world);
         this.view.bindMenuBarClick(this.handleShowPage)
         this.view.addNewsTickerItems(this.model.world);
@@ -9,14 +33,12 @@ class Controller {
         this.view.homePage.addGameTableScores(this.model.world.getGameDetails())
         this.view.addAllSingleGamePages(this.model.world);
         
-
         this.gameDetails = this.model.world.getGameDetails(); 
         this.view.liveGamesPage.addGameWidgets(this.gameDetails);
-        //this.view.addGameMessages(this.gameDetails);
         document.getElementById("standingsSection").innerHTML = 
             `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(5) 
-        + this.model.world.league.getStandingsTableBatters(5)+"</div>";
+        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
+        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
 
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
 

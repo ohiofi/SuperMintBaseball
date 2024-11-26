@@ -313,6 +313,7 @@ class BaseballTeam {
 
     addPlayer(newPlayer) {
         newPlayer.teamPlaceAbbreviation = this.place.abbreviation;
+        newPlayer.teamPlaceName = this.place.name;
         newPlayer.teamMascot = this.mascot;
         newPlayer.colorScheme = this.colorScheme;
         newPlayer.crest = this.crest;

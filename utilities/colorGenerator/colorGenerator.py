@@ -80,6 +80,9 @@ def generate_color_combinations(color_object):
             family2 = color_object[color_families[j]]       
             # Generate combinations between shades of the two families
             for key1, shade1 in family1.items():
+                # ensure that the combo starts with mid, light, or lighter
+                if key1 not in ["mid", "light", "lighter"]:
+                    continue
                 if not shade1 in colorPaletteUrl:
                     colorPaletteUrl += shade1 + "+"
                 for key2, shade2 in family2.items():

@@ -286,6 +286,7 @@ sub.gamePostRightBase {
   width: 200px;
   height: 300px;
   display:inline-block;
+  border-radius:5px;
 }
 .tradingCardContents {
   position: absolute;
@@ -294,9 +295,54 @@ sub.gamePostRightBase {
   bottom: 0;
   left: 0;
 	border-radius:5px;
+  background: #fff;
 /*   background: url(https://source.unsplash.com/300x300/?cat) 50% 50% / cover no-repeat; */
-  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  /* box-shadow: 0 0 3px rgba(0, 0, 0, .3); */
+  box-shadow: 0 0 2px rgba(255, 255, 255, .93);
   transition: 0.4s ease;
+  overflow: hidden;
+}
+.tradingCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background: #333;
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  /* border-radius:5px; */
+  overflow: hidden;
+}
+.tradingCardImage {
+  position: relative;
+  height: 50%;
+  background: #ccc; /* Placeholder background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+}
+.tradingCardImage canvas {
+  width: 90%;
+  height: auto;
+}
+.tradingCardBody {
+  padding: 10px;
+  color: #333;
+  font-size: 0.9em;
+  text-align: center;
+}
+.tradingCardBody p {
+  margin: 5px 0;
+}
+.cardReward {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  color: #e74c3c;
 }
 .tradingCardHoverPoint {
   position: absolute;
@@ -304,47 +350,31 @@ sub.gamePostRightBase {
   width: calc(100% / 2);
   height: calc(100% / 2);
 }
-.tradingCardHoverPoint:nth-child(1) {
-  top: 0;
-  left: 0;
-}
-
-.tradingCardHoverPoint:nth-child(2) {
-  top: 0;
-  right: 0;
-}
-
-.tradingCardHoverPoint:nth-child(3) {
-  bottom: 0;
-  left: 0;
-}
-
-.tradingCardHoverPoint:nth-child(4) {
-  bottom: 0;
-  right: 0;
-}
+.tradingCardHoverPoint:nth-child(1) { top: 0; left: 0; }
+.tradingCardHoverPoint:nth-child(2) { top: 0; right: 0; }
+.tradingCardHoverPoint:nth-child(3) { bottom: 0; left: 0; }
+.tradingCardHoverPoint:nth-child(4) { bottom: 0; right: 0; }
 .tradingCardHoverPoint:nth-child(1):hover ~ .tradingCardContents {
-  box-shadow: 7px 7px 50px rgba(0, 0, 0, .3);
-
+  /* box-shadow: 17px 7px 50px rgba(0, 0, 0, .3); */
+  box-shadow: 17px 7px 50px rgba(255, 255, 255, .3);
   transform-origin: right top;
   transform: perspective(1000px) rotateX(3deg) rotateY(-3deg) rotateZ(0.2deg);
 }
 
 .tradingCardHoverPoint:nth-child(2):hover ~ .tradingCardContents {
-  box-shadow: -7px 7px 50px rgba(0, 0, 0, .3);
+  box-shadow: -17px 7px 50px rgba(0, 0, 0, .3);
   transform-origin: left top;
   transform: perspective(1000px) rotateX(3deg) rotateY(3deg) rotateZ(-0.2deg);
 }
 
-
 .tradingCardHoverPoint:nth-child(3):hover ~ .tradingCardContents {
-  box-shadow: 7px -7px 50px rgba(0, 0, 0, .3);
+  box-shadow: 17px -7px 50px rgba(0, 0, 0, .3);
   transform-origin: right bottom;
   transform: perspective(1000px) rotateX(-3deg) rotateY(-3deg) rotateZ(-0.2deg);
 }
 
 .tradingCardHoverPoint:nth-child(4):hover ~ .tradingCardContents {
-  box-shadow: -7px -7px 50px rgba(0, 0, 0, .3);
+  box-shadow: -17px -7px 50px rgba(0, 0, 0, .3);
   transform-origin: left bottom;
   transform: perspective(1000px) rotateX(-3deg) rotateY(3deg) rotateZ(0.2deg);
 }
