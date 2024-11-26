@@ -15,6 +15,7 @@ class TradingCardComponent extends HTMLElement {
         this.colorLight = this.getAttribute('colorLight') || '#FFD700';
         this.colorMid = this.getAttribute('colorMid') || '#994500';
         this.colorDark = this.getAttribute('colorDark') || '#664500';
+        this.gradientRotation = rng.random();   
         const emoji = this.getAttribute('emoji') || '🏃';
         const uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
 
@@ -58,22 +59,22 @@ class TradingCardComponent extends HTMLElement {
         canvas.height = 150 / 10;
 
         // Create a gradient for the background
-        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        gradient.addColorStop(0.5, this.colorMid);
-        gradient.addColorStop(0.5, this.colorDark);
+        const gradient = ctx.createLinearGradient(canvas.width * this.gradientRotation, 0, canvas.width * (1-this.gradientRotation), canvas.height);
+        gradient.addColorStop(0.22, this.colorMid);
+        gradient.addColorStop(0.88, this.colorDark);
 
         // Apply the gradient as the background
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.filter = "contrast(90%) blur(0.1px) brightness(110%)";
+        ctx.filter = "contrast(70%) brightness(130%)";
         // Set font size and alignment for the emoji
-        ctx.font = '14px Arial';
+        ctx.font = '13px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
         // Draw the emoji
-        ctx.fillText(emoji, canvas.width / 2, canvas.height * 0.6);
+        ctx.fillText(emoji , canvas.width*0.51 , canvas.height * 0.6);
 
     }
 
@@ -85,6 +86,7 @@ class TradingCardComponent extends HTMLElement {
           height: 300px;
           display: inline-block;
           border-radius: 5px;
+          margin:3px;
         }
         
         .tradingCardContents {
@@ -168,13 +170,13 @@ class TradingCardComponent extends HTMLElement {
         .tradingCardHoverPoint:nth-child(3):hover ~ .tradingCardContents {
             box-shadow: 3px -3px 50px rgba(0, 0, 0, 1);
             transform-origin: right bottom;
-            transform: perspective(1000px) rotateX(-2deg) rotateY(-2deg) rotateZ(-0.2deg);
+            transform: perspective(1000px) rotateX(-10deg) rotateY(-10deg) rotateZ(-0.2deg);
         }
 
         .tradingCardHoverPoint:nth-child(4):hover ~ .tradingCardContents {
             box-shadow: -3px -3px 50px rgba(0, 0, 0, 1);
             transform-origin: left bottom;
-            transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) rotateZ(0.2deg);
+            transform: perspective(1000px) rotateX(-10deg) rotateY(10deg) rotateZ(0.2deg);
         }
         
 
