@@ -99,8 +99,10 @@ class Crest {
             <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
                 <defs>
                 <linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
-                <stop offset="50%" stop-color="${this.colorScheme[0]}" />
-                <stop offset="50%" stop-color="${this.colorScheme[1]}" />
+                <stop offset="45%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="45%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="55%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="55%" stop-color="${this.colorScheme.light}" />
             </linearGradient>
                 </defs>
                 <polygon 

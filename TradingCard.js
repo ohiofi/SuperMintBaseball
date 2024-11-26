@@ -15,8 +15,9 @@ class TradingCard{
   team="${this.team}"
   reward="${this.reward}"
   cost="${this.cost}"
-  colorPrimary="${this.colorScheme[0]}"
-  colorSecondary="${this.colorScheme[1]}"
+  colorLight="${this.colorScheme.light}"
+  colorMid="${this.colorScheme.mid}"
+  colorDark="${this.colorScheme.dark}"
   emoji="${this.profilePic}">
 </trading-card>`
     }

@@ -12,8 +12,9 @@ class TradingCardComponent extends HTMLElement {
         this.stats = this.getAttribute('stats') || 'N/A';
         this.reward = this.getAttribute('reward') || 'No Reward';
         this.cost = this.getAttribute('cost') || 'N/A';
-        this.colorPrimary = this.getAttribute('colorPrimary') || '#FFD700';
-        this.colorSecondary = this.getAttribute('colorSecondary') || '#FF4500';
+        this.colorLight = this.getAttribute('colorLight') || '#FFD700';
+        this.colorMid = this.getAttribute('colorMid') || '#994500';
+        this.colorDark = this.getAttribute('colorDark') || '#664500';
         const emoji = this.getAttribute('emoji') || '🏃';
         const uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
 
@@ -46,7 +47,7 @@ class TradingCardComponent extends HTMLElement {
       `;
 
         // Render the canvas
-        setTimeout(() => this.drawCanvas(shadow.querySelector(`#${uniqueCanvasId}`), emoji, [this.colorPrimary, this.colorSecondary]), 0);
+        setTimeout(() => this.drawCanvas(shadow.querySelector(`#${uniqueCanvasId}`), emoji, [this.colorMid, this.colorDark]), 0);
     }
 
     drawCanvas(canvas, emoji, colorScheme) {
@@ -58,8 +59,8 @@ class TradingCardComponent extends HTMLElement {
 
         // Create a gradient for the background
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        gradient.addColorStop(0.5, colorScheme[0]);
-        gradient.addColorStop(0.5, colorScheme[1]);
+        gradient.addColorStop(0.5, this.colorMid);
+        gradient.addColorStop(0.5, this.colorDark);
 
         // Apply the gradient as the background
         ctx.fillStyle = gradient;
@@ -105,7 +106,7 @@ class TradingCardComponent extends HTMLElement {
           align-items: center;
           padding: 5px 10px;
           
-          color: ${this.colorPrimary};
+          color: ${this.colorLight};
           
           font-size: 1em;
           font-weight: bold;

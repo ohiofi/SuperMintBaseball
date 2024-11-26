@@ -149,7 +149,7 @@ class BaseballTeam {
     //             crest += "radial-gradient(circle at bottom right"
     //             break;
     //     }
-    //     return crest += `, ${colorScheme[0]} 50%, ${colorScheme[1]} 50%);">&nbsp;${teamPlaceAbbreviation[0]}&nbsp;</span>`
+    //     return crest += `, ${colorScheme.mid} 50%, ${colorScheme.light} 50%);">&nbsp;${teamPlaceAbbreviation[0]}&nbsp;</span>`
         
     // }
 

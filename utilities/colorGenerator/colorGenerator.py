@@ -17,16 +17,20 @@ colors = {
         "mid":"ffd300", 
         "light":"ffe666"
     },  
-    "electeric_yellow":{
-        "light":"ffff33",  
-        "lighter":"ffff99"
+    "electric_yellow":{
+        "dark":"666600",
+        "mid":"ffff33",  
+        "light":"ffff99"
     },
     "chartreuse":{
         "dark":"8a9f00", 
-        "light":"deff0a"
+        "mid":"deff0a",
+        "light":"ecff70"
     },  
     "duron_electric_lime":{
-        "light":"81d800",
+        "dark":"62a300",
+        "mid":"81d800",
+        "light":"c6ff70"
     },
     "spring_green":{
         "darker":"007041",
@@ -36,7 +40,8 @@ colors = {
     },  
     "azure":{
         "darker":"04356c",
-        "mid":"147df5"   
+        "mid":"147df5",
+        "light":"4598f7"
     },
     "electric_blue":{  
         
@@ -68,7 +73,41 @@ colors = {
     }
 }
 
-def generate_color_combinations(color_object):
+# def generate_color_combinations(color_object):
+#     colorPaletteUrl = "https://www.colorzilla.com/colors/"
+#     result = []
+#     color_families = list(color_object.keys())
+
+#     # Iterate over all pairs of color families
+#     for i in range(len(color_families)):
+#         for j in range(i + 1, len(color_families)):
+#             family1 = color_object[color_families[i]]
+#             family2 = color_object[color_families[j]]       
+#             # Generate combinations between shades of the two families
+#             for key1, shade1 in family1.items():
+#                 # ensure that the combo starts with mid, light, or lighter
+#                 if key1 not in ["mid", "light", "lighter"]:
+#                     continue
+#                 if not shade1 in colorPaletteUrl:
+#                     colorPaletteUrl += shade1 + "+"
+#                 for key2, shade2 in family2.items():
+#                     if key1[0] == key2[0]: # don't match dark with dark, dark with darker, etc.
+#                         continue
+#                     result.append([shade1, shade2])
+#     print(colorPaletteUrl)
+#     return result
+
+
+
+# combinations = generate_color_combinations(colors)
+
+# formatted_list = [f'["#{combo[0]}", "#{combo[1]}"]' for combo in combinations]
+# with open("Colors.js", 'w') as f:
+#         f.write("const colorCombinations = [\n")
+#         f.write(",\n".join(formatted_list))  # Nicely format as a comma-separated string
+#         f.write("]")
+# f.close()
+def generate_color_combinations_as_objects(color_object):
     colorPaletteUrl = "https://www.colorzilla.com/colors/"
     result = []
     color_families = list(color_object.keys())
@@ -78,27 +117,29 @@ def generate_color_combinations(color_object):
         for j in range(i + 1, len(color_families)):
             family1 = color_object[color_families[i]]
             family2 = color_object[color_families[j]]       
-            # Generate combinations between shades of the two families
+            # Generate objects with light, mid, and dark properties
             for key1, shade1 in family1.items():
-                # ensure that the combo starts with mid, light, or lighter
-                if key1 not in ["mid", "light", "lighter"]:
-                    continue
-                if not shade1 in colorPaletteUrl:
+                if shade1 not in colorPaletteUrl:
                     colorPaletteUrl += shade1 + "+"
+                if key1 not in ["dark", "darker"]:
+                    continue
                 for key2, shade2 in family2.items():
-                    if key1[0] == key2[0]: # don't match dark with dark, dark with darker, etc.
-                        continue
-                    result.append([shade1, shade2])
+                        result.append({
+                            "light": family1["light"],
+                            "mid": family2.get("mid", None),  # Default to None if not present
+                            "dark": shade1
+                        })
     print(colorPaletteUrl)
     return result
 
+# Generate combinations as objects
+combinations = generate_color_combinations_as_objects(colors)
 
+# Format the output as JavaScript objects
+formatted_list = [f'{{"light": "#{obj["light"]}", "mid": "#{obj["mid"]}", "dark": "#{obj["dark"]}"}}' for obj in combinations]
 
-combinations = generate_color_combinations(colors)
-
-formatted_list = [f'["#{combo[0]}", "#{combo[1]}"]' for combo in combinations]
 with open("Colors.js", 'w') as f:
-        f.write("const colorCombinations = [\n")
-        f.write(",\n".join(formatted_list))  # Nicely format as a comma-separated string
-        f.write("]")
+    f.write("const colorCombinations = [\n")
+    f.write(",\n".join(formatted_list))  # Nicely format as a comma-separated string
+    f.write("\n];")
 f.close()
