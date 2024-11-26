@@ -70,10 +70,12 @@ class Crest {
                 return "5,5 95,5 95,95 5,95";
             case 10:
                 // Circle (approximated with a polygon)
-                return "50,5 68,10 83,27 90,50 83,73 68,90 50,95 32,90 17,73 10,50 17,27 32,10";
+                //return "50,5 68,10 83,27 90,50 83,73 68,90 50,95 32,90 17,73 10,50 17,27 32,10";
+                return "95.0,50.0 93.5,61.6 89.0,72.5 81.8,81.8 72.5,89.0 61.6,93.5 50.0,95.0 38.4,93.5 27.5,89.0 18.2,81.8 11.0,72.5 6.5,61.6 5.0,50.0 6.5,38.4 11.0,27.5 18.2,18.2 27.5,11.0 38.4,6.5 50.0,5.0 61.6,6.5 72.5,11.0 81.8,18.2 89.0,27.5 93.5,38.4"
             case 11:
                 // Star
-                return "50,5 60,40 95,40 65,60 75,95 50,75 25,95 35,60 5,40 40,40";
+                //return "50,5 60,40 95,40 65,60 75,95 50,75 25,95 35,60 5,40 40,40";
+                return "50,-17.5 65,35 117.5,35 72.5,65 87.5,117.5 50,87.5 12.5,117.5 27.5,65 -17.5,35 35,35"
             case 12:
                 // Cross
                 return "30,5 70,5 70,30 95,30 95,70 70,70 70,95 30,95 30,70 5,70 5,30 30,30";
@@ -99,10 +101,10 @@ class Crest {
             <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
                 <defs>
                 <linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
-                <stop offset="45%" stop-color="${this.colorScheme.mid}" />
-                <stop offset="45%" stop-color="${this.colorScheme.dark}" />
-                <stop offset="55%" stop-color="${this.colorScheme.dark}" />
-                <stop offset="55%" stop-color="${this.colorScheme.light}" />
+                <stop offset="42%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="42%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="58%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="58%" stop-color="${this.colorScheme.light}" />
             </linearGradient>
                 </defs>
                 <polygon 
