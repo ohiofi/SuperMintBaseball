@@ -53,8 +53,8 @@ class TradingCardComponent extends HTMLElement {
         const ctx = canvas.getContext('2d');
 
         // Set canvas size
-        canvas.width = 200;
-        canvas.height = 150;
+        canvas.width = 200 / 10;
+        canvas.height = 150 / 10;
 
         // Create a gradient for the background
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
@@ -67,7 +67,7 @@ class TradingCardComponent extends HTMLElement {
 
         ctx.filter = "contrast(90%) blur(0.1px) brightness(110%)";
         // Set font size and alignment for the emoji
-        ctx.font = '150px Arial';
+        ctx.font = '14px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
@@ -124,6 +124,7 @@ class TradingCardComponent extends HTMLElement {
         .tradingCardImage canvas {
           width: 90%;
           height: auto;
+          image-rendering: pixelated;
         }
         .tradingCardBody {
           padding: 10px;
