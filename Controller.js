@@ -13,15 +13,9 @@ class Controller {
         
 
         const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
-        // let card1 = new TradingCard(this.model.world.league.teams[0].getPitcher(),5)
-        // let card2 = new TradingCard(this.model.world.league.teams[1].getPitcher(),5)
-        // let card3 = new TradingCard(this.model.world.league.teams[2].getPitcher(),5)
-        // cardContainer.append(card1.render(),card2.render(),card3.render());
-        let cards = [];
-        for(let i=0; i<this.model.world.league.teams.length;i++){
-            cards.push(new TradingCard(this.model.world.league.teams[i].getPitcher(),5))
-            cardContainer.append(cards[i].render())
-        }
+        // set up shop
+        this.view.homePage.root.appendChild(this.model.world.shop.getThreeCards());
+        
     }
 
     setupAfternoonView(){
@@ -39,16 +33,15 @@ class Controller {
             `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
         + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
         + this.model.world.league.getStandingsTableBatters(6)+"</div>";
-
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-
         this.speed = 3500;
-
         // Set a new interval
         this.gameMessageInterval = setInterval(() => {
             app.update();
         }, this.speed);
     }
+
+    
 
     handleContinueButtonClick = () => {
         // update the model state
@@ -64,19 +57,14 @@ class Controller {
         // update home page scores
         this.view.homePage.addGameTableScores(gameMessages);
         for (let i = 0; i < gameMessages.length; i++) {
-
             // update game widgets
             this.view.liveGamesPage.widgets[i].update(gameMessages[i]);
-
             // update single game pages
             this.view.singleGamePages[i].update(gameMessages[i])
-
         }
-
         // update news ticker
         this.model.world.newsTicker.update(gameMessages);
         this.model.world.newsTicker.show();
-
         // check if the games are done
         if(this.model.world.league.isTodayDone()){
             this.view.showTodayIsDone();

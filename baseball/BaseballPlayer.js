@@ -158,7 +158,7 @@ class BaseballPlayer {
     }
 
     getNameWithLink() {
-        return this.crest.render() + `&nbsp;<a href="#" 
+        return this.crest.render(40) + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
         onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >` +
         this.teamPlaceAbbreviation + " " + this.lastName + '</a>';

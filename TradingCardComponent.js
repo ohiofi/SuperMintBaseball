@@ -7,6 +7,8 @@ class TradingCardComponent extends HTMLElement {
 
         // Extract attributes
         this.name = this.getAttribute('name') || 'Unknown Player';
+        
+        this.crest = this.getAttribute('crest') || 'crest';
         this.position = this.getAttribute('position') || 'Unknown Position';
         this.team = this.getAttribute('team') || 'Unknown Team';
         this.stats = this.getAttribute('stats') || 'N/A';
@@ -38,7 +40,7 @@ class TradingCardComponent extends HTMLElement {
               <canvas id="${uniqueCanvasId}"></canvas>
             </div>
             <div class="tradingCardBody">
-            <div class="cardTeam"><small>Team:</small> ${this.team}</div>
+              <div class="cardTeam"><small>Team:</small> ${this.team}</div>
               <div class="cardPosition"><small>Position:</small> ${this.position}</div>
               <div class="cardStats"><small>Click to see stats</small></div>
               <div class="cardReward">${this.reward}</div>
@@ -60,8 +62,8 @@ class TradingCardComponent extends HTMLElement {
 
         // Create a gradient for the background
         const gradient = ctx.createLinearGradient(canvas.width * this.gradientRotation, 0, canvas.width * (1-this.gradientRotation), canvas.height);
-        gradient.addColorStop(0.22, this.colorMid);
-        gradient.addColorStop(0.88, this.colorDark);
+        gradient.addColorStop(0.33, this.colorMid);
+        gradient.addColorStop(0.77, this.colorDark);
 
         // Apply the gradient as the background
         ctx.fillStyle = gradient;
@@ -79,6 +81,7 @@ class TradingCardComponent extends HTMLElement {
     }
 
     getStyles() {
+      const borderSize = "4px";
         return `
         .tradingCard {
           position: relative;
@@ -87,6 +90,7 @@ class TradingCardComponent extends HTMLElement {
           display: inline-block;
           border-radius: 5px;
           margin:3px;
+          
         }
         
         .tradingCardContents {
@@ -107,34 +111,35 @@ class TradingCardComponent extends HTMLElement {
           justify-content: space-between;
           align-items: center;
           padding: 5px 10px;
-          
           color: ${this.colorLight};
-          
+          background: ${this.colorDark};
           font-size: 1em;
           font-weight: bold;
           text-transform: uppercase;
+          border-bottom: ${borderSize} solid ${this.colorMid};
         }
         .tradingCardImage {
           position: relative;
           height: 50%;
-          background: #333;
+          background: ${this.colorDark};
           display: flex;
           align-items: center;
           justify-content: center;
-          border-top: 2px solid #333;
-          border-bottom: 2px solid #333;
+          border-top: ${borderSize} solid ${this.colorLight};
+          border-bottom: ${borderSize} solid ${this.colorLight};
         }
         .tradingCardImage canvas {
-          width: 90%;
+          width: 100%;
           height: auto;
           image-rendering: pixelated;
         }
         .tradingCardBody {
           padding: 10px;
           color: #fff;
-          background: #333;
+          background: ${this.colorDark};
           font-size: 0.9em;
           text-align: center;
+          border-top: ${borderSize} solid ${this.colorMid};
         }
         .tradingCardBody p {
           margin: 5px 0;

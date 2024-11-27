@@ -48,6 +48,8 @@ class View{
         // stats modal
         this.modal = new StatsModal();
         this.app.append(this.newsTickerContainer, this.pageMenuBar, this.pageContainer, this.modal.render())
+
+        
     }
 
     addMenuItemHome() {

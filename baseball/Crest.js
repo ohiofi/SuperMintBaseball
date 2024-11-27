@@ -36,7 +36,7 @@ class Crest {
     }
 
     generateShape() {
-        const randShape = Math.floor(rng.random() * 17);
+        const randShape = Math.floor(rng.random() * 24);
         switch (randShape) {
             case 0:
                 // Hexagon
@@ -75,7 +75,8 @@ class Crest {
             case 11:
                 // Star
                 //return "50,5 60,40 95,40 65,60 75,95 50,75 25,95 35,60 5,40 40,40";
-                return "50,-17.5 65,35 117.5,35 72.5,65 87.5,117.5 50,87.5 12.5,117.5 27.5,65 -17.5,35 35,35"
+                //return "50,-17.5 65,35 117.5,35 72.5,65 87.5,117.5 50,87.5 12.5,117.5 27.5,65 -17.5,35 35,35"
+                return "50.0,81.0 37.0,89.9 21.8,88.8 16.0,74.7 20.5,59.6 8.0,50.0 4.3,35.2 16.0,25.3 31.8,24.9 37.0,10.1 50.0,2.0 63.0,10.1 68.2,24.9 84.0,25.3 95.7,35.2 92.0,50.0 79.5,59.6 84.0,74.7 78.2,88.8 63.0,89.9"
             case 12:
                 // Cross
                 return "30,5 70,5 70,30 95,30 95,70 70,70 70,95 30,95 30,70 5,70 5,30 30,30";
@@ -84,19 +85,38 @@ class Crest {
                 return "30,5 70,5 90,30 90,70 70,95 30,95 10,70 10,30";
             case 14:
                 // Vertical Ellipse (approximated with a polygon)
-                return "50,5 60,8 70,20 75,50 70,80 60,92 50,95 40,92 30,80 25,50 30,20 40,8";
+                return "50,5 40,8 30,20 13,50 30,80 40,92 50,95 60,92 70,80 87,50 70,20 60,8";
             case 15:
                 // Horizontal Ellipse (approximated with a polygon)
-                return "5,50 8,40 20,30 50,15 80,30 92,40 95,50 92,60 80,70 50,85 20,70 8,60";
+                return "5,50 8,40 20,30 50,13 80,30 92,40 95,50 92,60 80,70 50,87 20,70 8,60";
             case 16:
                 // Inverted Pentagon
                 return "20,5 50,15 80,5 75,85 50,95 20,85";
+            case 17:
+                // home plate
+                return "10,15 90,15 90,58 50,97 10,58"
+            case 18:
+                // babbet
+                return "8,20 20,20 20,8 80,8 80,20 92,20 92,80 80,80 80,92 20,92 20,80 8,80"
+            case 19:
+                // right chevron
+                return "75,15 95,50 75,85 15,85 35,50 15,15"
+            case 20:
+                // right tilted diamond
+                return "25,25 97,3 75,75 3,97"
+            case 21:
+                // left tilted diamond
+                return "75,25 3,3 25,75 97,97"
+            case 22:
+                // bowtie
+                return "50,33 97,3 97,97 50,66 3,97 3,3"
+            case 23:
+                // shield
+                return "50,3 66,15 82,3 98,15 82,75 50,97 18,75 2,15 18,3 34,15 "
         }
     }
 
     render(size = 30) {
-        
-
         return `
             <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -113,7 +133,7 @@ class Crest {
                     stroke="black"
                     stroke-width="3"
                 />
-                <text x="49%" y="71%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
+                <text x="50%" y="71%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
                     font-size="60px" 
                     style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
 >
