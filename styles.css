@@ -263,7 +263,6 @@ sub.gamePostRightBase {
   overflow: hidden;
   animation: marquee 60s linear infinite;
   display: inline-block;
-  
 }
 .newsTickerItem{
   padding-left: 150px;

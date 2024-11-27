@@ -69,6 +69,8 @@ class BaseballGame {
     ]
 
     constructor(awayTeamObject, homeTeamObject) {
+        if(awayTeamObject===null) throw new Error("awayTeamObject can not be null");
+        if(homeTeamObject===null) throw new Error("homeTeamObject can not be null");
         this.name = awayTeamObject.getNameWithLink() + " @ " + homeTeamObject.getNameWithLink();
         this.hasStarted = false;
         this.done = false;
@@ -86,30 +88,15 @@ class BaseballGame {
             strikes: 0,
             outs: 0
         }
-        this.score = {
-            away: 0,
-            home: 0
-        }
+        this.score = new BaseballGameBoxScore(awayTeamObject, homeTeamObject);
         this.inning = 0;
         this.isTopOfInning = true;
         this.gameState = new PlayBall();
         this.onBase = [null, null, null];
-        this.boxScore = {
-            away: {
-                name: this.awayTeam.getNameWithLink(),
-                innings: [0],
-                runs: 0,
-                hits: 0, 
-                errors: 0  
-            },
-            home: {
-                name: this.homeTeam.getNameWithLink(),
-                innings: [],
-                runs: 0, 
-                hits: 0, 
-                errors: 0  
-            }
-        }
+    }
+
+    addBoxScoreInning(){
+        this.score.addNewInning(this.isTopOfInning, this.inning);
     }
 
     advanceBaseRunners(numberToAdvance, isSacrificeFly) {
@@ -353,47 +340,7 @@ class BaseballGame {
         return this.batter.getName();
     }
 
-    getBoxScoreTable() {
-        const maxInnings = Math.max(
-            this.boxScore.away.innings.length,
-            this.boxScore.home.innings.length
-        );
-
-        const inningsHeaders = Array.from({ length: maxInnings }, (_, i) => `<th class="text-secondary">${i + 1}</th>`).join("");
-
-        const formatInnings = (innings, max) =>
-            Array.from({ length: max }, (_, i) => `<td>${innings[i] ?? ""}</td>`).join("");
-
-        return `
-            <table class="table table-dark table-striped table-bordered text-center shadow overflow-hidden">
-                <thead>
-                    <tr>
-                        <th class="text-secondary">Team</th>
-                        ${inningsHeaders}
-                        <th class="text-secondary">R</th>
-                        <th class="text-secondary">H</th>
-                        <th class="text-secondary">E</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-start">${this.boxScore.away.name}</td>
-                        ${formatInnings(this.boxScore.away.innings, maxInnings)}
-                        <td>${this.boxScore.away.runs}</td>
-                        <td>${this.boxScore.away.hits}</td>
-                        <td>${this.boxScore.away.errors}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-start">${this.boxScore.home.name}</td>
-                        ${formatInnings(this.boxScore.home.innings, maxInnings)}
-                        <td>${this.boxScore.home.runs}</td>
-                        <td>${this.boxScore.home.hits}</td>
-                        <td>${this.boxScore.home.errors}</td>
-                    </tr>
-                </tbody>
-            </table>
-        `.trim();
-    }
+    
 
 
     getCountString() {
@@ -432,10 +379,10 @@ class BaseballGame {
     }
 
     getLosingTeam() {
-        if (this.score.home < this.score.away) {
+        if (this.score.getHomeScore() < this.score.getAwayScore()) {
             return this.homeTeam;
         }
-        if (this.score.home > this.score.away) {
+        if (this.score.getHomeScore() > this.score.getAwayScore()) {
             return this.awayTeam;
         }
         return null;
@@ -458,11 +405,7 @@ class BaseballGame {
     }
 
     getScore() {
-
-        if (!this.hasStarted) {
-            return this.awayTeam.getNameWithLink() + " @ " + this.homeTeam.getNameWithLink();
-        }
-        return "<span class='pe-4'>" + this.getInningString() + "</span><span class='pe-4'>" + this.awayTeam.getNameWithLink() + ":&nbsp;" + this.score.away + "</span><span class='pe-4'>" + this.homeTeam.getNameWithLink() + ":&nbsp;" + this.score.home + "</span>";
+        return this.score.getScore(this.getInningString());
     }
 
     getStrikes() {
@@ -471,10 +414,10 @@ class BaseballGame {
 
     getWinningTeam() {
 
-        if (this.score.home > this.score.away) {
+        if (this.score.getHomeScore() > this.score.getAwayScore() ) {
             return this.homeTeam;
         }
-        if (this.score.home < this.score.away) {
+        if (this.score.getHomeScore() < this.score.getAwayScore() ) {
             return this.awayTeam;
         }
         return null;
@@ -485,11 +428,7 @@ class BaseballGame {
     }
 
     incrementHits() {
-        if (this.isTopOfInning) {
-            this.boxScore.away.hits++;
-        }else{
-            this.boxScore.home.hits++;
-        }
+        this.score.incrementHits(this.isTopOfInning);
     }
 
     incrementInning() {
@@ -497,15 +436,7 @@ class BaseballGame {
     }
 
     incrementScore() {
-        if (this.isTopOfInning) {
-            this.score.away++;
-            this.boxScore.away.innings[this.boxScore.away.innings.length - 1]++;
-            this.boxScore.away.runs++;
-        } else {
-            this.score.home++;
-            this.boxScore.home.innings[this.boxScore.home.innings.length - 1]++;
-            this.boxScore.home.runs++;
-        }
+        this.score.incrementScore(this.isTopOfInning);
     }
 
     isGameOver() {

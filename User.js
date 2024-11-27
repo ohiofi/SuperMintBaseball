@@ -2,9 +2,9 @@ class User{
     constructor(name){
         this.name = name;
         this.lives = 3;
-        this.supplies = {
-            "💰":50
-        }
+        this.valuables = new Valuables({
+            "money":50
+        });
     }
 
     handleEvent(data){

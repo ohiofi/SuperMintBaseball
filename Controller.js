@@ -2,19 +2,11 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.view.bindMenuBarClick(this.handleShowPage)
-        document.getElementById("standingsSection").innerHTML = 
-            `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
-        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
-
-        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-
         
 
-        const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
-        // set up shop
-        this.view.homePage.root.appendChild(this.model.world.shop.getThreeCards());
+        this.setupAfternoonView()
+
+        
         
     }
 
@@ -23,6 +15,9 @@ class Controller {
         this.view.addMenuItemSingleGamePages(this.model.world);
         this.view.bindMenuBarClick(this.handleShowPage)
         this.view.addNewsTickerItems(this.model.world);
+        // set the speed
+        const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
+        this.model.world.newsTicker.setSpeed(newsTickerRibbonSize/100);
         //this.view.addPageMenuItems(this.model.world);
         this.view.homePage.addGameTableScores(this.model.world.getGameDetails())
         this.view.addAllSingleGamePages(this.model.world);
@@ -39,6 +34,19 @@ class Controller {
         this.gameMessageInterval = setInterval(() => {
             app.update();
         }, this.speed);
+    }
+
+    setupShopView(){
+        this.view.bindMenuBarClick(this.handleShowPage)
+        document.getElementById("standingsSection").innerHTML = 
+            `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
+        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
+        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
+
+        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+        const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
+        // set up shop
+        this.view.homePage.root.appendChild(this.model.world.shop.getThreeCards());
     }
 
     

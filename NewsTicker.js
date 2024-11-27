@@ -30,6 +30,18 @@ class NewsTicker {
         }
 
     }
+
+    setSpeed(numberOfSeconds){
+        
+            const ticker = document.getElementById('newsTickerRibbon');
+            
+            // Check if ticker exists
+            if (ticker) {
+              ticker.style.animationDuration = `${numberOfSeconds}s`;
+            }
+          
+    }
+
     // can happen out of schedule
     setBreakingNews(someString) {
 

@@ -26,14 +26,11 @@ class BottomOfTheInning extends AbstractBaseballGameState{
         baseballGame.setInningTop(false);
         baseballGame.setOffenseTeam();
         baseballGame.setCountToZero()
+        baseballGame.addBoxScoreInning();
         // away team is pitching
         baseballGame.awayTeam.pitcher.manager.notify(
             new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.awayTeam.leagueIdNumber,baseballGame.awayTeam.pitcher.leagueIdNumber)
         )
-        // check if new inning needs added to box score
-        if(baseballGame.getInning() > baseballGame.boxScore.home.innings.length){
-            baseballGame.boxScore.home.innings.push(0);
-        }
         return "Bottom of inning " + baseballGame.getInning() + ', ' +
         baseballGame.offenseTeam.getNameWithLink() + " batting.";
     }

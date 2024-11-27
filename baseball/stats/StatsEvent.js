@@ -3,7 +3,11 @@
 // a StatsEventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
 // a BaseballTeam or BaseballPlayer has a StatsEventManager
 // a User or the League subscribes to one or more StatsEventManagers and can handleEvent(data)
-
+/**
+ * Represents types of statistics events using an enumerated object.
+ * Used to define various game events such as hits, home runs, or pitching stats.
+ * @enum {number}
+ */
 const StatsEventType = {
   GAME_WINNER:0,
   GAME_LOSER:1,
@@ -27,17 +31,35 @@ const StatsEventType = {
 }
 
 
-
+/**
+ * Represents a statistical event in the context of a baseball game or baseball player's performance.
+ * Utilizes the observer design pattern to publish events that can be subscribed to by other objects.
+ */
 class StatsEvent {
-  
+  /**
+   * Restructures a plain JSON object into an instance of the `StatsEvent` class.
+   * @param {Object} jsonObject - The plain JSON object to convert.
+   * @returns {StatsEvent} The converted object with `StatsEvent` prototype.
+   */
   static restructure(jsonObject) {
     Object.setPrototypeOf(jsonObject, StatsEvent.prototype);
     return jsonObject;
   }
 
+  /**
+   * Initializes a new instance of the `StatsEvent` class.
+   * @param {number} eventType - The type of event, corresponding to a value from `StatsEventType`.
+   * @param {string} teamId - The unique identifier for the team involved in the event.
+   * @param {string} playerId - The unique identifier for the player involved in the event.
+   */
   constructor(eventType, teamId, playerId) {
-    this.eventType = eventType
-    this.teamId = teamId
-    this.playerId = playerId
+    /** @type {number} The type of the event, defined by `StatsEventType`. */
+    this.eventType = eventType;
+
+    /** @type {string} The unique identifier for the team associated with the event. */
+    this.teamId = teamId;
+
+    /** @type {string} The unique identifier for the player associated with the event. */
+    this.playerId = playerId;
   }
 }

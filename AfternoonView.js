@@ -4,6 +4,8 @@ class AfternoonView {
     constructor() {
         this.app = document.querySelector("#root");
 
+        this.app.innerHTML = null
+
         // news ticker
         this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4");
         this.tickerItems = [];

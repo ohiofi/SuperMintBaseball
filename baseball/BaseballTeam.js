@@ -330,7 +330,7 @@ class BaseballTeam {
         return (
             this.teamIdNumber === otherObject.teamIdNumber &&
             this.mascot === otherObject.mascot &&
-            this.getName() === otherObject.getName() &&
+            this.teamPlaceName === otherObject.teamPlaceName &&
             this.colorScheme === otherObject.colorScheme
         );
     }

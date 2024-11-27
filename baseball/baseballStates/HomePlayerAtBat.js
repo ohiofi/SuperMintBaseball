@@ -16,7 +16,7 @@ class HomePlayerAtBat extends AbstractBaseballGameState {
             this.setCountToZero();
         }
         // check if game is over
-        if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.home != baseballGame.score.away) {
+        if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.getHomeScore() != baseballGame.score.getAwayScore()) {
             baseballGame.setGameState(new FinalMessage());
         }
         return result

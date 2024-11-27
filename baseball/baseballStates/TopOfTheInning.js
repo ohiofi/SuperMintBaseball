@@ -31,14 +31,12 @@ class TopOfTheInning extends AbstractBaseballGameState{
         baseballGame.setOffenseTeam();
         baseballGame.setCountToZero();
         baseballGame.incrementInning();
+        baseballGame.addBoxScoreInning();
         // home team is pitching
         baseballGame.homeTeam.pitcher.manager.notify(
             new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.homeTeam.leagueIdNumber,baseballGame.homeTeam.pitcher.leagueIdNumber)
         )
-        // check if new inning needs added to box score
-        if(baseballGame.getInning() > baseballGame.boxScore.away.innings.length){
-            baseballGame.boxScore.away.innings.push(0);
-        }
+
         // return "Top of inning " + baseballGame.getInning() + ', <a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update('+baseballGame.awayTeam.leagueIdNumber+');" data-bs-target="#statsModal" data-bs-toggle="modal" >'+
         // baseballGame.getAwayTeamName() + "</a> batting.";
         return "Top of inning " + baseballGame.getInning() + ', ' +
