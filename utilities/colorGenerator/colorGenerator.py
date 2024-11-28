@@ -37,6 +37,11 @@ colors = {
         "mid":"81d800",
         "light":"c6ff70"
     },
+    "neon_green":{
+        "dark":"1ec700",
+        "mid":"39FF14",
+        "light":"79ff61"
+    },
     "spring_green":{
         "darker":"007041",
         # "dark":"009f5d",   
@@ -53,11 +58,11 @@ colors = {
         "mid":"147df5",
         "light":"4598f7"
     },
-    "electric_blue":{  
+    "rich_electric_blue":{  
         
-        "dark":"00959f", 
-        "mid":"0aefff",  
-        "light":"9ef9ff"
+        "dark":"044b6c", 
+        "mid":"0892D0",  
+        "light":"44bff8"
     },  
     "electric_indigo":{
         "dark":"32009f",  
@@ -129,7 +134,7 @@ colors = {
 # f.close()
 def generate_color_combinations_as_objects(color_object):
     colorPaletteUrl = "https://www.colorzilla.com/colors/"
-    result = []
+    colorList = []
     color_families = list(color_object.keys())
 
     # Iterate over all pairs of color families
@@ -141,16 +146,17 @@ def generate_color_combinations_as_objects(color_object):
             for key1, shade1 in family1.items():
                 if shade1 not in colorPaletteUrl:
                     colorPaletteUrl += shade1 + "+"
-                if key1 not in ["dark", "darker"]:
-                    continue
-                for key2, shade2 in family2.items():
-                        result.append({
-                            "light": family1["light"],
-                            "mid": family2.get("mid", None),  # Default to None if not present
-                            "dark": shade1
-                        })
+                if key1 in ["dark", "darker"]:
+
+                    for key2, shade2 in family2.items():
+                        if key2 == "mid":
+                            colorList.append({
+                                "light": family1["light"],
+                                "mid": family2.get("mid", None),  # Default to None if not present
+                                "dark": shade1
+                            })
     print(colorPaletteUrl)
-    return result
+    return colorList
 
 # Generate combinations as objects
 combinations = generate_color_combinations_as_objects(colors)

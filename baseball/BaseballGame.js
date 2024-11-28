@@ -99,51 +99,86 @@ class BaseballGame {
         this.score.addNewInning(this.isTopOfInning, this.inning);
     }
 
-    advanceBaseRunners(numberToAdvance, isSacrificeFly) {
-        let result = "";
-        if (numberToAdvance == null) {
-            numberToAdvance = 0;
-        }
-        if (this.onBase[2] != null && numberToAdvance >= 1) { // THIRD BASE RUNNER SCORES
-            result += "<br>" + this.onBase[2].getNameWithLink() + " SCORES!";
-            this.pitcher.setHungerUp()
-            this.incrementScore();
-            this.onBase[2].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[2].leagueIdNumber));
-            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
-            this.onBase[2] = null;
-            if (isSacrificeFly) {
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
-            }
-        }
-        if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
-            result += "<br>" + this.onBase[1].getNameWithLink() + " SCORES!";
-            this.incrementScore();
-            this.onBase[1].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[1].leagueIdNumber));
-            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
-            this.onBase[1] = null;
-            if (isSacrificeFly) {
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
-            }
-        } else if (this.onBase[1] != null && numberToAdvance == 1) { // SECOND BASE RUNNER advances
-            this.onBase[1 + numberToAdvance] = this.onBase[1];
-            this.onBase[1] = null;
-        }
-        if (this.onBase[0] != null && numberToAdvance >= 3) { // FIRST BASE RUNNER SCORES
-            result += "<br>" + this.onBase[0].getNameWithLink() + " SCORES!";
-            this.incrementScore();
-            this.onBase[0].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[0].leagueIdNumber));
-            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
-            this.onBase[0] = null;
-            if (isSacrificeFly) {
-                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
-            }
-        } else if (this.onBase[0] != null && numberToAdvance >= 1) { // FIRST BASE RUNNER advances
-            this.onBase[0 + numberToAdvance] = this.onBase[0];
-            this.onBase[0] = null;
+    //advanceBaseRunners(numberToAdvance, isSacrificeFly) {
+    //     let result = "";
+    //     if (numberToAdvance == null) {
+    //         numberToAdvance = 0;
+    //     }
+    //     if (this.onBase[2] != null && numberToAdvance >= 1) { // THIRD BASE RUNNER SCORES
+    //         result += "<br>" + this.onBase[2].getNameWithLink() + " SCORES!";
+    //         this.pitcher.setHungerUp()
+    //         this.incrementScore();
+    //         this.onBase[2].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[2].leagueIdNumber));
+    //         this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
+    //         this.onBase[2] = null;
+    //         if (isSacrificeFly) {
+    //             this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
+    //         }
+    //     }
+    //     if (this.onBase[1] != null && numberToAdvance >= 2) { // SECOND BASE RUNNER SCORES
+    //         result += "<br>" + this.onBase[1].getNameWithLink() + " SCORES!";
+    //         this.incrementScore();
+    //         this.onBase[1].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[1].leagueIdNumber));
+    //         this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
+    //         this.onBase[1] = null;
+    //         if (isSacrificeFly) {
+    //             this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
+    //         }
+    //     } else if (this.onBase[1] != null && numberToAdvance == 1) { // SECOND BASE RUNNER advances
+    //         this.onBase[1 + numberToAdvance] = this.onBase[1];
+    //         this.onBase[1] = null;
+    //     }
+    //     if (this.onBase[0] != null && numberToAdvance >= 3) { // FIRST BASE RUNNER SCORES
+    //         result += "<br>" + this.onBase[0].getNameWithLink() + " SCORES!";
+    //         this.incrementScore();
+    //         this.onBase[0].manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.onBase[0].leagueIdNumber));
+    //         this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
+    //         this.onBase[0] = null;
+    //         if (isSacrificeFly) {
+    //             this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
+    //         }
+    //     } else if (this.onBase[0] != null && numberToAdvance >= 1) { // FIRST BASE RUNNER advances
+    //         this.onBase[0 + numberToAdvance] = this.onBase[0];
+    //         this.onBase[0] = null;
 
+    //     }
+    //     return result;
+    // }
+
+    // handles 2nd base runner advancing by 1 and 1st base runner advancing by 1 or 2
+    getBaseRunnerAdvancesOrScores(baseIndex, numberToAdvance){
+        if (this.onBase[baseIndex] && numberToAdvance > 0) {
+            this.onBase[baseIndex + numberToAdvance] = this.onBase[baseIndex];
+            this.onBase[baseIndex] = null;
         }
+        return "";
+    }
+
+    getBaseRunnerMovement(numberToAdvance, isSacrificeFly){
+        numberToAdvance = numberToAdvance || 0;
+        let result = "";
+        result += this.getBaseRunnerScores(2, numberToAdvance, isSacrificeFly); // Handle third base
+        result += this.getBaseRunnerAdvancesOrScores(1, numberToAdvance, isSacrificeFly); // Handle second base
+        result += this.getBaseRunnerAdvancesOrScores(0, numberToAdvance); // Handle first base
         return result;
     }
+
+    getBaseRunnerScores(baseIndex, numberToAdvance, isSacrificeFly = false){
+        if (this.onBase[baseIndex] && numberToAdvance >= baseIndex - 1) {
+            let runner = this.onBase[baseIndex];
+            this.incrementScore();
+            runner.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, runner.leagueIdNumber));
+            this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
+            this.onBase[baseIndex] = null;
+            if (isSacrificeFly) {
+                this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
+            }
+            return `<br>${runner.getNameWithLink()} SCORES!`;
+        }
+        return "";
+    }
+
+    
 
     getAtBat(pitchScore) {
         let result = "";
@@ -226,11 +261,11 @@ class BaseballGame {
                 defender.setHungerDown()
                 this.batter.setHungerUp()
                 if (this.count.outs < 3) {
-                    result += this.advanceBaseRunners(1, true)
+                    result += this.getBaseRunnerMovement(1, true)
                 }
             } else if (hitScore / defenseScore <= 1.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a SINGLE"
-                result += this.advanceBaseRunners(1)
+                result += this.getBaseRunnerMovement(1)
                 this.onBase[0] = this.batter;
                 this.incrementHits()
                 this.pitcher.setHungerUp()
@@ -241,7 +276,7 @@ class BaseballGame {
                 )
             } else if (hitScore / defenseScore <= 2.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a DOUBLE"
-                result += this.advanceBaseRunners(2)
+                result += this.getBaseRunnerMovement(2)
                 this.onBase[1] = this.batter;
                 this.incrementHits()
                 this.pitcher.setHungerUp()
@@ -252,7 +287,7 @@ class BaseballGame {
                 )
             } else if (hitScore / defenseScore <= 3.999) {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a TRIPLE"
-                result += this.advanceBaseRunners(3)
+                result += this.getBaseRunnerMovement(3)
                 this.onBase[2] = this.batter;
                 this.incrementHits()
                 this.pitcher.setHungerUp()
@@ -265,7 +300,7 @@ class BaseballGame {
                 result += "<br>" + this.batter.getNameWithLink() + " hits a HOME RUN!"
                 this.incrementScore();
                 this.incrementHits()
-                result += this.advanceBaseRunners(4)
+                result += this.getBaseRunnerMovement(4)
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
@@ -511,7 +546,7 @@ class BaseballGame {
             this.onBase[1] = this.onBase[0];
             this.onBase[0] = this.batter;
         } else {
-            result = this.advanceBaseRunners(1);
+            result = this.getBaseRunnerMovement(1);
             this.onBase[0] = this.batter;
         }
         return result;

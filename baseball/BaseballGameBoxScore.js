@@ -35,11 +35,9 @@ class BaseballGameBoxScore {
     incrementHits(isTopOfInning) {
         if(isTopOfInning===null) throw new Error("isTopOfInning can not be null");
         if (isTopOfInning) {
-            this.away.innings[this.away.innings.length - 1]++;
-            this.away.runs++;
+            this.away.hits++;
         } else{
-            this.home.innings[this.home.innings.length - 1]++;
-            this.home.runs++;
+            this.home.hits++;
         }
     }
 

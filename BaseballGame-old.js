@@ -178,28 +178,28 @@ class BaseballGame {
                 this.batter.setHungerUp()
 
                 if (this.count.outs < 3) {
-                    result += this.advanceBaseRunners(1)
+                    result += this.getBaseRunnerMovement(1)
                 }
                 //this.gameState--;
                 //return result;
             } else if (hitScore / defenseScore <= 1.999) {
                 //console.log(this.batter.getName() + " hits a SINGLE")
                 result += "<br>" + this.batter.getName() + " hits a SINGLE"
-                result += this.advanceBaseRunners(1)
+                result += this.getBaseRunnerMovement(1)
                 this.onBase[0] = this.batter;
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
             } else if (hitScore / defenseScore <= 2.999) {
                 result += "<br>" + this.batter.getName() + " hits a DOUBLE"
-                result += this.advanceBaseRunners(2)
+                result += this.getBaseRunnerMovement(2)
                 this.onBase[1] = this.batter;
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
             } else if (hitScore / defenseScore <= 3.999) {
                 result += "<br>" + this.batter.getName() + " hits a TRIPLE"
-                result += this.advanceBaseRunners(3)
+                result += this.getBaseRunnerMovement(3)
                 this.onBase[2] = this.batter;
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
@@ -207,7 +207,7 @@ class BaseballGame {
             } else {
                 result += "<br>" + this.batter.getName() + " hits a HOME RUN!"
                 this.incrementScore();
-                result += this.advanceBaseRunners(4)
+                result += this.getBaseRunnerMovement(4)
                 this.pitcher.setHungerUp()
                 defender.setHungerUp()
                 this.batter.setHungerDown()
@@ -507,7 +507,7 @@ class BaseballGame {
             this.onBase[1] = this.onBase[0];
             this.onBase[0] = this.batter;
         } else {
-            result = this.advanceBaseRunners(1);
+            result = this.getBaseRunnerMovement(1);
             this.onBase[0] = this.batter;
         }
         return result;
