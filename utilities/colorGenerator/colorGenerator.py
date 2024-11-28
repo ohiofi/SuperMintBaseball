@@ -1,19 +1,24 @@
 colors = {
     "reds":{
         "darker":"660000",
-        "dark":"990000",
+        # "dark":"990000",
         "mid":"ff0000",
         "light":"ff6666"
     },
+    "firebrick":{
+         "dark":"891a1a",
+      "mid":"b22222",
+      "light":  "d83131" 
+    },
     "oranges":{
         "darker":"663600",
-        "dark":"995200",
+        # "dark":"995200",
         "mid":"ff8700",    
         "light":"ffb866"
     },  
     "gold":{
         "darker":"665500",
-        "dark":"998000", 
+        # "dark":"998000", 
         "mid":"ffd300", 
         "light":"ffe666"
     },  
@@ -34,10 +39,15 @@ colors = {
     },
     "spring_green":{
         "darker":"007041",
-        "dark":"009f5d",   
+        # "dark":"009f5d",   
         "mid":"0aff99", 
         "light":"6cffc2"
     },  
+    "electric_turquoise":{
+         "darker":"00574f",
+        "mid":"26ffed",
+        "light":"8afff5"
+    },
     "azure":{
         "darker":"04356c",
         "mid":"147df5",
@@ -66,10 +76,20 @@ colors = {
         "mid":"ff00e1",
         "light":"ff66ed"
     },
-    "black_to_white":{
-        "dark":"555555",       
-        "mid":"888888",       
-        "light":"cccccc"
+    "gray":{        
+        "mid":"8888aa",       
+    },
+    "darkgray":{      
+        "mid":"666688",       
+    },
+    "lightgray":{    
+        "mid":"aaaacc",       
+    },
+    "steel_blue":{
+         "mid":"4682B4"
+    },
+    "chocolate":{
+         "mid":"D2691E"
     }
 }
 

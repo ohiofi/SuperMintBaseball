@@ -563,7 +563,11 @@ class BaseballTeam {
                 <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name
             }</td></tr>
                 <tr><td>Team Name</td><td>${this.mascot}</td></tr>
-                <tr><td>Color Scheme</td><td>${this.crest}</td></tr>
+                <tr><td>Crest</td><td>${this.crest.render()}</td></tr>
+                <tr><td>Color Scheme Light</td><td><div style="color:black;background:${this.colorScheme.light};">${this.colorScheme.light}</div></td></tr>
+                <tr><td>Color Scheme Mid</td><td> <div style="color:black;background:${this.colorScheme.mid};">${this.colorScheme.mid}</div></td></tr>
+                <tr><td>Color Scheme Dark</td><td> <div style="background:${this.colorScheme.dark};">${this.colorScheme.dark}</div></td></tr>
+
                 <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(
                 1
             )}</td></tr>
