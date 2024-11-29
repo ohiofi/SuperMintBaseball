@@ -1,0 +1,4 @@
+class ShopView extends View{
+
+    
+}

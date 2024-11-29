@@ -108,6 +108,14 @@ class Season {
       console.log(result)
     }
   
+    getTodaysGames(){
+      if(this.state == SeasonStates.REGULAR_SEASON){
+        return this.regularSeasonSchedule.days[this.currentDay]
+      }
+      else if(this.playoffSchedule != null && this.state == SeasonStates.PLAYOFF_TOURNAMENT){
+        return this.playoffSchedule.days[this.currentDay]
+      }
+    }
    
   
   

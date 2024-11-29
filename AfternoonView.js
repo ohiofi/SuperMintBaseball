@@ -1,7 +1,8 @@
-class AfternoonView {
+class AfternoonView extends View{
     
 
     constructor() {
+        super();
         this.app = document.querySelector("#root");
 
         this.app.innerHTML = null
@@ -13,18 +14,25 @@ class AfternoonView {
         // menu bar
         this.pageMenuBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
         this.addMenuItemHome()
+        this.addMenuItemSchedule()
         this.addMenuItemStandings()
         this.addMenuItemLive()
 
         this.pageContainer = View.createElement("div", "pageContainer");
 
-        // home
+        // // home
         this.homePage = new AfternoonHomePage();
         this.pageContainer.append(this.homePage.render());
 
-        // standings page
-        this.standingsPage = new StandingsPage();
-        this.pageContainer.append(this.standingsPage.render());
+         // standings page
+         this.standingsPage = new StandingsPage();
+         this.pageContainer.append(this.standingsPage.render());
+
+        // schedule
+        this.schedulePage = new SchedulePage()
+        this.pageContainer.append(this.schedulePage.render());
+
+       
 
         // live games
         this.liveGamesPage = new LiveGamesPage();
@@ -51,16 +59,16 @@ class AfternoonView {
         }
     }
 
-    addMenuItemHome() {
-        const menuItem = View.createElement("li", "homePageMenuItem", "page-item active");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-        menuLink.dataset.linkToPageId = "homePage";
-        menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
-home
-</span>`;
-        menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
-    }
+//     addMenuItemHome() {
+//         const menuItem = View.createElement("li", "homePageMenuItem", "page-item active");
+//         const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+//         menuLink.dataset.linkToPageId = "homePage";
+//         menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
+// home
+// </span>`;
+//         menuItem.append(menuLink);
+//         this.pageMenuBar.append(menuItem);
+//     }
 
     addMenuItemLive() {
         const menuItem = View.createElement("li", "liveGamesPageMenuItem", "page-item bg-transparent");
@@ -87,16 +95,16 @@ stadium
         }
     }
 
-    addMenuItemStandings() {
-        const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-        menuLink.dataset.linkToPageId = "standingsPage";
-        menuLink.innerHTML = `<span class="material-symbols-outlined">
-format_list_numbered
-</span>`;
-        menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
-    }
+//     addMenuItemStandings() {
+//         const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
+//         const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+//         menuLink.dataset.linkToPageId = "standingsPage";
+//         menuLink.innerHTML = `<span class="material-symbols-outlined">
+// format_list_numbered
+// </span>`;
+//         menuItem.append(menuLink);
+//         this.pageMenuBar.append(menuItem);
+//     }
 
 
 
@@ -117,56 +125,56 @@ format_list_numbered
         this.newsTickerContainer.append(newsTickerRibbon);
     }
 
-    bindContinueButtonClick(handler) {
-        const els = document.getElementsByClassName("continueButton");
-        Array.from(els).forEach((el) => {
-            el.addEventListener('click', event => {
+    // bindContinueButtonClick(handler) {
+    //     const els = document.getElementsByClassName("continueButton");
+    //     Array.from(els).forEach((el) => {
+    //         el.addEventListener('click', event => {
 
-                if (event.target.localName === 'button') {
+    //             if (event.target.localName === 'button') {
 
-                    handler()
-                }
-            })
-        })
-    }
+    //                 handler()
+    //             }
+    //         })
+    //     })
+    // }
 
-    bindMenuBarClick(handler) {
-        this.pageMenuBar.addEventListener('click', event => {
-            if (event.target.localName === 'span') {
-                //const id = event.target.parentElement.id
-                const id = event.target.parentElement.dataset.linkToPageId;
-                handler(id)
-            }
-            if (event.target.localName === 'a') {
-                //const id = event.target.parentElement.id
-                const id = event.target.dataset.linkToPageId;
-                handler(id)
-            }
-        })
-    }
+    // bindMenuBarClick(handler) {
+    //     this.pageMenuBar.addEventListener('click', event => {
+    //         if (event.target.localName === 'span') {
+    //             //const id = event.target.parentElement.id
+    //             const id = event.target.parentElement.dataset.linkToPageId;
+    //             handler(id)
+    //         }
+    //         if (event.target.localName === 'a') {
+    //             //const id = event.target.parentElement.id
+    //             const id = event.target.dataset.linkToPageId;
+    //             handler(id)
+    //         }
+    //     })
+    // }
 
-    showPage(pageName) {
-        const els = document.getElementsByClassName("page");
-        Array.from(els).forEach((el) => {
-            el.classList.add("hide")
-        });
-        const page = document.getElementById(pageName);
-        page.classList.remove("hide");
+    // showPage(pageName) {
+    //     const els = document.getElementsByClassName("page");
+    //     Array.from(els).forEach((el) => {
+    //         el.classList.add("hide")
+    //     });
+    //     const page = document.getElementById(pageName);
+    //     page.classList.remove("hide");
 
-        // switch active menu bar item
-        const items = document.getElementsByClassName("page-item");
-        Array.from(items).forEach((listItem) => {
-            listItem.classList.remove("active")
-        });
-        document.getElementById(pageName + "MenuItem").classList.add("active");
+    //     // switch active menu bar item
+    //     const items = document.getElementsByClassName("page-item");
+    //     Array.from(items).forEach((listItem) => {
+    //         listItem.classList.remove("active")
+    //     });
+    //     document.getElementById(pageName + "MenuItem").classList.add("active");
 
-        // scroll down the feed
-        const container = page.querySelector(".messageFeedContainer");
-        if (container !== null) {
-            container.scrollTop = container.scrollHeight;
-            page.querySelector(".messageJumpButton").classList.add("hide");
-        }
-    }
+    //     // scroll down the feed
+    //     const container = page.querySelector(".messageFeedContainer");
+    //     if (container !== null) {
+    //         container.scrollTop = container.scrollHeight;
+    //         page.querySelector(".messageJumpButton").classList.add("hide");
+    //     }
+    // }
 
     showTodayIsDone() {
         this.homePage.root.querySelector("#homePageHeadline").textContent = "Today is Done";

@@ -78,6 +78,10 @@ class League {
         return null;
     }
 
+    getSchedule(){
+        return this.seasons[this.currentSeason].regularSeasonSchedule
+    }
+
     getStandingsTableBatters(topN) {
         const dataCopy = [];
         for (let i = 0; i < this.teams.length; i++) {
@@ -241,71 +245,71 @@ class League {
         return null;
     }
 
-    handleEvent(data) {
+    handleEvent = (data) => {
         switch (data.eventType) {
             case StatsEventType.GAME_WINNER:
-                const winningTeam = app.model.world.league.lookup(data.teamId)
+                const winningTeam = this.lookup(data.teamId)
                 winningTeam.addWin()
-                app.model.world.newsTicker.setBreakingNews(winningTeam.getName() + " win! ");
+                //app.model.world.newsTicker.setBreakingNews(winningTeam.getName() + " win! ");
                 break
             case StatsEventType.GAME_LOSER:
-                app.model.world.league.lookup(data.teamId).addLoss()
+                this.lookup(data.teamId).addLoss()
                 break
             case StatsEventType.AT_BATS:
-                app.model.world.league.lookup(data.teamId).addAtBats()
-                app.model.world.league.lookup(data.playerId).addAtBats()
+                this.lookup(data.teamId).addAtBats()
+                this.lookup(data.playerId).addAtBats()
                 break
             case StatsEventType.SINGLES:
-                app.model.world.league.lookup(data.teamId).addSingles()
-                app.model.world.league.lookup(data.playerId).addSingles()
+                this.lookup(data.teamId).addSingles()
+                this.lookup(data.playerId).addSingles()
                 break
             case StatsEventType.DOUBLES:
-                app.model.world.league.lookup(data.teamId).addDoubles()
-                app.model.world.league.lookup(data.playerId).addDoubles()
+                this.lookup(data.teamId).addDoubles()
+                this.lookup(data.playerId).addDoubles()
                 break
             case StatsEventType.TRIPLES:
-                app.model.world.league.lookup(data.teamId).addTriples()
-                app.model.world.league.lookup(data.playerId).addTriples()
+                this.lookup(data.teamId).addTriples()
+                this.lookup(data.playerId).addTriples()
                 break
             case StatsEventType.HOME_RUNS:
-                app.model.world.league.lookup(data.teamId).addHomeRuns()
-                app.model.world.league.lookup(data.playerId).addHomeRuns()
+                this.lookup(data.teamId).addHomeRuns()
+                this.lookup(data.playerId).addHomeRuns()
                 break
             case StatsEventType.BASES_ON_BALLS:
-                app.model.world.league.lookup(data.teamId).addBasesOnBalls()
-                app.model.world.league.lookup(data.playerId).addBasesOnBalls()
+                this.lookup(data.teamId).addBasesOnBalls()
+                this.lookup(data.playerId).addBasesOnBalls()
                 break
             case StatsEventType.SACRIFICE_FLIES:
-                app.model.world.league.lookup(data.teamId).addSacrificeFlies()
-                app.model.world.league.lookup(data.playerId).addSacrificeFlies()
+                this.lookup(data.teamId).addSacrificeFlies()
+                this.lookup(data.playerId).addSacrificeFlies()
                 break
             case StatsEventType.STRIKEOUTS_AT_BAT:
-                app.model.world.league.lookup(data.teamId).addStrikeoutsAtBat()
-                app.model.world.league.lookup(data.playerId).addStrikeoutsAtBat()
+                this.lookup(data.teamId).addStrikeoutsAtBat()
+                this.lookup(data.playerId).addStrikeoutsAtBat()
                 break
             case StatsEventType.INNINGS_PITCHED:
-                app.model.world.league.lookup(data.teamId).addInningsPitched()
-                app.model.world.league.lookup(data.playerId).addInningsPitched()
+                this.lookup(data.teamId).addInningsPitched()
+                this.lookup(data.playerId).addInningsPitched()
                 break
             case StatsEventType.STRIKEOUTS_THROWN:
-                app.model.world.league.lookup(data.teamId).addStrikeoutsThrown()
-                app.model.world.league.lookup(data.playerId).addStrikeoutsThrown()
+                this.lookup(data.teamId).addStrikeoutsThrown()
+                this.lookup(data.playerId).addStrikeoutsThrown()
                 break
             case StatsEventType.RUNS_ALLOWED:
-                app.model.world.league.lookup(data.teamId).addRunsAllowed() //
-                app.model.world.league.lookup(data.playerId).addRunsAllowed()
+                this.lookup(data.teamId).addRunsAllowed() //
+                this.lookup(data.playerId).addRunsAllowed()
                 break
             case StatsEventType.HOME_RUNS_ALLOWED:
-                app.model.world.league.lookup(data.teamId).addHomeRunsAllowed()
-                app.model.world.league.lookup(data.playerId).addHomeRunsAllowed()
+                this.lookup(data.teamId).addHomeRunsAllowed()
+                this.lookup(data.playerId).addHomeRunsAllowed()
                 break
             case StatsEventType.WALKS_ALLOWED:
-                app.model.world.league.lookup(data.teamId).addWalksAllowed()
-                app.model.world.league.lookup(data.playerId).addWalksAllowed()
+                this.lookup(data.teamId).addWalksAllowed()
+                this.lookup(data.playerId).addWalksAllowed()
                 break
             case StatsEventType.RUNS_SCORED:
-                app.model.world.league.lookup(data.teamId).addRunsScored()
-                app.model.world.league.lookup(data.playerId).addRunsScored()
+                this.lookup(data.teamId).addRunsScored()
+                this.lookup(data.playerId).addRunsScored()
                 break
         }
 
@@ -338,29 +342,42 @@ class League {
         return null;
     }
 
-
-
-
-    doSeason() {
-        let weeksInSchedule = this.seasons[this.currentSeason].days.length
-        let playEveryTeamXTimes = 1
-        //for i in range(weeksInSchedule * playEveryTeamXTimes){
-        for (let i = 0; i < weeksInSchedule * playEveryTeamXTimes; i++) {
-            this.seasons[this.currentSeason].doWeek()
+    skipToday(){
+        while(!this.isTodayDone()){
+            this.nextGameMessages()
         }
-        console.log("\nWeek " + ("" + this.seasons[this.currentSeason].currentWeek) + " Standings")
-        //# get overall standings
-        this.seasons[this.currentSeason].getStandings()
-        //# get stats
-        console.log(this.seasons[this.currentSeason].getFBRanking(3))
-        console.log(this.seasons[this.currentSeason].getQBRanking(3))
-        console.log(this.seasons[this.currentSeason].getWRRanking(3))
-        console.log(this.seasons[this.currentSeason].getMVPRanking(3))
-        //#input()
-        //# start playoffs
-        //# this.seasons[0].schedulePlayoffWeekOne()
-        //# console.log(this.seasons[0].getPlayoffBracket())
     }
+
+    reloadTeams(){
+        // loop thru each game today
+        for(let each of this.seasons[this.currentSeason].getTodaysGames()){
+            // retrieve the up-to-date versions of the teams
+            each.homeTeam = this.lookup(each.homeTeam.leagueIdNumber)
+            each.awayTeam = this.lookup(each.awayTeam.leagueIdNumber)
+        }
+        
+    }
+
+    // doSeason() {
+    //     let weeksInSchedule = this.seasons[this.currentSeason].days.length
+    //     let playEveryTeamXTimes = 1
+    //     //for i in range(weeksInSchedule * playEveryTeamXTimes){
+    //     for (let i = 0; i < weeksInSchedule * playEveryTeamXTimes; i++) {
+    //         this.seasons[this.currentSeason].doWeek()
+    //     }
+    //     console.log("\nWeek " + ("" + this.seasons[this.currentSeason].currentWeek) + " Standings")
+    //     //# get overall standings
+    //     this.seasons[this.currentSeason].getStandings()
+    //     //# get stats
+    //     console.log(this.seasons[this.currentSeason].getFBRanking(3))
+    //     console.log(this.seasons[this.currentSeason].getQBRanking(3))
+    //     console.log(this.seasons[this.currentSeason].getWRRanking(3))
+    //     console.log(this.seasons[this.currentSeason].getMVPRanking(3))
+    //     //#input()
+    //     //# start playoffs
+    //     //# this.seasons[0].schedulePlayoffWeekOne()
+    //     //# console.log(this.seasons[0].getPlayoffBracket())
+    // }
 
     addNewSeason() {
         //for eachTeam in this.teams:

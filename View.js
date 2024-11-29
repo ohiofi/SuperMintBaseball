@@ -42,6 +42,10 @@ class View{
         this.homePage = new HomePage();
         this.pageContainer.append(this.homePage.render());
 
+        // schedule
+        this.schedulePage = new SchedulePage()
+        this.pageContainer.append(this.schedulePage.render());
+
         // standings page
         this.standingsPage = new StandingsPage();
         this.pageContainer.append(this.standingsPage.render());
@@ -65,7 +69,7 @@ home
     }
 
     addMenuItemSchedule() {
-        const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
+        const menuItem = View.createElement("li", "schedulePageMenuItem", "page-item bg-transparent");
         const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
         menuLink.dataset.linkToPageId = "schedulePage";
         menuLink.innerHTML = `<span class="material-symbols-outlined">

@@ -18,7 +18,7 @@ class Shop{
                 ))
         }
         for(let i=0; i<league.teams.length;i++){
-            this.pitcherCards.push(
+            this.sluggerCards.push(
                 new TradingCard(
                     league.teams[i].getSlugger(),
                     2,

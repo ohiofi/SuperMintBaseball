@@ -1,6 +1,7 @@
 class Crest {
     static crestCounter = 0
     constructor(colorScheme, teamPlaceAbbreviation) {
+        this.id = Crest.crestCounter++;
         this.colorScheme = colorScheme;
         this.teamPlaceAbbreviation = teamPlaceAbbreviation;
         this.shape = this.generateShape();
@@ -39,47 +40,29 @@ class Crest {
                 this.gradientDirection = { x1: "0%", y1: "100%", x2: "100%", y2: "0%" } // Diagonal SW to NE
         }
         this.size = 40
-        this.gradient = this.generateStripes()
-        this.root = `<defs>
-            ${this.gradient}
-        </defs>
-        <polygon 
-            points="${this.shape}" 
-            fill="url(#${Crest.crestCounter++})" 
-            stroke="black"
-            stroke-width="3"
-        />
-        <style>
-
-        </style>
-        <text x="50%" y="74%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
-            font-size="65px" 
-            style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
->
-            ${this.teamPlaceAbbreviation[0]}
-        </text>`
+        this.gradient = Math.floor(rng.random() * 9);
+    
         
         
         
     }
 
-    generateStripes() {
-        const randStripes = Math.floor(rng.random() * 9);
-        switch(randStripes){
+    getStripes() {
+        switch(this.gradient){
             case 0: // 2 stripes
-                return `<linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
+                return `<linearGradient id="gradient${this.id}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                 <stop offset="50%" stop-color="${this.colorScheme.mid}" />
                 <stop offset="50%" stop-color="${this.colorScheme.dark}" />
                 </linearGradient>`
             case 1: // 3 stripes
-                    return `<linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
+                    return `<linearGradient id="gradient${this.id}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                     <stop offset="42%" stop-color="${this.colorScheme.mid}" />
                     <stop offset="42%" stop-color="${this.colorScheme.dark}" />
                     <stop offset="58%" stop-color="${this.colorScheme.dark}" />
                     <stop offset="58%" stop-color="${this.colorScheme.light}" />
                     </linearGradient>`
             case 2: // 5 stripes
-                    return `<linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
+                    return `<linearGradient id="gradient${this.id}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                     <stop offset="26%" stop-color="${this.colorScheme.dark}" />
                     <stop offset="26%" stop-color="${this.colorScheme.mid}" />
                     <stop offset="42%" stop-color="${this.colorScheme.mid}" />
@@ -90,36 +73,36 @@ class Crest {
                     <stop offset="74%" stop-color="${this.colorScheme.dark}" />
                     </linearGradient>`
             case 3: // radiant 3 stripes center
-                return `<radialGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                 <stop offset="55%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="55%" stop-color="${this.colorScheme.light}" />
                 <stop offset="66%" stop-color="${this.colorScheme.light}" />
                 <stop offset="66%" stop-color="${this.colorScheme.mid}" />
                 </radialGradient>`
             case 4: // radiant 2 stripes center
-                return `<radialGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                 <stop offset="66%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="66%" stop-color="${this.colorScheme.mid}" />
                 </radialGradient>`
             case 5: // radiant 2 stripes bottom
-                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
                 <stop offset="50%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="50%" stop-color="${this.colorScheme.mid}" />
                 </radialGradient>`
             case 6: // radiant 3 stripes bottom
-                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
                 <stop offset="45%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="45%" stop-color="${this.colorScheme.mid}" />
                 <stop offset="75%" stop-color="${this.colorScheme.mid}" />
                 <stop offset="75%" stop-color="${this.colorScheme.light}" />
                 </radialGradient>`
             case 7: // radiant 2 stripes top
-                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
                 <stop offset="50%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="50%" stop-color="${this.colorScheme.mid}" />
                 </radialGradient>`
             case 8: // radiant 3 stripes top
-                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
+                return `<radialGradient id="gradient${this.id}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
                 <stop offset="45%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="45%" stop-color="${this.colorScheme.mid}" />
                 <stop offset="75%" stop-color="${this.colorScheme.mid}" />
@@ -223,10 +206,27 @@ class Crest {
             }
     }
 
-    render(size = 30) {
+    render(size = 22) {
         return `
         <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-            ${this.root}
+            <defs>
+                ${this.getStripes()}
+            </defs>
+            <polygon 
+                points="${this.shape}" 
+                fill="url(#gradient${this.id})" 
+                stroke="black"
+                stroke-width="3"
+            />
+            <style>
+
+            </style>
+            <text x="50%" y="74%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
+                font-size="65px" 
+                style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
+        >
+                ${this.teamPlaceAbbreviation[0]}
+            </text>
         </svg>
     `;
     }

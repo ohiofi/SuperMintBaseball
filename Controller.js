@@ -2,19 +2,26 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        
+        for(let each of this.model.world.league.teams){
+            document.getElementById("footerFinalRow").innerHTML+=each.crest.render()
+        }
+        this.model.world.league.skipToday()
 
         //this.setupAfternoonView()
-
+        this.setupShopView()
         
         
     }
 
     setupAfternoonView(){
         this.view = new AfternoonView();
+        this.model.world.league.reloadTeams()
+        
+        this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.addMenuItemSingleGamePages(this.model.world);
         this.view.bindMenuBarClick(this.handleShowPage)
         this.view.addNewsTickerItems(this.model.world);
+        
         // set the speed
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
         this.model.world.newsTicker.setSpeed(newsTickerRibbonSize/100);
@@ -37,6 +44,7 @@ class Controller {
     }
 
     setupShopView(){
+        this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.bindMenuBarClick(this.handleShowPage)
         document.getElementById("standingsSection").innerHTML = 
             `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
@@ -46,7 +54,7 @@ class Controller {
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
         const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
         // set up shop
-        this.view.homePage.root.appendChild(this.model.world.shop.getThreeCards());
+        this.view.homePage.root.appendChild(this.model.world.shop.getCards(5));
     }
 
     
@@ -65,10 +73,11 @@ class Controller {
         // update home page scores
         this.view.homePage.addGameTableScores(gameMessages);
         for (let i = 0; i < gameMessages.length; i++) {
-            // update game widgets
-            this.view.liveGamesPage.widgets[i].update(gameMessages[i]);
+            
             // update single game pages
             this.view.singleGamePages[i].update(gameMessages[i])
+            // update game widgets
+            this.view.liveGamesPage.widgets[i].update(gameMessages[i]);
         }
         // update news ticker
         this.model.world.newsTicker.update(gameMessages);

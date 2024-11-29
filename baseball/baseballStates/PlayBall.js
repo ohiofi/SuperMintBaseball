@@ -5,9 +5,6 @@ class PlayBall extends AbstractBaseballGameState{
     }
 
     handle(baseballGame){
-        // retrieve the up-to-date versions of the teams
-        baseballGame.homeTeam = app.model.world.league.lookup(baseballGame.homeTeam.leagueIdNumber)
-        baseballGame.awayTeam = app.model.world.league.lookup(baseballGame.awayTeam.leagueIdNumber)
         baseballGame.defenseTeam = baseballGame.homeTeam;
         baseballGame.offenseTeam = baseballGame.awayTeam;
         baseballGame.pitcher = baseballGame.defenseTeam.getPitcher();

@@ -161,21 +161,23 @@ class RegularSeasonSchedule extends AbstractSchedule {
     }
     //# for eachGame in possibleGames:
     for (let eachGame of possibleGames) {
-      let dayCounter = 0;
+      let dayCounter = this.days.length-1;
       while (true) {
         //# if both teams not scheduled this day
         if (!this.isTeamScheduledThisDay(eachGame.awayTeam, dayCounter) && !this.isTeamScheduledThisDay(eachGame.homeTeam, dayCounter)) {
-          //# add to the schedule
+          //# add to the schedule, in reverse order
           this.days[dayCounter].push(eachGame)
           //# break while true
           break
           //# else
         } else {
-          //# try next day
-          dayCounter += 1
-          if (dayCounter >= this.days.length) {
+          //# try previous day
+          dayCounter -= 1
+          if(dayCounter < 0){
+          //if (dayCounter >= this.days.length) {
             //# add a new day
             this.days.push([])
+            dayCounter = this.days.length-1
           }
         }
       }
