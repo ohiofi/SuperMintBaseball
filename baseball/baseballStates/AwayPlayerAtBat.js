@@ -15,7 +15,7 @@ class AwayPlayerAtBat extends AbstractBaseballGameState {
             this.setCountToZero();
         }
         // check if game is over early
-        if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.score.getHomeScore() > baseballGame.score.getAwayScore()) {
+        if (baseballGame.getOuts() >= 3 && baseballGame.getInning() >= 9 && baseballGame.scoreboard.getHomeScore() > baseballGame.scoreboard.getAwayScore()) {
             baseballGame.setGameState(new FinalMessage());
         }
         return result

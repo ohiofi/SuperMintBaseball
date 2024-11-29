@@ -3,8 +3,6 @@ class Crest {
     constructor(colorScheme, teamPlaceAbbreviation) {
         this.colorScheme = colorScheme;
         this.teamPlaceAbbreviation = teamPlaceAbbreviation;
-        // this.gradientId = `gradient-${rng.random().toString(36).substring(2, 9)}`; // Unique ID for the gradient
-        this.fontColor = rng.random() < 0.5 ? "black" : "white"; // Randomly set text color
         this.shape = this.generateShape();
         this.fontStyle = null;
         switch(Math.floor(rng.random()*3)){
@@ -17,7 +15,15 @@ class Crest {
             case 2:
                 this.fontStyle = "monospace";
         }
-        this.shadowColor = this.fontColor === "black" ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)";
+        this.shadowColor = null
+        this.fontColor = null
+        if (rng.random() < 0.5){
+            this.fontColor = this.colorScheme.dark;
+            this.shadowColor = "white";
+        } else {
+            this.fontColor = this.colorScheme.light;
+            this.shadowColor = "black";
+        }
         this.gradientDirection = null;
         switch(Math.floor(rng.random()*4)){
             case 0:
@@ -46,7 +52,7 @@ class Crest {
         <style>
 
         </style>
-        <text x="50%" y="74%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.colorScheme.light}" 
+        <text x="50%" y="74%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
             font-size="65px" 
             style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
 >
@@ -58,7 +64,7 @@ class Crest {
     }
 
     generateStripes() {
-        const randStripes = Math.floor(rng.random() * 5);
+        const randStripes = Math.floor(rng.random() * 9);
         switch(randStripes){
             case 0: // 2 stripes
                 return `<linearGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
@@ -83,24 +89,48 @@ class Crest {
                     <stop offset="74%" stop-color="${this.colorScheme.mid}" />
                     <stop offset="74%" stop-color="${this.colorScheme.dark}" />
                     </linearGradient>`
-            case 3:
+            case 3: // radiant 3 stripes center
                 return `<radialGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                 <stop offset="55%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="55%" stop-color="${this.colorScheme.light}" />
                 <stop offset="66%" stop-color="${this.colorScheme.light}" />
                 <stop offset="66%" stop-color="${this.colorScheme.mid}" />
                 </radialGradient>`
-            case 4:
+            case 4: // radiant 2 stripes center
                 return `<radialGradient id="${Crest.crestCounter}" x1="${this.gradientDirection.x1}" y1="${this.gradientDirection.y1}" x2="${this.gradientDirection.x2}" y2="${this.gradientDirection.y2}" gradientUnits="userSpaceOnUse">
                 <stop offset="66%" stop-color="${this.colorScheme.dark}" />
                 <stop offset="66%" stop-color="${this.colorScheme.mid}" />
+                </radialGradient>`
+            case 5: // radiant 2 stripes bottom
+                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
+                <stop offset="50%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="50%" stop-color="${this.colorScheme.mid}" />
+                </radialGradient>`
+            case 6: // radiant 3 stripes bottom
+                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
+                <stop offset="45%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="45%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="75%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="75%" stop-color="${this.colorScheme.light}" />
+                </radialGradient>`
+            case 7: // radiant 2 stripes top
+                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
+                <stop offset="50%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="50%" stop-color="${this.colorScheme.mid}" />
+                </radialGradient>`
+            case 8: // radiant 3 stripes top
+                return `<radialGradient id="${Crest.crestCounter}" cx="50%" cy="0%" r="100%" gradientUnits="userSpaceOnUse">
+                <stop offset="45%" stop-color="${this.colorScheme.dark}" />
+                <stop offset="45%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="75%" stop-color="${this.colorScheme.mid}" />
+                <stop offset="75%" stop-color="${this.colorScheme.light}" />
                 </radialGradient>`
         }
         
     }
 
     generateShape() {
-        const randShape = Math.floor(rng.random() * 27);
+        const randShape = Math.floor(rng.random() * 29);
         switch (randShape) {
             case 0:
                 // Hexagon
@@ -137,9 +167,7 @@ class Crest {
                 //return "50,5 68,10 83,27 90,50 83,73 68,90 50,95 32,90 17,73 10,50 17,27 32,10";
                 return "95.0,50.0 93.5,61.6 89.0,72.5 81.8,81.8 72.5,89.0 61.6,93.5 50.0,95.0 38.4,93.5 27.5,89.0 18.2,81.8 11.0,72.5 6.5,61.6 5.0,50.0 6.5,38.4 11.0,27.5 18.2,18.2 27.5,11.0 38.4,6.5 50.0,5.0 61.6,6.5 72.5,11.0 81.8,18.2 89.0,27.5 93.5,38.4"
             case 11:
-                // Star
-                //return "50,5 60,40 95,40 65,60 75,95 50,75 25,95 35,60 5,40 40,40";
-                //return "50,-17.5 65,35 117.5,35 72.5,65 87.5,117.5 50,87.5 12.5,117.5 27.5,65 -17.5,35 35,35"
+                // Meeple
                 return "50.0,81.0 37.0,89.9 21.8,88.8 16.0,74.7 20.5,59.6 8.0,50.0 4.3,35.2 16.0,25.3 31.8,24.9 37.0,10.1 50.0,2.0 63.0,10.1 68.2,24.9 84.0,25.3 95.7,35.2 92.0,50.0 79.5,59.6 84.0,74.7 78.2,88.8 63.0,89.9"
             case 12:
                 // Cross
@@ -148,11 +176,11 @@ class Crest {
                 // Tall Octagon
                 return "30,5 70,5 90,30 90,70 70,95 30,95 10,70 10,30";
             case 14:
-                // Vertical Ellipse (approximated with a polygon)
-                return "50,5 40,8 30,20 13,50 30,80 40,92 50,95 60,92 70,80 87,50 70,20 60,8";
+                // Pinched Vertical Ellipse (approximated with a polygon)
+                return "50,5 40,8 30,20 3,50 30,80 40,92 50,95 60,92 70,80 97,50 70,20 60,8";
             case 15:
-                // Horizontal Ellipse (approximated with a polygon)
-                return "5,50 8,40 20,30 50,13 80,30 92,40 95,50 92,60 80,70 50,87 20,70 8,60";
+                // Pinched Horizontal Ellipse (approximated with a polygon)
+                return "5,50 8,40 20,30 50,3 80,30 92,40 95,50 92,60 80,70 50,97 20,70 8,60";
             case 16:
                 // Inverted Pentagon
                 return "20,5 50,15 80,5 75,85 50,95 20,85";
@@ -187,8 +215,12 @@ class Crest {
                 // 4 point tulip
                 return "95.0,50.0 93.5,61.6 89.0,72.5 81.8,81.8 72.5,89.0 61.6,93.5 50.0,95.0 38.4,93.5 27.5,89.0 18.2,81.8 11.0,72.5 6.5,61.6 5.0,50.0 5,3 20,13 35,3 50,13 65,3 80,13 95,3 95,50"
             case 27:
-                // 
-        }
+                // left titled star 
+                return "80.0,50.0 86.4,76.5 59.3,78.5 36.1,92.8 25.7,67.6 5.0,50.0 25.7,32.4 36.1,7.2 59.3,21.5 86.4,23.5 "
+            case 28:
+                // right tilted star
+                return "74.3,67.6 63.9,92.8 40.7,78.5 13.6,76.5 20.0,50.0 13.6,23.5 40.7,21.5 63.9,7.2 74.3,32.4 95.0,50.0 "
+            }
     }
 
     render(size = 30) {

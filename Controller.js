@@ -4,7 +4,7 @@ class Controller {
         this.view = view;
         
 
-        this.setupAfternoonView()
+        //this.setupAfternoonView()
 
         
         

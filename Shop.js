@@ -6,37 +6,44 @@ class Shop{
         this.onDisplay = [];
     }
 
-    getThreeCards(){
-        for(let i=0; i<3; i++){
-            const indexToRemove = Math.floor(rng.random()*this.pitcherCards.length)
-            this.onDisplay.push(this.pitcherCards.splice(indexToRemove, 1)[0])
+    addCards(league){
+        for(let i=0; i<league.teams.length;i++){
+            this.pitcherCards.push(
+                new TradingCard(
+                    league.teams[i].getPitcher(),
+                    20,
+                    1,
+                    new Valuables({"tickets":1}),
+                    StatsEventType.STRIKEOUTS_THROWN
+                ))
         }
-        this.root.innerHTML = `
+        for(let i=0; i<league.teams.length;i++){
+            this.pitcherCards.push(
+                new TradingCard(
+                    league.teams[i].getSlugger(),
+                    2,
+                    1,
+                    new Valuables({"caps":1}),
+                    StatsEventType.HITS
+                ))
+        }
+    }
+
+    getCards(number){
+        for(let i=0; i<number; i++){
+            const indexToRemove = Math.floor(rng.random()*this.pitcherCards.length)
+            this.onDisplay.push(this.pitcherCards.splice(indexToRemove, 1)[0]);
+            this.root.innerHTML += `
             <span class="col col-md-4  row">
-                <span id="slot1" class="col-12 text-center">
+                <span id="slot${i}" class="col-12 text-center">
                 </span>
                 <div class="col-12 text-center">
                     <button type="button" class="btn btn-warning">BUY ME!</button>
                 </div>
             </span>
-            <span class="col col-md-4  row">
-                <span id="slot2" class="col-12  text-center">
-                </span>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-warning">BUY ME!</button>
-                </div>
-            </span>
-            <span class="col col-md-4  row">
-                <span id="slot3" class="col-12 text-center">
-                </span>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-warning">BUY ME!</button>
-                </div>
-            </span>
-        `
-        this.root.querySelector("#slot1").append(this.onDisplay[0].render())
-        this.root.querySelector("#slot2").append(this.onDisplay[1].render())
-        this.root.querySelector("#slot3").append(this.onDisplay[2].render())
+            `
+            this.root.querySelector("#slot"+i).append(this.onDisplay[i].render())
+        }
         return this.root
     }
 }

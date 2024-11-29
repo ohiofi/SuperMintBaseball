@@ -69,5 +69,6 @@ class NewsTicker {
             this.items[i] = myArray[i % myArray.length].scoreString;
             this.slideDivs[i].innerHTML = this.items[i];
         }
+        this.setSpeed()
     }
 }

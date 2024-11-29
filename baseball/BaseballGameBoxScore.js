@@ -5,7 +5,7 @@ class BaseballGameBoxScore {
         
         this.away = {
                 name: awayTeam.getNameWithLink(),
-                innings: [0],
+                innings: [],
                 runs: 0,
                 hits: 0, 
                 errors: 0  
@@ -99,7 +99,7 @@ class BaseballGameBoxScore {
 
     getScore(inningString) {
         if(inningString===null) throw new Error("inningString can not be null")
-        if (!this.hasStarted) {
+        if (this.away.innings.length == 0) {
             return this.away.name 
             + " @ " 
             + this.home.name 

@@ -33,6 +33,7 @@ class View{
         // menu bar
         this.pageMenuBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
         this.addMenuItemHome()
+        this.addMenuItemSchedule()
         this.addMenuItemStandings()
 
         this.pageContainer = View.createElement("div", "pageContainer");
@@ -58,6 +59,17 @@ class View{
         menuLink.dataset.linkToPageId = "homePage";
         menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
 home
+</span>`;
+        menuItem.append(menuLink);
+        this.pageMenuBar.append(menuItem);
+    }
+
+    addMenuItemSchedule() {
+        const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
+        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+        menuLink.dataset.linkToPageId = "schedulePage";
+        menuLink.innerHTML = `<span class="material-symbols-outlined">
+calendar_clock
 </span>`;
         menuItem.append(menuLink);
         this.pageMenuBar.append(menuItem);

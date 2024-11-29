@@ -88,7 +88,7 @@ class BaseballGame {
             strikes: 0,
             outs: 0
         }
-        this.score = new BaseballGameBoxScore(awayTeamObject, homeTeamObject);
+        this.scoreboard = new BaseballGameBoxScore(awayTeamObject, homeTeamObject);
         this.inning = 0;
         this.isTopOfInning = true;
         this.gameState = new PlayBall();
@@ -96,7 +96,7 @@ class BaseballGame {
     }
 
     addBoxScoreInning(){
-        this.score.addNewInning(this.isTopOfInning, this.inning);
+        this.scoreboard.addNewInning(this.isTopOfInning, this.inning);
     }
 
     //advanceBaseRunners(numberToAdvance, isSacrificeFly) {
@@ -414,10 +414,10 @@ class BaseballGame {
     }
 
     getLosingTeam() {
-        if (this.score.getHomeScore() < this.score.getAwayScore()) {
+        if (this.scoreboard.getHomeScore() < this.scoreboard.getAwayScore()) {
             return this.homeTeam;
         }
-        if (this.score.getHomeScore() > this.score.getAwayScore()) {
+        if (this.scoreboard.getHomeScore() > this.scoreboard.getAwayScore()) {
             return this.awayTeam;
         }
         return null;
@@ -440,7 +440,7 @@ class BaseballGame {
     }
 
     getScore() {
-        return this.score.getScore(this.getInningString());
+        return this.scoreboard.getScore(this.getInningString());
     }
 
     getStrikes() {
@@ -449,10 +449,10 @@ class BaseballGame {
 
     getWinningTeam() {
 
-        if (this.score.getHomeScore() > this.score.getAwayScore() ) {
+        if (this.scoreboard.getHomeScore() > this.scoreboard.getAwayScore() ) {
             return this.homeTeam;
         }
-        if (this.score.getHomeScore() < this.score.getAwayScore() ) {
+        if (this.scoreboard.getHomeScore() < this.scoreboard.getAwayScore() ) {
             return this.awayTeam;
         }
         return null;
@@ -463,7 +463,7 @@ class BaseballGame {
     }
 
     incrementHits() {
-        this.score.incrementHits(this.isTopOfInning);
+        this.scoreboard.incrementHits(this.isTopOfInning);
     }
 
     incrementInning() {
@@ -471,7 +471,7 @@ class BaseballGame {
     }
 
     incrementScore() {
-        this.score.incrementScore(this.isTopOfInning);
+        this.scoreboard.incrementScore(this.isTopOfInning);
     }
 
     isGameOver() {

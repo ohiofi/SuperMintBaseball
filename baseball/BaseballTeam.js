@@ -423,6 +423,21 @@ class BaseballTeam {
         // return result
     }
 
+    getSlugger(){
+        if(this.stats.gamesPlayed == 0){
+            return this.slugger
+        }
+        // Copy the original array to avoid modifying the original 
+        const dataCopy = [...this.players];
+        // sort by most hits
+        dataCopy.sort((a, b) => b.stats.hits - a.stats.hits);
+        if(dataCopy[0].stats.hits > 0){
+            return dataCopy[0];
+        } else {
+            return this.slugger
+        }
+    }
+
     getStats() {
         return this.getFullName() + "\n" + this.stats;
     }

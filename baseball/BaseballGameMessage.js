@@ -8,12 +8,12 @@ class BaseballGameMessage{
         this.awayTeam = game.awayTeam.getName();
         this.awayNameWithLink = game.awayTeam.getNameWithLink();
         this.awayId = game.awayTeam.leagueIdNumber;
-        this.score = structuredClone({"away":game.score.getAwayScore(),"home":game.score.getHomeScore()});
+        this.score = structuredClone({"away":game.scoreboard.getAwayScore(),"home":game.scoreboard.getHomeScore()});
         this.scoreString = game.getScore();
         this.baseIcons = game.getBaseIcons();
         this.count = structuredClone(game.count);
         this.log = log;
-        this.boxScoreTable = game.score.getBoxScoreTable()
+        this.boxScoreTable = game.scoreboard.getBoxScoreTable()
         this.done = game.done;
     }
 
