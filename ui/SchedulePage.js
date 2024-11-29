@@ -21,15 +21,46 @@ class SchedulePage{
 
     addSchedule(schedule){
 
-        const accordion = this.root.querySelector("#scheduleAccordion");
-        for(let dayNumber = 0; dayNumber < schedule.days.length; dayNumber++){
-            accordion.append(View.createElement("p",null,"col-12","Day "+dayNumber))
-            for(let eachGame of schedule.days[dayNumber]){
-                accordion.append(View.createElement("span",null,"col-4",eachGame.getScore()))
-            }
+        // const accordion = this.root.querySelector("#scheduleAccordion");
+        // for(let dayNumber = 0; dayNumber < schedule.days.length; dayNumber++){
+        //     const details = View.createElement("details",null,"row")
+        //     accordion.append(details);
+        //     details.append(View.createElement("summary",null,"col-12","Day "+dayNumber))
+            
+        //     for(let eachGame of schedule.days[dayNumber]){
+        //         details.append(View.createElement("span",null,"col-6",eachGame.getScore()))
+        //     }
 
+        // }
+        const accordion = this.root.querySelector("#scheduleAccordion");
+        const accordionItem = View.createElement("details",null,"row")
+        for(let dayNumber = 0; dayNumber < schedule.days.length; dayNumber++){
+            this.createAccordionItem(dayNumber, "Day "+dayNumber, "")
+            for(let eachGame of schedule.days[dayNumber]){
+                document.getElementById("accordionBody"+dayNumber).append(View.createElement("span",null,"col-6",eachGame.getScore()))
+            }
         }
     }
+
+    createAccordionItem(id, title, bodyContent) {
+        const accordionItem = document.createElement('div');
+        accordionItem.classList.add('accordion-item');
+    
+        accordionItem.innerHTML = `
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${id}" aria-expanded="true" aria-controls="collapse${id}">
+              ${title}
+            </button>
+          </h2>
+          <div id="collapse${id}" class="accordion-collapse collapse" data-bs-parent="#scheduleAccordion">
+            <div id="accordionBody${id}" class="accordion-body row">
+              ${bodyContent}
+            </div>
+          </div>
+        `;
+    
+        document.getElementById('scheduleAccordion').appendChild(accordionItem);
+      }
 
     render(){
         return this.root;

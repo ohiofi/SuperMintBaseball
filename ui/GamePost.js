@@ -8,7 +8,7 @@ class GamePost {
                 <span class="pe-4">${gameMessage.awayTeam}:&nbsp;${gameMessage.score.away}</span>
                 <span class="pe-4">${gameMessage.homeTeam}:&nbsp;${gameMessage.score.home}</span>
             </span> <span class="timestamp">${timestamp}</span>
-            <p>${gameMessage.log}</p>
+            <p>${gameMessage.render()}</p>
             <span>
             <sub class='baseIcon gamePostLeftBase'>${gameMessage.baseIcons.charAt(0)}</sub>
                 <sup class='baseIcon gamePostCenterBase'>${gameMessage.baseIcons.charAt(1)}</sup>

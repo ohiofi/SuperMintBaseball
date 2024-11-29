@@ -7,8 +7,8 @@ class Controller {
         }
         this.model.world.league.skipToday()
 
-        //this.setupAfternoonView()
-        this.setupShopView()
+        this.setupAfternoonView()
+        //this.setupShopView()
         
         
     }
@@ -48,8 +48,8 @@ class Controller {
         this.view.bindMenuBarClick(this.handleShowPage)
         document.getElementById("standingsSection").innerHTML = 
             `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
-        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
+        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(10) 
+        + this.model.world.league.getStandingsTableBatters(10)+"</div>";
 
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
         const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
@@ -87,8 +87,8 @@ class Controller {
             this.view.showTodayIsDone();
             this.view.standingsPage.root.querySelector("#standingsSection").innerHTML =
             `<div class="row"><div class="col-lg-6">` + this.model.world.league.getStandingsTableTeams()
-            + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(5)
-            + this.model.world.league.getStandingsTableBatters(5) + "</div>";
+            + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(10)
+            + this.model.world.league.getStandingsTableBatters(10) + "</div>";
             clearInterval(this.gameMessageInterval)
             // update news ticker one last time
             setTimeout(()=>{
