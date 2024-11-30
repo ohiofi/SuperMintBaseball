@@ -2,7 +2,7 @@ class StatsModal {
     constructor() {
         this.root = View.createElement("div", "statsModal", "modal");
         this.root.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered  modal-lg">
+            <div class="modal-dialog modal-dialog-centered  modal-fullscreen">
                 <div class="modal-content bg-dark">
                     <div class="modal-header bg-dark text-light border-0">
                         <h4 id="statsModalTitle" class="modal-title">Modal Heading</h4>

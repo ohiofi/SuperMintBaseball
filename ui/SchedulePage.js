@@ -37,7 +37,7 @@ class SchedulePage{
         for(let dayNumber = 0; dayNumber < schedule.days.length; dayNumber++){
             this.createAccordionItem(dayNumber, "Day "+dayNumber, "")
             for(let eachGame of schedule.days[dayNumber]){
-                document.getElementById("accordionBody"+dayNumber).append(View.createElement("span",null,"col-6",eachGame.getScore()))
+                document.getElementById("accordionBody"+dayNumber).append(View.createElement("span",null,"col-12 col-lg-6",eachGame.getScore()))
             }
         }
     }
@@ -48,7 +48,7 @@ class SchedulePage{
     
         accordionItem.innerHTML = `
           <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${id}" aria-expanded="true" aria-controls="collapse${id}">
+            <button class="accordion-button link-light link-opacity-25 link-opacity-100-hover" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${id}" aria-expanded="true" aria-controls="collapse${id}">
               ${title}
             </button>
           </h2>

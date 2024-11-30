@@ -20,10 +20,10 @@ class Crest {
         this.fontColor = null
         if (rng.random() < 0.5){
             this.fontColor = this.colorScheme.dark;
-            this.shadowColor = "white";
+            this.shadowColor = "rgba(192,192,192,0.9)";
         } else {
             this.fontColor = this.colorScheme.light;
-            this.shadowColor = "black";
+            this.shadowColor = "rgba(64,64,64,0.9)";
         }
         this.gradientDirection = null;
         switch(Math.floor(rng.random()*4)){
@@ -215,7 +215,7 @@ class Crest {
             <polygon 
                 points="${this.shape}" 
                 fill="url(#gradient${Crest.crestCounter++})" 
-                stroke="black"
+                stroke="rgba(127,127,127,0.9)"
                 stroke-width="3"
             />
             <style>

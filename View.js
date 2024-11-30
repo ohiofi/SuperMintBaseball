@@ -36,6 +36,7 @@ class View{
         this.addMenuItemSchedule()
         this.addMenuItemStandings()
 
+        // add the pages
         this.pageContainer = View.createElement("div", "pageContainer");
 
         // home
@@ -57,37 +58,29 @@ class View{
         
     }
 
+    addMenuItem(pageId, menuItemId, iconName) {
+        const menuItem = View.createElement("li", menuItemId, "page-item bg-transparent");
+        const menuLink = View.createElement(
+            "a",
+            null,
+            "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover"
+        );
+        menuLink.dataset.linkToPageId = pageId;
+        menuLink.innerHTML = `<span class="material-symbols-outlined">${iconName}</span>`;
+        menuItem.append(menuLink);
+        this.pageMenuBar.append(menuItem);
+    }
+
     addMenuItemHome() {
-        const menuItem = View.createElement("li", "homePageMenuItem", "page-item active");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-        menuLink.dataset.linkToPageId = "homePage";
-        menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
-home
-</span>`;
-        menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
+        this.addMenuItem("homePage", "homePageMenuItem", "home");
     }
-
+    
     addMenuItemSchedule() {
-        const menuItem = View.createElement("li", "schedulePageMenuItem", "page-item bg-transparent");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-        menuLink.dataset.linkToPageId = "schedulePage";
-        menuLink.innerHTML = `<span class="material-symbols-outlined">
-calendar_clock
-</span>`;
-        menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
+        this.addMenuItem("schedulePage", "schedulePageMenuItem", "calendar_clock");
     }
-
+    
     addMenuItemStandings() {
-        const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-        menuLink.dataset.linkToPageId = "standingsPage";
-        menuLink.innerHTML = `<span class="material-symbols-outlined">
-format_list_numbered
-</span>`;
-        menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
+        this.addMenuItem("standingsPage", "standingsPageMenuItem", "format_list_numbered");
     }
 
     bindMenuBarClick(handler) {

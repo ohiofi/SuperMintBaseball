@@ -22,8 +22,8 @@ class Shop{
                 new TradingCard(
                     league.teams[i].getSlugger(),
                     2,
-                    1,
-                    new Valuables({"caps":1}),
+                    10,
+                    new Valuables({"caps":10}),
                     StatsEventType.HITS
                 ))
         }

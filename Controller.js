@@ -2,9 +2,11 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        let crestString = "";
         for(let each of this.model.world.league.teams){
-            document.getElementById("footerFinalRow").innerHTML+=each.crest.render()
+            crestString+=each.crest.render()
         }
+        document.getElementById("footerFinalRow").innerHTML = crestString;
         this.model.world.league.skipToday()
 
         this.setupAfternoonView()

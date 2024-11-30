@@ -4187,8 +4187,8 @@ class Name {
     "Bangers",
     "Banjos",
     "Bankers",
-    "Barbacks",
     "Barbarians",
+    "Barbeques",
     "Barbers",
     "Bards",
     "Barkers",
@@ -4862,7 +4862,7 @@ class Name {
     "Possibilities",
     "Postmasters",
     "Potatoes",
-    "Powers",
+    "Power",
     "Pragmatists",
     "Prairie Dogs",
     "Precision",
@@ -5206,7 +5206,7 @@ class Name {
     "Yowlers",
     "Zanders",
     "Zappers",
-    "Zaps",
+
     "Zebras",
     "Zeros",
     "Zest",
@@ -5215,8 +5215,8 @@ class Name {
     "Zippers",
     "Zithers",
     "Zombies",
-    "Zoologist",
-    "Zoomers",
+    "Zoologists",
+    "Zoomies",
     "Zoos"
   ];
 
