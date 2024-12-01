@@ -33,17 +33,21 @@ class TradingCardComponent extends HTMLElement {
           <div class="tradingCardHoverPoint"></div>
           <div class="tradingCardContents">
             <div class="tradingCardHeader">
-              <span class="cardName">${this.name}</span>
-              <span class="cardCost"><small>${this.cost}💰</small></span>
+              
+                <span class="cardName"><small>${this.name}</small></span>
+                <span class="cardCost"><small>${this.cost}💰</small></span>
+              
             </div>
             <div class="tradingCardImage">
               <canvas id="${uniqueCanvasId}"></canvas>
             </div>
             <div class="tradingCardBody">
-              <div class="cardTeam"><small>Team:</small> ${this.team}</div>
-              <div class="cardPosition"><small>Position:</small> ${this.position}</div>
-              <div class="cardStats"><small>Click to see stats</small></div>
-              <div class="cardReward">${this.reward}</div>
+       
+                <div class="cardReward py-0 my-0"><small>${this.reward}</small></div>
+                <div class="cardTeam py-0 my-0"><small>Team:</small> ${this.team}</div>
+                <div class="cardPosition py-0 my-0"><small>Position:</small> ${this.position}</div>
+                <div class="cardStats pb-5"><small>Click to see stats</small></div>
+   
             </div>
           </div>
         </div>
@@ -102,7 +106,7 @@ class TradingCardComponent extends HTMLElement {
           border-radius: 5px;
           
           box-shadow: 0 0 5px rgba(0, 0, 0, 1);
-          transition: 0.4s ease;
+          transition: 0.3s ease;
           overflow: hidden;
         }
         
@@ -161,25 +165,25 @@ class TradingCardComponent extends HTMLElement {
         .tradingCardHoverPoint:nth-child(3) { bottom: 0; left: 0; }
         .tradingCardHoverPoint:nth-child(4) { bottom: 0; right: 0; }
         .tradingCardHoverPoint:nth-child(1):hover ~ .tradingCardContents {
-            box-shadow: 3px 3px 50px rgba(0, 0, 0, 1);
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 1);
             transform-origin: right top;
             transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) rotateZ(0.2deg);
         }
 
         .tradingCardHoverPoint:nth-child(2):hover ~ .tradingCardContents {
-            box-shadow: -3px 3px 50px rgba(0, 0, 0, 1);
+            box-shadow: -3px 3px 15px rgba(0, 0, 0, 1);
             transform-origin: left top;
             transform: perspective(1000px) rotateX(2deg) rotateY(2deg) rotateZ(-0.2deg);
         }
 
         .tradingCardHoverPoint:nth-child(3):hover ~ .tradingCardContents {
-            box-shadow: 3px -3px 50px rgba(0, 0, 0, 1);
+            box-shadow: 3px -3px 15px rgba(0, 0, 0, 1);
             transform-origin: right bottom;
             transform: perspective(1000px) rotateX(-10deg) rotateY(-10deg) rotateZ(-0.2deg);
         }
 
         .tradingCardHoverPoint:nth-child(4):hover ~ .tradingCardContents {
-            box-shadow: -3px -3px 50px rgba(0, 0, 0, 1);
+            box-shadow: -3px -3px 15px rgba(0, 0, 0, 1);
             transform-origin: left bottom;
             transform: perspective(1000px) rotateX(-10deg) rotateY(10deg) rotateZ(0.2deg);
         }

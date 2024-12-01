@@ -13,54 +13,12 @@ class HomePage{
             
         `.trim();
     }
-    addGameTableScores(games) {
-        const tableBody = this.root.querySelector('#gameTableBody');
-        tableBody.innerHTML = ''; // Clear any existing rows
-        // console.log(games)
-        games.forEach((gameDetails, i) => {
-            
-
-            // Create a new row for each game
-            const row = View.createElement('tr',null,"row mx-0");
-
-            // Inning cell
-            const inningCell = View.createElement('div',null,"ps-3 py-0  col col-lg-12");
-            inningCell.textContent = gameDetails.inning || 'N/A';
-
-            // Score cell
-            const scoreCell = View.createElement('td',null,"ps-3 py-0 col-lg-12 row m-0");
-
-            const awayRow = View.createElement('div',null,"m-0 p-0 col col-lg-6 row" );
-            const awayNameCol = View.createElement('div',null,"m-0 p-0 col col-10 col-lg-9 ");
-            awayNameCol.innerHTML = gameDetails.awayNameWithLink || 'Away';
-            const awayScoreCol = View.createElement('div',null,"col col-1 col-lg-3 font-monospace");
-            awayScoreCol.innerHTML = gameDetails.score.away || '0';
-            awayRow.append(awayNameCol,awayScoreCol)
-
-            // Home cell
-            //const homeCell = View.createElement('td',null,"row");
-            const homeRow = View.createElement('td',null,"col col-lg-6 row" );
-            const homeNameCol = View.createElement('div',null,"col col-10 col-lg-9");
-            homeNameCol.innerHTML = gameDetails.homeNameWithLink || 'Home';
-            const homeScoreCol = View.createElement('div',null," col col-1  col-lg-3  font-monospace ");
-            homeScoreCol.innerHTML = gameDetails.score.home || '0';
-            homeRow.append(homeNameCol,homeScoreCol)
-
-            scoreCell.append(awayRow,homeRow)
-
-            // Append cells to the row
-            row.appendChild(inningCell);
-            row.appendChild(scoreCell);
-
-            // row.appendChild(actionCell);
-
-            // Append row to the table body
-            tableBody.appendChild(row);
-        });
+    
+    setShop(shop){
+        this.root.querySelector("#homePageCardContainer").innerHTML = "";
+        this.root.querySelector("#homePageCardContainer").append(shop);
     }
-
-    update(gameMessages) {
-    }
+    
     render(){
         return this.root;
     }

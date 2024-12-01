@@ -29,21 +29,45 @@ class Shop{
         }
     }
 
+    buyCard(user,slotNumber){
+
+    }
     getCards(number){
         for(let i=0; i<number; i++){
-            const indexToRemove = Math.floor(rng.random()*this.pitcherCards.length)
-            this.onDisplay.push(this.pitcherCards.splice(indexToRemove, 1)[0]);
-            this.root.innerHTML += `
-            <span class="col col-md-4  row">
-                <span id="slot${i}" class="col-12 text-center">
+            if(this.onDisplay[i] != null){
+                this.root.innerHTML += `
+                <span class="col row">
+                    <span id="cardSlot${i}" class="col-12 text-center">
+                    </span>
+                    <div class="col-12 text-center">
+                        <button id="cardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-warning">BUY ME!</button>
+                    </div>
                 </span>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-warning">BUY ME!</button>
-                </div>
-            </span>
-            `
-            this.root.querySelector("#slot"+i).append(this.onDisplay[i].render())
+                `
+                this.root.querySelector("#cardSlot"+i).append(this.onDisplay[i].render())
+            }
+            // else{
+            //     this.root.innerHTML += `
+            //     <span class="col row">
+            //         <span id="slot${i}" class="col-12 text-center">
+            //         SOLD
+            //         </span>
+            //         <div class="col-12 text-center">
+            //             <button disabled type="button" value=${i} class="btn btn-warning">SOLD</button>
+            //         </div>
+            //     </span>
+            //     `
+            // }
+            
         }
         return this.root
     }
+    setPitcherCards(number){
+        for(let i=0; i<number; i++){
+            const indexToRemove = Math.floor(rng.random()*this.pitcherCards.length)
+            const addedCard = this.pitcherCards.splice(indexToRemove, 1)[0]
+            this.onDisplay.push(addedCard);
+        }
+    }
+
 }

@@ -13,6 +13,11 @@ class World{
         this.users = [];
         this.league = new League(22);
         this.newsTicker = new NewsTicker();
+        // news tickers subscribes to teams so it can display winning teams
+        for(let each of this.league.teams){
+            this.newsTicker.teamNames[each.leagueIdNumber] = each.getName();
+            each.manager.subscribe(this.newsTicker.handleEvent);
+        }
         this.shop = new Shop();
         this.shop.addCards(this.league)
     }

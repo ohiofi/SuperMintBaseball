@@ -168,6 +168,13 @@ class BaseballPlayer {
         return this.crest.render(40) + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
     }
 
+    getFullNameWithLink() {
+        return this.crest.render(40) + `&nbsp;<a href="#" 
+        class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
+        onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >`
+        + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName + '</a>';
+    }
+
     getSummary() {
         return `${this.fullname}, ${this.position}`;
     }

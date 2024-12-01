@@ -1,5 +1,7 @@
 class TradingCard{
+    static counter = 0;
     constructor(player, cost, rewardAmount, valuables, eventType){
+        this.cardId = TradingCard.counter++;
         this.name = player.firstName + " " + player.lastName;
         this.position = player.position;
         this.team = player.teamPlaceAbbreviation + " " + player.teamMascot;

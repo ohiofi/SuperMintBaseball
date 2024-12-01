@@ -2,12 +2,14 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        this.speed = 350;
+
         let crestString = "";
         for(let each of this.model.world.league.teams){
             crestString+=each.crest.render()
         }
         document.getElementById("footerFinalRow").innerHTML = crestString;
-        this.model.world.league.skipToday()
+        //this.model.world.league.skipToday()
 
         this.setupAfternoonView()
         //this.setupShopView()
@@ -33,12 +35,14 @@ class Controller {
         
         this.gameDetails = this.model.world.getGameDetails(); 
         this.view.liveGamesPage.addGameWidgets(this.gameDetails);
-        document.getElementById("standingsSection").innerHTML = 
-            `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(6) 
-        + this.model.world.league.getStandingsTableBatters(6)+"</div>";
+        this.view.standingsPage.update(this.model.world.league.getStandingsTableTeams(),this.model.world.league.getStandingsTablePitchers(10),this.model.world.league.getStandingsTableBatters(10))
+        // document.getElementById("standingsSection").innerHTML = 
+        //     `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
+        //     + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(10) 
+        //     + this.model.world.league.getStandingsTableBatters(10)+"</div>";
+
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-        this.speed = 3500;
+        
         // Set a new interval
         this.gameMessageInterval = setInterval(() => {
             app.update();
@@ -48,23 +52,30 @@ class Controller {
     setupShopView(){
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.bindMenuBarClick(this.handleShowPage)
-        document.getElementById("standingsSection").innerHTML = 
-            `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(10) 
-        + this.model.world.league.getStandingsTableBatters(10)+"</div>";
+        this.view.standingsPage.update(this.model.world.league.getStandingsTableTeams(),this.model.world.league.getStandingsTablePitchers(10),this.model.world.league.getStandingsTableBatters(10))
 
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
         const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
         // set up shop
-        this.view.homePage.root.appendChild(this.model.world.shop.getCards(5));
+        this.model.world.shop.setPitcherCards(5)
+        this.view.homePage.setShop(this.model.world.shop.getCards(5));
+        this.view.bindShopButtonClick(this.handleShopButtonClick);
     }
-
-    
 
     handleContinueButtonClick = () => {
         // update the model state
         this.model.next()
         // update the view
+    }
+
+    handleShopButtonClick = (value) => {
+        // update the shop
+        this.model.world.shop.onDisplay[0] == null;
+        // update the view
+        document.getElementById("cardSlot"+value+"Button").disabled = true;
+        document.getElementById("cardSlot"+value+"Button").textContent = "SOLD";
+        document.getElementById("cardSlot"+value).style.opacity = 0.25;
+        
     }
     handleShowPage = (id) => {
         this.view.showPage(id)

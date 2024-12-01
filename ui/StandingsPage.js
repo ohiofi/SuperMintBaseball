@@ -18,4 +18,11 @@ class StandingsPage{
     render(){
         return this.root;
     }
+    update(teamTable, pitchersTable, battersTable){
+        const standingsSection = this.root.querySelector("#standingsSection")
+        standingsSection.innerHTML = 
+            `<div class="row"><div class="col-lg-6">`+ teamTable 
+            + `</div><div class="col-lg-6">` + pitchersTable 
+            + battersTable + "</div>";
+    }
 }

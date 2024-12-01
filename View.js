@@ -109,6 +109,18 @@ class View{
             })
         })
     }
+    bindShopButtonClick(handler) {
+        const els = document.getElementsByClassName("shopButton");
+        Array.from(els).forEach((el) => {
+            el.addEventListener('click', event => {
+
+                if (event.target.localName === 'button') {
+                    const id = event.target.value
+                    handler(id)
+                }
+            })
+        })
+    }
 
     showPage(pageName) {
         const els = document.getElementsByClassName("page");

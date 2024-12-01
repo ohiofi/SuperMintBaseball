@@ -5,8 +5,15 @@ class NewsTicker {
         this.breakingNewsItems = [];
         this.parentDiv;
         this.slideDivs;
-
+        this.teamNames = [];
     }
+
+    handleEvent = (data) => {
+        if (data.eventType === StatsEventType.GAME_WINNER) {
+            this.setBreakingNews(this.teamNames[data.teamId] + " win! ");
+        }
+    }
+
     // should occur on a fixed schedule, slides the ticker, decrements breaking news countdown
     show() {
 

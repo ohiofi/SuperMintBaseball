@@ -4,7 +4,6 @@
 
 class Valuables{
 
-    
 
     constructor(objectLiteral){
         this.tickets = objectLiteral.tickets || 0; // 🎟️

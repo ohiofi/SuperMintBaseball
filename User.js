@@ -5,6 +5,7 @@ class User{
         this.valuables = new Valuables({
             "money":50
         });
+        this.cards = [];
     }
 
     handleEvent(data){

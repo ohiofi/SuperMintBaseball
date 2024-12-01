@@ -92,7 +92,7 @@ class League {
         dataCopy.sort((a, b) => b.stats.hits - a.stats.hits);
         // Handle ties
         let rank = 1;
-        let previousOPS = null;
+        let previousHits = null;
         let tieRank = 1;
         //let table = '<table class="table table-striped table-dark"><thead><tr><th>#</th><th>Batter Name</th><th>OPS</th></tr></thead><tbody>';
         let table = `
@@ -110,16 +110,16 @@ class League {
         let count = 0;
         for (let i = 0; i < dataCopy.length; i++) {
             const player = dataCopy[i];
-            // If the player wins are the same as the previous one, they share the rank
-            if (player.stats.getOnBasePlusSlugging() !== previousOPS) {
+            // If the player hits are the same as the previous one, they share the rank
+            if (player.stats.hits !== previousHits) {
                 rank = tieRank;  // New rank for the current player
-                previousOPS = player.stats.getOnBasePlusSlugging();  // Update previous wins
+                previousHits = player.stats.hits;  // Update previous hits
             }
             tieRank++;
             table += `
         <tr class="overflow-hidden">
             <td>${rank}</td>
-            <td>${player.getNameWithLink()}</td>
+            <td>${player.getFullNameWithLink()}</td>
             <td>${player.stats.hits}</td>
             <td>${player.stats.getOnBasePlusSlugging()}</td>
         </tr>
@@ -143,7 +143,7 @@ class League {
         dataCopy.sort((a, b) => b.stats.strikeoutsThrown - a.stats.strikeoutsThrown);
         // Handle ties
         let rank = 1;
-        let previousERA = null;
+        let previousStrikeoutsThrown = null;
         let tieRank = 1;
         let table = `
     <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
@@ -160,16 +160,16 @@ class League {
         let count = 0;
         for (let i = 0; i < dataCopy.length; i++) {
             const player = dataCopy[i];
-            // If the player wins are the same as the previous one, they share the rank
-            if (player.stats.getEarnedRunAverage() !== previousERA) {
+            // If the player strikeoutsThrown are the same as the previous one, they share the rank
+            if (player.stats.strikeoutsThrown !== previousStrikeoutsThrown) {
                 rank = tieRank;  // New rank for the current player
-                previousERA = player.stats.getEarnedRunAverage();  // Update previous wins
+                previousStrikeoutsThrown = player.stats.strikeoutsThrown;  // Update previous wins
             }
             tieRank++;
             table += `
         <tr>
             <td>${rank}</td>
-            <td>${player.getNameWithLink()}</td>
+            <td>${player.getFullNameWithLink()}</td>
             <td>${player.stats.strikeoutsThrown}</td>
             <td>${player.stats.getEarnedRunAverage()}</td>
         </tr>
@@ -188,46 +188,75 @@ class League {
     getStandingsTableTeams() {
         // Copy the original array to avoid modifying the original 
         const dataCopy = [...this.teams];
-        dataCopy.sort((a, b) => b.stats.wins - a.stats.wins);
-        // Handle ties
+    
+        // Sort by win fraction, then wins, then negative losses
+        dataCopy.sort((a, b) => {
+            const winFractionA = a.stats.wins / (a.stats.wins + a.stats.losses || 1);
+            const winFractionB = b.stats.wins / (b.stats.wins + b.stats.losses || 1);
+            if (winFractionB !== winFractionA) {
+                return winFractionB - winFractionA;
+            }
+            if (b.stats.wins !== a.stats.wins) {
+                return b.stats.wins - a.stats.wins;
+            }
+            return a.stats.losses - b.stats.losses;
+        });
+    
+        // Handle ranks
         let rank = 1;
+        let previousWinFraction = null;
         let previousWins = null;
+        let previousLosses = null;
         let tieRank = 1;
+    
         // Create the table element
         let table = `
-        <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
-            <thead>
-                <tr>
-                    <th class="text-secondary">#</th>
-                    <th class="text-secondary">Team Name</th>
-                    <th class="text-secondary">Wins</th>
-                </tr>
-            </thead>
-            <tbody>
+            <table class="table table-striped table-dark shadow rounded-2 overflow-hidden table-borderless">
+                <thead>
+                    <tr>
+                        <th class="text-secondary">#</th>
+                        <th class="text-secondary">Team Name</th>
+                        <th class="text-secondary">W - L</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
+    
         // Iterate over the sorted data and generate rows
         for (let i = 0; i < dataCopy.length; i++) {
             const team = dataCopy[i];
-            // If the team wins are the same as the previous one, they share the rank
-            if (team.stats.wins !== previousWins) {
-                rank = tieRank;  // New rank for the current team
-                previousWins = team.stats.wins;  // Update previous wins
+            const winFraction = (team.stats.wins / (team.stats.wins + team.stats.losses || 1)).toFixed(3);
+    
+            // Handle tie ranks
+            if (
+                winFraction !== previousWinFraction || 
+                team.stats.wins !== previousWins || 
+                team.stats.losses !== previousLosses
+            ) {
+                rank = tieRank;
+                previousWinFraction = winFraction;
+                previousWins = team.stats.wins;
+                previousLosses = team.stats.losses;
             }
-            tieRank++;  // Update the tie rank if wins are the same
+            tieRank++;
+    
             // Add a table row for the team with their rank
             table += `
-        <tr>
-            <td>${rank}</td>
-            <td>${team.getNameWithLink()}</td>
-            <td>${team.stats.wins}</td>
-        </tr>
-        `;
+                <tr>
+                    <td>${rank}</td>
+                    <td>${team.getNameWithLink()}</td>
+                    <td>${team.stats.wins} - ${team.stats.losses}</td>
+                </tr>
+            `;
         }
+    
         // Close the table tags
         table += '</tbody></table>';
+    
         // Return the generated HTML table
         return table;
     }
+    
 
     getNameableByFullName(someName) {
         // loop thru teams

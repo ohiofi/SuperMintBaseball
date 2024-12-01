@@ -221,13 +221,23 @@ class Crest {
             <style>
 
             </style>
-            <text x="50%" y="74%" font-family="${this.fontStyle}" font-weight="bold" text-anchor="middle" fill="${this.fontColor}" 
-                font-size="65px" 
+            <text 
+                x="50%" 
+                y="53%" 
+                font-family="${this.fontStyle}" 
+                font-weight="bold" 
+                text-anchor="middle" 
+                dominant-baseline="middle"
+                fill="${this.fontColor}" 
+                stroke="${this.shadowColor}"
+                stroke-width="1"
+                font-size="${90/this.teamPlaceAbbreviation.length + 10}px" 
                 style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
         >
-                ${this.teamPlaceAbbreviation[0]}
+                ${this.teamPlaceAbbreviation}
             </text>
         </svg>
     `;
     }
 }
+// style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"

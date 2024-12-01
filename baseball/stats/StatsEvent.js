@@ -49,17 +49,17 @@ class StatsEvent {
   /**
    * Initializes a new instance of the `StatsEvent` class.
    * @param {number} eventType - The type of event, corresponding to a value from `StatsEventType`.
-   * @param {string} teamId - The unique identifier for the team involved in the event.
-   * @param {string} playerId - The unique identifier for the player involved in the event.
+   * @param {number} teamId - The unique league id number for the team involved in the event.
+   * @param {number} playerId - The unique league id number for the player involved in the event.
    */
   constructor(eventType, teamId, playerId) {
     /** @type {number} The type of the event, defined by `StatsEventType`. */
     this.eventType = eventType;
 
-    /** @type {string} The unique identifier for the team associated with the event. */
+    /** @type {number} The unique league id number for the team associated with the event. */
     this.teamId = teamId;
 
-    /** @type {string} The unique identifier for the player associated with the event. */
+    /** @type {number} The unique league id number for the player associated with the event. */
     this.playerId = playerId;
   }
 }
