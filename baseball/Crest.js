@@ -229,8 +229,7 @@ class Crest {
                 text-anchor="middle" 
                 dominant-baseline="middle"
                 fill="${this.fontColor}" 
-                stroke="${this.shadowColor}"
-                stroke-width="1"
+                
                 font-size="${90/this.teamPlaceAbbreviation.length + 10}px" 
                 style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
         >
@@ -240,4 +239,6 @@ class Crest {
     `;
     }
 }
+//stroke="${this.shadowColor}"
+//stroke-width="1"
 // style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"

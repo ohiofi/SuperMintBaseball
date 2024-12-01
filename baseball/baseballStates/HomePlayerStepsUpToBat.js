@@ -10,7 +10,7 @@ class HomePlayerStepsUpToBat extends AbstractBaseballGameState{
             new StatsEvent(StatsEventType.AT_BATS,baseballGame.offenseTeam.leagueIdNumber,baseballGame.batter.leagueIdNumber)
         )
         return '<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update('+baseballGame.batter.leagueIdNumber+');" data-bs-target="#statsModal" data-bs-toggle="modal" >'+
-        baseballGame.getBatterFullName() + "</a> steps up to bat for the " + baseballGame.getHomeTeamName();
+        baseballGame.getBatterFullName(20) + "</a> steps up to bat for the " + baseballGame.homeTeam.getNameWithLink(20);
                 
     }
 

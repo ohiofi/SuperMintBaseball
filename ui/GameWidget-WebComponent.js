@@ -48,7 +48,7 @@ class GameWidget extends HTMLElement {
   
           <!-- Center Section -->
           <div class="col-lg m-0 px-3 text-white row">
-            <div class="base-icons col-3 text-center"></div>
+            <div class="base-icons font-monospace col-3 text-center"></div>
             <div class="count-container col-9 row">
               <div class="balls-label col font-monospace text-end">B:</div>
               <div class="balls col font-monospace text-start">0</div>

@@ -32,6 +32,6 @@ class BottomOfTheInning extends AbstractBaseballGameState{
             new StatsEvent(StatsEventType.INNINGS_PITCHED,baseballGame.awayTeam.leagueIdNumber,baseballGame.awayTeam.pitcher.leagueIdNumber)
         )
         return "Bottom of inning " + baseballGame.getInning() + ', ' +
-        baseballGame.offenseTeam.getNameWithLink() + " batting.";
+        baseballGame.offenseTeam.getNameWithLink(20) + " batting.";
     }
 }

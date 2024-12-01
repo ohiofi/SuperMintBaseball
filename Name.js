@@ -4935,7 +4935,7 @@ class Name {
     "Remote Controls",
     "Reporters",
     "Reptiles",
-    "Reuters",
+    "Reruns",
     "Rhinoceroses",
     "Riders",
     "Rippers",

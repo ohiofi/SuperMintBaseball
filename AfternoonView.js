@@ -3,22 +3,23 @@ class AfternoonView extends View{
 
     constructor() {
         super();
-        this.app = document.querySelector("#root");
+        //this.app = document.querySelector("#root");
 
-        this.app.innerHTML = null
+        //this.app.innerHTML = null
 
         // news ticker
-        this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4");
-        this.tickerItems = [];
+        //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4");
+        //this.tickerItems = [];
 
         // menu bar
-        this.pageMenuBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
+        //this.navBar = new NavBar();
+        // this.navBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
         this.addMenuItemHome()
         this.addMenuItemSchedule()
         this.addMenuItemStandings()
         this.addMenuItemLive()
 
-        this.pageContainer = View.createElement("div", "pageContainer");
+        //this.pageContainer = View.createElement("div", "pageContainer");
 
         // // home
         this.homePage = new AfternoonHomePage();
@@ -44,8 +45,8 @@ class AfternoonView extends View{
         this.singleGamePages = [];
 
         // stats modal
-        this.modal = new StatsModal();
-        this.app.append(this.newsTickerContainer, this.pageMenuBar, this.pageContainer, this.modal.render())
+        //this.modal = new StatsModal();
+        
     }
 
     
@@ -67,31 +68,38 @@ class AfternoonView extends View{
 // home
 // </span>`;
 //         menuItem.append(menuLink);
-//         this.pageMenuBar.append(menuItem);
+//         this.navBar.add(menuItem);
 //     }
 
     addMenuItemLive() {
-        const menuItem = View.createElement("li", "liveGamesPageMenuItem", "page-item bg-transparent");
-        const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
+        const menuItem = View.createElement("li", "liveGamesPageMenuItem", "nav-item bg-transparent pt-1");
+        const menuLink = View.createElement("a", null, "nav-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
         menuLink.dataset.linkToPageId = "liveGamesPage";
         menuLink.innerHTML = `<span class="material-symbols-outlined size-24">
 stadium
 </span>`;
         menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
+        this.navBar.add(menuItem);
     }
 
     addMenuItemSingleGamePages(game) {
         const scores = game.getGameDetails();
+        const dropdownNavItem = View.createElement("li","dropdownNavItem","nav-item dropdown pt-2")
+        dropdownNavItem.innerHTML = `
+            <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown">Games</a>
+            <ul id="singleGamesDropdownMenu" class="dropdown-menu bg-dark">
+            </ul>
+        `.trim();
         for (let i = 0; i < scores.length; i++) {
-            const menuItem = View.createElement("li", "game" + i + "PageMenuItem", "page-item bg-transparent");
-            const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover");
-            menuLink.dataset.linkToPageId = "game" + i + "Page";
-            menuLink.innerHTML = `<span class="font-monospace size-48">
-    ${i}
+            const dropdownLi = View.createElement("li", "game" + i + "PageMenuItem", "bg-dark");
+            const dropdownA = View.createElement("a", null, "dropdown-item bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover");
+            dropdownA.dataset.linkToPageId = "game" + i + "Page";
+            dropdownA.innerHTML = `<span class="font-monospace size-48">
+            ${scores[i].awayTeam} @ ${scores[i].homeTeam}
       </span>`;
-            menuItem.append(menuLink);
-            this.pageMenuBar.append(menuItem);
+            dropdownLi.append(dropdownA);
+            dropdownNavItem.querySelector("#singleGamesDropdownMenu").append(dropdownLi);
+            this.navBar.add(dropdownNavItem);
         }
     }
 
@@ -103,7 +111,7 @@ stadium
 // format_list_numbered
 // </span>`;
 //         menuItem.append(menuLink);
-//         this.pageMenuBar.append(menuItem);
+//         this.navBar.add(menuItem);
 //     }
 
 
@@ -122,7 +130,7 @@ stadium
 
             newsTickerRibbon.append(this.tickerItems[i]);
         }
-        this.newsTickerContainer.append(newsTickerRibbon);
+        document.getElementById("newsTickerContainer").append(newsTickerRibbon);
     }
 
     // bindContinueButtonClick(handler) {
@@ -139,7 +147,7 @@ stadium
     // }
 
     // bindMenuBarClick(handler) {
-    //     this.pageMenuBar.addEventListener('click', event => {
+    //     this.navBar.addEventListener('click', event => {
     //         if (event.target.localName === 'span') {
     //             //const id = event.target.parentElement.id
     //             const id = event.target.parentElement.dataset.linkToPageId;

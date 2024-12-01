@@ -25,50 +25,42 @@ class View{
 
     constructor(){
         this.app = document.querySelector("#root");
+        this.app.innerHTML = "";
+        this.viewContainer = View.createElement("div","viewContainer","container mt-5 pt-5")
 
         // news ticker
-        this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4");
-        this.tickerItems = [];
+        //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4 bg-danger");
+        this.tickerItems = ["We are back!"];
 
         // menu bar
-        this.pageMenuBar = View.createElement("ul", "pageMenuBar", "pagination border-0");
-        this.addMenuItemHome()
-        this.addMenuItemSchedule()
-        this.addMenuItemStandings()
+        this.navBar = new NavBar();
+        // this.addMenuItemHome()
+        // this.addMenuItemSchedule()
+        // this.addMenuItemStandings()
 
         // add the pages
         this.pageContainer = View.createElement("div", "pageContainer");
 
-        // home
-        this.homePage = new HomePage();
-        this.pageContainer.append(this.homePage.render());
-
-        // schedule
-        this.schedulePage = new SchedulePage()
-        this.pageContainer.append(this.schedulePage.render());
-
-        // standings page
-        this.standingsPage = new StandingsPage();
-        this.pageContainer.append(this.standingsPage.render());
+        
 
         // stats modal
         this.modal = new StatsModal();
-        this.app.append(this.newsTickerContainer, this.pageMenuBar, this.pageContainer, this.modal.render())
-
+        this.viewContainer.append( this.pageContainer, this.modal.render())
+        this.app.append(this.newsTickerContainer, this.navBar.render(), this.viewContainer)
         
     }
 
     addMenuItem(pageId, menuItemId, iconName) {
-        const menuItem = View.createElement("li", menuItemId, "page-item bg-transparent");
+        const menuItem = View.createElement("li", menuItemId, "nav-item bg-transparent");
         const menuLink = View.createElement(
             "a",
             null,
-            "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover"
+            "nav-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover"
         );
         menuLink.dataset.linkToPageId = pageId;
-        menuLink.innerHTML = `<span class="material-symbols-outlined">${iconName}</span>`;
+        menuLink.innerHTML = `<span class="mt-1 material-symbols-outlined">${iconName}</span>`;
         menuItem.append(menuLink);
-        this.pageMenuBar.append(menuItem);
+        this.navBar.add(menuItem);
     }
 
     addMenuItemHome() {
@@ -84,15 +76,20 @@ class View{
     }
 
     bindMenuBarClick(handler) {
-        this.pageMenuBar.addEventListener('click', event => {
-            if (event.target.localName === 'span') {
-                //const id = event.target.parentElement.id
+        this.navBar.root.addEventListener('click', event => {
+            console.log(event)
+            if (event.target.localName === 'span' || event.target.localName === 'nobr'){
                 const id = event.target.parentElement.dataset.linkToPageId;
                 handler(id)
             }
-            if (event.target.localName === 'a') {
+            else if (event.target.localName === 'a') {
                 //const id = event.target.parentElement.id
                 const id = event.target.dataset.linkToPageId;
+                handler(id)
+            }
+            else if (event.target.localName === 'text' || event.target.localName === 'polygon' ) {
+                //const id = event.target.parentElement.id
+                const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.linkToPageId;
                 handler(id)
             }
         })

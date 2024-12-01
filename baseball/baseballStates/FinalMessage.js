@@ -12,7 +12,7 @@ class FinalMessage extends AbstractBaseballGameState{
         baseballGame.getLosingTeam().manager.notify(
             new StatsEvent(StatsEventType.GAME_LOSER,baseballGame.getLosingTeam().leagueIdNumber)
         )
-        return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()
+        return baseballGame.getWinningTeam().getNameWithLink(20)+" defeated "+baseballGame.getLosingTeam().getNameWithLink(20)
         
     }
 

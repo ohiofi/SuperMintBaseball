@@ -2,7 +2,7 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 350;
+        this.speed = 2000;
 
         let crestString = "";
         for(let each of this.model.world.league.teams){
@@ -50,6 +50,7 @@ class Controller {
     }
 
     setupShopView(){
+        this.view = new ShopView();
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.bindMenuBarClick(this.handleShowPage)
         this.view.standingsPage.update(this.model.world.league.getStandingsTableTeams(),this.model.world.league.getStandingsTablePitchers(10),this.model.world.league.getStandingsTableBatters(10))
@@ -78,6 +79,7 @@ class Controller {
         
     }
     handleShowPage = (id) => {
+        if(!id) return
         this.view.showPage(id)
     }
 

@@ -10,9 +10,9 @@ class GamePost {
             </span> <span class="timestamp">${timestamp}</span>
             <p>${gameMessage.render()}</p>
             <span>
-            <sub class='baseIcon gamePostLeftBase'>${gameMessage.baseIcons.charAt(0)}</sub>
-                <sup class='baseIcon gamePostCenterBase'>${gameMessage.baseIcons.charAt(1)}</sup>
-                <sub class='baseIcon gamePostRightBase'>${gameMessage.baseIcons.charAt(2)}</sub>
+            <sub class='baseIcon font-monospace gamePostLeftBase'>${gameMessage.baseIcons.charAt(0)}</sub>
+                <sup class='baseIcon font-monospace gamePostCenterBase'>${gameMessage.baseIcons.charAt(1)}</sup>
+                <sub class='baseIcon font-monospace gamePostRightBase'>${gameMessage.baseIcons.charAt(2)}</sub>
             </span>
             <span class="font-monospace">
                 

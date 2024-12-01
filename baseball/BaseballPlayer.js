@@ -157,22 +157,22 @@ class BaseballPlayer {
         return this.teamPlaceAbbreviation + " " + this.lastName;
     }
 
-    getNameWithLink() {
-        return this.crest.render(40) + `&nbsp;<a href="#" 
+    getNameWithLink(crestSize = 40) {
+        return this.crest.render(crestSize) + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
-        onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >` +
-        this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
+        onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >` 
+        + " " + this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
     }
 
-    getFullName() {
-        return this.crest.render(40) + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
+    getFullName(crestSize = 40) {
+        return this.crest.render(crestSize) + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
     }
 
-    getFullNameWithLink() {
-        return this.crest.render(40) + `&nbsp;<a href="#" 
+    getFullNameWithLink(crestSize = 40) {
+        return this.crest.render(crestSize) + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
         onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >`
-        + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName + '</a>';
+        + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName + '</a>';
     }
 
     getSummary() {

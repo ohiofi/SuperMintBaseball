@@ -12,7 +12,7 @@ class EndOfGame extends AbstractBaseballGameState{
         baseballGame.onBase = [null, null, null];
         baseballGame.setGameOver();
         
-        return baseballGame.getWinningTeam().getNameWithLink()+" defeated "+baseballGame.getLosingTeam().getNameWithLink()
+        return baseballGame.getWinningTeam().getNameWithLink(20)+" defeated "+baseballGame.getLosingTeam().getNameWithLink(20)
         
     }
 
