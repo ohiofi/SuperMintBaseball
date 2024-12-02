@@ -87,14 +87,14 @@ stadium
         const dropdownNavItem = View.createElement("li","dropdownNavItem","nav-item dropdown pt-2")
         dropdownNavItem.innerHTML = `
             <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown">Games</a>
-            <ul id="singleGamesDropdownMenu" class="dropdown-menu bg-dark">
+            <ul id="singleGamesDropdownMenu" class="dropdown-menu bg-dark shadow">
             </ul>
         `.trim();
         for (let i = 0; i < scores.length; i++) {
             const dropdownLi = View.createElement("li", "game" + i + "PageMenuItem", "bg-dark");
             const dropdownA = View.createElement("a", null, "dropdown-item bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover");
             dropdownA.dataset.linkToPageId = "game" + i + "Page";
-            dropdownA.innerHTML = `<span class="font-monospace size-48">
+            dropdownA.innerHTML = `<span class="size-48">
             ${scores[i].awayTeam} @ ${scores[i].homeTeam}
       </span>`;
             dropdownLi.append(dropdownA);
@@ -118,20 +118,7 @@ stadium
 
 
 
-    addNewsTickerItems(game) {
-        const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
-        const scores = game.getGameDetails();
-        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
-        let multiplier = 2;
-        if (scores.length < 3) multiplier = 4
-        for (let i = 0; i < scores.length * multiplier; i++) {
-            this.tickerItems[i] = View.createElement("span", null, "newsTickerItem");
-            this.tickerItems[i].innerHTML = scores[i % scores.length].scoreString;
-
-            newsTickerRibbon.append(this.tickerItems[i]);
-        }
-        document.getElementById("newsTickerContainer").append(newsTickerRibbon);
-    }
+    
 
     // bindContinueButtonClick(handler) {
     //     const els = document.getElementsByClassName("continueButton");

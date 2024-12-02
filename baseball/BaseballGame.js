@@ -146,25 +146,31 @@ class BaseballGame {
     // }
 
     // handles 2nd base runner advancing by 1 and 1st base runner advancing by 1 or 2
-    getBaseRunnerAdvancesOrScores(baseIndex, numberToAdvance){
-        if (this.onBase[baseIndex] && numberToAdvance > 0) {
+    getBaseRunnerAdvancesOrScores(baseIndex, numberToAdvance, isSacrificeFly = false){
+        if (this.onBase[baseIndex] && (baseIndex + numberToAdvance) >= 3) { // base index 3 would be home base
+            return this.getBaseRunnerScores(baseIndex, numberToAdvance, isSacrificeFly)
+        }
+        // runner does not score
+        else if (this.onBase[baseIndex] && numberToAdvance > 0) {
             this.onBase[baseIndex + numberToAdvance] = this.onBase[baseIndex];
             this.onBase[baseIndex] = null;
         }
         return "";
     }
 
-    getBaseRunnerMovement(numberToAdvance, isSacrificeFly){
+    getBaseRunnerMovement(numberToAdvance, isSacrificeFly = false){
         numberToAdvance = numberToAdvance || 0;
         let result = "";
         result += this.getBaseRunnerScores(2, numberToAdvance, isSacrificeFly); // Handle third base
-        result += this.getBaseRunnerAdvancesOrScores(1, numberToAdvance, isSacrificeFly); // Handle second base
+        result += this.getBaseRunnerAdvancesOrScores(1, numberToAdvance); // Handle second base
         result += this.getBaseRunnerAdvancesOrScores(0, numberToAdvance); // Handle first base
         return result;
     }
 
     getBaseRunnerScores(baseIndex, numberToAdvance, isSacrificeFly = false){
-        if (this.onBase[baseIndex] && numberToAdvance >= baseIndex - 1) {
+        console.log("line 171 ")
+        if (this.onBase[baseIndex] && (baseIndex + numberToAdvance) >= 3) { // base index 3 would be home base
+            console.log("line 171 "+baseIndex+"/"+numberToAdvance+"/"+isSacrificeFly)
             let runner = this.onBase[baseIndex];
             this.incrementScore();
             runner.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, runner.leagueIdNumber));
@@ -173,7 +179,7 @@ class BaseballGame {
             if (isSacrificeFly) {
                 this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
             }
-            return `<br>${runner.getNameWithLink(20)} SCORES!`;
+            return `<br>${runner.getFullNameWithLink(20)} SCORES!`;
         }
         return "";
     }
@@ -193,11 +199,11 @@ class BaseballGame {
             } else {
                 // swinging but doesn't make contact
                 this.count.strikes++;
-                result += "<br>" + this.batter.getNameWithLink(20) + " gets a STRIKE swinging, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " gets a STRIKE swinging, " + this.count.balls + "-" + this.count.strikes
 
                 if (this.count.strikes >= 3) {
                     this.count.outs++;
-                    result += " " + this.batter.getNameWithLink(20) + " STRIKES OUT swinging. " + this.getOutsString()
+                    result += " " + this.batter.getFullNameWithLink(20) + " STRIKES OUT swinging. " + this.getOutsString()
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     this.setCountToZero();
@@ -208,11 +214,11 @@ class BaseballGame {
             // batter doesn't swing
             if (pitchScore > 5) {
                 this.count.strikes++;
-                result += "<br>" + this.batter.getNameWithLink(20) + " gets a STRIKE looking, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " gets a STRIKE looking, " + this.count.balls + "-" + this.count.strikes
 
                 if (this.count.strikes >= 3) {
                     this.count.outs++
-                    result += " " + this.batter.getNameWithLink(20) + " STRIKES OUT looking. " + this.getOutsString();
+                    result += " " + this.batter.getFullNameWithLink(20) + " STRIKES OUT looking. " + this.getOutsString();
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     this.setCountToZero()
@@ -220,7 +226,7 @@ class BaseballGame {
                 }
             } else {
                 this.count.balls++;
-                result += "<br>" + this.batter.getNameWithLink(20) + " is looking. BALL looking, " + this.count.balls + "-" + this.count.strikes
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " is looking. BALL looking, " + this.count.balls + "-" + this.count.strikes
                 this.pitcher.setHungerUp()
                 if (this.count.balls >= 4) {
                     this.gameState.previousState(this);
@@ -246,7 +252,7 @@ class BaseballGame {
         let result = "";
         // 50% of weak hits are foul
         if (hitScore <= 2.5 && rng.random() > 0.5) {
-            result += "<br>" + this.batter.getNameWithLink(20) + " hits a foul ball"
+            result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a foul ball"
             if (this.count.strikes < 2) {
                 this.count.strikes++;
             }
@@ -255,16 +261,16 @@ class BaseballGame {
             let defender = this.defenseTeam.getRandomPlayer();
             let defenseScore = defender.getDefenseScore(this.pitchNumber);
             if (defenseScore >= hitScore) {
-                result += "<br>" + this.batter.getNameWithLink(20) + " hits a fly ball. "
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a fly ball. "
                 this.count.outs++;
-                result += defender.getNameWithLink(20) + " makes the catch. " + this.getOutsString()
+                result += defender.getFullNameWithLink(20) + " makes the catch. " + this.getOutsString()
                 defender.setHungerDown()
                 this.batter.setHungerUp()
                 if (this.count.outs < 3) {
                     result += this.getBaseRunnerMovement(1, true)
                 }
             } else if (hitScore / defenseScore <= 1.999) {
-                result += "<br>" + this.batter.getNameWithLink(20) + " hits a SINGLE"
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a SINGLE"
                 result += this.getBaseRunnerMovement(1)
                 this.onBase[0] = this.batter;
                 this.incrementHits()
@@ -275,7 +281,7 @@ class BaseballGame {
                     new StatsEvent(StatsEventType.SINGLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else if (hitScore / defenseScore <= 2.999) {
-                result += "<br>" + this.batter.getNameWithLink(20) + " hits a DOUBLE"
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a DOUBLE"
                 result += this.getBaseRunnerMovement(2)
                 this.onBase[1] = this.batter;
                 this.incrementHits()
@@ -286,7 +292,7 @@ class BaseballGame {
                     new StatsEvent(StatsEventType.DOUBLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else if (hitScore / defenseScore <= 3.999) {
-                result += "<br>" + this.batter.getNameWithLink(20) + " hits a TRIPLE"
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a TRIPLE"
                 result += this.getBaseRunnerMovement(3)
                 this.onBase[2] = this.batter;
                 this.incrementHits()
@@ -297,7 +303,7 @@ class BaseballGame {
                     new StatsEvent(StatsEventType.TRIPLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else {
-                result += "<br>" + this.batter.getNameWithLink(20) + " hits a HOME RUN!"
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a HOME RUN!"
                 this.incrementScore();
                 this.incrementHits()
                 result += this.getBaseRunnerMovement(4)
@@ -494,7 +500,7 @@ class BaseballGame {
         let result = "";
         this.pitcher = this.defenseTeam.getPitcher();
         let pitchScore = this.pitcher.getPitchScore(this.pitchNumber);
-        result += this.pitcher.getNameWithLink(20) + " throws ";
+        result += this.pitcher.getFullNameWithLink(20) + " throws ";
         result += BaseballGame.useAOrAn(this.getPitchDescription(pitchScore));
         result += " " + this.getPitchDescription(pitchScore) + " pitch"
         return result + this.getAtBat(pitchScore);

@@ -2,7 +2,7 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 2000;
+        this.speed = 1000;
 
         let crestString = "";
         for(let each of this.model.world.league.teams){
@@ -24,7 +24,13 @@ class Controller {
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.addMenuItemSingleGamePages(this.model.world);
         this.view.bindMenuBarClick(this.handleShowPage)
-        this.view.addNewsTickerItems(this.model.world);
+        // set up ticker items
+        const gameDetails = this.model.world.getGameDetails();
+        const tickerArray = [];
+        for(let each of gameDetails){
+            tickerArray.push(each.scoreString);
+        }
+        this.view.addNewsTickerItems(tickerArray);
         
         // set the speed
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
@@ -58,9 +64,10 @@ class Controller {
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
         const cardContainer = this.view.homePage.root.querySelector("#homePageCardContainer")
         // set up shop
-        this.model.world.shop.setPitcherCards(5)
-        this.view.homePage.setShop(this.model.world.shop.getCards(5));
+        this.model.world.shop.setPitcherCards(10)
+        this.view.homePage.setShop(this.model.world.shop.getCards(10));
         this.view.bindShopButtonClick(this.handleShopButtonClick);
+        this.view.addNewsTickerItems(["WE ARE BACK!", "I AM THE TICKER","THIS IS AMERICA'S PASTIME... SHOPPING!", "PLAY NICE", "NO STEALING"]);
     }
 
     handleContinueButtonClick = () => {

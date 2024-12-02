@@ -4,14 +4,14 @@ class BaseballGameBoxScore {
         if(homeTeam===null) throw new Error("homeTeam can not be null");
         
         this.away = {
-                name: awayTeam.getNameWithLink(),
+                name: awayTeam.getFullNameWithLink(),
                 innings: [],
                 runs: 0,
                 hits: 0, 
                 errors: 0  
             };
         this.home = {
-                name: homeTeam.getNameWithLink(),
+                name: homeTeam.getFullNameWithLink(),
                 innings: [],
                 runs: 0, 
                 hits: 0, 

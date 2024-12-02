@@ -4637,7 +4637,7 @@ class Name {
     "Immortals",
     "Impalas",
     "Indoors",
-    "Inersia",
+    "Inertia",
     "Influencers",
     "Insects",
     "Inspectors",

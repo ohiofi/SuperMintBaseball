@@ -352,7 +352,7 @@ class BaseballTeam {
     getName(crestSize = 40) {
         return (
             "<nobr>" +
-            this.crest.render(crestSize) + " " +
+            this.crest.render(crestSize) + "&nbsp;" +
             this.place.abbreviation.toUpperCase() +
             "</nobr> " +
             this.mascot
@@ -372,15 +372,25 @@ class BaseballTeam {
     getFullName(crestSize = 40) {
         return (
             "<nobr>" +
-            this.crest.render(crestSize) + " " +
+            this.crest.render(crestSize) + "&nbsp;" +
             this.place.name.toUpperCase() +
             "</nobr> " +
             this.mascot
         );
     }
 
+    getFullNameWithLink(crestSize = 40) {
+        return (
+            this.crest.render(crestSize) + '&nbsp;<a href="#" class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" onclick="app.view.modal.update(' +
+            this.leagueIdNumber +
+            ');" data-bs-target="#statsModal" data-bs-toggle="modal" >' 
+            + this.place.name.toUpperCase() + " " + this.mascot +
+            "</a>"
+        );
+    }
+
     getPlace(crestSize = 40) {
-        return this.crest.render(crestSize) + " " + this.place.name.toUpperCase();
+        return this.crest.render(crestSize) + "&nbsp;" + this.place.name.toUpperCase();
     }
 
     getNextBatter() {

@@ -30,7 +30,7 @@ class View{
 
         // news ticker
         //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4 bg-danger");
-        this.tickerItems = ["We are back!"];
+        this.tickerItems = [];
 
         // menu bar
         this.navBar = new NavBar();
@@ -73,6 +73,21 @@ class View{
     
     addMenuItemStandings() {
         this.addMenuItem("standingsPage", "standingsPageMenuItem", "format_list_numbered");
+    }
+
+    addNewsTickerItems(myArray) {
+        const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
+        
+        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
+        let multiplier = 2;
+        if (myArray.length < 3) multiplier = 4
+        for (let i = 0; i < myArray.length * multiplier; i++) {
+            this.tickerItems[i] = View.createElement("span", null, "newsTickerItem");
+            this.tickerItems[i].innerHTML = myArray[i % myArray.length];
+
+            newsTickerRibbon.append(this.tickerItems[i]);
+        }
+        document.getElementById("newsTickerContainer").append(newsTickerRibbon);
     }
 
     bindMenuBarClick(handler) {

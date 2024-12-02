@@ -154,25 +154,25 @@ class BaseballPlayer {
     }
 
     getName() {
-        return this.teamPlaceAbbreviation + " " + this.lastName;
+        return this.teamPlaceAbbreviation + "&nbsp;" + this.lastName;
     }
 
     getNameWithLink(crestSize = 40) {
         return this.crest.render(crestSize) + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
         onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >` 
-        + " " + this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
+        + this.teamPlaceAbbreviation + " " + this.lastName + '</a>';
     }
 
     getFullName(crestSize = 40) {
-        return this.crest.render(crestSize) + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
+        return this.crest.render(crestSize) + "&nbsp;" + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName;
     }
 
     getFullNameWithLink(crestSize = 40) {
         return this.crest.render(crestSize) + `&nbsp;<a href="#" 
         class="link link-light link-underline-opacity-25 link-underline-opacity-100-hover" 
         onclick="app.view.modal.update(${this.leagueIdNumber});" data-bs-target="#statsModal" data-bs-toggle="modal" >`
-        + " " + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName + '</a>';
+        + this.teamPlaceAbbreviation + " " + this.firstName + " " + this.lastName + '</a>';
     }
 
     getSummary() {
