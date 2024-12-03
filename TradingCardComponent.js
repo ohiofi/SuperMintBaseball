@@ -18,8 +18,8 @@ class TradingCardComponent extends HTMLElement {
         this.colorMid = this.getAttribute('colorMid') || '#994500';
         this.colorDark = this.getAttribute('colorDark') || '#664500';
         this.gradientRotation = rng.random();   
-        const emoji = this.getAttribute('emoji') || '🏃';
-        const uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
+        this.emoji = this.getAttribute('emoji') || '🏃';
+        this.uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
 
         // HTML structure
         shadow.innerHTML = `
@@ -39,7 +39,7 @@ class TradingCardComponent extends HTMLElement {
               
             </div>
             <div class="tradingCardImage">
-              <canvas id="${uniqueCanvasId}"></canvas>
+              <canvas id="${this.uniqueCanvasId}"></canvas>
             </div>
             <div class="tradingCardBody">
        
@@ -54,10 +54,10 @@ class TradingCardComponent extends HTMLElement {
       `;
 
         // Render the canvas
-        setTimeout(() => this.drawCanvas(shadow.querySelector(`#${uniqueCanvasId}`), emoji, [this.colorMid, this.colorDark]), 0);
+        setTimeout(() => this.drawCanvas(shadow.querySelector(`#${this.uniqueCanvasId}`)),1);
     }
 
-    drawCanvas(canvas, emoji, colorScheme) {
+    drawCanvas(canvas, emoji) {
         const ctx = canvas.getContext('2d');
 
         // Set canvas size
@@ -75,12 +75,24 @@ class TradingCardComponent extends HTMLElement {
 
         ctx.filter = "contrast(70%) brightness(130%)";
         // Set font size and alignment for the emoji
-        ctx.font = '13px Arial';
+        // ctx.font = (emoji.length == 1 ? 33 : 7/emoji.length+6)+'px';
+        if(this.position != "Favorite Team"){
+          ctx.font = "13px Arial"
+        } else {
+          ctx.font = (7/this.emoji.length+6)+'px monospace';
+        }
+        
+
+
+        
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.fillStyle = this.colorLight
 
         // Draw the emoji
-        ctx.fillText(emoji , canvas.width*0.51 , canvas.height * 0.6);
+        ctx.strokeText(this.emoji , canvas.width*0.51 , canvas.height * 0.6);
+
+        ctx.fillText(this.emoji , canvas.width*0.51 , canvas.height * 0.6);
 
     }
 
@@ -93,7 +105,7 @@ class TradingCardComponent extends HTMLElement {
           height: 300px;
           display: inline-block;
           border-radius: 5px;
-          margin:3px;
+          margin:5px;
           
         }
         

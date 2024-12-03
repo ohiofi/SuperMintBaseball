@@ -32,13 +32,13 @@ class BaseballGameMessage {
     }
   }
 
-  render() {
-    // this is a workaround that fixes an issue in which team Crests do not render gradients 
-    // properly when the same GameMessage is displayed twice (on the Live Page and a Single Game Page)
-    return new String(
-      this.log.replace(/gradient/g, "gradient" + Math.random())
-    );
-  }
+  // render() {
+  //   // this was a workaround that fixes an issue in which team Crests do not render gradients 
+  //   // properly when the same GameMessage is displayed twice (on the Live Page and a Single Game Page)
+  //   return new String(
+  //     this.log.replace(/gradient/g, "gradient" + Math.random())
+  //   );
+  // }
 
   setGameState(game) {
     this.name = game.name;

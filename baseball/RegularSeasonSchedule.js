@@ -111,6 +111,14 @@ class RegularSeasonSchedule extends AbstractSchedule {
     }
     return result
   }
+  getTeamsPlayingToday() {
+    let result = [];
+    for (let eachGame of this.days[this.day]) {
+      result.push(eachGame.awayTeam);
+      result.push(eachGame.homeTeam);
+    }
+    return result
+  }
 
   nextGameMessages(dayNumber){
     let resultArray = [];

@@ -3,6 +3,7 @@ class Model {
         // The state of the model
         //this.game = JSON.parse(localStorage.getItem('savedGame')) || new Game();
         this.world = new World();
+        this.users = [new User()];
     }
 
     addUser() {
@@ -11,10 +12,31 @@ class Model {
         this.users.push(newUser)
     }
 
+    
+
     _commit(todos) {
         this.onTodoListChanged(todos)
         localStorage.setItem('todos', JSON.stringify(todos))
     }
+
+    // Only mutates the state, no return value for affordability check
+    attemptShopPurchase(value, user) {
+        if(!user.hasRoomForThisCard(this.world.shop.onDisplay[value])){
+            console.log("Oops no more room for more cards")
+        }
+        else if (this.world.shop.isPurchaseAffordable(value, user)) {
+            const buyingCard = this.world.shop.getPurchase(value, user);
+        
+            
+            
+            if (buyingCard) {
+                this.users[0].addCard(buyingCard);
+            }
+        }
+    }
+
+
+
 
     next(){
         console.log("NEXT STATE")

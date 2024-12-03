@@ -20,10 +20,10 @@ class Crest {
         this.fontColor = null
         if (rng.random() < 0.5){
             this.fontColor = this.colorScheme.dark;
-            this.shadowColor = "rgba(192,192,192,0.9)";
+            this.shadowColor = "rgba(255,255,255,0.9)";
         } else {
             this.fontColor = this.colorScheme.light;
-            this.shadowColor = "rgba(64,64,64,0.9)";
+            this.shadowColor = "rgba(0,0,0,0.9)";
         }
         this.gradientDirection = null;
         switch(Math.floor(rng.random()*4)){

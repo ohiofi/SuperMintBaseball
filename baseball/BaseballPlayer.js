@@ -148,6 +148,7 @@ class BaseballPlayer {
 
     equals(otherObject) {
         return this.playerIdNumber === otherObject.playerIdNumber &&
+            this.leagueIdNumber === otherObject.leagueIdNumber &&
             this.firstName === otherObject.firstName &&
             this.lastName === otherObject.lastName &&
             this.jerseyNumber === otherObject.jerseyNumber

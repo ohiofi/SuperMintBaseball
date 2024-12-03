@@ -17,7 +17,7 @@ a {
     cursor: pointer !important;
 }
 
-#alertContainer {
+.alert-fixed {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -313,7 +313,7 @@ font-weight: Bold; */
 }
 
 .newsTickerItem {
-    padding-left: 150px;
+    padding-left: 33vw;
 }
 
 .newsTickerItem,

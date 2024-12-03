@@ -40,7 +40,8 @@ class View{
 
         // add the pages
         this.pageContainer = View.createElement("div", "pageContainer");
-
+        this.userPage = new UserPage();
+        this.pageContainer.append(this.userPage.render());
         
 
         // stats modal

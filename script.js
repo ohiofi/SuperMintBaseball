@@ -6,32 +6,32 @@ const app = new Controller(new Model(), new View())
 // let bgame = new BaseballGame(new BaseballTeam(), new BaseballTeam());
 // let count = 0
 
-function addAlert(message, type) { 
-    // const cont = 
-    //     document.getElementById('alertContainer');
-    // while (cont.firstChild) {
-    //     cont.removeChild(cont.firstChild);
-    // }
-    // const aDiv = document.createElement('div');
-    // aDiv.classList.
-    //     add('alert', 'alert-' + 
-    //         type, 'alert-dismissible', 
-    //         'fade', 'show', 'w-25','float-end');
-    // aDiv.setAttribute('role', 'alert');
-    // aDiv.innerHTML = message + 
-    // `<button type="button"
-    //     class="btn-close" data-bs-dismiss="alert"
-    //     aria-label="Close">
-    // </button>`;
-    // cont.appendChild(aDiv);
-    // setTimeout(function () {
-    //     aDiv.classList.remove('show');
-    //     aDiv.remove();
-    // }, 3000);
-    // app.view.newsTickerContainer.innerHTML =  "BREAKING NEWS: " + message;
-    app.model.world.newsTicker.setBreakingNews(message);
+// function addAlert(message, type) { 
+//     // const cont = 
+//     //     document.getElementById('alertContainer');
+//     // while (cont.firstChild) {
+//     //     cont.removeChild(cont.firstChild);
+//     // }
+//     // const aDiv = document.createElement('div');
+//     // aDiv.classList.
+//     //     add('alert', 'alert-' + 
+//     //         type, 'alert-dismissible', 
+//     //         'fade', 'show', 'w-25','float-end');
+//     // aDiv.setAttribute('role', 'alert');
+//     // aDiv.innerHTML = message + 
+//     // `<button type="button"
+//     //     class="btn-close" data-bs-dismiss="alert"
+//     //     aria-label="Close">
+//     // </button>`;
+//     // cont.appendChild(aDiv);
+//     // setTimeout(function () {
+//     //     aDiv.classList.remove('show');
+//     //     aDiv.remove();
+//     // }, 3000);
+//     // app.view.newsTickerContainer.innerHTML =  "BREAKING NEWS: " + message;
+//     app.model.world.newsTicker.setBreakingNews(message);
     
-}
+// }
 
 // CUSTOM EVENT LISTENERS
 document.addEventListener('HomeRun', (event) => {

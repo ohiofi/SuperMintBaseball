@@ -19,7 +19,7 @@ class World{
             each.manager.subscribe(this.newsTicker.handleEvent);
         }
         this.shop = new Shop();
-        this.shop.addCards(this.league)
+        this.shop.addCards(this.league.getTeamsPlayingToday())
     }
 
 

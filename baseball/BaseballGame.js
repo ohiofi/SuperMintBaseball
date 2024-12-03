@@ -168,9 +168,7 @@ class BaseballGame {
     }
 
     getBaseRunnerScores(baseIndex, numberToAdvance, isSacrificeFly = false){
-        console.log("line 171 ")
         if (this.onBase[baseIndex] && (baseIndex + numberToAdvance) >= 3) { // base index 3 would be home base
-            console.log("line 171 "+baseIndex+"/"+numberToAdvance+"/"+isSacrificeFly)
             let runner = this.onBase[baseIndex];
             this.incrementScore();
             runner.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, runner.leagueIdNumber));

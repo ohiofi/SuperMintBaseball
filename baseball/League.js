@@ -78,6 +78,10 @@ class League {
         return null;
     }
 
+    getTeamsPlayingToday() {
+        return this.seasons[this.currentSeason].regularSeasonSchedule.getTeamsPlayingToday();
+    }
+
     getSchedule(){
         return this.seasons[this.currentSeason].regularSeasonSchedule
     }
