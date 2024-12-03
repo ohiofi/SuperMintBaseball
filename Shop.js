@@ -15,8 +15,8 @@ class Shop{
         <trading-card 
             name="+1 HAND SIZE ✋"
             position="✋"
-            team="✋"
-            reward="Hold 1 additional card"
+            cardLine2="✋"
+            cardLine1="Hold 1 additional card"
             cost="${Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice}"
             colorLight="#FFFFFF"
             colorMid="#333333"
@@ -37,7 +37,7 @@ class Shop{
 
     addCards(teamArray){
         for(let i=0; i<teamArray.length;i++){
-            if(!this.hasCardInShop(teamArray[i].leagueIdNumber)){
+            if(!this.isCardInShop(teamArray[i].leagueIdNumber)){
                 this.favTeamCards.push(
                     new FavTeamCard(
                         teamArray[i],
@@ -48,7 +48,7 @@ class Shop{
                     )
                 )
             }
-            if(!this.hasCardInShop(teamArray[i].getPitcher().leagueIdNumber)){
+            if(!this.isCardInShop(teamArray[i].getPitcher().leagueIdNumber)){
                 this.pitcherCards.push(
                     new TradingCard(
                         teamArray[i].getPitcher(),
@@ -59,7 +59,7 @@ class Shop{
                     )
                 )
             }
-            if(!this.hasCardInShop(teamArray[i].getSlugger().leagueIdNumber)){
+            if(!this.isCardInShop(teamArray[i].getSlugger().leagueIdNumber)){
                 this.sluggerCards.push(
                     new TradingCard(
                         teamArray[i].getSlugger(),
@@ -82,7 +82,7 @@ class Shop{
                     <span id="shopCardSlot${i}" class="col-12 text-center">
                     </span>
                     <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-warning">BUY ME -${this.onDisplay[i].cost}💰</button>
+                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${this.onDisplay[i].cost}💰</button>
                     </div>
                 </span>
                 `
@@ -97,7 +97,7 @@ class Shop{
                     </span>
                     <div class="col-12 text-center pb-5">
                         <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
-                            class="handSizeCardButton btn btn-warning">BUY ME -${handSizeCard.cost}💰</button>
+                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}💰</button>
                     </div>
                 </span>
                 `
@@ -114,7 +114,7 @@ class Shop{
         this.onDisplay[index] == null;
         return card;
     }
-    hasCardInShop(leagueIdNumber){
+    isCardInShop(leagueIdNumber){
         for(let each of this.favTeamCards){
             if(each.leagueIdNumber === leagueIdNumber) return true
         }

@@ -17,6 +17,14 @@ a {
     cursor: pointer !important;
 }
 
+.accordion-button:not(.collapsed) {
+    color:#000 !important;
+    background-color: #888;
+    border-radius: 8px;
+    padding: 10px;
+    margin:10px 0px;
+}
+
 .alert-fixed {
     position: fixed;
     top: 0px;

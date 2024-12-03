@@ -4,14 +4,14 @@ class TradingCard{
     constructor(player, cost, rewardAmount, valuables, eventType){
         this.cardId = TradingCard.counter++;
         this.name = null;
-        this.position = null;
+        this.cardType = null;
         this.team = null;
         this.leagueIdNumber = null;
         this.colorScheme = {light:"black",mid:"black",dark:"black"};
         this.profilePic = null;
         if(player != null){
             this.name = player.firstName + " " + player.lastName;
-            this.position = player.position;
+            this.cardType = player.position;
             this.team = player.teamPlaceAbbreviation + " " + player.teamMascot;
             this.leagueIdNumber = player.leagueIdNumber;
             this.colorScheme = player.colorScheme;
@@ -40,14 +40,17 @@ class TradingCard{
             data-bs-target="#statsModal" 
             data-bs-toggle="modal"
             name="${this.name}"
-            position="${this.position}"
-            team="${this.team}"
-            reward="+${this.rewardAmount} ${this.valuables.getEmoji()} per ${this.eventString}"
+            cardLine1="+${this.rewardAmount} ${this.valuables.getEmoji()} per ${this.eventString}"
+            cardLine2="${this.team}"
+            cardLine3="${this.cardType}"
+            cardLine4="Click for Player stats"
+            
             cost="${this.cost}"
             colorLight="${this.colorScheme.light}"
             colorMid="${this.colorScheme.mid}"
             colorDark="${this.colorScheme.dark}"
-            emoji="${this.profilePic}">
+            emoji="${this.profilePic}"
+            font="13px Arial">
         </trading-card>`.trim();
     }
     equals(otherObject){

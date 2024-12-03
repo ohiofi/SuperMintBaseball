@@ -7,18 +7,17 @@ class TradingCardComponent extends HTMLElement {
 
         // Extract attributes
         this.name = this.getAttribute('name') || 'Unknown Player';
-        
-        this.crest = this.getAttribute('crest') || 'crest';
-        this.position = this.getAttribute('position') || 'Unknown Position';
-        this.team = this.getAttribute('team') || 'Unknown Team';
-        this.stats = this.getAttribute('stats') || 'N/A';
-        this.reward = this.getAttribute('reward') || 'No Reward';
+        this.cardLine1 = this.getAttribute('cardLine1') || 'No Reward';
+        this.cardLine2 = this.getAttribute('cardLine2') || 'Unknown Team';
+        this.cardLine3 = this.getAttribute('cardLine3') || 'Unknown Position';
+        this.cardLine4 = this.getAttribute('cardLine4') || 'Click to see stats';
         this.cost = this.getAttribute('cost') || 'N/A';
         this.colorLight = this.getAttribute('colorLight') || '#FFD700';
         this.colorMid = this.getAttribute('colorMid') || '#994500';
         this.colorDark = this.getAttribute('colorDark') || '#664500';
         this.gradientRotation = rng.random();   
         this.emoji = this.getAttribute('emoji') || '🏃';
+        this.font = this.getAttribute('font') || '13px';
         this.uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
 
         // HTML structure
@@ -43,10 +42,10 @@ class TradingCardComponent extends HTMLElement {
             </div>
             <div class="tradingCardBody">
        
-                <div class="cardReward py-0 my-0"><small>${this.reward}</small></div>
-                <div class="cardTeam py-0 my-0"><small>Team:</small> ${this.team}</div>
-                <div class="cardPosition py-0 my-0"><small>Position:</small> ${this.position}</div>
-                <div class="cardStats pb-5"><small>Click to see stats</small></div>
+                <div class="cardLine1 py-0 my-0"><small>${this.cardLine1}</small></div>
+                <div class="cardLine2 py-0 my-0">${this.cardLine2}</div>
+                <div class="cardLine3 py-0 my-0">${this.cardLine3}</div>
+                <div class="cardLine4 pb-5"><small>${this.cardLine4}</small></div>
    
             </div>
           </div>
@@ -76,11 +75,9 @@ class TradingCardComponent extends HTMLElement {
         ctx.filter = "contrast(70%) brightness(130%)";
         // Set font size and alignment for the emoji
         // ctx.font = (emoji.length == 1 ? 33 : 7/emoji.length+6)+'px';
-        if(this.position != "Favorite Team"){
-          ctx.font = "13px Arial"
-        } else {
-          ctx.font = (7/this.emoji.length+6)+'px monospace';
-        }
+        
+        ctx.font = this.font;
+        
         
 
 
@@ -129,7 +126,8 @@ class TradingCardComponent extends HTMLElement {
           padding: 5px 10px;
           color: ${this.colorLight};
           background: ${this.colorDark};
-          font-size: 1em;
+          /*font-size: 1em;*/
+          font-size:${Math.min(290/this.name.length, 16)}px;
           font-weight: bold;
           text-transform: uppercase;
           border-bottom: ${borderSize} solid ${this.colorMid};
@@ -150,20 +148,23 @@ class TradingCardComponent extends HTMLElement {
           image-rendering: pixelated;
         }
         .tradingCardBody {
-          padding: 10px;
+          padding: 0px 0px 50px 0px;
           color: #fff;
           background: ${this.colorDark};
-          font-size: 0.9em;
+          font-size: 0.85em;
           text-align: center;
           border-top: ${borderSize} solid ${this.colorMid};
+          line-height:1.4em;
         }
         .tradingCardBody p {
           margin: 5px 0;
         }
-        .cardReward {
-          font-size: 1.2em;
+        .cardLine1 {
+          font-size: 1.35em;
           font-weight: bold;
           text-align: center;
+          
+          line-height:1.9em;
           color: #fff;
         }
         .tradingCardHoverPoint {
