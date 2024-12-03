@@ -75,9 +75,6 @@ class Shop{
 
 
     getCardDisplay(number){
-        // always add the +1 Hand Size card
-        this.onDisplay.push(Shop.getHandSizeCard())
-        number++;
         for(let i=0; i<number; i++){
             if(this.onDisplay[i] != null){
                 this.root.innerHTML += `
@@ -91,20 +88,20 @@ class Shop{
                 `
                 this.root.querySelector("#shopCardSlot"+i).append(this.onDisplay[i].render())
             }
-            // else{
-            //     this.root.innerHTML += `
-            //     <span class="col row">
-            //         <span id="slot${i}" class="col-12 text-center">
-            //         SOLD
-            //         </span>
-            //         <div class="col-12 text-center">
-            //             <button disabled type="button" value=${i} class="btn btn-warning">SOLD</button>
-            //         </div>
-            //     </span>
-            //     `
-            // }
-            
         }
+        // always add the +1 Hand Size card
+        const handSizeCard = Shop.getHandSizeCard()
+        this.root.innerHTML += `
+                <span class="col row">
+                    <span id="shopCardSlotHandSizeCard" class="col-12 text-center">
+                    </span>
+                    <div class="col-12 text-center pb-5">
+                        <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
+                            class="handSizeCardButton btn btn-warning">BUY ME -${handSizeCard.cost}💰</button>
+                    </div>
+                </span>
+                `
+                this.root.querySelector("#shopCardSlotHandSizeCard").append(handSizeCard.render())
         return this.root
     }
     getPurchase(index, user){

@@ -15,10 +15,10 @@ class NavBar {
                 <span class="d-flex">
                     
                     <span class=" font-monospace text-secondary pt-1 pe-3" data-link-to-page-id="userPage">
-                        <span id="moneyCounter">100</span><span class="opacity-50">💰</span>
-                        <span id="stocksCounter">1</span><span class="opacity-50">💹</span>
-                        <span id="ticketsCounter">3</span><span class="opacity-50">🎟️</span>
-                        <span id="capsCounter">5</span><span class="opacity-50">🧢</span>
+                        <span id="moneyCounter">100</span><span class="opacity-75">💰</span>
+                        <span id="stocksCounter">1</span><span class="opacity-75">💹</span>
+                        <span id="ticketsCounter">3</span><span class="opacity-75">🎟️</span>
+                        <span id="capsCounter">5</span><span class="opacity-75">🧢</span>
                     </span>
                     <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-secondary link-opacity-25 link-opacity-100-hover text-decoration-none"
                         data-link-to-page-id="userPage" >                   

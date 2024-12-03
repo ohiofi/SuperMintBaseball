@@ -122,11 +122,11 @@ class Controller {
         }
         else if (!this.model.users[0].hasRoomForThisCard(this.model.world.shop.onDisplay[value])) {
             console.log(this.model.world.shop.onDisplay[value])
-            this.addAlert("danger", "no room for more cards")
+            this.addAlert("danger", `oops! no room for more cards! you have ${this.model.users[0].cards.length}/${this.model.users[0].maxCards}🃏. can you buy +1 Hand Size?`)
         }
         else if (!this.model.world.shop.isPurchaseAffordable(value, this.model.users[0])) {
             console.log("not enough money")
-            this.addAlert("danger", "not enough money")
+            this.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}💰, but that costs ${this.model.world.shop.onDisplay[value].cost}💰`)
         }
         this.view.userPage.update(this.model.users[0])
         this.view.navBar.setCounters(this.model.users[0])
