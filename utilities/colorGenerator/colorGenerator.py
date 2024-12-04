@@ -32,22 +32,22 @@ colors_hsl = {
         "light": "hsl(69, 100%, 92%)"
     },
     "duron_electric_lime": {
-        "dark": "hsl(98, 100%, 22%)",
+        "dark": "hsl(98, 100%, 10%)",
         "mid": "hsl(98, 100%, 45%)",
         "light": "hsl(98, 100%, 81%)"
     },
     "neon_green": {
-        "dark": "hsl(126, 100%, 30%)",
+        "dark": "hsl(132, 100%, 30%)",
         "mid": "hsl(132, 100%, 55%)",
         "light": "hsl(132, 100%, 92%)"
     },
     "spring_green": {
-        "darker": "hsl(160, 100%, 22%)",
+        "darker": "hsl(160, 100%, 25%)",
         "mid": "hsl(160, 100%, 50%)",
         "light": "hsl(160, 100%, 81%)"
     },
     "electric_turquoise": {
-        "darker": "hsl(176, 100%, 20%)",
+        "darker": "hsl(176, 100%, 30%)",
         "mid": "hsl(177, 100%, 60%)",
         "light": "hsl(177, 100%, 90%)"
     },

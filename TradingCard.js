@@ -1,17 +1,23 @@
-class TradingCard{
-    
+const CardType = {
+    PITCHER:"Pitcher",
+    SLUGGER:"Slugger",
+    FAV_TEAM:"Fav Team",
+    INCREASE_HAND_SIZE:"Increase Hand Size"
+}
+
+class TradingCard {
+
     static counter = 0;
-    constructor(player, cost, rewardAmount, valuables, eventType){
+    constructor(cardType, player, cost, rewardAmount, valuables, eventType) {
         this.cardId = TradingCard.counter++;
         this.name = null;
-        this.cardType = null;
+        this.cardType = cardType;
         this.team = null;
         this.leagueIdNumber = null;
-        this.colorScheme = {light:"black",mid:"black",dark:"black"};
+        this.colorScheme = { light: "black", mid: "black", dark: "black" };
         this.profilePic = null;
-        if(player != null){
+        if (player != null) {
             this.name = player.firstName + " " + player.lastName;
-            this.cardType = player.position;
             this.team = player.teamPlaceAbbreviation + " " + player.teamMascot;
             this.leagueIdNumber = player.leagueIdNumber;
             this.colorScheme = player.colorScheme;
@@ -24,16 +30,19 @@ class TradingCard{
         // console.log(valuables)
         this.eventType = eventType
         this.eventString = null;
-        switch(this.eventType){
+        this.pastTenseEventString = null;
+        switch (this.eventType) {
             case StatsEventType.STRIKEOUTS_THROWN:
                 this.eventString = "strikeout thrown"
+                this.pastTenseEventString = "threw a strikeout!";
                 break
             case StatsEventType.HITS:
                 this.eventString = "hit"
+                this.pastTenseEventString = "got a hit!";
                 break
         }
         this.container = View.createElement("span");
-        if(!this.valuables) return
+        if (!this.valuables) return
         this.container.innerHTML = `
         <trading-card 
             onclick="app.view.modal.update(${this.leagueIdNumber});" 
@@ -44,7 +53,6 @@ class TradingCard{
             cardLine2="${this.team}"
             cardLine3="${this.cardType}"
             cardLine4="Click for Player stats"
-            
             cost="${this.cost}"
             colorLight="${this.colorScheme.light}"
             colorMid="${this.colorScheme.mid}"
@@ -53,8 +61,26 @@ class TradingCard{
             font="13px Arial">
         </trading-card>`.trim();
     }
-    equals(otherObject){
+    equals(otherObject) {
         return this.leagueIdNumber === otherObject.leagueIdNumber
+    }
+    isTriggered(statsEvent) {
+        if(statsEvent.playerId === this.leagueIdNumber){
+            if (statsEvent.eventType === this.eventType) {
+                return true;
+            }
+            if (this.eventType === StatsEventType.HITS
+                && (
+                    statsEvent.eventType === StatsEventType.SINGLES 
+                    || statsEvent.eventType === StatsEventType.DOUBLES 
+                    || statsEvent.eventType === StatsEventType.TRIPLES 
+                    || statsEvent.eventType === StatsEventType.HOME_RUNS
+                )) {
+                return true
+            }
+        }
+        
+        return false;
     }
     render() {
         return this.container

@@ -1,9 +1,17 @@
+const ModelState = {
+    MORNING:0,
+    AFTERNOON:1,
+    NIGHT:2
+}
+
+
 class Model {
     constructor() {
         // The state of the model
         //this.game = JSON.parse(localStorage.getItem('savedGame')) || new Game();
         this.world = new World();
         this.users = [new User()];
+        this.state = ModelState.MORNING;
     }
 
     addUser() {
@@ -30,7 +38,7 @@ class Model {
             
             
             if (buyingCard) {
-                this.users[0].addCard(buyingCard);
+                this.users[0].addCard(buyingCard, this.world.league.lookup(buyingCard.leagueIdNumber));
             }
         }
     }
@@ -39,7 +47,7 @@ class Model {
 
 
     next(){
-        console.log("NEXT STATE")
+        this.state = ( this.state + 1 ) % Object.keys(ModelState).length;
     }
 
 

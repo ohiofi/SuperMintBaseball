@@ -22,6 +22,8 @@ class World{
         this.shop.addCards(this.league.getTeamsPlayingToday())
     }
 
+    
+
 
 
     getGameDetails(){

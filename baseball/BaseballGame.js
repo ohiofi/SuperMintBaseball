@@ -158,6 +158,14 @@ class BaseballGame {
         return "";
     }
 
+    getBaseRunnerCount(){
+        let count = 0
+        for(let each of this.onBase){
+            if (each != null) count++
+        }
+        return count;
+    }
+
     getBaseRunnerMovement(numberToAdvance, isSacrificeFly = false){
         numberToAdvance = numberToAdvance || 0;
         let result = "";
@@ -171,7 +179,7 @@ class BaseballGame {
         if (this.onBase[baseIndex] && (baseIndex + numberToAdvance) >= 3) { // base index 3 would be home base
             let runner = this.onBase[baseIndex];
             this.incrementScore();
-            runner.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, runner.leagueIdNumber));
+            this.offenseTeam.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, runner.leagueIdNumber));
             this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             this.onBase[baseIndex] = null;
             if (isSacrificeFly) {
@@ -301,7 +309,20 @@ class BaseballGame {
                     new StatsEvent(StatsEventType.TRIPLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
             } else {
-                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a HOME RUN!"
+                switch(this.getBaseRunnerCount()){
+                    case 0:
+                        result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a HOME RUN!"
+                        break
+                    case 1:
+                        result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a TWO-RUN HOME RUN!"
+                        break
+                    case 2:
+                        result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a THREE-RUN HOME RUN!"
+                        break
+                    case 3:
+                        result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a GRAND SLAM HOME RUN!"
+                        break
+                }
                 this.incrementScore();
                 this.incrementHits()
                 result += this.getBaseRunnerMovement(4)
@@ -314,7 +335,7 @@ class BaseballGame {
                 this.pitcher.manager.notify(
                     new StatsEvent(StatsEventType.HOME_RUNS_ALLOWED, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
-                this.batter.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                this.offenseTeam.manager.notify(new StatsEvent(StatsEventType.RUNS_SCORED, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
                 this.pitcher.manager.notify(new StatsEvent(StatsEventType.RUNS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
             }
             this.gameState.previousState(this);

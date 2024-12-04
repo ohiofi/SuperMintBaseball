@@ -1,5 +1,5 @@
 class Shop{
-    static increaseHandSizeBasePrice = 24
+    static increaseHandSizeBasePrice = 9
     static increaseHandSizeSquarePrice = 1
     // takes an integer sum and splits it into three parts such that the total equals the given sum.
     static splitThreeWays(sum) {
@@ -9,14 +9,15 @@ class Shop{
         return [part1, part2, part3];
     }
     static getHandSizeCard(cost){
-        const card = new TradingCard(null, Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice);
+        const card = new TradingCard(CardType.INCREASE_HAND_SIZE,null, Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice);
         card.leagueIdNumber = -1;
         card.container.innerHTML = `
         <trading-card 
             name="+1 HAND SIZE ✋"
-            position="✋"
-            cardLine2="✋"
             cardLine1="Hold 1 additional card"
+            cardLine2="✋"
+            cardLine3="✋"
+            cardLine4="✋"
             cost="${Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice}"
             colorLight="#FFFFFF"
             colorMid="#333333"
@@ -40,6 +41,7 @@ class Shop{
             if(!this.isCardInShop(teamArray[i].leagueIdNumber)){
                 this.favTeamCards.push(
                     new FavTeamCard(
+                        CardType.FAV_TEAM,
                         teamArray[i],
                         4,
                         5,
@@ -51,6 +53,7 @@ class Shop{
             if(!this.isCardInShop(teamArray[i].getPitcher().leagueIdNumber)){
                 this.pitcherCards.push(
                     new TradingCard(
+                        CardType.PITCHER,
                         teamArray[i].getPitcher(),
                         20,
                         1,
@@ -62,10 +65,11 @@ class Shop{
             if(!this.isCardInShop(teamArray[i].getSlugger().leagueIdNumber)){
                 this.sluggerCards.push(
                     new TradingCard(
+                        CardType.SLUGGER,
                         teamArray[i].getSlugger(),
                         2,
-                        10,
-                        new Valuables({"caps":10}),
+                        5,
+                        new Valuables({"caps":5}),
                         StatsEventType.HITS
                     )
                 )

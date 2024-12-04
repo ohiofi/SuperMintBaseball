@@ -1,8 +1,28 @@
 class Controller {
+
+    static addAlert(type, message) {
+        const aDiv = document.createElement('div');
+        aDiv.classList.
+            add('alert', 'alert-' +
+                type, 'alert-dismissible',
+                'fade', 'show', 'w-25', 'float-end', 'alert-fixed', "rounded-4", "m-4", "opacity-75");
+        aDiv.setAttribute('role', 'alert');
+        aDiv.innerHTML = message +
+            `<button type="button"
+            class="btn-close" data-bs-dismiss="alert"
+            aria-label="Close">
+        </button>`;
+        document.body.appendChild(aDiv);
+        setTimeout(function () {
+            aDiv.classList.remove('show');
+            aDiv.remove();
+        }, 5000);
+    }
+
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 1000;
+        this.speed = 3000;
 
         let crestString = "";
         for (let each of this.model.world.league.teams) {
@@ -17,27 +37,11 @@ class Controller {
 
     }
 
-    addAlert(type, message) {
-        const aDiv = document.createElement('div');
-        aDiv.classList.
-            add('alert', 'alert-' +
-                type, 'alert-dismissible',
-                'fade', 'show', 'w-50', 'float-end', 'alert-fixed', "rounded-4", "m-4");
-        aDiv.setAttribute('role', 'alert');
-        aDiv.innerHTML = message +
-            `<button type="button"
-            class="btn-close" data-bs-dismiss="alert"
-            aria-label="Close">
-        </button>`;
-        document.body.appendChild(aDiv);
-        setTimeout(function () {
-            aDiv.classList.remove('show');
-            aDiv.remove();
-        }, 5000);
-    }
+    
 
     setupAfternoonView() {
         this.view = new AfternoonView();
+        this.setTime();
         this.model.world.league.reloadTeams()
 
         this.view.navBar.setCounters(this.model.users[0])
@@ -53,7 +57,7 @@ class Controller {
         }
         this.view.addNewsTickerItems(tickerArray);
 
-        // set the speed
+        // set the ticker speed
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
         this.model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
         //this.view.addPageMenuItems(this.model.world);
@@ -78,6 +82,9 @@ class Controller {
 
     setupShopView() {
         this.view = new ShopView();
+        this.setTime();
+        // update user info
+        this.view.userPage.update(this.model.users[0])
         this.view.navBar.setCounters(this.model.users[0])
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.bindMenuBarClick(this.handleShowPage)
@@ -96,16 +103,43 @@ class Controller {
             "WE ARE BACK!",
             "I AM THE NEW TICKER",
             "INVEST IN TRADING CARDS",
+            "BUY SOMETHIN' WILL YA!",
+            "LOOK ON MY WARES, YE MIGHTY, AND REJOICE",
             "PLAY NICE",
             "NO STEALING",
+            "PAY ME AND I'LL TALK",
+            "EVERYTHING IS YOURS TO TAKE",
             "THIS IS AMERICA'S PASTIME... SHOPPING!",
+            "I REMAIN UNCHANGED",
+            "LET'S PLAY MONEY MAKING GAME",
+            "WE NEED A PITCHER",
+            "NOT A BELLY ITCHER",
+            "RISE, STAY AWAKE",
+            "BOY, YOU'RE RICH",
+            "TAKE ANY ONE YOU WANT",
+            "YOU ARE NO LONGER AVOIDING THE ORDINARY ACT OF REALITY",
+            "BOY, THIS IS REALLY EXPENSIVE!",
+            "WHO'S ON FIRST BASE? PRIDE. SECOND BASE IS GREED, THIRD BASE WRATH... SLOTH IS ON THE BENCH",
         ]);
+        // set the ticker speed
+        const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
+        this.model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
     }
 
     handleContinueButtonClick = () => {
         // update the model state
         this.model.next()
         // update the view
+        switch(this.model.state){
+            case ModelState.MORNING:
+                this.setupShopView()
+                break
+            case ModelState.AFTERNOON:
+                this.setupAfternoonView()
+                break
+            case ModelState.NIGHT:
+                break
+        }
     }
 
     handleShopButtonClick = (value) => {
@@ -122,11 +156,11 @@ class Controller {
         }
         else if (!this.model.users[0].hasRoomForThisCard(this.model.world.shop.onDisplay[value])) {
             console.log(this.model.world.shop.onDisplay[value])
-            this.addAlert("danger", `oops! no room for more cards! you have ${this.model.users[0].cards.length}/${this.model.users[0].maxCards}🃏. can you buy +1 Hand Size?`)
+            Controller.addAlert("danger", `oops! no room for more cards! you have ${this.model.users[0].cards.length}/${this.model.users[0].maxCards}🃏. can you buy +1 Hand Size?`)
         }
         else if (!this.model.world.shop.isPurchaseAffordable(value, this.model.users[0])) {
             console.log("not enough money")
-            this.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}💰, but that costs ${this.model.world.shop.onDisplay[value].cost}💰`)
+            Controller.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}💰, but that costs ${this.model.world.shop.onDisplay[value].cost}💰`)
         }
         this.view.userPage.update(this.model.users[0])
         this.view.navBar.setCounters(this.model.users[0])
@@ -134,6 +168,10 @@ class Controller {
     handleShowPage = (id) => {
         if (!id) return
         this.view.showPage(id)
+    }
+
+    setTime(){
+        this.view.homePage.root.querySelector("#dateAndTime").innerHTML = "Year "+this.model.world.league.currentSeason+" Day "+this.model.world.league.seasons[this.model.world.league.currentSeason].day
     }
 
     update() {
@@ -150,6 +188,10 @@ class Controller {
         // update news ticker
         this.model.world.newsTicker.update(gameMessages);
         this.model.world.newsTicker.show();
+        // update user info
+        this.view.userPage.update(this.model.users[0])
+        this.view.navBar.setCounters(this.model.users[0])
+
         // check if the games are done
         if (this.model.world.league.isTodayDone()) {
             this.view.showTodayIsDone();

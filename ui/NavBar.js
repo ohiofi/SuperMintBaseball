@@ -35,6 +35,7 @@ class NavBar {
     }
 
     setCounters(user){
+        console.log(38)
         this.root.querySelector("#moneyCounter").innerHTML = user.valuables.money;
         this.root.querySelector("#stocksCounter").innerHTML = user.valuables.stocks;
         this.root.querySelector("#ticketsCounter").innerHTML = user.valuables.tickets;
