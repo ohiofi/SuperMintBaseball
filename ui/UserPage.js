@@ -10,6 +10,32 @@ class UserPage{
                 </div>
             </div>
             <div class="container my-5">
+            <div class="row text-center">
+                <div class="col">
+                    <strong>Lives 🩸</strong>
+                    <p id="userLives" class="font-monospace">3</p>
+                </div>
+                <div class="col">
+                    <strong>Money 💰</strong>
+                    <p id="money" class="font-monospace">50</p>
+                </div>
+                <div class="col">
+                    <strong>Stocks 💹</strong>
+                    <p id="stocks" class="font-monospace">0</p>
+                </div>
+                <div class="col">
+                    <strong>Tickets 🎟️</strong>
+                    <p id="tickets" class="font-monospace">0</p>
+                </div>
+                <div class="col">
+                    <strong>Caps 🧢</strong>
+                    <p id="caps" class="font-monospace">0</p>
+                </div>
+                <div class="col">
+                    <strong>Cards 🃏</strong>
+                    <p><span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span></p>
+                </div>
+            </div>
 
                 <ul class="nav nav-tabs  nav-fill" id="userTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -38,7 +64,7 @@ class UserPage{
                         <div class="card text-secondary bg-222 shadow pb-4 mt-0">
                             <div class="card-header text-center">
                                 <h3>Cards 🃏
-                                <span class="cardsCount">0</span>/<span class="maxCards">5</span></h3>
+                                <span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span>
                             </div>
                             <div id="userPageCardContainer" class="card-body row p-4">
                                 <!-- Cards content dynamically inserted here -->
@@ -53,32 +79,7 @@ class UserPage{
                                 <h3><span id="userName">John Doe</span></h3>
                             </div>
                             <div class="card-body">
-                                <div class="row text-center">
-                                    <div class="col">
-                                        <strong>Lives 🩸</strong>
-                                        <p id="userLives">3</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Money 💰</strong>
-                                        <p id="money">50</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Stocks 💹</strong>
-                                        <p id="stocks">0</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Tickets 🎟️</strong>
-                                        <p id="tickets">0</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Caps 🧢</strong>
-                                        <p id="caps">0</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Cards 🃏</strong>
-                                        <p><span class="cardsCount">0</span>/<span class="maxCards">5</span></p>
-                                    </div>
-                                </div>
+                                User stats go here
                                 
                             </div>
                         </div>

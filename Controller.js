@@ -61,7 +61,7 @@ class Controller {
         for (let each of gameDetails) {
             tickerArray.push(each.scoreString);
         }
-        this.view.addNewsTickerItems(tickerArray);
+        this.model.world.newsTicker.addItems(tickerArray);
 
         // set the ticker speed
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
@@ -73,10 +73,6 @@ class Controller {
         this.gameDetails = this.model.world.getGameDetails();
         this.view.liveGamesPage.addGameWidgets(this.gameDetails);
         this.view.standingsPage.update(this.model.world.league.getStandingsTableTeams(), this.model.world.league.getStandingsTablePitchers(10), this.model.world.league.getStandingsTableBatters(10))
-        // document.getElementById("standingsSection").innerHTML = 
-        //     `<div class="row"><div class="col-lg-6">`+this.model.world.league.getStandingsTableTeams() 
-        //     + `</div><div class="col-lg-6">` + this.model.world.league.getStandingsTablePitchers(10) 
-        //     + this.model.world.league.getStandingsTableBatters(10)+"</div>";
 
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
 
@@ -111,28 +107,7 @@ class Controller {
         this.model.world.shop.setPitcherCards(Shop.splitThreeWays(numberOfCards)[2])
         this.view.homePage.setShop(this.model.world.shop.getCardDisplay(numberOfCards));
         this.view.bindShopButtonClick(this.handleShopButtonClick);
-        this.view.addNewsTickerItems([
-            "WE ARE BACK!",
-            "I AM THE NEW TICKER",
-            "INVEST IN TRADING CARDS",
-            "BUY SOMETHIN' WILL YA!",
-            "LOOK ON MY WARES, YE MIGHTY, AND REJOICE",
-            "PLAY NICE",
-            "NO STEALING",
-            "PAY ME AND I'LL TALK",
-            "EVERYTHING IS YOURS TO TAKE",
-            "THIS IS AMERICA'S PASTIME... SHOPPING!",
-            "I REMAIN UNCHANGED",
-            "LET'S PLAY MONEY MAKING GAME",
-            "WE NEED A PITCHER",
-            "NOT A BELLY ITCHER",
-            "RISE, STAY AWAKE",
-            "BOY, YOU'RE RICH",
-            "TAKE ANY ONE YOU WANT",
-            "YOU ARE NO LONGER AVOIDING THE ORDINARY ACT OF REALITY",
-            "BOY, THIS IS REALLY EXPENSIVE!",
-            "WHO'S ON FIRST BASE? PRIDE. SECOND BASE IS GREED, THIRD BASE WRATH... SLOTH IS ON THE BENCH",
-        ]);
+        this.model.world.newsTicker.setShopText();
         // set the ticker speed
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
         this.model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
