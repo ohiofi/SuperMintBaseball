@@ -7,7 +7,7 @@ class HomePage{
                 <div id="dateAndTime"></div>
                 <div class="pageSummary col pb-4">The experiment demands that you continue.</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning">CONTINUE</button>
+                    <button type="button" class="continueButton bouncy btn btn-warning ">CONTINUE</button>
                 </div>
             </div>
             <div id="homePageCardContainer"></div>

@@ -1,12 +1,13 @@
 class User {
     constructor(name) {
         this.name = name;
+        this.hasClickedUserIcon = false;
         this.lives = 3;
         this.valuables = new Valuables({
             "money": 30,
-            "stocks": 0,
-            "tickets": 0,
-            "caps": 0
+            "stocks": 1,
+            "tickets": 1,
+            "caps": 1
         });
         this.cards = [];
         this.maxCards = 5;
@@ -15,14 +16,9 @@ class User {
     addCard(cardToAdd, leagueIdObject) {
         if (this.hasRoomForThisCard(cardToAdd)) {
             this.cards.push(cardToAdd);
-            if (cardToAdd.cardType === CardType.PITCHER
-                || cardToAdd.cardType === CardType.SLUGGER
-                || cardToAdd.cardType === CardType.FAV_TEAM)
-            {
+            if (cardToAdd.leagueIdNumber > -1){
                 leagueIdObject.manager.subscribe(this.handleEvent);
             }
-
-
         }
     }
 
@@ -31,8 +27,8 @@ class User {
         // loop thru cards 
         for(let i=0; i<this.cards.length;i++){
             if(this.cards[i].isTriggered(data)){
-                this.valuables.add(this.cards[i].valuables)
-                Controller.addAlert("success",this.cards[i].name + " " + this.cards[i].pastTenseEventString + " +" +this.cards[i].rewardAmount + this.cards[i].valuables.getEmoji())
+                this.cards[i].addRewardToUser(this)
+                Controller.addAlert("success","+" +this.cards[i].rewardAmount + this.cards[i].valuables.getEmoji()+" <small>"+this.cards[i].name + " " + this.cards[i].pastTenseEventString + "</small>")
             }
         }
     }

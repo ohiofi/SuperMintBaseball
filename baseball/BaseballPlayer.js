@@ -291,67 +291,152 @@ class BaseballPlayer {
     }
 
 
+    // getStatsTable() {
+    //     return `
+    //         <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+    //                 <tr>
+    //                     <th colspan="2" class="text-center">Player Details</th>
+    //                 </tr>
+    //                 <tr><td>Team</td><td>
+    //                 ${this.crest.render(40)} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+    //                      ${this.teamPlaceAbbreviation} ${this.teamPlaceName} ${this.teamMascot}
+    //                 </a>
+    //                 </td></tr>
+    //                 <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
+    //                 <tr><td>Full Name</td><td>${this.firstName} "${this.nickName}" ${this.lastName}</td></tr>
+    //                 <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
+    //                 <tr><td>Position</td><td>${this.position}</td></tr>
+    //                 <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
+    //                 <tr><td>Age</td><td>${this.age}</td></tr>
+    //         </table>
+
+    //         <details>
+    //             <summary>Stats</summary>
+    //             ${this.stats.getStatsTable()}
+    //         </details>
+            
+    //         <details>
+    //         <summary>Attributes</summary>
+    //         <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+    //             <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+    //             <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+    //             <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
+    //             <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
+    //             <tr>
+    //                 <th colspan="2" class="text-center">Pitching Attributes</th>
+    //             </tr>
+    //             <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
+    //             <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
+    //             <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
+    //             <tr>
+    //                 <th colspan="2" class="text-center">Batting Attributes</th>
+    //             </tr>
+    //             <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
+    //             <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
+    //             <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
+    //             <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
+    //             <tr>
+    //                 <th colspan="2" class="text-center">Defense Attributes</th>
+    //             </tr>
+    //             <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
+    //             <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
+    //             <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
+                
+    //         </table>
+    //         </details>
+            
+    //         <details>
+    //             <summary>Lifetime</summary>
+    //             ${this.lifetimeStats.getStatsTable()}
+    //         </details>
+    //             `.trim();
+    // }
+
     getStatsTable() {
         return `
-            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-                    <tr>
-                        <th colspan="2" class="text-center">Player Details</th>
-                    </tr>
-                    <tr><td>Team</td><td>
-                    ${this.crest.render(40)} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
-                         ${this.teamPlaceAbbreviation} ${this.teamPlaceName} ${this.teamMascot}
-                    </a>
-                    </td></tr>
-                    <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
-                    <tr><td>Full Name</td><td>${this.firstName} "${this.nickName}" ${this.lastName}</td></tr>
-                    <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
-                    <tr><td>Position</td><td>${this.position}</td></tr>
-                    <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
-                    <tr><td>Age</td><td>${this.age}</td></tr>
-            </table>
-
-            <details>
-                <summary>Stats</summary>
-                ${this.stats.getStatsTable()}
-            </details>
-            
-            <details>
-            <summary>Attributes</summary>
-            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-                <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-                <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
-                <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
-                <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
-                <tr>
-                    <th colspan="2" class="text-center">Pitching Attributes</th>
-                </tr>
-                <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
-                <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
-                <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
-                <tr>
-                    <th colspan="2" class="text-center">Batting Attributes</th>
-                </tr>
-                <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
-                <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
-                <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
-                <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
-                <tr>
-                    <th colspan="2" class="text-center">Defense Attributes</th>
-                </tr>
-                <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
-                <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
-                <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
-                
-            </table>
-            </details>
-            
-            <details>
-                <summary>Lifetime</summary>
-                ${this.lifetimeStats.getStatsTable()}
-            </details>
-                `.trim();
+            <ul class="nav nav-tabs nav-fill" id="playerTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link link-secondary active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" 
+                    type="button" role="tab" aria-controls="details" aria-selected="true">Player Details</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
+                    type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link link-secondary" id="attributes-tab" data-bs-toggle="tab" data-bs-target="#attributes" 
+                    type="button" role="tab" aria-controls="attributes" aria-selected="false">Attributes</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link link-secondary" id="lifetime-tab" data-bs-toggle="tab" data-bs-target="#lifetime" 
+                    type="button" role="tab" aria-controls="lifetime" aria-selected="false">Lifetime</button>
+                </li>
+            </ul>
+    
+            <div class="tab-content" id="playerTabContent">
+                <!-- Player Details Tab -->
+                <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                    <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                        <tr>
+                            <th colspan="2" class="text-center">Player Details</th>
+                        </tr>
+                        <tr><td>Team</td><td>
+                            ${this.crest.render(40)} <a href="#" onclick="app.view.modal.update(${this.teamLeagueIdNumber})" 
+                            class="link text-light link-offset-2 link-light link-underline-opacity-25 link-underline-opacity-100-hover">
+                                ${this.teamPlaceAbbreviation} ${this.teamPlaceName} ${this.teamMascot}
+                            </a>
+                        </td></tr>
+                        <tr><td>Player ID</td><td>${this.playerIdNumber}</td></tr>
+                        <tr><td>Full Name</td><td>${this.firstName} "${this.nickName}" ${this.lastName}</td></tr>
+                        <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
+                        <tr><td>Position</td><td>${this.position}</td></tr>
+                        <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
+                        <tr><td>Age</td><td>${this.age}</td></tr>
+                    </table>
+                </div>
+    
+                <!-- Stats Tab -->
+                <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+                    ${this.stats.getStatsTable()}
+                </div>
+    
+                <!-- Attributes Tab -->
+                <div class="tab-pane fade" id="attributes" role="tabpanel" aria-labelledby="attributes-tab">
+                    <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                        <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+                        <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+                        <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
+                        <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
+                        <tr>
+                            <th colspan="2" class="text-center">Pitching Attributes</th>
+                        </tr>
+                        <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
+                        <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
+                        <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
+                        <tr>
+                            <th colspan="2" class="text-center">Batting Attributes</th>
+                        </tr>
+                        <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
+                        <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
+                        <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
+                        <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
+                        <tr>
+                            <th colspan="2" class="text-center">Defense Attributes</th>
+                        </tr>
+                        <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
+                        <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
+                        <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
+                    </table>
+                </div>
+    
+                <!-- Lifetime Stats Tab -->
+                <div class="tab-pane fade" id="lifetime" role="tabpanel" aria-labelledby="lifetime-tab">
+                    ${this.lifetimeStats.getStatsTable()}
+                </div>
+            </div>
+        `.trim();
     }
-
+    
 
     getDefenseAptitude() {
         return (this.reliability + this.teamwork) / 2;

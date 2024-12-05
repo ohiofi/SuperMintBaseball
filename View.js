@@ -28,6 +28,7 @@ class View{
         this.app.innerHTML = "";
         this.viewContainer = View.createElement("div","viewContainer","container mt-5 pt-5")
 
+        this.alertContainer = View.createElement("span",null,"position-fixed alert-fixed w-25 mt-3")
         // news ticker
         //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4 bg-danger");
         this.tickerItems = [];
@@ -47,7 +48,7 @@ class View{
         // stats modal
         this.modal = new StatsModal();
         this.viewContainer.append( this.pageContainer, this.modal.render())
-        this.app.append(this.newsTickerContainer, this.navBar.render(), this.viewContainer)
+        this.app.append(this.alertContainer, this.newsTickerContainer, this.navBar.render(), this.viewContainer)
         
     }
 
@@ -93,7 +94,7 @@ class View{
 
     bindMenuBarClick(handler) {
         this.navBar.root.addEventListener('click', event => {
-            console.log(event)
+            // console.log(event)
             if (event.target.localName === 'span' || event.target.localName === 'nobr'){
                 const id = event.target.parentElement.dataset.linkToPageId;
                 handler(id)

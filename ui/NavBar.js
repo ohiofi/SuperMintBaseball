@@ -4,7 +4,13 @@ class NavBar {
         this.root.innerHTML = `
             <div id="newsTickerContainer" class="mt-1 col-12 small"></div>
             <div class="container col-12">
-                <a class="navbar-brand text-secondary link-secondary link-opacity-25 link-opacity-100-hover" data-link-to-page-id="homePage" href="#">ioBaseball</a>
+                <a class="fs-2 navbar-brand text-secondary me-2" data-link-to-page-id="homePage" href="#">
+                    ioBaseball<span style="font-size:8px;padding-top:5px;" class="badge text-bg-secondary rounded-1 m-0">
+                        BETA
+                    </span>
+                    
+                </a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -20,6 +26,7 @@ class NavBar {
                         <span id="ticketsCounter">3</span><span class="opacity-75">🎟️</span>
                         <span id="capsCounter">5</span><span class="opacity-75">🧢</span>
                     </span>
+                    <h6 id="userIconNag"><span class="badge text-bg-warning bouncy">YOUR CARDS →</span></h6>
                     <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-secondary link-opacity-25 link-opacity-100-hover text-decoration-none"
                         data-link-to-page-id="userPage" >                   
                         account_circle

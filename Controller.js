@@ -5,24 +5,24 @@ class Controller {
         aDiv.classList.
             add('alert', 'alert-' +
                 type, 'alert-dismissible',
-                'fade', 'show', 'w-25', 'float-end', 'alert-fixed', "rounded-4", "m-4", "opacity-75");
+                'fade', 'show', 'd-inline-block', 'float-start', "opacity-75", 'alert-fixed', "rounded-4","m-0");
         aDiv.setAttribute('role', 'alert');
         aDiv.innerHTML = message +
             `<button type="button"
             class="btn-close" data-bs-dismiss="alert"
             aria-label="Close">
         </button>`;
-        document.body.appendChild(aDiv);
+        app.view.alertContainer.appendChild(aDiv);
         setTimeout(function () {
             aDiv.classList.remove('show');
             aDiv.remove();
-        }, 5000);
+        }, 4000);
     }
 
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 3000;
+        this.speed = 300;
 
         let crestString = "";
         for (let each of this.model.world.league.teams) {
@@ -44,7 +44,13 @@ class Controller {
         this.setTime();
         this.model.world.league.reloadTeams()
 
+        // set user info
         this.view.navBar.setCounters(this.model.users[0])
+        this.view.userPage.setCardDisplay(this.model.users[0])
+        // navbar
+        if(this.model.users[0].hasClickedUserIcon){
+            document.getElementById("userIconNag").classList.add("hide");
+        }
 
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.addMenuItemSingleGamePages(this.model.world);
@@ -85,7 +91,13 @@ class Controller {
         this.setTime();
         // update user info
         this.view.userPage.update(this.model.users[0])
+        this.view.userPage.setCardDisplay(this.model.users[0])
+        // navbar
         this.view.navBar.setCounters(this.model.users[0])
+        if(this.model.users[0].hasClickedUserIcon){
+            document.getElementById("userIconNag").classList.add("hide");
+        }
+
         this.view.schedulePage.addSchedule(this.model.world.league.getSchedule())
         this.view.bindMenuBarClick(this.handleShowPage)
         this.view.standingsPage.update(this.model.world.league.getStandingsTableTeams(), this.model.world.league.getStandingsTablePitchers(10), this.model.world.league.getStandingsTableBatters(10))
@@ -163,11 +175,16 @@ class Controller {
             Controller.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}💰, but that costs ${this.model.world.shop.onDisplay[value].cost}💰`)
         }
         this.view.userPage.update(this.model.users[0])
+        this.view.userPage.setCardDisplay(this.model.users[0])
         this.view.navBar.setCounters(this.model.users[0])
     }
     handleShowPage = (id) => {
         if (!id) return
-        this.view.showPage(id)
+        this.view.showPage(id);
+        if(id === "userPage"){
+            this.model.users[0].hasClickedUserIcon = true;
+            document.getElementById("userIconNag").classList.add("hide");
+        }
     }
 
     setTime(){

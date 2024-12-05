@@ -44,8 +44,8 @@ class Shop{
                         CardType.FAV_TEAM,
                         teamArray[i],
                         4,
-                        5,
-                        new Valuables({"stocks":5}),
+                        1,
+                        new Valuables({"stocks":1}),
                         StatsEventType.RUNS_SCORED
                     )
                 )
@@ -68,8 +68,8 @@ class Shop{
                         CardType.SLUGGER,
                         teamArray[i].getSlugger(),
                         2,
-                        5,
-                        new Valuables({"caps":5}),
+                        1,
+                        new Valuables({"caps":1}),
                         StatsEventType.HITS
                     )
                 )

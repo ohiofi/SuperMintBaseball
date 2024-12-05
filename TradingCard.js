@@ -15,6 +15,7 @@ class TradingCard {
         this.team = null;
         this.leagueIdNumber = null;
         this.colorScheme = { light: "black", mid: "black", dark: "black" };
+        this.gradientRotation = rng.random();   
         this.profilePic = null;
         if (player != null) {
             this.name = player.firstName + " " + player.lastName;
@@ -57,9 +58,15 @@ class TradingCard {
             colorLight="${this.colorScheme.light}"
             colorMid="${this.colorScheme.mid}"
             colorDark="${this.colorScheme.dark}"
+            gradientRotation="${this.gradientRotation}"
             emoji="${this.profilePic}"
             font="13px Arial">
         </trading-card>`.trim();
+    }
+
+    // this approach is necessary so that one card can trigger other cards
+    addRewardToUser(user){
+        user.valuables.add(this.valuables)
     }
     equals(otherObject) {
         return this.leagueIdNumber === otherObject.leagueIdNumber

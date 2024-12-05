@@ -15,7 +15,7 @@ class TradingCardComponent extends HTMLElement {
         this.colorLight = this.getAttribute('colorLight') || '#FFD700';
         this.colorMid = this.getAttribute('colorMid') || '#994500';
         this.colorDark = this.getAttribute('colorDark') || '#664500';
-        this.gradientRotation = rng.random();   
+        this.gradientRotation = this.getAttribute('gradientRotation') || '0';
         this.emoji = this.getAttribute('emoji') || '🏃';
         this.font = this.getAttribute('font') || '13px';
         this.uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;

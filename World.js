@@ -11,7 +11,7 @@ const WorldStates = {
 class World{
     constructor(){
         this.users = [];
-        this.league = new League(22);
+        this.league = new League(24);
         this.newsTicker = new NewsTicker();
         // news tickers subscribes to teams so it can display winning teams
         for(let each of this.league.teams){

@@ -2,12 +2,12 @@ import re
 
 colors_hsl = {
     "reds": {
-        "darker": "hsl(0, 100%, 20%)",
+        "darker": "hsl(0, 100%, 18%)",
         "mid": "hsl(0, 100%, 50%)",
         "light": "hsl(0, 100%, 80%)"
     },
     "firebrick": {
-        "dark": "hsl(0, 67%, 32%)",
+        "dark": "hsl(0, 67%, 35%)",
         "mid": "hsl(0, 68%, 41%)",
         "light": "hsl(0, 69%, 90%)"
     },

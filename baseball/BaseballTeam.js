@@ -568,53 +568,125 @@ class BaseballTeam {
         this.setPositions();
     }
 
-    getStatsTable() {
-        return `
-        <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-            <tr>
-                <th colspan="2" class="text-center">Players</th>
-            </tr>
-            ${this.getPlayerList()}
-            <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
-        </table>
-        <details>
-            <summary>Stats</summary>
-            ${this.stats.getStatsTable()}
-        </details>
-        <details>
-            <summary>Info</summary>
-            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-                <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
-                <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name
-            }</td></tr>
-                <tr><td>Team Name</td><td>${this.mascot}</td></tr>
-                <tr><td>Crest</td><td>${this.crest.render()}</td></tr>
-                <tr><td>Color Scheme Light</td><td><div style="color:black;background:${this.colorScheme.light};">${this.colorScheme.light}</div></td></tr>
-                <tr><td>Color Scheme Mid</td><td> <div style="color:black;background:${this.colorScheme.mid};">${this.colorScheme.mid}</div></td></tr>
-                <tr><td>Color Scheme Dark</td><td> <div style="background:${this.colorScheme.dark};">${this.colorScheme.dark}</div></td></tr>
+//     getStatsTable() {
+//         return `
+//         <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+//             <tr>
+//                 <th colspan="2" class="text-center">Players</th>
+//             </tr>
+//             ${this.getPlayerList()}
+//             <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
+//         </table>
+//         <details>
+//             <summary>Stats</summary>
+//             ${this.stats.getStatsTable()}
+//         </details>
+//         <details>
+//             <summary>Info</summary>
+//             <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+//                 <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
+//                 <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name
+//             }</td></tr>
+//                 <tr><td>Team Name</td><td>${this.mascot}</td></tr>
+//                 <tr><td>Crest</td><td>${this.crest.render()}</td></tr>
+//                 <tr><td>Color Scheme Light</td><td><div style="color:black;background:${this.colorScheme.light};">${this.colorScheme.light}</div></td></tr>
+//                 <tr><td>Color Scheme Mid</td><td> <div style="color:black;background:${this.colorScheme.mid};">${this.colorScheme.mid}</div></td></tr>
+//                 <tr><td>Color Scheme Dark</td><td> <div style="background:${this.colorScheme.dark};">${this.colorScheme.dark}</div></td></tr>
 
-                <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(
-                1
-            )}</td></tr>
-                <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
-                <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-                <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(
-                1
-            )}</td></tr>
-                <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
-                <tr><td>Batter Up Number</td><td>${this.batterUpNumber
-            }</td></tr>
-                <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(
-                ", "
-            )}</td></tr>
-            </table>
-        </details>
-        <details>
-            <summary>Lifetime Stats</summary>
-            ${this.lifetimeStats.getStatsTable()}
-        </details>
-  `.trim();
-    }
+//                 <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(
+//                 1
+//             )}</td></tr>
+//                 <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
+//                 <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+//                 <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(
+//                 1
+//             )}</td></tr>
+//                 <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
+//                 <tr><td>Batter Up Number</td><td>${this.batterUpNumber
+//             }</td></tr>
+//                 <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(
+//                 ", "
+//             )}</td></tr>
+//             </table>
+//         </details>
+//         <details>
+//             <summary>Lifetime Stats</summary>
+//             ${this.lifetimeStats.getStatsTable()}
+//         </details>
+//   `.trim();
+//     }
+getStatsTable() {
+    return `
+        <ul class="nav nav-tabs nav-fill" id="teamTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary active" id="players-tab" data-bs-toggle="tab" data-bs-target="#players" 
+                type="button" role="tab" aria-controls="players" aria-selected="true">Players</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
+                type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" 
+                type="button" role="tab" aria-controls="info" aria-selected="false">Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary" id="lifetime-tab" data-bs-toggle="tab" data-bs-target="#lifetime" 
+                type="button" role="tab" aria-controls="lifetime" aria-selected="false">Lifetime Stats</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="teamTabContent">
+            <!-- Players Tab -->
+            <div class="tab-pane fade show active" id="players" role="tabpanel" aria-labelledby="players-tab">
+                <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                    <tr>
+                        <th colspan="2" class="text-center">Players</th>
+                    </tr>
+                    ${this.getPlayerList()}
+                    <tr><td>Number of Players</td><td>${this.players.length}</td></tr>
+                </table>
+            </div>
+
+            <!-- Stats Tab -->
+            <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+                ${this.stats.getStatsTable()}
+            </div>
+
+            <!-- Info Tab -->
+            <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                    <tr><td>Team ID</td><td>${this.teamIdNumber}</td></tr>
+                    <tr><td>Place</td><td>${this.place.abbreviation}, ${this.place.name}</td></tr>
+                    <tr><td>Team Name</td><td>${this.mascot}</td></tr>
+                    <tr><td>Crest</td><td>${this.crest.render()}</td></tr>
+                    <tr><td>Color Scheme Light</td>
+                        <td><div style="color:black;background:${this.colorScheme.light};">${this.colorScheme.light}</div></td>
+                    </tr>
+                    <tr><td>Color Scheme Mid</td>
+                        <td><div style="color:black;background:${this.colorScheme.mid};">${this.colorScheme.mid}</div></td>
+                    </tr>
+                    <tr><td>Color Scheme Dark</td>
+                        <td><div style="background:${this.colorScheme.dark};">${this.colorScheme.dark}</div></td>
+                    </tr>
+                    <tr><td>Team Aptitude</td><td>${this.getTeamAptitude().toFixed(1)}</td></tr>
+                    <tr><td>Mood</td><td>${this.mood.toFixed(1)}</td></tr>
+                    <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+                    <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+                    <tr><td>XP</td><td>${this.xp.toFixed(1)}</td></tr>
+                    <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
+                    <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
+                </table>
+            </div>
+
+            <!-- Lifetime Stats Tab -->
+            <div class="tab-pane fade" id="lifetime" role="tabpanel" aria-labelledby="lifetime-tab">
+                ${this.lifetimeStats.getStatsTable()}
+            </div>
+        </div>
+    `.trim();
+}
+
 
     updateXp() {
         this.xp += this.dailyXp;
