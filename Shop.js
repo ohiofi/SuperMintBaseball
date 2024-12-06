@@ -28,7 +28,7 @@ class Shop{
     }
 
     constructor(){
-        this.root = View.createElement("div","shop","container row pb-4")
+        this.root = View.createElement("div","shop"," row p-5 gx-5")
         this.favTeamCards = [];
         this.pitcherCards = [];
         this.sluggerCards = [];

@@ -11,7 +11,7 @@
 const StatsEventType = {
   GAME_WINNER:0,
   GAME_LOSER:1,
-  AT_BATS:2,
+  PLATE_APPEARANCES:2,
   HITS:3,
   SINGLES:4,
   DOUBLES:5,

@@ -221,9 +221,9 @@ class BaseballTeam {
         this.manager = new StatsEventManager();
     }
 
-    addAtBats() {
-        this.stats.atBats++;
-        this.lifetimeStats.atBats++;
+    addPlateAppearances() {
+        this.stats.plateAppearances++;
+        this.lifetimeStats.plateAppearances++;
     }
     addBasesOnBalls() {
         this.stats.basesOnBalls++;
@@ -623,13 +623,14 @@ getStatsTable() {
                 type="button" role="tab" aria-controls="players" aria-selected="true">Players</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
-                type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
-            </li>
-            <li class="nav-item" role="presentation">
                 <button class="nav-link link-secondary" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" 
                 type="button" role="tab" aria-controls="info" aria-selected="false">Info</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
+                type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
+            </li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link link-secondary" id="lifetime-tab" data-bs-toggle="tab" data-bs-target="#lifetime" 
                 type="button" role="tab" aria-controls="lifetime" aria-selected="false">Lifetime Stats</button>
@@ -648,10 +649,7 @@ getStatsTable() {
                 </table>
             </div>
 
-            <!-- Stats Tab -->
-            <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-                ${this.stats.getStatsTable()}
-            </div>
+
 
             <!-- Info Tab -->
             <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
@@ -679,9 +677,28 @@ getStatsTable() {
                 </table>
             </div>
 
+                        <!-- Stats Tab -->
+            <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+                <div class="row">
+                    <div class="col col-lg-6">
+                    ${this.stats.getRecordAndPitcherStats()}
+                    </div>
+                    <div class="col col-lg-6">
+                    ${this.stats.getBatterStats()}
+                    </div>
+                </div>
+            </div>
+
             <!-- Lifetime Stats Tab -->
             <div class="tab-pane fade" id="lifetime" role="tabpanel" aria-labelledby="lifetime-tab">
-                ${this.lifetimeStats.getStatsTable()}
+                <div class="row">
+                    <div class="col col-lg-6">
+                    ${this.lifetimeStats.getRecordAndPitcherStats()}
+                    </div>
+                    <div class="col col-lg-6">
+                    ${this.lifetimeStats.getBatterStats()}
+                    </div>
+                </div>
             </div>
         </div>
     `.trim();

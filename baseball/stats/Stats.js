@@ -31,8 +31,8 @@ class Stats {
 
         // Batting stats
 
-        /** @type {number} Number of at-bats. */
-        this.atBats = 0;
+        /** @type {number} Number of turns as a batter. */
+        this.plateAppearances = 0;
 
         /** @type {number} Number of hits. */
         this.hits = 0;
@@ -95,7 +95,7 @@ class Stats {
    * @returns {string} Formatted string of statistics.
    */
     displayStats() {
-        return `Home Runs: ${this.homeRuns}\nAt Bats: ${this.atBats}\nHits: ${this.hits}\nStrikeouts: ${this.strikeouts}\nStolen Bases: ${this.stolenBases}\nBatting Average: ${this.getBattingAverage()}\nOn-Base Percentage: ${this.getOnBasePercentage()}`;
+        return `Home Runs: ${this.homeRuns}\nAt Bats: ${this.plateAppearances}\nHits: ${this.hits}\nStrikeouts: ${this.strikeouts}\nStolen Bases: ${this.stolenBases}\nBatting Average: ${this.getBattingAverage()}\nOn-Base Percentage: ${this.getOnBasePercentage()}`;
     }
 
 
@@ -104,7 +104,7 @@ class Stats {
    * @returns {string} Batting average as a fixed-point number or `-1` if at-bats are zero.
    */
     getBattingAverage() {
-        return this.atBats > 0 ? (this.hits / this.atBats).toFixed(3) : -1;
+        return (this.plateAppearances > 0 ? (this.hits / this.plateAppearances).toFixed(3) : 0);
     }
 
     /**
@@ -112,7 +112,7 @@ class Stats {
    * @returns {string} OBP as a fixed-point number or `-1` if at-bats are zero.
    */
     getOnBasePercentage() {
-        return this.atBats > 0 ? ((this.hits + 0.3 * this.stolenBases) / this.atBats).toFixed(3) : -1;
+        return this.plateAppearances > 0 ? ((this.hits + 0.3 * this.stolenBases) / this.plateAppearances).toFixed(3) : 0;
     }
 
     /**
@@ -120,7 +120,7 @@ class Stats {
    * @returns {string} OPS as a fixed-point number or `-1` if at-bats are zero.
    */
     getOnBasePlusSlugging() {
-        return this.atBats > 0 ? ((this.atBats * (this.atBats + this.basesOnBalls + this.hitByPitch) + this.totalBases * (this.atBats + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch)) / (this.atBats * (this.atBats + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch))).toFixed(3) : -1;
+        return this.plateAppearances > 0 ? ((this.plateAppearances * (this.plateAppearances + this.basesOnBalls + this.hitByPitch) + this.totalBases * (this.plateAppearances + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch)) / (this.plateAppearances * (this.plateAppearances + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch))).toFixed(3) : -1;
     }
 
     /**
@@ -130,6 +130,16 @@ class Stats {
     getEarnedRunAverage() {
         return this.inningsPitched > 0 ? ((this.runsAllowed / this.inningsPitched) * 9).toFixed(3) : 999;
     }
+
+    /**
+     * Calculates the average number of strikeouts per nine innings.
+     * @returns {number} Strikeouts per nine innings, or 0 if innings pitched is 0.
+     */
+    getStrikeoutsPerNineInnings() {
+        if (this.inningsPitched === 0) return 0; // Avoid division by zero
+        return ((this.strikeoutsThrown / this.inningsPitched) * 9).toFixed(2);
+    }
+
 
 
     /**
@@ -144,28 +154,162 @@ class Stats {
             .replace(/^./, (str) => str.toUpperCase());
     }
 
-    /**
-   * Generates an HTML table displaying the player's statistics.
-   * @returns {string} HTML string representing the statistics table.
-   */
-    getStatsTable() {
-        const rows = Object.entries(this)
-            .map(
-                ([key, value]) => `
-      <tr>
-        <td>${this.stringFormatKey(key)}</td>
-        <td>${value}</td>
-      </tr>`
-            )
-            .join("");
+//     /**
+//    * Generates an HTML table displaying the player's statistics.
+//    * @returns {string} HTML string representing the statistics table.
+//    */
+//     getStatsTable() {
+//         const rows = Object.entries(this)
+//             .map(
+//                 ([key, value]) => `
+//       <tr>
+//         <td>${this.stringFormatKey(key)}</td>
+//         <td>${value}</td>
+//       </tr>`
+//             )
+//             .join("");
 
-        return `
+//         return `
+//     <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+//       <tbody>
+//         ${rows}
+//       </tbody>
+//     </table>
+//   `;
+//     }
+
+/**
+ * Generates an HTML table displaying the record and pitching statistics.
+ * Additional pitching stats are only shown if inningsPitched > 0.
+ * @returns {string} HTML string representing the table.
+ */
+getRecordAndPitcherStats() {
+    const { gamesPlayed, wins, losses, inningsPitched, strikeoutsThrown, runsAllowed, homeRunsAllowed, walksAllowed } = this;
+
+    const rows = `
+      <tr>
+        <td>${this.stringFormatKey("gamesPlayed")}</td>
+        <td>${gamesPlayed}</td>
+      </tr>
+      <tr>
+        <td>Win Percent</td>
+        <td>${gamesPlayed > 0 ? Math.round(wins/gamesPlayed*100)+"%" : "0%"}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("wins")}</td>
+        <td>${wins}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("losses")}</td>
+        <td>${losses}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("inningsPitched")}</td>
+        <td>${inningsPitched}</td>
+      </tr>
+      ${
+        inningsPitched > 0
+          ? `
+        <tr>
+          <td>Earned Run Average</td>
+          <td>${this.getEarnedRunAverage()}</td>
+        </tr>
+        <tr>
+          <td>Strikeouts Per 9 Innings</td>
+          <td>${this.getStrikeoutsPerNineInnings()}</td>
+        </tr>
+        <tr>
+          <td>${this.stringFormatKey("strikeoutsThrown")}</td>
+          <td>${strikeoutsThrown}</td>
+        </tr>
+        <tr>
+          <td>${this.stringFormatKey("runsAllowed")}</td>
+          <td>${runsAllowed}</td>
+        </tr>
+        <tr>
+          <td>${this.stringFormatKey("homeRunsAllowed")}</td>
+          <td>${homeRunsAllowed}</td>
+        </tr>
+        <tr>
+          <td>${this.stringFormatKey("walksAllowed")}</td>
+          <td>${walksAllowed}</td>
+        </tr>
+      `
+          : ""
+      }
+    `;
+
+    return `
     <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
       <tbody>
         ${rows}
       </tbody>
     </table>
   `;
-    }
+}
+
+/**
+ * Generates an HTML table displaying the batter's statistics.
+ * @returns {string} HTML string representing the table.
+ */
+getBatterStats() {
+    const { plateAppearances, hits, singles, doubles, triples, homeRuns, runsScored, stolenBases, strikeoutsAtBat, sacrificeFlies } = this;
+
+    const rows = `
+      <tr>
+        <td>Batting Average</td>
+        <td>${this.getBattingAverage()}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("plateAppearances")}</td>
+        <td>${plateAppearances}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("hits")}</td>
+        <td>${hits}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("singles")}</td>
+        <td>${singles}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("doubles")}</td>
+        <td>${doubles}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("triples")}</td>
+        <td>${triples}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("homeRuns")}</td>
+        <td>${homeRuns}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("runsScored")}</td>
+        <td>${runsScored}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("stolenBases")}</td>
+        <td>${stolenBases}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("strikeoutsAtBat")}</td>
+        <td>${strikeoutsAtBat}</td>
+      </tr>
+      <tr>
+        <td>${this.stringFormatKey("sacrificeFlies")}</td>
+        <td>${sacrificeFlies}</td>
+      </tr>
+    `;
+
+    return `
+    <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+  `;
+}
+
 
 }

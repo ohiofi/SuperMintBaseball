@@ -1,23 +1,44 @@
 class Controller {
 
+    // static addAlert(type, message) {
+    //     const aDiv = View.createElement('div',null,
+    //         `alert alert-${type} alert-dismissible fade show d-inline-block float-end opacity-100 alert-fixed rounded-4 m-0`);
+    //     aDiv.setAttribute('role', 'alert');
+    //     aDiv.innerHTML = message +
+    //         `<button type="button"
+    //         class="btn-close" data-bs-dismiss="alert"
+    //         aria-label="Close">
+    //     </button>`;
+    //     app.view.alertContainer.appendChild(aDiv);
+    //     setTimeout(function () {
+    //         aDiv.classList.remove('show');
+    //         aDiv.remove();
+    //     }, 4000);
+    // }
     static addAlert(type, message) {
-        const aDiv = document.createElement('div');
-        aDiv.classList.
-            add('alert', 'alert-' +
-                type, 'alert-dismissible',
-                'fade', 'show', 'd-inline-block', 'float-start', "opacity-75", 'alert-fixed', "rounded-4","m-0");
-        aDiv.setAttribute('role', 'alert');
-        aDiv.innerHTML = message +
-            `<button type="button"
-            class="btn-close" data-bs-dismiss="alert"
-            aria-label="Close">
-        </button>`;
-        app.view.alertContainer.appendChild(aDiv);
-        setTimeout(function () {
-            aDiv.classList.remove('show');
-            aDiv.remove();
+        const alertContainer = document.getElementById('alertContainer');
+        const alertDiv = document.createElement('div');
+        
+        alertDiv.className = `alert alert-${type} alert-dismissible fade`;
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        app.view.alertContainer.appendChild(alertDiv);
+        
+        // Trigger the animation after DOM reflow
+        setTimeout(() => {
+            alertDiv.classList.add('show');
+        }, 50);
+
+        // Auto-remove after 4 seconds
+        setTimeout(() => {
+            alertDiv.classList.remove('show');
+            setTimeout(() => alertDiv.remove(), 500);
         }, 4000);
     }
+    
 
     constructor(model, view) {
         this.model = model;

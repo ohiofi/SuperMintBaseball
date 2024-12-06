@@ -46,7 +46,7 @@ class SchedulePage{
         const accordionItem = document.createElement('div');
         accordionItem.classList.add('accordion-item');
         accordionItem.innerHTML = `
-          <h2 class="accordion-header bg-444 text-black my-2 rounded-2">
+          <h2 class="accordion-header bg-444 text-black my-2 rounded-2 shadow">
             <button class="accordion-button link-black link-opacity-25 link-opacity-100-hover p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${id}" aria-expanded="true" aria-controls="collapse${id}">
               ${title}
             </button>

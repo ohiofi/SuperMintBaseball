@@ -28,7 +28,7 @@ class View{
         this.app.innerHTML = "";
         this.viewContainer = View.createElement("div","viewContainer","container mt-5 pt-5")
 
-        this.alertContainer = View.createElement("span",null,"position-fixed alert-fixed w-25 mt-3")
+        this.alertContainer = View.createElement("span",null,"position-fixed alert-fixed w-25 mt-3 bottom-0 end-0 p-3")
         // news ticker
         //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4 bg-danger");
         //this.tickerItems = [];

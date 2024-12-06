@@ -7,6 +7,8 @@ class PlayBall extends AbstractBaseballGameState{
     handle(baseballGame){
         baseballGame.defenseTeam = baseballGame.homeTeam;
         baseballGame.offenseTeam = baseballGame.awayTeam;
+        baseballGame.homeTeam.batterUpNumber = 0;
+        baseballGame.awayTeam.batterUpNumber = 0;
         baseballGame.pitcher = baseballGame.defenseTeam.getPitcher();
         this.nextState(baseballGame);
         baseballGame.setGameStarted();

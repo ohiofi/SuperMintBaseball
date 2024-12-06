@@ -93,7 +93,7 @@ class League {
                 dataCopy.push(this.teams[i].players[j])
             }
         }
-        dataCopy.sort((a, b) => b.stats.hits - a.stats.hits);
+        dataCopy.sort((a, b) => b.stats.getBattingAverage() - a.stats.getBattingAverage());
         // Handle ties
         let rank = 1;
         let previousHits = null;
@@ -105,6 +105,7 @@ class League {
             <tr>
                 <th class="text-secondary">#</th>
                 <th class="text-secondary">Batter Name</th>
+                <th class="text-secondary">BA</th>
                 <th class="text-secondary">Hits</th>
                 <th class="text-secondary">OPS</th>
             </tr>
@@ -124,6 +125,7 @@ class League {
         <tr class="overflow-hidden">
             <td>${rank}</td>
             <td>${player.getFullNameWithLink()}</td>
+            <td>${player.stats.getBattingAverage()}</td>
             <td>${player.stats.hits}</td>
             <td>${player.stats.getOnBasePlusSlugging()}</td>
         </tr>
@@ -144,7 +146,7 @@ class League {
         for (let each of this.teams) {
             dataCopy.push(each.pitcher)
         }
-        dataCopy.sort((a, b) => b.stats.strikeoutsThrown - a.stats.strikeoutsThrown);
+        dataCopy.sort((a, b) => b.stats.getStrikeoutsPerNineInnings() - a.stats.getStrikeoutsPerNineInnings());
         // Handle ties
         let rank = 1;
         let previousStrikeoutsThrown = null;
@@ -155,7 +157,8 @@ class League {
             <tr>
                 <th class="text-secondary">#</th>
                 <th class="text-secondary">Pitcher Name</th>
-                <th class="text-secondary">SOs</th>
+                <th class="text-secondary">SO/9</th>
+                <th class="text-secondary">SO</th>
                 <th class="text-secondary">ERA</th>
             </tr>
         </thead>
@@ -174,6 +177,7 @@ class League {
         <tr>
             <td>${rank}</td>
             <td>${player.getFullNameWithLink()}</td>
+            <td>${player.stats.getStrikeoutsPerNineInnings()}</td>
             <td>${player.stats.strikeoutsThrown}</td>
             <td>${player.stats.getEarnedRunAverage()}</td>
         </tr>
@@ -288,9 +292,9 @@ class League {
             case StatsEventType.GAME_LOSER:
                 this.lookup(data.teamId).addLoss()
                 break
-            case StatsEventType.AT_BATS:
-                this.lookup(data.teamId).addAtBats()
-                this.lookup(data.playerId).addAtBats()
+            case StatsEventType.PLATE_APPEARANCES:
+                this.lookup(data.teamId).addPlateAppearances()
+                this.lookup(data.playerId).addPlateAppearances()
                 break
             case StatsEventType.SINGLES:
                 this.lookup(data.teamId).addSingles()

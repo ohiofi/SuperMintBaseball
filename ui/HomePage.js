@@ -2,15 +2,17 @@ class HomePage{
     constructor(){
         this.root = View.createElement("div","homePage","page");
         this.root.innerHTML = `
-            <h3 id="homePageHeadline" class="pb-4  display-6 ">Ye Olde Trading Card Shoppe</h3>
+            <h3 id="homePageHeadline" class="pb-4  display-6 ">Trading Card Shop</h3>
             <div class="row">
                 <div id="dateAndTime"></div>
-                <div class="pageSummary col pb-4">The experiment demands that you continue.</div>
+                <div class="pageSummary col pb-4">Please buy some cards so that we can continue.</div>
                 <div class="col">
                     <button type="button" class="continueButton bouncy btn btn-warning ">CONTINUE</button>
                 </div>
             </div>
-            <div id="homePageCardContainer"></div>
+            
+            <div id="homePageCardContainer" class="card-body bg-222 rounded-3 shadow"></div>
+            
             
         `.trim();
     }

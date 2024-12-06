@@ -59,9 +59,9 @@ class BaseballPlayer {
         this.manager = new StatsEventManager();
     }
 
-    addAtBats() {
-        this.stats.atBats++;
-        this.lifetimeStats.atBats++;
+    addPlateAppearances() {
+        this.stats.plateAppearances++;
+        this.lifetimeStats.plateAppearances++;
     }
     addBasesOnBalls() {
         this.stats.basesOnBalls++;
@@ -360,13 +360,14 @@ class BaseballPlayer {
                     type="button" role="tab" aria-controls="details" aria-selected="true">Player Details</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
-                    type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
-                </li>
-                <li class="nav-item" role="presentation">
                     <button class="nav-link link-secondary" id="attributes-tab" data-bs-toggle="tab" data-bs-target="#attributes" 
                     type="button" role="tab" aria-controls="attributes" aria-selected="false">Attributes</button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
+                    type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
+                </li>
+                
                 <li class="nav-item" role="presentation">
                     <button class="nav-link link-secondary" id="lifetime-tab" data-bs-toggle="tab" data-bs-target="#lifetime" 
                     type="button" role="tab" aria-controls="lifetime" aria-selected="false">Lifetime</button>
@@ -394,13 +395,8 @@ class BaseballPlayer {
                         <tr><td>Age</td><td>${this.age}</td></tr>
                     </table>
                 </div>
-    
-                <!-- Stats Tab -->
-                <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-                    ${this.stats.getStatsTable()}
-                </div>
-    
-                <!-- Attributes Tab -->
+
+                                <!-- Attributes Tab -->
                 <div class="tab-pane fade" id="attributes" role="tabpanel" aria-labelledby="attributes-tab">
                     <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
                         <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
@@ -429,9 +425,30 @@ class BaseballPlayer {
                     </table>
                 </div>
     
+                <!-- Stats Tab -->
+                <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+                    <div class="row">
+                        <div class="col col-lg-6">
+                        ${this.stats.getRecordAndPitcherStats()}
+                        </div>
+                        <div class="col col-lg-6">
+                        ${this.stats.getBatterStats()}
+                        </div>
+                    </div>
+                </div>
+    
+
+    
                 <!-- Lifetime Stats Tab -->
                 <div class="tab-pane fade" id="lifetime" role="tabpanel" aria-labelledby="lifetime-tab">
-                    ${this.lifetimeStats.getStatsTable()}
+                    <div class="row">
+                        <div class="col col-lg-6">
+                        ${this.lifetimeStats.getRecordAndPitcherStats()}
+                        </div>
+                        <div class="col col-lg-6">
+                        ${this.lifetimeStats.getBatterStats()}
+                        </div>
+                    </div>
                 </div>
             </div>
         `.trim();

@@ -7,7 +7,7 @@ class HomePlayerStepsUpToBat extends AbstractBaseballGameState{
         this.nextState(baseballGame);
         baseballGame.nextBatter();
         baseballGame.batter.manager.notify(
-            new StatsEvent(StatsEventType.AT_BATS,baseballGame.offenseTeam.leagueIdNumber,baseballGame.batter.leagueIdNumber)
+            new StatsEvent(StatsEventType.PLATE_APPEARANCES,baseballGame.offenseTeam.leagueIdNumber,baseballGame.batter.leagueIdNumber)
         )
         return baseballGame.batter.getFullNameWithLink(20) + " steps up to bat for the " + baseballGame.homeTeam.getNameWithLink(20);
                 

@@ -5,7 +5,7 @@ class NavBar {
             <div id="newsTickerContainer" class="mt-1 col-12 small"></div>
             <div class="container col-12">
                 <a class="fs-5 navbar-brand text-secondary me-2" data-link-to-page-id="homePage" href="#">
-                    ioBaseball<span style="font-size:8px;padding:3px;border-radius:2px;" class="badge text-bg-secondary m-0">
+                    ioBaseball<span style="font-size:7px;padding:1px;border-radius:2px;" class="badge text-bg-secondary font-monospace m-0">
                         BETA
                     </span>
                     
@@ -18,20 +18,26 @@ class NavBar {
                 <ul id="navBarList" class="navbar-nav me-auto">
 
                 </ul>
-                <span class="d-flex">
+                <span class="d-flex ">
 
-                    <span class=" font-monospace text-secondary pt-1 pe-3" data-link-to-page-id="userPage">
-                        <span id="moneyCounter">100</span><span class="opacity-75">💰</span>
-                        <span id="stocksCounter">1</span><span class="opacity-75">💹</span>
-                        <span id="ticketsCounter">3</span><span class="opacity-75">🎟️</span>
-                        <span id="capsCounter">5</span><span class="opacity-75">🧢</span>
+                    <span id="counterSection"  class=" text-secondary pt-1 pe-1 small" data-link-to-page-id="userPage">
+                        <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">💰</span>&nbsp;
+                        <span id="stocksCounter" class="font-monospace ">1</span><span class="opacity-75 small">💹</span>&nbsp;
+                        <span id="ticketsCounter" class="font-monospace ">3</span><span class="opacity-75 small">🎟️</span>&nbsp;
+                        <span id="capsCounter" class="font-monospace ">5</span><span class="opacity-75 small">🧢</span>&nbsp;
+                        <span class="cardsCount font-monospace ">0</span>/<span class="maxCards font-monospace">5</span><span class="opacity-75  small">🃏</span>
                     </span>
+                    
+                    
+                    
 
-                    <h6 id="userIconNag"><span class="badge text-bg-warning bouncy">YOUR CARDS →</span></h6>
-                    <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-secondary link-opacity-25 link-opacity-100-hover text-decoration-none"
-                        data-link-to-page-id="userPage" >                   
-                        account_circle
-                    </a>
+                        <span id="userIconNag"><span class="badge text-bg-warning bouncy">YOUR CARDS →</span></span>
+                        <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-secondary link-opacity-25 link-opacity-100-hover text-decoration-none"
+                            data-link-to-page-id="userPage" >                   
+                            account_circle
+                        </a>
+              
+                    
                 </span>
                 </div>
             </div>

@@ -32,7 +32,31 @@ a {
     /* width: 100%; */
     z-index: 9999;
     border-radius: 0px;
-    transition:1s;
+
+
+        position: fixed;
+        bottom: 20px;
+        right: -300px; /* Start off-screen */
+        transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
+    
+    .alert.slide-in {
+        right: 20px; /* Slide into view */
+    }
+    .alert {
+        position: relative;
+        right: -100%;
+        transition: right 0.5s ease, opacity 0.5s ease;
+        opacity: 0;
+    }
+    .alert.show {
+        right: 0;
+        opacity: 1;
+    }
+    
+.opacity-ease-100 {
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .bg-000 {
@@ -89,6 +113,31 @@ a {
         transform: scale(0.95);
     }
 }
+
+
+
+
+  
+  .tooltipTrigger .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #797a7d;
+    color: #aa5353;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position:relative;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+  }
+  
+  .tooltipTrigger:hover .tooltipText {
+    visibility: visible;
+  }
+
 
 .game-widget {
     /* line-height: 2.5ex;
