@@ -8,19 +8,42 @@ class NewsTicker {
         this.teamNames = [];
     }
 
-    addItems(myArray) {
-        const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
-        
-        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
-        let multiplier = 2;
-        if (myArray.length < 3) multiplier = 4
-        for (let i = 0; i < myArray.length * multiplier; i++) {
-            this.items[i] = View.createElement("span", null, "newsTickerItem");
-            this.items[i].innerHTML = myArray[i % myArray.length];
-
-            newsTickerRibbon.append(this.items[i]);
+    /**
+     * Cleans up expired breaking news items from the queue.
+     * Should be explicitly called to handle cleanup logic.
+     */
+    cleanUpBreakingNews() {
+        if (this.breakingNewsItems.length > 0) {
+            this.breakingNewsItems.shift();
         }
-        document.getElementById("newsTickerContainer").append(newsTickerRibbon);
+    }
+
+    /**
+     * Marks the first breaking news item for removal if needed.
+     */
+    flagBreakingNewsForRemoval() {
+        if (this.breakingNewsItems.length > 0) {
+            const firstItem = this.breakingNewsItems[0];
+            if (!firstItem.flaggedForRemoval) {
+                firstItem.flaggedForRemoval = true;
+            } else {
+                // If already flagged, remove it
+                this.breakingNewsItems.shift();
+            }
+        }
+    }
+
+    /**
+     * Getter method only reads data; does not alter any state.
+     * @returns {string[]} List of items to display (breaking news takes precedence).
+     */
+    getVisibleTickerItems() {
+        if (this.breakingNewsItems.length > 0) {
+            // Return only the first breaking news item
+            return [this.breakingNewsItems[0].text];
+        }
+
+        return [...this.items];
     }
 
     handleEvent = (data) => {
@@ -29,7 +52,7 @@ class NewsTicker {
         }
     }
 
-    // should occur on a fixed schedule, slides the ticker, decrements breaking news countdown
+    // should occur on a fixed schedule, decrements breaking news countdown
     show() {
 
         this.parentDiv = document.getElementById('newsTickerContainer');
@@ -53,11 +76,12 @@ class NewsTicker {
 
     }
 
+    setItems(array){
+        this.items = array;
+    }
+
     setSpeed(numberOfSeconds){
-        
             const ticker = document.getElementById('newsTickerRibbon');
-            
-            // Check if ticker exists
             if (ticker) {
               ticker.style.animationDuration = `${numberOfSeconds}s`;
             }
@@ -80,7 +104,7 @@ class NewsTicker {
     }
 
     setShopText(){
-        this.addItems([
+        this.items = [
             "WE ARE BACK!",
             "I AM THE NEW TICKER",
             "INVEST IN TRADING CARDS",
@@ -95,27 +119,29 @@ class NewsTicker {
             "LET'S PLAY MONEY MAKING GAME",
             "WE NEED A PITCHER",
             "NOT A BELLY ITCHER",
+            "BROWSE OUR LATEST DEALS",
             "RISE, STAY AWAKE",
             "BOY, YOU'RE RICH",
             "TAKE ANY ONE YOU WANT",
             "YOU ARE NO LONGER AVOIDING THE ORDINARY ACT OF REALITY",
             "BOY, THIS IS REALLY EXPENSIVE!",
             "WHO'S ON FIRST BASE? PRIDE. SECOND BASE IS GREED, THIRD BASE WRATH... SLOTH IS ON THE BENCH",
-        ]);
+        ];
     }
 
 
     // can happen out of schedule
     update(myArray) {
-        this.parentDiv = document.getElementById('newsTickerContainer');
-        this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
+        this.flagBreakingNewsForRemoval();
+        //this.parentDiv = document.getElementById('newsTickerContainer');
+        //this.slideDivs = this.parentDiv.querySelectorAll('.newsTickerItem');
         // add 2x as many items as there are games. add 4x if only 1 or 2 games.
         let multiplier = 2;
         if (myArray.length < 3) multiplier = 4;
         for (let i = 0; i < myArray.length * multiplier; i++) {
             this.items[i] = myArray[i % myArray.length].scoreString;
-            this.slideDivs[i].innerHTML = this.items[i];
+            //this.slideDivs[i].innerHTML = this.items[i];
         }
-        //this.setSpeed()
+        this.setSpeed()
     }
 }

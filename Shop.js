@@ -28,7 +28,7 @@ class Shop{
     }
 
     constructor(){
-        this.root = View.createElement("div","shop"," row p-5 gx-5")
+        this.displaySize = 13
         this.favTeamCards = [];
         this.pitcherCards = [];
         this.sluggerCards = [];
@@ -77,37 +77,55 @@ class Shop{
         }
     }
 
-
-    getCardDisplay(number){
-        for(let i=0; i<number; i++){
-            if(this.onDisplay[i] != null){
-                this.root.innerHTML += `
-                <span class="col row">
-                    <span id="shopCardSlot${i}" class="col-12 text-center">
-                    </span>
-                    <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${this.onDisplay[i].cost}💰</button>
-                    </div>
-                </span>
-                `
-                this.root.querySelector("#shopCardSlot"+i).append(this.onDisplay[i].render())
-            }
+    attemptShopPurchase(value, user) {
+        const card = this.onDisplay[value];
+        if (this.isPurchaseAffordable(value, user) && user.hasRoomForThisCard(card)) {
+            user.addCards(card);
+            user.valuables.money -= card.cost;
+            // Mark card as sold
+            this.onDisplay[value] = null;
         }
-        // always add the +1 Hand Size card
-        const handSizeCard = Shop.getHandSizeCard()
-        this.root.innerHTML += `
-                <span class="col row">
-                    <span id="shopCardSlotHandSizeCard" class="col-12 text-center">
-                    </span>
-                    <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
-                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}💰</button>
-                    </div>
-                </span>
-                `
-                this.root.querySelector("#shopCardSlotHandSizeCard").append(handSizeCard.render())
-        return this.root
     }
+
+    // getCardDisplay(number){
+    //     for(let i=0; i<number; i++){
+    //         if(this.onDisplay[i] != null){
+    //             this.root.innerHTML += `
+    //             <span class="col row">
+    //                 <span id="shopCardSlot${i}" class="col-12 text-center">
+    //                 </span>
+    //                 <div class="col-12 text-center pb-5">
+    //                     <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${this.onDisplay[i].cost}💰</button>
+    //                 </div>
+    //             </span>
+    //             `
+    //             this.root.querySelector("#shopCardSlot"+i).append(this.onDisplay[i].render())
+    //         }
+    //     }
+    //     // always add the +1 Hand Size card
+    //     const handSizeCard = Shop.getHandSizeCard()
+    //     this.root.innerHTML += `
+    //             <span class="col row">
+    //                 <span id="shopCardSlotHandSizeCard" class="col-12 text-center">
+    //                 </span>
+    //                 <div class="col-12 text-center pb-5">
+    //                     <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
+    //                         class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}💰</button>
+    //                 </div>
+    //             </span>
+    //             `
+    //             this.root.querySelector("#shopCardSlotHandSizeCard").append(handSizeCard.render())
+    //     return this.root
+    // }
+    getCardsOnDisplay() {
+        this.onDisplay = [
+            ...this.sluggerCards.slice(0,  Shop.splitThreeWays(this.displaySize)[0]),
+            ...this.favTeamCards.slice(0, Shop.splitThreeWays(this.displaySize)[1]),
+            ...this.pitcherCards.slice(0, Shop.splitThreeWays(this.displaySize)[2]),
+        ];
+        return this.onDisplay;
+    }
+
     getPurchase(index, user){
         if(!this.isPurchaseAffordable(index, user)) {
             return null;
@@ -137,7 +155,7 @@ class Shop{
         
         return user.valuables.money >= this.onDisplay[index].cost;
     }
-    setBatterCards(number){
+    setSluggerCards(number){
         for(let i=0; i<number; i++){
             if(this.sluggerCards.length == 0) break
             const indexToRemove = Math.floor(rng.random()*this.sluggerCards.length)

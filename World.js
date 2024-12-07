@@ -30,7 +30,31 @@ class World{
         return this.league.getGameDetails();
     }
 
+    getSchedule() {
+        return this.league.getSchedule();
+    }
+
+    getStandingsTableBatters(limit) {
+        return this.league.getStandingsTableBatters(limit);
+    }
+
+    getStandingsTablePitchers(limit) {
+        return this.league.getStandingsTablePitchers(limit);
+    }
+
+    getStandingsTableTeams() {
+        return this.league.getStandingsTableTeams();
+    }
+
+    isTodayDone() {
+        return this.league.isTodayDone();
+    }
+
     nextGameMessages(){
         return this.league.nextGameMessages();
+    }
+
+    reloadTeams() {
+        this.league.reloadTeams();
     }
 }

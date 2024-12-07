@@ -26,6 +26,12 @@ class LiveGamesPage {
         return this.root;
     }
 
+    updateGameWidgets(gameDetails) {
+        gameDetails.forEach((detail, i) => {
+            this.widgets[i].update(detail);
+        });
+    }
+
 
     
 }

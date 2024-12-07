@@ -32,7 +32,7 @@ class NavBar {
                     
 
                         <span id="userIconNag"><span class="badge text-bg-warning bouncy">YOUR CARDS →</span></span>
-                        <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-secondary link-opacity-25 link-opacity-100-hover text-decoration-none"
+                        <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-light link-opacity-25 link-opacity-100-hover text-decoration-none"
                             data-link-to-page-id="userPage" >                   
                             account_circle
                         </a>
@@ -48,15 +48,69 @@ class NavBar {
         this.root.querySelector("#navBarList").appendChild(newElement);
     }
 
+
+    bindNavBarClick(handler) {
+        this.root.addEventListener('click', event => {
+            // console.log(event)
+            if (event.target.localName === 'span' || event.target.localName === 'nobr'){
+                const id = event.target.parentElement.dataset.linkToPageId;
+                handler(id)
+            }
+            else if (event.target.localName === 'a') {
+                //const id = event.target.parentElement.id
+                const id = event.target.dataset.linkToPageId;
+                handler(id)
+            }
+            else if (event.target.localName === 'text' || event.target.localName === 'polygon' ) {
+                //const id = event.target.parentElement.id
+                const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.linkToPageId;
+                handler(id)
+            }
+        })
+    }
+
+    
+
+    render(){
+        return this.root;
+    }
+
     setCounters(user){
         console.log(38)
         this.root.querySelector("#moneyCounter").innerHTML = user.valuables.money;
         this.root.querySelector("#stocksCounter").innerHTML = user.valuables.stocks;
         this.root.querySelector("#ticketsCounter").innerHTML = user.valuables.tickets;
         this.root.querySelector("#capsCounter").innerHTML = user.valuables.caps;
+        this.root.querySelectorAll('.cardsCount').forEach(element => {
+            element.innerText = user.cards.length;
+        });
+        this.root.querySelectorAll('.maxCards').forEach(element => {
+            element.innerText = user.maxCards;
+        });
     }
 
-    render(){
-        return this.root;
+    renderTicker(tickerItems) {
+        const newsTickerRibbon = View.createElement("p", "newsTickerRibbon", null);
+        
+        // add 2x as many items as there are games. add 4x if only 1 or 2 games.
+        let multiplier = 2;
+        if (tickerItems.length < 3) multiplier = 4
+        for (let i = 0; i < tickerItems.length * multiplier; i++) {
+            const tickerItem = View.createElement("span", null, "newsTickerItem");
+            tickerItem.innerHTML = tickerItems[i % tickerItems.length];
+
+            newsTickerRibbon.append(tickerItem);
+        }
+        document.getElementById("newsTickerContainer").append(newsTickerRibbon);
+    }
+
+        
+
+    setTickerItems(tickerItems){
+        const parentDiv = document.getElementById('newsTickerContainer');
+        const slideDivs = parentDiv.querySelectorAll('.newsTickerItem');
+        for (let i = 0; i < slideDivs.length; i++) {
+            slideDivs[i].innerHTML = tickerItems[i % tickerItems.length];
+        }
     }
 }

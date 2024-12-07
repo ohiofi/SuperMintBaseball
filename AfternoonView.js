@@ -60,17 +60,6 @@ class AfternoonView extends View{
         }
     }
 
-//     addMenuItemHome() {
-//         const menuItem = View.createElement("li", "homePageMenuItem", "page-item active");
-//         const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-//         menuLink.dataset.linkToPageId = "homePage";
-//         menuLink.innerHTML = `<span class="material-symbols-outlined size-48">
-// home
-// </span>`;
-//         menuItem.append(menuLink);
-//         this.navBar.add(menuItem);
-//     }
-
     addMenuItemLive() {
         const menuItem = View.createElement("li", "liveGamesPageMenuItem", "nav-item bg-transparent pt-1");
         const menuLink = View.createElement("a", null, "nav-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
@@ -84,9 +73,11 @@ stadium
 
     addMenuItemSingleGamePages(game) {
         const scores = game.getGameDetails();
-        const dropdownNavItem = View.createElement("li","dropdownNavItem","nav-item dropdown pt-2")
+        const dropdownNavItem = View.createElement("li","dropdownNavItem","nav-item dropdown pt-1")
         dropdownNavItem.innerHTML = `
-            <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown">Games</a>
+            <a class="nav-link dropdown-toggle link-light link-opacity-25 link-opacity-100-hover" href="#" role="button" data-bs-toggle="dropdown"><span class="material-symbols-outlined">
+sports_baseball
+</span></a>
             <ul id="singleGamesDropdownMenu" class="dropdown-menu bg-dark shadow">
             </ul>
         `.trim();
@@ -103,73 +94,45 @@ stadium
         }
     }
 
-//     addMenuItemStandings() {
-//         const menuItem = View.createElement("li", "standingsPageMenuItem", "page-item bg-transparent");
-//         const menuLink = View.createElement("a", null, "page-link bg-transparent border-0 link-light link-opacity-25 link-opacity-100-hover")
-//         menuLink.dataset.linkToPageId = "standingsPage";
-//         menuLink.innerHTML = `<span class="material-symbols-outlined">
-// format_list_numbered
-// </span>`;
-//         menuItem.append(menuLink);
-//         this.navBar.add(menuItem);
-//     }
+    setupAfternoonView(model) {
+        this.setTime(model);
+        // navbar stuff
+        this.navBar.setCounters(model.users[0]);
+        this.userPage.setCardDisplay(model.users[0]);
+        this.userPage.updateUserInfo(model.users[0]);
+        if (model.users[0].hasClickedUserIcon) {
+            document.getElementById("userIconNag").classList.add("hide");
+        }
 
+        //
+        
+        this.addMenuItemSingleGamePages(model.world);
+        // set up news ticker
+        const gameDetails = model.world.getGameDetails();
+        const tickerArray = gameDetails.map(each => each.scoreString);
+        model.world.newsTicker.setItems(tickerArray);
+        this.navBar.renderTicker(model.world.newsTicker.items); // Display the updated ticker items
+        console.log(this.navBar)
+        const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth;
+        model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
 
+        this.homePage.addGameTableScores(gameDetails);
+        
 
+        this.schedulePage.addSchedule(model.world.league.getSchedule());
 
-
-    
-
-    // bindContinueButtonClick(handler) {
-    //     const els = document.getElementsByClassName("continueButton");
-    //     Array.from(els).forEach((el) => {
-    //         el.addEventListener('click', event => {
-
-    //             if (event.target.localName === 'button') {
-
-    //                 handler()
-    //             }
-    //         })
-    //     })
-    // }
-
-    // bindMenuBarClick(handler) {
-    //     this.navBar.addEventListener('click', event => {
-    //         if (event.target.localName === 'span') {
-    //             //const id = event.target.parentElement.id
-    //             const id = event.target.parentElement.dataset.linkToPageId;
-    //             handler(id)
-    //         }
-    //         if (event.target.localName === 'a') {
-    //             //const id = event.target.parentElement.id
-    //             const id = event.target.dataset.linkToPageId;
-    //             handler(id)
-    //         }
-    //     })
-    // }
-
-    // showPage(pageName) {
-    //     const els = document.getElementsByClassName("page");
-    //     Array.from(els).forEach((el) => {
-    //         el.classList.add("hide")
-    //     });
-    //     const page = document.getElementById(pageName);
-    //     page.classList.remove("hide");
-
-    //     // switch active menu bar item
-    //     const items = document.getElementsByClassName("page-item");
-    //     Array.from(items).forEach((listItem) => {
-    //         listItem.classList.remove("active")
-    //     });
-    //     document.getElementById(pageName + "MenuItem").classList.add("active");
-
-    //     // scroll down the feed
-    //     const container = page.querySelector(".messageFeedContainer");
-    //     if (container !== null) {
-    //         container.scrollTop = container.scrollHeight;
-    //         page.querySelector(".messageJumpButton").classList.add("hide");
-    //     }
-    // }
+        const standings = {
+            teams: model.world.league.getStandingsTableTeams(),
+            pitchers: model.world.league.getStandingsTablePitchers(10),
+            batters: model.world.league.getStandingsTableBatters(10),
+        };
+        this.standingsPage.update(standings.teams, standings.pitchers, standings.batters);
+        
+        this.liveGamesPage.addGameWidgets(gameDetails);
+        // single game pages
+        this.addAllSingleGamePages(model.world);
+        
+    }
 
     showTodayIsDone() {
         this.homePage.root.querySelector("#homePageHeadline").textContent = "Today is Done";

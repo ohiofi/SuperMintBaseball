@@ -27,16 +27,12 @@ class Model {
         localStorage.setItem('todos', JSON.stringify(todos))
     }
 
-    // Only mutates the state, no return value for affordability check
     attemptShopPurchase(value, user) {
         if(!user.hasRoomForThisCard(this.world.shop.onDisplay[value])){
-            console.log("Oops no more room for more cards")
+            //console.log("Oops no more room for more cards")
         }
         else if (this.world.shop.isPurchaseAffordable(value, user)) {
             const buyingCard = this.world.shop.getPurchase(value, user);
-        
-            
-            
             if (buyingCard) {
                 this.users[0].addCard(buyingCard, this.world.league.lookup(buyingCard.leagueIdNumber));
             }
@@ -45,29 +41,30 @@ class Model {
 
 
 
-
-    next(){
-        this.state = ( this.state + 1 ) % Object.keys(ModelState).length;
+    getNextGameMessages() {
+        return this.world.nextGameMessages();
     }
 
 
 
-    // // Map through all todos, and replace the text of the todo with the specified id
-    // editTodo(id, updatedText) {
-    //     this.todos = this.todos.map((todo) =>
-    //         todo.id === id ? { id: todo.id, text: updatedText, complete: todo.complete } : todo,
-    //     )
-    // }
 
-    // // Filter a todo out of the array by id
-    // deleteTodo(id) {
-    //     this.todos = this.todos.filter((todo) => todo.id !== id)
-    // }
+    next() {
+        switch (this.state) {
+            case ModelState.MORNING:
+                this.state = ModelState.AFTERNOON;
+                break;
+            case ModelState.AFTERNOON:
+                this.state = ModelState.NIGHT;
+                break;
+            case ModelState.NIGHT:
+                this.state = ModelState.MORNING;
+                break;
+        }
+    }
 
-    // // Flip the complete boolean on the specified todo
-    // toggleTodo(id) {
-    //     this.todos = this.todos.map((todo) =>
-    //         todo.id === id ? { id: todo.id, text: todo.text, complete: !todo.complete } : todo,
-    //     )
-    // }
+    reloadTeams(){
+        this.model.world.league.reloadTeams()
+    }
+
+
 }

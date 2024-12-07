@@ -1,6 +1,6 @@
 //let seed = prompt("Type a number");
 const rng = new MersenneTwister(parseInt(2021));
-const app = new Controller(new Model(), new View())
+const app = new Controller(new Model(), new ShopView())
 
 // let league = new League(9);
 // let bgame = new BaseballGame(new BaseballTeam(), new BaseballTeam());

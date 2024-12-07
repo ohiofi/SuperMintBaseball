@@ -107,6 +107,22 @@ class UserPage{
                             </div>
                             <div class="card-body">
                                 <p>Settings content goes here...</p>
+                                <div class="container mt-5">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="speedSelect" aria-label="Speed selection">
+                                            <option value="100">FAST</option>
+                                            <option value="1000">Hedgehog</option>
+                                            <option value="2000">Tiger</option>
+                                            <option value="3000">Bison </option>
+                                            <option value="4000" selected>NORMAL</option>
+                                            <option value="5000">Cow</option>
+                                            <option value="6000">Crab</option>
+                                            <option value="7000">Worm</option>
+                                            <option value="8000">SLOW</option>
+                                        </select>
+                                        <label for="speedSelect">Select Speed</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,6 +205,15 @@ class UserPage{
         `.trim();
         }
 
+        bindSpeedSelect(handler){
+            this.root.querySelector('#speedSelect');
+            speedSelect.addEventListener('change', event => {
+                const selectedSpeed = event.target.value;
+                console.log(`Selected speed: ${selectedSpeed}`);
+                handler(selectedSpeed)
+            });
+        }
+
     setCardDisplay(user){
         this.root.querySelector("#userPageCardContainer").innerHTML = "";
         for(let i=0; i<user.cards.length; i++){
@@ -206,7 +231,7 @@ class UserPage{
         }    
     }
 
-    update(user) {
+    updateUserInfo(user) {
         if(user.hasClickedUserIcon){
             document.getElementById("userIconNag").classList.add("hide");
         }
@@ -217,6 +242,7 @@ class UserPage{
         this.root.querySelector('#stocks').innerText = user.valuables.stocks;
         this.root.querySelector('#tickets').innerText = user.valuables.tickets;
         this.root.querySelector('#caps').innerText = user.valuables.caps;
+        this.root.querySelector('#speedSelect').value = user.favoriteSpeed;
         //this.root.querySelector('#cardsCount').innerText = user.cards.length;
         this.root.querySelectorAll('.cardsCount').forEach(element => {
             element.innerText = user.cards.length;

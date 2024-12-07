@@ -65,7 +65,7 @@ class RegularSeasonSchedule extends AbstractSchedule {
     }
     temp = new Game(awayTeam, homeTeam)
     temp.generate(1)
-    console.log("" + temp.getFinalScore())
+    //("" + temp.getFinalScore())
     //# add win to standings
     this.standings[temp.winningTeam.getName()]["wins"] += 1
     this.standings[temp.losingTeam.getName()]["losses"] += 1

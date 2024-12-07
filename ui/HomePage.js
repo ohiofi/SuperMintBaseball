@@ -16,6 +16,18 @@ class HomePage{
             
         `.trim();
     }
+    bindShopButtonClick(handler) {
+        const els = document.getElementsByClassName("shopButton");
+        Array.from(els).forEach((el) => {
+            el.addEventListener('click', event => {
+
+                if (event.target.localName === 'button') {
+                    const id = event.target.value
+                    handler(id)
+                }
+            })
+        })
+    }
     
     setShop(shop){
         this.root.querySelector("#homePageCardContainer").innerHTML = "";

@@ -1,4 +1,25 @@
 class View{
+    static addAlert(type, message) {
+        const alertContainer = document.getElementById('alertContainer');
+        const alertDiv = View.createElement('div',null, `alert alert-${type} alert-dismissible fade py-1 m-1`);
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        alertContainer.appendChild(alertDiv);
+        
+        // Trigger the animation after DOM reflow
+        setTimeout(() => {
+            alertDiv.classList.add('show');
+        }, 50);
+
+        // Auto-remove after 4 seconds
+        setTimeout(() => {
+            alertDiv.classList.remove('show');
+            setTimeout(() => alertDiv.remove(), 500);
+        }, 4000);
+    }
     static createElement(tag, idName, classNames, content) {
         const element = document.createElement(tag);
         if (idName) {
@@ -28,7 +49,7 @@ class View{
         this.app.innerHTML = "";
         this.viewContainer = View.createElement("div","viewContainer","container mt-5 pt-5")
 
-        this.alertContainer = View.createElement("span",null,"position-fixed alert-fixed w-25 mt-3 bottom-0 end-0 p-3")
+        this.alertContainer = View.createElement("span","alertContainer","position-fixed alert-fixed w-25 mt-3 bottom-0 end-0 p-3")
         // news ticker
         //this.newsTickerContainer = View.createElement("div", "newsTickerContainer", "mt-4 bg-danger");
         //this.tickerItems = [];
@@ -79,25 +100,26 @@ class View{
 
     
 
-    bindMenuBarClick(handler) {
-        this.navBar.root.addEventListener('click', event => {
-            // console.log(event)
-            if (event.target.localName === 'span' || event.target.localName === 'nobr'){
-                const id = event.target.parentElement.dataset.linkToPageId;
-                handler(id)
-            }
-            else if (event.target.localName === 'a') {
-                //const id = event.target.parentElement.id
-                const id = event.target.dataset.linkToPageId;
-                handler(id)
-            }
-            else if (event.target.localName === 'text' || event.target.localName === 'polygon' ) {
-                //const id = event.target.parentElement.id
-                const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.linkToPageId;
-                handler(id)
-            }
-        })
-    }
+    // bindMenuBarClick(handler) {
+    //     this.navBar.root.addEventListener('click', event => {
+    //         // console.log(event)
+    //         if (event.target.localName === 'span' || event.target.localName === 'nobr'){
+    //             const id = event.target.parentElement.dataset.linkToPageId;
+    //             handler(id)
+    //         }
+    //         else if (event.target.localName === 'a') {
+    //             //const id = event.target.parentElement.id
+    //             const id = event.target.dataset.linkToPageId;
+    //             handler(id)
+    //         }
+    //         else if (event.target.localName === 'text' || event.target.localName === 'polygon' ) {
+    //             //const id = event.target.parentElement.id
+    //             const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.linkToPageId;
+    //             handler(id)
+    //         }
+    //     })
+    // }
+    
     bindContinueButtonClick(handler) {
         const els = document.getElementsByClassName("continueButton");
         Array.from(els).forEach((el) => {
@@ -110,18 +132,19 @@ class View{
             })
         })
     }
-    bindShopButtonClick(handler) {
-        const els = document.getElementsByClassName("shopButton");
-        Array.from(els).forEach((el) => {
-            el.addEventListener('click', event => {
 
-                if (event.target.localName === 'button') {
-                    const id = event.target.value
-                    handler(id)
-                }
-            })
-        })
-    }
+    // bindShopButtonClick(handler) {
+    //     const els = document.getElementsByClassName("shopButton");
+    //     Array.from(els).forEach((el) => {
+    //         el.addEventListener('click', event => {
+
+    //             if (event.target.localName === 'button') {
+    //                 const id = event.target.value
+    //                 handler(id)
+    //             }
+    //         })
+    //     })
+    // }
 
     showPage(pageName) {
         const els = document.getElementsByClassName("page");
@@ -143,6 +166,13 @@ class View{
         if (container !== null) {
             container.scrollTop = container.scrollHeight;
             page.querySelector(".messageJumpButton").classList.add("hide");
+        }
+    }
+
+    setTime(model) {
+        const dateAndTime = document.getElementById('dateAndTime');
+        if (dateAndTime) {
+            dateAndTime.innerHTML = `Year ${model.world.league.currentSeason} Day ${model.world.league.seasons[model.world.league.currentSeason].day}`;
         }
     }
 
