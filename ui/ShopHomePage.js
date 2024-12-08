@@ -1,4 +1,4 @@
-class HomePage{
+class ShopHomePage{
     constructor(){
         this.root = View.createElement("div","homePage","page");
         this.root.innerHTML = `
@@ -7,7 +7,7 @@ class HomePage{
                 <div id="dateAndTime"></div>
                 <div class="pageSummary col pb-4">Please buy some cards so that we can continue.</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning ">CONTINUE</button>
+                    <button type="button" class="continueButton bouncy btn btn-warning float-start">CONTINUE</button>
                 </div>
             </div>
             

@@ -16,8 +16,12 @@ class Controller {
         document.getElementById("footerFinalRow").innerHTML = crestString;
         //this.model.world.league.skipToday()
 
+        //this.view = new AfternoonView()
         //this.setupAfternoonView()
-        this.setupShopView()
+        //this.setupShopView()
+        this.view = new NightView()
+        this.setupNightView();
+
         this.view.bindContinueButtonClick(this.handleContinueButtonClick);
         this.view.navBar.bindNavBarClick(this.handleShowPage)
         this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
@@ -108,20 +112,16 @@ class Controller {
         switch(this.model.state){
             case ModelState.MORNING:
                 this.view = new ShopView();
-                this.setupShopView(this.model)
-                this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-                this.view.navBar.bindNavBarClick(this.handleShowPage)
-                this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
+                this.setupShopView()
+                
                 break
             case ModelState.AFTERNOON:
                 this.view = new AfternoonView();
-                this.view.setupAfternoonView(this.model)
-                this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-                this.view.navBar.bindNavBarClick(this.handleShowPage)
-                this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
-                this.startGameLoop();
+                this.setupAfternoonView()
                 break
             case ModelState.NIGHT:
+                this.view = new NightView();
+                this.setupNightView()
                 break
         }
     }
@@ -173,22 +173,41 @@ class Controller {
     //     this.view.homePage.root.querySelector("#dateAndTime").innerHTML = "Year "+this.model.world.league.currentSeason+" Day "+this.model.world.league.seasons[this.model.world.league.currentSeason].day
     // }
 
+    setupAfternoonView(){
+        this.view.setupAfternoonView(this.model)
+        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+        this.view.navBar.bindNavBarClick(this.handleShowPage)
+        this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
+        this.startGameLoop();
+    }
+
     setupShopView() {
         // Delegate view setup to the ShopView
         this.view.setupShopView(this.model);
-    
         // Bind events
         this.view.homePage.bindShopButtonClick(this.handleShopButtonClick);
-        
+        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+        this.view.navBar.bindNavBarClick(this.handleShowPage)
+        this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
+    }
+
+    setupNightView(){
+        this.model.world.plot.setPlotLines(this.model)
+        this.startGameLoop()
     }
 
     startGameLoop() {
         this.gameMessageInterval = setInterval(() => {
-            this.update();
+            this.update()
         }, this.speed);
     }
 
-    update() {
+    update(){
+        if(this.model.state === ModelState.AFTERNOON) this.updateAfternoon();
+        if(this.model.state === ModelState.NIGHT) this.updateNight();
+    }
+
+    updateAfternoon() {
         const gameMessages = this.model.world.nextGameMessages();
         // update home page scores
         this.view.homePage.addGameTableScores(gameMessages);
@@ -201,7 +220,7 @@ class Controller {
                 this.view.singleGamePages[i].update(gameMessages[i]);
             }
             if (this.view.liveGamesPage.widgets[i]) {
-                this.view.liveGamesPage.widgets[i].update(gameMessages[i]);
+                this.view.liveGamesPage.widgets[i].render(gameMessages[i]);
             }
         }
         // ticker
@@ -224,6 +243,9 @@ class Controller {
         
     }
 
+    updateNight(){
+        this.view.homePage.addSocialPost(this.model.world.plot.next(this.model));
+    }
 
 
 

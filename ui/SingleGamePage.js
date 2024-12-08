@@ -88,15 +88,19 @@ class SingleGamePage {
             return;
         }
         const container = this.root.querySelector('#messageFeedContainer');
-        const postDiv = new GamePost(gameMessage)
+        //const postDiv = new GamePost(gameMessage)
+        const postDiv = View.createElement("game-post");
+        postDiv.setAttribute("game-message",JSON.stringify(gameMessage))
+        // `<game-post game-message="${gameMessage}"></game-post>`
         // Append the new post to the container while maintaining scroll
         const previousScrollTop = container.scrollTop;
         if (container.scrollHeight - container.clientHeight <= container.scrollTop) {
-            container.appendChild(postDiv.render());
+            //container.appendChild(postDiv.render());
+            container.appendChild(postDiv);
             container.scrollTop = container.scrollHeight;
             this.root.querySelector('#messageJumpButton').classList.add("hide");
         } else {
-            container.appendChild(postDiv.render());
+            container.appendChild(postDiv);
             container.scrollTop = previousScrollTop;
             this.root.querySelector('#messageJumpButton').classList.remove("hide");
         }

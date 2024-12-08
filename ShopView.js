@@ -7,7 +7,7 @@ class ShopView extends View{
         this.addMenuItemStandings()
 
         // home
-        this.homePage = new HomePage();
+        this.homePage = new ShopHomePage();
         this.pageContainer.append(this.homePage.render());
 
         // schedule

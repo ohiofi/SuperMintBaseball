@@ -21,17 +21,19 @@ class NavBar {
                 <span class="d-flex ">
 
                     <span id="counterSection"  class=" text-secondary pt-1 pe-1 small" data-link-to-page-id="userPage">
+                        <span id="userIconNag"><span class="badge text-bg-warning bouncy z-3 position-relative top-0 start-50">YOUR CARDS →</span></span>
                         <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">💰</span>&nbsp;
                         <span id="stocksCounter" class="font-monospace ">1</span><span class="opacity-75 small">💹</span>&nbsp;
                         <span id="ticketsCounter" class="font-monospace ">3</span><span class="opacity-75 small">🎟️</span>&nbsp;
                         <span id="capsCounter" class="font-monospace ">5</span><span class="opacity-75 small">🧢</span>&nbsp;
                         <span class="cardsCount font-monospace ">0</span>/<span class="maxCards font-monospace">5</span><span class="opacity-75  small">🃏</span>
+                        
                     </span>
                     
                     
                     
 
-                        <span id="userIconNag"><span class="badge text-bg-warning bouncy">YOUR CARDS →</span></span>
+                        
                         <a id="userPageMenuItem" class="material-symbols-outlined text-secondary link link-light link-opacity-25 link-opacity-100-hover text-decoration-none"
                             data-link-to-page-id="userPage" >                   
                             account_circle
@@ -76,7 +78,7 @@ class NavBar {
     }
 
     setCounters(user){
-        console.log(38)
+        //console.log(38)
         this.root.querySelector("#moneyCounter").innerHTML = user.valuables.money;
         this.root.querySelector("#stocksCounter").innerHTML = user.valuables.stocks;
         this.root.querySelector("#ticketsCounter").innerHTML = user.valuables.tickets;

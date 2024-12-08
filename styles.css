@@ -139,12 +139,12 @@ a {
   }
 
 
-.game-widget {
+/* .game-widget { */
     /* line-height: 2.5ex;
 /* height: 7.5ex; */
     /* overflow: scroll; */
     /*margin-bottom: 25px; */
-}
+/* } */
 
 .hide {
     display: none;
@@ -161,69 +161,69 @@ input[type="range"]:hover {
     border: 1px solid var(--border);
 }
 
-.baseIcon {
+/* .baseIcon {
     font-size: 2em;
-}
+}  */
 
 
-sub.baseIcon {
+/* sub.baseIcon { */
     /* bottom: -0.391em; */
-    bottom: -0.1955em;
+    /* bottom: -0.1955em; */
     /* bottom:0em; */
     /* top: -0.391em; */
-}
+/* } */
 
-sup.baseIcon {
+/* sup.baseIcon {
     /* top: -0.782em; */
     /* top: -0.391em; */
-    top: -0.1955em;
+    /* top: -0.1955em; */
     /* top:0em; */
-}
+/* } */ 
 
-sub.gameWidgetLeftBase {
+/* sub.gameWidgetLeftBase { */
     /* right: -0.37em; */
-    right: -0.48em;
+    /* right: -0.48em; */
     /* right:-0.28em */
     /* right: -0.25em; */
-}
-
-sup.gameWidgetCenterBase {
+/* } */
+/* 
+sup.gameWidgetCenterBase { */
     /* right: 0.37em; */
-    right: 0.24em;
-}
+    /* right: 0.24em; */
+/* } */
 
-sub.gameWidgetRightBase {
+/* sub.gameWidgetRightBase { */
     /* right:0.21em; */
     /* right: 0.74em; */
     /* right: 0.37em; */
     /* right: 0.48em; */
     /* right:0.78em */
     /* right: 0.73em; */
-    right: 0.97em;
-}
+    /* right: 0.97em;
+} */
 /* game feed posts on single game pages */
-sub.gamePostLeftBase {
+/* sub.gamePostLeftBase { */
     /* right: -0.37em; */
     /* right: -0.48em; */
     /* right:-0.24em */
     /* right: -0.26em; */
-    right: -0.51em;
-}
+    /* right: -0.51em;
+} */
 /* game feed posts on single game pages */
-sup.gamePostCenterBase {
+/* sup.gamePostCenterBase { */
     /* right: 0.37em; */
-    right: 0.24em;
-}
+    /* right: 0.24em;
+} */
 /* game feed posts on single game pages */
-sub.gamePostRightBase {
+/* sub.gamePostRightBase { */
     /* right:0.21em; */
     /* right: 0.74em; */
     /* right: 0.37em; */
     /* right: 0.48em; */
     /* right:0.74em; */
     /* right: 0.75em; */
-    right:1.01em;
-}
+    /* right:1.01em;
+} */ */
 
 /* Rules for icon sizes: */
 .material-icons.size-12px {

@@ -17,8 +17,9 @@ class LiveGamesPage {
     addGameWidgets(gameMessages) {
         const widgetsContainer = this.root.querySelector('#widgetsContainer');
         for (let i = 0; i < gameMessages.length; i++) {
-            this.widgets[i] = new GameWidget(i, gameMessages[i])
-            widgetsContainer.append(this.widgets[i].render())
+            this.widgets[i] = new GameWidgetComponent()
+            this.widgets[i].render(gameMessages[i])
+            widgetsContainer.append(this.widgets[i])
         }
     }
 
@@ -28,7 +29,7 @@ class LiveGamesPage {
 
     updateGameWidgets(gameDetails) {
         gameDetails.forEach((detail, i) => {
-            this.widgets[i].update(detail);
+            this.widgets[i].render(detail);
         });
     }
 

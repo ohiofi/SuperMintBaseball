@@ -11,7 +11,7 @@ class Model {
         //this.game = JSON.parse(localStorage.getItem('savedGame')) || new Game();
         this.world = new World();
         this.users = [new User()];
-        this.state = ModelState.MORNING;
+        this.state = ModelState.NIGHT;
     }
 
     addUser() {

@@ -6,7 +6,7 @@ class UserPage{
             <div class="row">
                 <div class="pageSummary col pb-4">You are user</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
+                    <button type="button" class="continueButton bouncy btn btn-warning">CONTINUE</button>
                 </div>
             </div>
             <div class="container my-5">
@@ -68,6 +68,7 @@ class UserPage{
                             </div>
                             <div id="userPageCardContainer" class="card-body row p-4">
                                 <!-- Cards content dynamically inserted here -->
+                                ${TradingCard.getPlaceholderCard()}
                             </div>
                         </div>
                     </div>
@@ -94,7 +95,11 @@ class UserPage{
                                 <h3>Feed</h3>
                             </div>
                             <div class="card-body">
-                                <p>Feed content goes here...</p>
+                                <div id="messageFeedContainer" class="messageFeedContainer bg-333 shadow rounded-2">
+                                    <div id="messageJumpButton" class="messageJumpButton rounded-3 text-center mx-auto bg-warning hide w-50">
+                                        Jump To Newest Update
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,15 +115,15 @@ class UserPage{
                                 <div class="container mt-5">
                                     <div class="form-floating">
                                         <select class="form-select" id="speedSelect" aria-label="Speed selection">
-                                            <option value="100">FAST</option>
-                                            <option value="1000">Hedgehog</option>
-                                            <option value="2000">Tiger</option>
-                                            <option value="3000">Bison </option>
+                                            <option value="100">⏩ FAST</option>
+                                            <option value="1000">⏩ Hedgehog</option>
+                                            <option value="2000">⏩ Tiger</option>
+                                            <option value="3000">⏩ Bison </option>
                                             <option value="4000" selected>NORMAL</option>
-                                            <option value="5000">Cow</option>
-                                            <option value="6000">Crab</option>
-                                            <option value="7000">Worm</option>
-                                            <option value="8000">SLOW</option>
+                                            <option value="5000">⏪ Cow</option>
+                                            <option value="6000">⏪ Crab</option>
+                                            <option value="7000">⏪ Worm</option>
+                                            <option value="8000">⏪ SLOW</option>
                                         </select>
                                         <label for="speedSelect">Select Speed</label>
                                     </div>
@@ -216,6 +221,21 @@ class UserPage{
 
     setCardDisplay(user){
         this.root.querySelector("#userPageCardContainer").innerHTML = "";
+        // add placeholder card if user has no cards...
+        if(user.cards.length==0){
+            this.root.querySelector("#userPageCardContainer").innerHTML = `
+            <span class="col row">
+                <span id="userCardSlotZ" class="col text-center">
+                
+                </span>
+                <div class="col-12 text-center pb-5">
+                    <button id="userCardSlotZButton" type="button" class="shopButton btn btn-outline-danger" disabled>SELL ME</button>
+                </div>
+            </span>
+            `
+            this.root.querySelector("#userCardSlotZ").append(TradingCard.getPlaceholderCard().render())
+            
+        }
         for(let i=0; i<user.cards.length; i++){
             
             this.root.querySelector("#userPageCardContainer").innerHTML += `

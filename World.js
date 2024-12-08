@@ -10,7 +10,6 @@ const WorldStates = {
 
 class World{
     constructor(){
-        this.users = [];
         this.league = new League(24);
         this.newsTicker = new NewsTicker();
         // news tickers subscribes to teams so it can display winning teams
@@ -20,6 +19,10 @@ class World{
         }
         this.shop = new Shop();
         this.shop.addCards(this.league.getTeamsPlayingToday())
+        this.nightScript = []
+        this.level = 1;
+        this.goal = this.level * this.level * 150
+        this.plot = new PlotDevice()
     }
 
     
@@ -46,6 +49,10 @@ class World{
         return this.league.getStandingsTableTeams();
     }
 
+    getTime(){
+        return "Year "+this.model.world.league.currentSeason+" Day "+this.model.world.league.seasons[this.model.world.league.currentSeason].currentDay;
+    }
+
     isTodayDone() {
         return this.league.isTodayDone();
     }
@@ -53,6 +60,8 @@ class World{
     nextGameMessages(){
         return this.league.nextGameMessages();
     }
+
+    
 
     reloadTeams() {
         this.league.reloadTeams();

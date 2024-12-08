@@ -1,4 +1,5 @@
 class View{
+
     static addAlert(type, message) {
         const alertContainer = document.getElementById('alertContainer');
         const alertDiv = View.createElement('div',null, `alert alert-${type} alert-dismissible fade py-1 m-1`);

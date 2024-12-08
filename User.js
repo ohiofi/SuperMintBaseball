@@ -5,9 +5,9 @@ class User {
         this.lives = 3;
         this.valuables = new Valuables({
             "money": 30,
-            "stocks": 1,
-            "tickets": 1,
-            "caps": 1
+            "stocks": 13,
+            "tickets": 14,
+            "caps": 15
         });
         this.cards = [];
         this.maxCards = 5;
