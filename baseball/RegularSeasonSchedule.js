@@ -48,35 +48,35 @@ class RegularSeasonSchedule extends AbstractSchedule {
     return false
   }
 
-  doGame() {
-    let temp;
-    let awayTeam;
-    let homeTeam;
-    let daysInSchedule = this.days.length
-    //# console.log("Week " + (this.currentWeek) + " Day " + (this.currentDay))
-    let today = this.days[this.currentWeek %
-      daysInSchedule][this.currentDay]
-    if (this.currentWeek % 2 == 0) {
-      awayTeam = today[0]
-      homeTeam = today[1]
-    } else {
-      awayTeam = today[1]
-      homeTeam = today[0]
-    }
-    temp = new Game(awayTeam, homeTeam)
-    temp.generate(1)
-    //("" + temp.getFinalScore())
-    //# add win to standings
-    this.standings[temp.winningTeam.getName()]["wins"] += 1
-    this.standings[temp.losingTeam.getName()]["losses"] += 1
-    //# increase day/week
-    this.currentDay += 1
-    if (this.currentDay >= this.days[this.currentWeek % daysInSchedule].length) {
-      this.currentWeek += 1
-      this.currentDay = 0
-      //#this.history.push([])
-    }
-  }
+  // doGame() {
+  //   let temp;
+  //   let awayTeam;
+  //   let homeTeam;
+  //   let daysInSchedule = this.days.length
+  //   //# console.log("Week " + (this.currentWeek) + " Day " + (this.currentDay))
+  //   let today = this.days[this.currentWeek %
+  //     daysInSchedule][this.currentDay]
+  //   if (this.currentWeek % 2 == 0) {
+  //     awayTeam = today[0]
+  //     homeTeam = today[1]
+  //   } else {
+  //     awayTeam = today[1]
+  //     homeTeam = today[0]
+  //   }
+  //   temp = new Game(awayTeam, homeTeam)
+  //   temp.generate(1)
+  //   //("" + temp.getFinalScore())
+  //   //# add win to standings
+  //   this.standings[temp.winningTeam.getName()]["wins"] += 1
+  //   this.standings[temp.losingTeam.getName()]["losses"] += 1
+  //   //# increase day/week
+  //   this.currentDay += 1
+  //   if (this.currentDay >= this.days[this.currentWeek % daysInSchedule].length) {
+  //     this.currentWeek += 1
+  //     this.currentDay = 0
+  //     //#this.history.push([])
+  //   }
+  // }
 
   getDaySchedule(dayNumber) {
     let result = [];
@@ -111,9 +111,10 @@ class RegularSeasonSchedule extends AbstractSchedule {
     }
     return result
   }
-  getTeamsPlayingToday() {
+  getTeamsPlayingToday(dayNumber) {
+    if(dayNumber == null) throw new Error("null dayNumber")
     let result = [];
-    for (let eachGame of this.days[this.day]) {
+    for (let eachGame of this.days[dayNumber]) {
       result.push(eachGame.awayTeam);
       result.push(eachGame.homeTeam);
     }
@@ -121,6 +122,7 @@ class RegularSeasonSchedule extends AbstractSchedule {
   }
 
   nextGameMessages(dayNumber){
+    if(dayNumber == null) throw new Error("null dayNumber")
     let resultArray = [];
     for (let eachGame of this.days[dayNumber]) {
       resultArray.push(eachGame.next())

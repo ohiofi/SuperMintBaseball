@@ -39,7 +39,7 @@ class NightView extends View{
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth;
         model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
 
-        this.schedulePage.addSchedule(model.world.league.getSchedule());
+        this.schedulePage.addSchedule(model.world.league.getSchedule(model.world.year));
 
         const standings = {
             teams: model.world.league.getStandingsTableTeams(),

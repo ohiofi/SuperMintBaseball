@@ -5,6 +5,7 @@ const PlotState = {
     REWARD: 3,
 };
 
+
 const negativePhrases = [
     "Awful Evil.",
     "Cursed.",
@@ -68,12 +69,14 @@ class PlotDevice {
             model.users[0].valuables.redMagic *
             model.users[0].valuables.blueMagic;
         if (vp >= model.world.goal) {
+            View.addAlert("success","LEVEL UP! 🚀<br>")
             this.setMidScriptPositive(model);
             return {
                 username: model.world.league.getCommissionerFullName(),
                 log: "<div style='background:#FFD700;color:black;text-align:center;'>" + PlotDevice.choice(positivePhrases) + "</div>",
             };
         } else {
+            View.addAlert("danger",`-1 LIFE <br> +{}🌕`)
             this.setMidScriptNegative(model);
             model.users[0].lives--;
             return {
@@ -135,12 +138,12 @@ class PlotDevice {
         this.plotPoints.push(
             {
                 username: model.world.newsNetwork.getFullName(),
-                log: `Shortly after the game, the Commissioner of Baseball announced that an unscheduled press conferance would be held.`
+                log: `Shortly after the game, the Commissioner of Baseball announced that an unscheduled press conferance would be held. The mood is tense.`
             })
         this.plotPoints.push(
             {
                 username: model.world.newsNetwork.getFullName(),
-                log: `There are dozens of players, staff, and league employees that have gathered here in the press room. There is some concern.`
+                log: `There are dozens of players, staff, and league employees that have gathered here in the press room. There is some concern amongst the player.`
             })
         this.plotPoints.push(
             {
@@ -354,11 +357,6 @@ class PlotDevice {
                     log: "Let's make this quick.",
                 },
                 { username: model.world.league.getCommissionerFullName(), log: "Let's jump right in." },
-            ])
-        );
-
-        this.plotPoints.push(
-            PlotDevice.choice([
                 {
                     username: model.world.league.getCommissionerFullName(),
                     log: "Nullification. Incineration. ",
@@ -693,27 +691,27 @@ class PlotDevice {
             PlotDevice.choice([
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "If we act quickly, we can still turn a profit.",
+                    log: "If we act quickly, we can sell off some junk and make a little money.",
                 },
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "Alright, enough whining. Let's find a way to make a quick buck.",
+                    log: "Alright, enough whining. We can sell off some junk and make a little money.",
                 },
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "Forget the mistakes. Let's pivot and chase the next revenue stream.",
+                    log: "Forget the mistakes. Let's pivot, sell off some junk, and make a little money.",
                 },
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "We can't change the past, but we can make a quick buck right now.",
+                    log: "We can't change the past, but we can sell off some junk and make a little money.",
                 },
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "Let's put our focus on quick wins. Money waits for no one.",
+                    log: "Let's put our focus on quick wins. Let's sell off some junk and make a little money.",
                 },
                 {
                     username: model.world.league.getCommissionerFullName(),
-                    log: "Stop the blame game. I've got an idea to generate cash, and it starts now.",
+                    log: "Stop the blame game. Let's pivot, sell off some junk, and make a little money.",
                 },
             ])
         );
@@ -945,14 +943,14 @@ class PlotDevice {
         this.plotPoints.push(
             {
                 username: model.world.league.getCommissionerFullName(),
-                log: `Our goal for today was ${model.world.goal} VP 🏅`,
+                log: `Our goal for today was ${model.world.goal} victory points 👑`,
             },
             {
                 username: model.world.league.getCommissionerFullName(),
                 log: `We earned ${model.users[0].valuables.greenMagic *
                     model.users[0].valuables.redMagic *
                     model.users[0].valuables.blueMagic
-                    } VP 🏅`,
+                    } victory points 👑`,
             }
         );
     }

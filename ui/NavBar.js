@@ -22,7 +22,7 @@ class NavBar {
 
                     <span id="counterSection"  class=" text-secondary pt-1 pe-1 small" data-link-to-page-id="userPage">
                         <span id="userIconNag"><span class="badge text-bg-warning bouncy z-3 position-relative top-0 start-50">YOUR CARDS →</span></span>
-                        <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">💰</span>&nbsp;
+                        <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">🌕</span>&nbsp;
                         <span id="greenMagicCounter" class="font-monospace ">1</span><span class="opacity-75 small">🌵</span>&nbsp;
                         <span id="redMagicCounter" class="font-monospace ">3</span><span class="opacity-75 small">🔥</span>&nbsp;
                         <span id="blueMagicCounter" class="font-monospace ">5</span><span class="opacity-75 small">💧</span>&nbsp;

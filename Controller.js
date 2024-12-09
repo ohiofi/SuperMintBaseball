@@ -144,7 +144,7 @@ class Controller {
         }
         else if (!this.model.world.shop.isPurchaseAffordable(value, this.model.users[0])) {
             //console.log("not enough money")
-            View.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}💰, but that costs ${this.model.world.shop.onDisplay[value].cost}💰`)
+            View.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}🌕, but that costs ${this.model.world.shop.onDisplay[value].cost}🌕`)
         }
         this.view.userPage.updateUserInfo(this.model.users[0])
         //this.view.userPage.setCardDisplay(this.model.users[0])

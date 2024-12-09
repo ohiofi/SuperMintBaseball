@@ -173,7 +173,7 @@ class View{
     setTime(model) {
         const dateAndTime = document.getElementById('dateAndTime');
         if (dateAndTime) {
-            dateAndTime.innerHTML = `Year ${model.world.league.currentSeason} Day ${model.world.league.seasons[model.world.league.currentSeason].day}`;
+            dateAndTime.innerHTML = `Year ${model.world.year} Day ${model.world.day}`;
         }
     }
 

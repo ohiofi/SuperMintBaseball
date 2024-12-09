@@ -38,7 +38,6 @@ class Season {
       
       this.teams = teamArray
       
-      this.currentDay = 0;
       this.regularSeasonScheduleComplete = false;
       this.playoffScheduleComplete = false;
       
@@ -65,9 +64,10 @@ class Season {
     //   //# this.getStandings()
     // }
 
-    getGameDetails(){
+    getGameDetails(day){
+      if(day == null) throw new Error("null day")
       if(this.state === SeasonStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.getGameDetails(this.currentDay)
+        return this.regularSeasonSchedule.getGameDetails(day)
       }
     }
   
@@ -108,12 +108,13 @@ class Season {
       console.log(result)
     }
   
-    getTodaysGames(){
+    getTodaysGames(day){
+      if(day == null) throw new Error("null day")
       if(this.state == SeasonStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.days[this.currentDay]
+        return this.regularSeasonSchedule.days[day]
       }
       else if(this.playoffSchedule != null && this.state == SeasonStates.PLAYOFF_TOURNAMENT){
-        return this.playoffSchedule.days[this.currentDay]
+        return this.playoffSchedule.days[day]
       }
     }
    
@@ -253,12 +254,13 @@ class Season {
     //   return resultString
     // }
 
-    isTodayDone(){
+    isTodayDone(day){
+      if(day == null) throw new Error("null day")
       if(this.state == SeasonStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.isTodayDone()
+        return this.regularSeasonSchedule.isTodayDone(day)
       }
       else if(this.playoffSchedule != null && this.state == SeasonStates.PLAYOFF_TOURNAMENT){
-        return this.playoffSchedule.isTodayDone()
+        return this.playoffSchedule.isTodayDone(day)
       }
       
     }
@@ -274,9 +276,10 @@ class Season {
       }
     }
 
-    nextGameMessages(){
+    nextGameMessages(day){
+      if(day == null) throw new Error("null day")
       if(this.state === SeasonStates.REGULAR_SEASON){
-        return this.regularSeasonSchedule.nextGameMessages(this.currentDay)
+        return this.regularSeasonSchedule.nextGameMessages(day)
       }
     }
   }

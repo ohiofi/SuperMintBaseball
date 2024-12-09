@@ -34,7 +34,7 @@ class TradingCardComponent extends HTMLElement {
             <div class="tradingCardHeader">
               
                 <span class="cardName"><small>${this.name}</small></span>
-                <span class="cardCost"><small>${this.cost}💰</small></span>
+                <span class="cardCost"><small>${this.cost}🌕</small></span>
               
             </div>
             <div class="tradingCardImage">

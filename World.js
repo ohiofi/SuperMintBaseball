@@ -10,6 +10,8 @@ const WorldStates = {
 
 class World{
     constructor(){
+        this.year = 0;
+        this.day = 0;
         this.league = new League(24);
         this.newsTicker = new NewsTicker();
         // news tickers subscribes to teams so it can display winning teams
@@ -18,9 +20,8 @@ class World{
             each.manager.subscribe(this.newsTicker.handleEvent);
         }
         this.shop = new Shop();
-        this.shop.addCards(this.league.getTeamsPlayingToday())
-        this.level = 1;
-        this.goal = this.level * this.level * 150;
+        this.shop.addCards(this.league.getTeamsPlayingToday(this.year,this.day))
+        
         this.plot = new PlotDevice();
         this.newsNetwork = new BroadcastNews();
     }
@@ -30,7 +31,7 @@ class World{
 
 
     getGameDetails(){
-        return this.league.getGameDetails();
+        return this.league.getGameDetails(this.year,this.day);
     }
 
     getSchedule() {

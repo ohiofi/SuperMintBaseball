@@ -44,7 +44,6 @@ class League {
             }
         }
 
-        this.currentSeason = 0
         this.seasons = [new Season(this.teams)]
         this.colorScheme = {
             light:"#3d8bff",// hsl 216, 100%, 62%
@@ -75,8 +74,10 @@ class League {
         return `${this.crest.render()} Commissioner Vici`;
     }
 
-    getGameDetails() {
-        return this.seasons[this.currentSeason].getGameDetails();
+    getGameDetails(year,day) {
+        if(year == null) throw new Error("null year")
+        if(day == null) throw new Error("null day")
+        return this.seasons[year].getGameDetails(day);
     }
 
     getTeam(someObject) {
@@ -88,12 +89,15 @@ class League {
         return null;
     }
 
-    getTeamsPlayingToday() {
-        return this.seasons[this.currentSeason].regularSeasonSchedule.getTeamsPlayingToday();
+    getTeamsPlayingToday(year,day) {
+        if(year == null) throw new Error("null year")
+        if(day == null) throw new Error("null day")
+        return this.seasons[year].regularSeasonSchedule.getTeamsPlayingToday(day);
     }
 
-    getSchedule(){
-        return this.seasons[this.currentSeason].regularSeasonSchedule
+    getSchedule(year){
+        if(year == null) throw new Error("null year")
+        return this.seasons[year].regularSeasonSchedule
     }
 
     getStandingsTableBatters(topN) {
@@ -363,8 +367,10 @@ class League {
 
     }
 
-    isTodayDone() {
-        return this.seasons[this.currentSeason].isTodayDone();
+    isTodayDone(year, day) {
+        if(year == null) throw new Error("null year")
+        if(day == null) throw new Error("null day")
+        return this.seasons[year].isTodayDone(day);
     }
 
     lookup(idNum) {
@@ -395,9 +401,11 @@ class League {
         }
     }
 
-    reloadTeams(){
+    reloadTeams(year,day){
+        if(year == null) throw new Error("null year")
+        if(day == null) throw new Error("null day")
         // loop thru each game today
-        for(let each of this.seasons[this.currentSeason].getTodaysGames()){
+        for(let each of this.seasons[year].getTodaysGames(day)){
             // retrieve the up-to-date versions of the teams
             each.homeTeam = this.lookup(each.homeTeam.leagueIdNumber)
             each.awayTeam = this.lookup(each.awayTeam.leagueIdNumber)
@@ -406,20 +414,20 @@ class League {
     }
 
     // doSeason() {
-    //     let weeksInSchedule = this.seasons[this.currentSeason].days.length
+    //     let weeksInSchedule = this.seasons[year].days.length
     //     let playEveryTeamXTimes = 1
     //     //for i in range(weeksInSchedule * playEveryTeamXTimes){
     //     for (let i = 0; i < weeksInSchedule * playEveryTeamXTimes; i++) {
-    //         this.seasons[this.currentSeason].doWeek()
+    //         this.seasons[year].doWeek()
     //     }
-    //     console.log("\nWeek " + ("" + this.seasons[this.currentSeason].currentWeek) + " Standings")
+    //     console.log("\nWeek " + ("" + this.seasons[year].currentWeek) + " Standings")
     //     //# get overall standings
-    //     this.seasons[this.currentSeason].getStandings()
+    //     this.seasons[year].getStandings()
     //     //# get stats
-    //     console.log(this.seasons[this.currentSeason].getFBRanking(3))
-    //     console.log(this.seasons[this.currentSeason].getQBRanking(3))
-    //     console.log(this.seasons[this.currentSeason].getWRRanking(3))
-    //     console.log(this.seasons[this.currentSeason].getMVPRanking(3))
+    //     console.log(this.seasons[year].getFBRanking(3))
+    //     console.log(this.seasons[year].getQBRanking(3))
+    //     console.log(this.seasons[year].getWRRanking(3))
+    //     console.log(this.seasons[year].getMVPRanking(3))
     //     //#input()
     //     //# start playoffs
     //     //# this.seasons[0].schedulePlayoffWeekOne()
@@ -436,22 +444,24 @@ class League {
                 eachPlayer.resetSeasonStats()
             }
         }
-        this.currentSeason += 1
         this.seasons.push(new Season(this.teams))
     }
 
-    doPlayoffs(messageLevel = 0) {
-        this.seasons[this.currentSeason].doPlayoffs(messageLevel)
+    doPlayoffs(year, messageLevel = 0) {
+        if(year == null) throw new Error("null year")
+        this.seasons[year].doPlayoffs(messageLevel)
     }
 
-    isSeasonOver() {
-        if (this.seasons[this.currentSeason].arePlayoffsOver()) {
+    isSeasonOver(year) {
+        if(year == null) throw new Error("null year")
+        if (this.seasons[year].arePlayoffsOver()) {
             return True
         }
         return False
     }
 
-    nextGameMessages() {
-        return this.seasons[this.currentSeason].nextGameMessages();
+    nextGameMessages(year) {
+        if(year == null) throw new Error("null year")
+        return this.seasons[year].nextGameMessages();
     }
 }

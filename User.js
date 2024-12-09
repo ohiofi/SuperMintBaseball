@@ -2,17 +2,20 @@ class User {
     constructor(name) {
         this.name = name;
         this.hasClickedUserIcon = false;
-        this.lives = 3;
+        this.lives = 3; // 🩸
+        this.level = 1; // 🚀
         this.valuables = new Valuables({
-            "money": 30,
-            "greenMagic": 3,
-            "redMagic": 4,
-            "blueMagic": 5
+            "money": 30, // 🌕🌝💰
+            "greenMagic": 3,// 🌵🪴🌿☘️💹
+            "redMagic": 4,// 🔥🎟️
+            "blueMagic": 5// 💧💦🌊🧢
         });
         this.cards = [];
         this.maxCards = 5;
         this.favoriteSpeed = 4000;
     }
+
+    
 
     addCard(cardToAdd, leagueIdObject) {
         //console.log(leagueIdObject)
@@ -26,6 +29,16 @@ class User {
 
     get clickedUserIcon() {
         return this.hasClickedUserIcon;
+    }
+
+    // goal emoji is 🎯🏁
+    getGoal(){
+        return this.level * this.level * 150;
+    }
+
+    // victory points emoji is 👑
+    getVictoryPoints(){
+        return this.valuables.greenMagic * this.valuables.redMagic * this.valuables.blueMagic;
     }
 
     handleEvent = (data) => {

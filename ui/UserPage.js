@@ -11,12 +11,16 @@ class UserPage{
             </div>
             <div class="container my-5">
             <div class="row text-center">
+            <div class="col">
+                    <strong>Level 🚀</strong>
+                    <p id="userLevel" class="font-monospace">3</p>
+                </div>
                 <div class="col">
                     <strong>Lives 🩸</strong>
                     <p id="userLives" class="font-monospace">3</p>
                 </div>
                 <div class="col">
-                    <strong>Money 💰</strong>
+                    <strong>Money 🌕</strong>
                     <p id="money" class="font-monospace">50</p>
                 </div>
                 <div class="col">
@@ -243,7 +247,7 @@ class UserPage{
                 <span id="userCardSlot${i}" class="col text-center">
                 </span>
                 <div class="col-12 text-center pb-5">
-                    <button id="userCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-danger">SELL ME +${user.cards[i].cost/2}💰</button>
+                    <button id="userCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-danger">SELL ME +${user.cards[i].cost/2}🌕</button>
                 </div>
             </span>
             `

@@ -22,9 +22,9 @@ class Valuables{
 
     getEmoji(){
         let result = "";
-        if(this.redMagic > 0) result += "🎟️"
-        if(this.greenMagic > 0) result += "💹"
-        if(this.blueMagic > 0) result += "🧢"
+        if(this.redMagic > 0) result += "🔥"
+        if(this.greenMagic > 0) result += "🌵"
+        if(this.blueMagic > 0) result += "💧"
         return result
     }
 }

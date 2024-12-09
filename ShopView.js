@@ -29,7 +29,7 @@ class ShopView extends View{
                     <span id="shopCardSlot${i}" class="col-12 text-center">
                     </span>
                     <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${onDisplayArray[i].cost}💰</button>
+                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${onDisplayArray[i].cost}🌕</button>
                     </div>
                 </span>
                 `
@@ -44,7 +44,7 @@ class ShopView extends View{
                     </span>
                     <div class="col-12 text-center pb-5">
                         <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
-                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}💰</button>
+                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}🌕</button>
                     </div>
                 </span>
                 `
