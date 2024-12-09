@@ -23,9 +23,9 @@ class NavBar {
                     <span id="counterSection"  class=" text-secondary pt-1 pe-1 small" data-link-to-page-id="userPage">
                         <span id="userIconNag"><span class="badge text-bg-warning bouncy z-3 position-relative top-0 start-50">YOUR CARDS →</span></span>
                         <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">💰</span>&nbsp;
-                        <span id="stocksCounter" class="font-monospace ">1</span><span class="opacity-75 small">💹</span>&nbsp;
-                        <span id="ticketsCounter" class="font-monospace ">3</span><span class="opacity-75 small">🎟️</span>&nbsp;
-                        <span id="capsCounter" class="font-monospace ">5</span><span class="opacity-75 small">🧢</span>&nbsp;
+                        <span id="greenMagicCounter" class="font-monospace ">1</span><span class="opacity-75 small">🌵</span>&nbsp;
+                        <span id="redMagicCounter" class="font-monospace ">3</span><span class="opacity-75 small">🔥</span>&nbsp;
+                        <span id="blueMagicCounter" class="font-monospace ">5</span><span class="opacity-75 small">💧</span>&nbsp;
                         <span class="cardsCount font-monospace ">0</span>/<span class="maxCards font-monospace">5</span><span class="opacity-75  small">🃏</span>
                         
                     </span>
@@ -80,9 +80,9 @@ class NavBar {
     setCounters(user){
         //console.log(38)
         this.root.querySelector("#moneyCounter").innerHTML = user.valuables.money;
-        this.root.querySelector("#stocksCounter").innerHTML = user.valuables.stocks;
-        this.root.querySelector("#ticketsCounter").innerHTML = user.valuables.tickets;
-        this.root.querySelector("#capsCounter").innerHTML = user.valuables.caps;
+        this.root.querySelector("#greenMagicCounter").innerHTML = user.valuables.greenMagic;
+        this.root.querySelector("#redMagicCounter").innerHTML = user.valuables.redMagic;
+        this.root.querySelector("#blueMagicCounter").innerHTML = user.valuables.blueMagic;
         this.root.querySelectorAll('.cardsCount').forEach(element => {
             element.innerText = user.cards.length;
         });

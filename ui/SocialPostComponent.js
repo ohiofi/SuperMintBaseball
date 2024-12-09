@@ -84,10 +84,9 @@ class SocialPostComponent extends HTMLElement {
         this.shadowRoot.getElementById('timestamp').textContent = timestamp;
         this.shadowRoot.getElementById('username').innerHTML = message.username;
         this.shadowRoot.getElementById('log').innerHTML = message.log;
-        if (Object.hasOwn(message, 'bgcolor')) {
-            this.shadowRoot.getElementById('log').style.backgroundColor = message.bgcolor;
-
-        }
+        // if (Object.hasOwn(message, 'bgcolor')) {
+        //     this.shadowRoot.getElementById('log').style.backgroundColor = message.bgcolor;
+        // }
 
     }
 

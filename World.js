@@ -19,10 +19,10 @@ class World{
         }
         this.shop = new Shop();
         this.shop.addCards(this.league.getTeamsPlayingToday())
-        this.nightScript = []
         this.level = 1;
-        this.goal = this.level * this.level * 150
-        this.plot = new PlotDevice()
+        this.goal = this.level * this.level * 150;
+        this.plot = new PlotDevice();
+        this.newsNetwork = new BroadcastNews();
     }
 
     

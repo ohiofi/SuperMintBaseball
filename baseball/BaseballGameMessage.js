@@ -3,6 +3,7 @@ class BaseballGameMessage {
     this.name = game.name;
     this.inning = game.getInningString();
     this.homeTeam = game.homeTeam.getName();
+    this.homeTeamPlace = game.homeTeam.place;
     this.homeNameWithLink = game.homeTeam.getNameWithLink();
     this.homeId = game.homeTeam.leagueIdNumber;
     this.awayTeam = game.awayTeam.getName();
@@ -44,6 +45,7 @@ class BaseballGameMessage {
     this.name = game.name;
     this.inning = game.getInningString();
     this.homeTeam = game.homeTeam.getName();
+    this.homeTeamPlace = game.homeTeam.place;
     this.homeNameWithLink = game.homeTeam.getNameWithLink();
     this.homeId = game.homeTeam.leagueIdNumber;
     this.awayTeam = game.awayTeam.getName();

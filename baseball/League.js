@@ -46,6 +46,12 @@ class League {
 
         this.currentSeason = 0
         this.seasons = [new Season(this.teams)]
+        this.colorScheme = {
+            light:"#3d8bff",// hsl 216, 100%, 62%
+            mid:"#D50032",  // hsl 346, 100%, 42%
+            dark:"#002D72"  // hsl 216, 100%, 22%
+        };
+        this.crest = new Crest(this.colorScheme,"ioLB")
     }
 
     getPlayer(someObject) {
@@ -63,6 +69,10 @@ class League {
             }
         }
         return null;
+    }
+
+    getCommissionerFullName(){
+        return `${this.crest.render()} Commissioner Vici`;
     }
 
     getGameDetails() {

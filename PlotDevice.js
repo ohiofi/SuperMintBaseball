@@ -6,128 +6,44 @@ const PlotState = {
 };
 
 const negativePhrases = [
-    "Numbers go down.",
-    "So below.",
-    "Shame.",
-    "Strike.",
-    "Underhanded.",
-    "Low ball.",
-    "Under.",
+    "Awful Evil.",
     "Cursed.",
-    "You have been found wanting. No one wants to be found wanting.",
+    "Low Ball.",
+    "Numbers Go Down.",
+    "Shame.",
+    "So Below.",
+    "Strike.",
+    "Under.",
+    "Underhanded.",
+    "Wild Low.",
+    "You Have Been Found Wanting.",
+    "You Sink."
 ];
 const positivePhrases = [
-    "Numbers go up.",
-    "#PARTYTIME",
-    "Blessings.",
-    "Idolized.",
-    "Divinity.",
     "Ambitious.",
     "Ascension.",
-    "Over.",
-    "Home run vibes.",
-    "Grand slam moment.",
-    "Home run.",
-    "Winning streak.",
-    "Diamond dreams.",
-    "Champions' spirit.",
-    "Clutch performance.",
-    "Field of triumph.",
-    "Swing for the stars.",
-    "Victory formation.",
-    "Golden glove goals.",
+    "Blessings.",
+    "Champions' Spirit.",
+    "Clutch Performance.",
+    "Diamond Dreams.",
+    "Divinity.",
+    "Field Of Triumph.",
+    "Golden Glove Goals.",
+    "Grand Slam Moment.",
+    "Home Run Vibes.",
+    "Home Run.",
+    "Idolized.",
     "Magic.",
-];
-const officeItems = [
-    {
-        username: "Commissioner Vici",
-        log: "We can sell this conference table.",
-    },
-    { username: "Commissioner Vici", log: "We can sell that water cooler." },
-    { username: "Commissioner Vici", log: "We can sell these fax machines." },
-    {
-        username: "Commissioner Vici",
-        log: "We can sell these old coffee cups.",
-    },
-    { username: "Commissioner Vici", log: "We can sell those flood pumps." },
-    { username: "Commissioner Vici", log: "We can sell the solar panels." },
-    {
-        username: "Commissioner Vici",
-        log: "We can sell all the leftover concessions.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "Stale popcorn is still good, right?",
-    },
-    { username: "Commissioner Vici", log: "We can sell the salmon cannons." },
-    {
-        username: "Commissioner Vici",
-        log: "We can sell these bags of peanuts.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "There's that huge bin that's full of stolen shoes. It's a nice bin. If we empty it out I bet somebody will buy that bin.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "There's probably plenty of copper wiring we can rip out of these walls.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "We can offload these old filing cabinets. People still buy vintage office furniture, right?",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "These office chairs could probably bring in a few bucks.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "Let's sell the leftover boxes of printer paper. Paper's paper, and someone might need it.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "We can auction off that whiteboard that no one's used since making those YouTube videos.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "How much do you think we could get for the vending machine? I bet someone would pay for those snack options.",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "That old photocopier could fetch a decent price if we sell it as scrap.",
-    },
+    "Numbers Go Up.",
+    "Over.",
+    "Partytime.",
+    "Swing For The Stars.",
+    "Victory Formation.",
+    "Winning Streak.",
 ];
 
-const wantToBuy = [
-    {
-        username: "Commissioner Vici",
-        log: "Does anyone want to buy a bucket of chum?",
-    },
-    { username: "Commissioner Vici", log: "Anyone want to buy a wet pretzel?" },
-    {
-        username: "Commissioner Vici",
-        log: "Does anyone want to buy some cold fries?",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "Anyone want to buy a some snake oil?",
-    },
-    {
-        username: "Commissioner Vici",
-        log: "Does anyone want to buy a lootcrate?",
-    },
-    { username: "Commissioner Vici", log: "Anyone want to buy a square sun?" },
-    {
-        username: "Commissioner Vici",
-        log: "Does anyone want to buy a news ticker?",
-    },
-    { username: "Commissioner Vici", log: "Anyone want to buy a microphone?" },
-    { username: "Commissioner Vici", log: "Does anyone want to buy a vault?" },
-    {
-        username: "Commissioner Vici",
-        log: "Anyone want to buy a forbidden book?",
-    },
-];
+
+
 
 class PlotDevice {
     static choice(array) {
@@ -139,59 +55,64 @@ class PlotDevice {
     }
 
     constructor() {
-        console.log("Constructor called"); // Debugging
-        this.plotLines = [];
+        //console.log("Constructor called"); // Debugging
+        this.plotPoints = [];
         this.state = PlotState.INTRO_SCRIPT; // Ensure the initial state is set
-        console.log("this.state initialized:", this.state);
+        //console.log("this.state initialized:", this.state);
     }
 
     getJudgement(model) {
         // did user reach the goal?
         const vp =
-            model.users[0].valuables.stocks *
-            model.users[0].valuables.tickets *
-            model.users[0].valuables.caps;
+            model.users[0].valuables.greenMagic *
+            model.users[0].valuables.redMagic *
+            model.users[0].valuables.blueMagic;
         if (vp >= model.world.goal) {
-            //this.plotLines = getPositiveJudgementScript();
+            this.setMidScriptPositive(model);
             return {
-                username: "Commissioner Vici",
-                bgcolor: "#006600",
-                log: PlotDevice.choice(positivePhrases),
+                username: model.world.league.getCommissionerFullName(),
+                log: "<div style='background:#FFD700;color:black;text-align:center;'>" + PlotDevice.choice(positivePhrases) + "</div>",
             };
         } else {
-            //this.plotLines = getNegativeJudgementScript();
+            this.setMidScriptNegative(model);
+            model.users[0].lives--;
             return {
-                username: "Commissioner Vici",
-                bgcolor: "#660000",
-                log: PlotDevice.choice(negativePhrases),
+                username: model.world.league.getCommissionerFullName(),
+                log: "<div style='background:#A16DC3;color:black;text-align:center;'>" + PlotDevice.choice(negativePhrases) + "</div>",
             };
         }
     }
 
     // Handle state transitions
     next(model) {
-        console.log("Current state:", this.state);
+        //console.log("Current state:", this.state);
         switch (this.state) {
             case PlotState.INTRO_SCRIPT:
-                console.log("In INTRO_SCRIPT state");
-                if (this.plotLines.length > 1) {
-                    return this.plotLines.shift();
+                //console.log("In INTRO_SCRIPT state");
+                if (this.plotPoints.length > 1) {
+                    return this.plotPoints.shift();
                 } else {
                     this.state = PlotState.JUDGEMENT; // Transition to the next state
-                    return this.plotLines.shift();
+                    return this.plotPoints.shift();
                 }
 
             case PlotState.JUDGEMENT:
-                console.log("Moving to MID_SCRIPT state");
+                //console.log("Moving to MID_SCRIPT state");
                 this.state = PlotState.MID_SCRIPT;
                 return this.getJudgement(model);
 
             case PlotState.MID_SCRIPT:
-                console.log("In MID_SCRIPT state");
+                //console.log("In MID_SCRIPT state");
+                if (this.plotPoints.length > 1) {
+                    return this.plotPoints.shift();
+                } else {
+                    this.state = PlotState.REWARD; // Transition to the next state
+                    return this.plotPoints.shift();
+                }
                 break;
 
             case PlotState.REWARD:
-                console.log("In REWARD state");
+                //console.log("In REWARD state");
                 break;
 
             default:
@@ -199,762 +120,877 @@ class PlotDevice {
         }
     }
 
-    setPlotLines(model) {
-        this.plotLines = [];
-        rng.random();rng.random();
-        this.plotLines.push(
+    setIntroScript(model) {
+        this.plotPoints = [];
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `This is ${model.world.newsNetwork.getReporterName()} for ${model.world.newsNetwork.getNewsAbbreviation()}, ${model.world.newsNetwork.getNewsName()}.`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `I am reporting live from ${model.world.getGameDetails()[0].homeTeamPlace.name} tonight.`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `Shortly after the game, the Commissioner of Baseball announced that an unscheduled press conferance would be held.`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `There are dozens of players, staff, and league employees that have gathered here in the press room. There is some concern.`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `It was an exciting game here in ${model.world.getGameDetails()[0].homeTeamPlace.name} with a final score of ${model.world.getGameDetails()[0].scoreString}`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `The Commissioner is walking up to the podium now and is about to speak.`
+            })
+        this.plotPoints.push(
             PlotDevice.choice([
-                { username: "Commissioner Vici", log: "Well that was fun!" },
-                { username: "Commissioner Vici", log: "Wow! What a day!" },
+                { username: model.world.league.getCommissionerFullName(), log: "Well that was fun!" },
+                { username: model.world.league.getCommissionerFullName(), log: "Wow! What a day!" },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Baseball baseball baseball. Am I right?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Is it just me or did today simply fly by!",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Gosh. Now I know why they call baseball 'The Beautiful Game' ",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Okay, team. As we say in baseball... 'everybody huddle up' ",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "These are exciting times",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Well, that was a home run of a day, wasn't it?",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "Alright, folks. Let's pitch some ideas and swing for the fences.",
-                },
-                {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Phew! What a game-changer of a day.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Wow, today felt like running bases non-stop. Who's with me?",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Here's a fun trick. What number am I thinking?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Before we start, does anyone have good news?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Did anyone see that game earlier?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "How about this weather? Weird right?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Should we get started?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Anybody into jazz? Any jazz fans in the house?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Does anyone have any burning questions before we dive in?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "So... who's ready to impress me today?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Anyone want to volunteer some good news before we begin?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Can someone remind me why we're in this business?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Did someone give me a double-shot in my coffee... because I feel wired!",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Is it just me or do we need so more coffee?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's hear it. Who's got a brilliant idea to save the day?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's not strike out on this one folks. Am I right?",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                { username: "Commissioner Vici", log: "No?" },
-                { username: "Commissioner Vici", log: "No one?" },
-                { username: "Commissioner Vici", log: "Any one?" },
-                { username: "Commissioner Vici", log: "Nevermind." },
+                { username: model.world.league.getCommissionerFullName(), log: "No?" },
+                { username: model.world.league.getCommissionerFullName(), log: "No one?" },
+                { username: model.world.league.getCommissionerFullName(), log: "Any one?" },
+                { username: model.world.league.getCommissionerFullName(), log: "Nevermind." },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "I'll take that as a no.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Silent as usual, I see.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Guess I'm talking to myself again.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Well, don't EVERYONE speak at once.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Is this thing ONLINE?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Can you hear me out there?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Testing, testing, 1-2-3.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Am I talking to myself here?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* ECHO!!! Echo!! Echo! echo",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Is there an echo in here, or is it just static?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Did everyone forget how to speak?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "*taps microphone* Must be a tough crowd today.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Alright, let's see what's on the agenda.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Alright, let's do this.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Alright, let's get down to business.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Alright, here we go again.",
                 },
-                { username: "Commissioner Vici", log: "Alright, everyone..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Alright, everyone..." },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Hope you're ready for this one.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Here's hoping this is productive.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's keep this pain to a minimum, shall we?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's not waste any more time.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's make this quick.",
                 },
-                { username: "Commissioner Vici", log: "Let's jump right in." },
+                { username: model.world.league.getCommissionerFullName(), log: "Let's jump right in." },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Nullification. Incineration. ",
                 },
-                { username: "Commissioner Vici", log: "Moving on, then." },
-                { username: "Commissioner Vici", log: "Okay. Welcome back." },
+                { username: model.world.league.getCommissionerFullName(), log: "Moving on, then." },
+                { username: model.world.league.getCommissionerFullName(), log: "Okay. Welcome back." },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "So... let's get started, I guess.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Okay, team, settle in.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Well, let's see how this goes.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We step up to the plate and here's the pitch...",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Time to play ball, team. Eyes on the prize.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's dig in and see if we can make a double play here.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Enough practice swings. We gotta get started.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Something's brewing. And it's not coffee.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Looks like we're in the bottom of the inning. Let's see if we can turn this around.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
-                    log: "We're shutting this league down.",
-                },
-                { username: "Commissioner Vici", log: "It's over." },
-                { username: "Commissioner Vici", log: "This is the end." },
-                {
-                    username: "Commissioner Vici",
-                    log: "Alright, let's get this over with.",
-                },
-                {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Well, I assume we all know why we're here... I hope.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Buckle up. This meeting might be a bumpy ride.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's try to keep this short. I've got better things to do.",
                 },
-                { username: "Commissioner Vici", log: "We're done here." },
+
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Here's a weather forecast. There's a storm brewing.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's dive right into the chaos, shall we?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's dive in and hope this doesn't turn into a disaster.",
                 },
             ])
         );
-
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                { username: "Commissioner Vici", log: "You're all fired." },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We're shutting this league down. We're through.",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "It's over. We're shutting this league down." },
+                { username: model.world.league.getCommissionerFullName(), log: "We're shutting this league down. This is the end." },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Alright, let's get this over with. We're shutting this league down.",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "We're done here. We're shutting this league down." },
+            ])
+        );
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `BREAKING NEWS: io League Baseball is shutting down.`
+            })
+
+        this.plotPoints.push(
+            PlotDevice.choice([
+                { username: model.world.league.getCommissionerFullName(), log: "You're all fired." },
+                {
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Your services are no longer required. Don't let the door hit you on the way out.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Consider this your final curtain call. Take a bow and exit stage left.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We're downsizing. Spoiler alert: You didn't make the cut.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We're initiating a strategic personnel pivot. Translation: You're out.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Effective immediately, you're all being relieved of your duties.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "The company's moving in a new direction. We're selling everything for scrap.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "The league's moving in a new direction. We're selling everything for scrap.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Consider this your permanent vacation notice. Enjoy it.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's just say... we're decluttering the office. EVERYTHING must go.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "You've all been reassigned. Your job title is now: unemployed.",
                 },
             ])
         );
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `BREAKING NEWS: ioLB Commissioner announces end of the league, lays off staff.`
+            })
+        this.plotPoints.push(
+            {
+                username: model.world.newsNetwork.getFullName(),
+                log: `There were gasps in the room as that announcement was made. Players and staff are understandably upset.`
+            })
         //
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Look on the bright side. Finding a new job can be fun!",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Look on the bright side. Unemployment might suit you better.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "This isn't a setback, it's an opportunity... for us to find someone better.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Look on the bright side. We might be able to flee the country before the debt collectors get here.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "It's not personal. It's just business and you're all bad at business.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "Hey, at least you'll have more free time now.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Without your job, you'll have more free time now.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "Don't be sad; not everyone is cut out for greatness.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Don't be sad. Not everyone is cut out for greatness.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Think of this as a learning experience: don't disappoint your next boss.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Well, we all saw this coming, didn't we?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "I'm doing you a favor. You should be thanking me for this wake-up call.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Chin up! It's not like you were making a huge impact here anyway.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Good luck out there. You're going to need it. This is a tough job market.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "The current business model simply isn't sustainable.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We're burning through our seed money",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Finance department is a literal black hole",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "This job pays peanuts compared to other industries.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Hope I don't sound too heavy-handed, but the league's a sinking ship. We're too dense.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We're swimming in shark-infested waters",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
-                    log: "We're hemorrhaging money faster than we can make it.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We're bleeding money faster than we can make it.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "Our overhead costs are so high, they might as well be in orbit.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "It's like pulling teeth trying to get anything done around here. I LOVE pulling teeth, but it's just not a long-term solution.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "This place feels more like a daycare than a business some days.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Our overhead costs are so high, they might as well be in the clouds.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "The profit margins are thinner than my patience.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "This place feels more like a desert than a business some days.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We might as well hand out paychecks with I.O.U.s at this point.",
                 },
             ])
         );
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
-                    log: "Our growth strategy is about as effective as a fish trying to swim upstream.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Our expansion strategy is about as effective as a fish trying to swim upstream.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "The way things are going, we'll be out of business by next quarter.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "No new growth or expansion. Our only area of expansion is our debts.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "It's like pulling teeth trying to get anything productive done around here.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "No new growth or expansion. The magic is gone, folks.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "I wouldn't blame the investors if they ran for the hills.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "No growth or expansion. I wouldn't blame the investors if they jumped ship.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "Some days it feels like all the blood has drained from this place.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "No growth or expansion. Some days it feels like all the blood has drained from this place.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
-                    log: "We have to face the fact that no one cares about this company anymore.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "The management doesn't trust any of you anymore. Who can blame them?",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "The management trust any of you anymore. Who can blame them?",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "You've burned through so many managers. Why? What's your problem with management?",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "You've burned through so many managers. Why? What's wrong wi",
-                },
-                {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "The budget is tight because you wasted too much time fighting management instead of doing your job.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "If you think fighting with the management will save this company, you've been misled.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "Frankly, most of you are replaceable, and we all know it.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "We're behind schedule, and I'm not interested in excuses this time.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "If you think fighting with the management will save this league, you've been misled.",
                 },
             ])
         );
 
-        this.plotLines.push(
-            PlotDevice.choice([
-                {
-                    username: "Commissioner Vici",
-                    log: "Profitability has become a pipe dream with how inefficient this team is.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "Your success doesn't matter unless it directly benefits me.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "I've run out of excuses to explain why this company is still afloat.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "The only thing consistent around here is how poorly we execute our plans.",
-                },
-                {
-                    username: "Commissioner Vici",
-                    log: "I've given you every opportunity, and yet the results are always mediocre at best.",
-                },
-            ])
-        );
+        
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "You've missed deadlines because you lack discipline.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "You act like discipline isn't needed here",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Your lack of discipline is why we're always cleaning up the same messes.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "You have no discipline, this league is just a collection of individual excuses.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "If you can't stick to the rules... If you're that undisciplined, then this isn't the place for you.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "If you can't stick to my rules... If you're that undisciplined, then this isn't the place for you.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Discipline starts with accountability, and accountability starts with you.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "The lack of discipline here isn't a surprise, considering how little effort you put in.",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "If we act quickly, we can still turn a profit.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Alright, enough whining. Let's find a way to make a quick buck.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Forget the mistakes. Let's pivot and chase the next revenue stream.",
                 },
                 {
-                    username: "Commissioner Vici",
-                    log: "We can't change the past, but we can chase a profit right now.",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We can't change the past, but we can make a quick buck right now.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Let's put our focus on quick wins. Money waits for no one.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Stop the blame game. I've got an idea to generate cash, and it starts now.",
                 },
             ])
         );
 
         // things for sale
-        this.plotLines.push(...PlotDevice.choiceCount(2, officeItems));
-        this.plotLines.push(PlotDevice.choice(wantToBuy));
+        this.plotPoints.push(...PlotDevice.choiceCount(2, 
+            [
 
-        this.plotLines.push(
-            PlotDevice.choice([
-                { username: "Commissioner Vici", log: "Everything must go!" },
-                { username: "Commissioner Vici", log: "Make an offer!" },
+                { username: model.world.league.getCommissionerFullName(), log: "We can sell these fax machines." },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We can sell these old coffee cups.",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "We can sell those flood pumps." },
+                { username: model.world.league.getCommissionerFullName(), log: "We can sell the solar panels." },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We can sell all the leftover concessions.",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Stale popcorn is still good, right?",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "We can sell the salmon cannons." },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We can sell these bags of peanuts.",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "There's that huge bin that's full of stolen shoes. It's a nice bin. If we empty it out I bet somebody will buy that bin.",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "We can auction off that whiteboard that no one's used since making those YouTube videos.",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "How much do you think we could get for the vending machine? I bet someone would pay for those snack options.",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "That old photocopier could fetch a decent price if we sell it as scrap.",
+                },
+            ]
+        ));
+        this.plotPoints.push(PlotDevice.choice(
+            [
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Does anyone want to buy a bucket of chum?",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "Anyone want to buy a wet pretzel?" },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Does anyone want to buy some cold fries?",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Anyone want to buy a some snake oil?",
+                },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Does anyone want to buy a lootcrate?",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "Anyone want to buy a square sun?" },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Does anyone want to buy a news ticker?",
+                },
+                { username: model.world.league.getCommissionerFullName(), log: "Anyone want to buy a microphone?" },
+                { username: model.world.league.getCommissionerFullName(), log: "Does anyone want to buy a vault?" },
+                {
+                    username: model.world.league.getCommissionerFullName(),
+                    log: "Anyone want to buy a forbidden book?",
+                },
+            ]
+        ));
+
+        this.plotPoints.push(
+            PlotDevice.choice([
+                { username: model.world.league.getCommissionerFullName(), log: "Everything must go!" },
+                { username: model.world.league.getCommissionerFullName(), log: "Make an offer!" },
+                {
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Who wants to make a deal?",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Prices are negotiable—always.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "I'll cut you a deal if you act fast!",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Cash talks. Let's make it happen.",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "Don't wait. This offer won't last forever!",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "As my old Boss used to say... 'Profits!' ",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "As my old Boss used to say... 'Sometimes the baseball business isn't easily blexplained' ",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "As my old Boss used to say... 'Please don't incinerate me' ",
                 },
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "As my old Boss used to say... 'It's called the baseball BUSINESS, not baseball friend-ness' ",
                 },
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                {username: "Commissioner Vici",log:"Lol"},
-                {username: "Commissioner Vici",log:"Right?"},
-                {username: "Commissioner Vici",log:"Ha"},
-                {username: "Commissioner Vici",log:"Haha"},
+                { username: model.world.league.getCommissionerFullName(), log: "Lol" },
+                { username: model.world.league.getCommissionerFullName(), log: "Right?" },
+                { username: model.world.league.getCommissionerFullName(), log: "Ha" },
+                { username: model.world.league.getCommissionerFullName(), log: "Haha" },
             ])
         );
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                { username: "Commissioner Vici", log: "What was I saying? Oh yeah..." },
-                { username: "Commissioner Vici", log: "Anyway... as I was saying..." },
-                { username: "Commissioner Vici", log: "So... as I was saying..." },
-                { username: "Commissioner Vici", log: "As I was saying..." },
-                { username: "Commissioner Vici", log: "In conclusion..." },
-                { username: "Commissioner Vici", log: "In summary..." }
+                { username: model.world.league.getCommissionerFullName(), log: "What was I saying? Oh yeah..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Anyway... as I was saying..." },
+                { username: model.world.league.getCommissionerFullName(), log: "So... as I was saying..." },
+                { username: model.world.league.getCommissionerFullName(), log: "As I was saying..." },
+                { username: model.world.league.getCommissionerFullName(), log: "In conclusion..." },
+                { username: model.world.league.getCommissionerFullName(), log: "In summary..." }
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
                 {
-                    username: "Commissioner Vici",
+                    username: model.world.league.getCommissionerFullName(),
                     log: "We're shutting this league down. You're all fired. io League Baseball is over.",
                 },
-                { username: "Commissioner Vici", log: "It's over. You're all fired. io League Baseball is through." },
-                { username: "Commissioner Vici", log: "This is the end. You're all fired. io League Baseball is over." },
-                { username: "Commissioner Vici", log: "We're done here. You're all fired. io League Baseball is through." },
-                { username: "Commissioner Vici", log: "The season is over. You're all fired. io League Baseball is done." },
-                { username: "Commissioner Vici", log: "This league is through. You're all fired. io League Baseball is done." },
-                { username: "Commissioner Vici", log: "You're all fired. The season is over. io League Baseball is done." },
-                
+                { username: model.world.league.getCommissionerFullName(), log: "It's over. You're all fired. io League Baseball is through." },
+                { username: model.world.league.getCommissionerFullName(), log: "This is the end. You're all fired. io League Baseball is over." },
+                { username: model.world.league.getCommissionerFullName(), log: "We're done here. You're all fired. io League Baseball is through." },
+                { username: model.world.league.getCommissionerFullName(), log: "The season is over. You're all fired. io League Baseball is done." },
+                { username: model.world.league.getCommissionerFullName(), log: "This league is through. You're all fired. io League Baseball is done." },
+                { username: model.world.league.getCommissionerFullName(), log: "You're all fired. The season is over. io League Baseball is done." },
+
             ])
         );
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                {username: "Commissioner Vici",log:"Before the clean out your desk... Let's see if we sold anything today..."},
-                {username: "Commissioner Vici", log: "While you're packing up your belongings... Let's review today's results..."},
-                {username: "Commissioner Vici", log: "As you're boxing up your junk... I'm going to review today's earnings..."},
-                {username: "Commissioner Vici", log: "Don't start cleaning out desk just yet... I'm just going to see how we performed today..."},
-                {username: "Commissioner Vici", log: "Pause on the desk packing-up... I want to review how things went today..."},
-                {username: "Commissioner Vici", log: "Before you leave... Let's take a moment to evaluate today's progress..."},
-                {username: "Commissioner Vici", log: "Let's put the packing-up on hold... while I check in on how we did today..."}
+                { username: model.world.league.getCommissionerFullName(), log: "Before the clean out your desk... Let's see if we sold anything today..." },
+                { username: model.world.league.getCommissionerFullName(), log: "While you're packing up your belongings... Let's review today's results..." },
+                { username: model.world.league.getCommissionerFullName(), log: "As you're boxing up your junk... I'm going to review today's earnings..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Don't start cleaning out desk just yet... I'm just going to see how we performed today..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Pause on the desk packing-up... I want to review how things went today..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Before you leave... Let's take a moment to evaluate today's progress..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Let's put the packing-up on hold... while I check in on how we did today..." }
             ])
         );
 
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                {username: "Commissioner Vici",log:"Hmm..."},
-                {username: "Commissioner Vici",log:"Well..."},
-                {username: "Commissioner Vici",log:"Gee..."},
-                {username: "Commissioner Vici",log:"Hmm... well..."},
-                {username: "Commissioner Vici",log:"Well... gee..."},
-                {username: "Commissioner Vici",log:"Gee... hmm... "},
+                { username: model.world.league.getCommissionerFullName(), log: "Hmm..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Well..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Gee..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Hmm... well..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Well... gee..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Gee... hmm... " },
             ])
         );
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                {username: "Commissioner Vici",log:"I'm checking theses figures..."},
-                {username: "Commissioner Vici",log:"I'm double-checking the math here..."},
-                {username: "Commissioner Vici",log:"That plus that... Carry the one..."},
+                { username: model.world.league.getCommissionerFullName(), log: "I'm checking theses figures..." },
+                { username: model.world.league.getCommissionerFullName(), log: "I'm double-checking the math here..." },
+                { username: model.world.league.getCommissionerFullName(), log: "That plus that... Carry the one..." },
             ])
         );
-        this.plotLines.push(
+        this.plotPoints.push(
             PlotDevice.choice([
-                {username: "Commissioner Vici",log:"Hmm..."},
-                {username: "Commissioner Vici",log:"Well..."},
-                {username: "Commissioner Vici",log:"Gee..."},
-                {username: "Commissioner Vici",log:"Hmm... well..."},
-                {username: "Commissioner Vici",log:"Well... gee..."},
-                {username: "Commissioner Vici",log:"Gee... hmm... "},
+                { username: model.world.league.getCommissionerFullName(), log: "Hmm..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Well..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Gee..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Hmm... well..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Well... gee..." },
+                { username: model.world.league.getCommissionerFullName(), log: "Gee... hmm... " },
             ])
         );
 
 
-        this.plotLines.push(
+        this.plotPoints.push(
             {
-                username: "Commissioner Vici",
-                log: `Looks like we tricked ${model.users[0].valuables.stocks} fools into buying stocks 💹`,
+                username: model.world.league.getCommissionerFullName(),
+                log: `Looks like we tricked ${model.users[0].valuables.greenMagic} fools into buying stock 💹🌵`,
             },
             {
-                username: "Commissioner Vici",
-                log: `Plus we generated ${model.users[0].valuables.tickets} ticket sales 🎟️`,
+                username: model.world.league.getCommissionerFullName(),
+                log: `Plus we generated ${model.users[0].valuables.redMagic} ticket sales 🎟️🔥`,
             },
             {
-                username: "Commissioner Vici",
-                log: `And we made ${model.users[0].valuables.caps} sales in merchandise 🧢`,
+                username: model.world.league.getCommissionerFullName(),
+                log: `And we made ${model.users[0].valuables.blueMagic} sales in merchandise 🧢💧`,
             }
         );
-        // {username: "Commissioner Vici", log: `Well, well, well. We managed to swindle ${model.users[0].valuables.stocks} unsuspecting fools into buying stocks today.`},
-        // {username: "Commissioner Vici",log:"Impressive."},
-        // {username: "Commissioner Vici",log:"Think of the profits people!"},
-        // {username: "Commissioner Vici", log: `On top of that, we raked in ${model.users[0].valuables.tickets} ticket sales.`},
-        // {username: "Commissioner Vici",log:"Maybe we can keep this money train rolling."},
-        // {username: "Commissioner Vici", log: `And let's not forget, we boosted ${model.users[0].valuables.caps} in merchandise sales.`},
-        // {username: "Commissioner Vici",log:`I can feel my pockets growing already.`},
-        // {username: "Commissioner Vici", log: `Another day, another set of fools handing over their hard-earned cash.`},
-        // {username: "Commissioner Vici", log: `${model.users[0].valuables.stocks} stocks, ${model.users[0].valuables.tickets} tickets, and ${model.users[0].valuables.caps} in merchandise... Delicious.`},
-        // {username: "Commissioner Vici", log: `This just proves that my hard work is paying off.`},
-        // {username: "Commissioner Vici", log: `Every dollar from ${model.users[0].valuables.stocks} shares, ${model.users[0].valuables.tickets} tickets, and ${model.users[0].valuables.caps} goods brings us closer to financial stability.`},
-        // {username: "Commissioner Vici", log: `Today's numbers are music to my ears: ${model.users[0].valuables.stocks} stocks tricked, ${model.users[0].valuables.tickets} tickets sold, and ${model.users[0].valuables.caps} worth of merchandise. `},
-        // {username: "Commissioner Vici", log: `I just keep impressing myself.`},
-        // {username: "Commissioner Vici",log:"Consider yourselves un-fired."},
-        this.plotLines.push(
+        // {username: model.world.league.getCommissionerFullName(), log: `Well, well, well. We managed to swindle ${model.users[0].valuables.greenMagic} unsuspecting fools into buying stocks today.`},
+
+        // {username: model.world.league.getCommissionerFullName(), log: `On top of that, we raked in ${model.users[0].valuables.redMagic} ticket sales.`},
+        // {username: model.world.league.getCommissionerFullName(), log: `And let's not forget, we boosted ${model.users[0].valuables.blueMagic} in merchandise sales.`},
+        // 
+        // 
+        // {username: model.world.league.getCommissionerFullName(), log: `${model.users[0].valuables.greenMagic} stocks, ${model.users[0].valuables.redMagic} redMagic, and ${model.users[0].valuables.blueMagic} in merchandise... Delicious.`},
+        // 
+        // {username: model.world.league.getCommissionerFullName(), log: `Every dollar from ${model.users[0].valuables.greenMagic} shares, ${model.users[0].valuables.redMagic} redMagic, and ${model.users[0].valuables.blueMagic} goods brings us closer to financial stability.`},
+        // {username: model.world.league.getCommissionerFullName(), log: `Today's numbers are music to my ears: ${model.users[0].valuables.greenMagic} stocks tricked, ${model.users[0].valuables.redMagic} redMagic sold, and ${model.users[0].valuables.blueMagic} worth of merchandise. `},
+        // {username: model.world.league.getCommissionerFullName(), log: `I just keep impressing myself.`},
+        // {username: model.world.league.getCommissionerFullName(),log:"Consider yourselves un-fired."},
+        this.plotPoints.push(
             {
-                username: "Commissioner Vici",
+                username: model.world.league.getCommissionerFullName(),
                 log: `Our goal for today was ${model.world.goal} VP 🏅`,
             },
             {
-                username: "Commissioner Vici",
-                log: `We earned ${
-                    model.users[0].valuables.stocks *
-                    model.users[0].valuables.tickets *
-                    model.users[0].valuables.caps
-                } VP 🏅`,
+                username: model.world.league.getCommissionerFullName(),
+                log: `We earned ${model.users[0].valuables.greenMagic *
+                    model.users[0].valuables.redMagic *
+                    model.users[0].valuables.blueMagic
+                    } VP 🏅`,
             }
         );
+    }
+
+    setMidScriptNegative(model) {
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "What's that pinch you just felt? What's that gurgling sound you hear?" })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "That would Project A.B.O. draining about a third of your blood." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "You agreed that the league could drain your blood when you signed your contract." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Selling off all of your blood should allow us to stay in business for another 24 hours." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Also... we have insurance right?" })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "H.R. is telling me that insurance claims were never filed, because of the whole 'Act of God' nonsense. " })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "That's amazing. I'll handle it. I'm handling it." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "I've got a guaranteed new revenue stream. You'll see!" })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Consider yourselves un-fired." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: `I've saved the league once again. I just keep impressing myself.` })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "The league is not shutting down after all. Play ball!" })
+    }
+    setMidScriptPositive(model) {
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Impressive." })
+        this.plotPoints.push(
+            PlotDevice.choice([
+                { username: model.world.league.getCommissionerFullName(), log: "Think of the profits people!" },
+                { username: model.world.league.getCommissionerFullName(), log: "Maybe we can keep this money train rolling." }
+            ])
+        );
+        this.plotPoints.push(
+            PlotDevice.choice([
+                { username: model.world.league.getCommissionerFullName(), log: `I can feel my pockets growing already.` },
+                { username: model.world.league.getCommissionerFullName(), log: `This just proves that my hard work is paying off.` },
+                { username: model.world.league.getCommissionerFullName(), log: `Another day, another set of fools handing over their hard-earned cash.` },
+            ])
+        );
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Also... we have insurance right?" })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "H.R. is telling me that insurance claims were never filed, because of the whole 'Act of God' nonsense. " })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "That's amazing. I'll handle it. I'm handling it." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "I've got a guaranteed new revenue stream. You'll see!" })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "Consider yourselves un-fired." })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: `I've saved the league once again. I just keep impressing myself.` })
+        this.plotPoints.push({ username: model.world.league.getCommissionerFullName(), log: "The league is not shutting down after all. Play ball!" })
     }
 }

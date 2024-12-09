@@ -192,7 +192,8 @@ class Controller {
     }
 
     setupNightView(){
-        this.model.world.plot.setPlotLines(this.model)
+        this.view.setupNightView(this.model)
+        this.model.world.plot.setIntroScript(this.model)
         this.startGameLoop()
     }
 

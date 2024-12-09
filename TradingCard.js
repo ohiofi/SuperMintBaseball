@@ -14,7 +14,7 @@ class TradingCard {
                 name="Your Cards Go Here"
                 cardLine1="Placeholder 😏"
                 cardLine2="This Is Where I'd Put My Cards"
-                cardLine3="...If I Had Any"
+                cardLine3="If I Had Any"
                 cardLine4="(not a real card)"
                 cost="?"
                 colorLight="rgba(127,127,255,0.0)"

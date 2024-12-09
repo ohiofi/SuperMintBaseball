@@ -10,7 +10,7 @@ class NightHomePage{
                     <button type="button" class="continueButton bouncy btn btn-warning float-end">CONTINUE</button>
                 </div>
             </div>
-            <div id="messageFeedContainer" class="messageFeedContainer bg-333 shadow rounded-2 pb-5 mb-5">
+            <div id="messageFeedContainer" class="messageFeedContainer bg-333 shadow rounded-2 mb-5">
                 <div id="messageJumpButton" class="messageJumpButton rounded-3 text-center mx-auto bg-warning hide w-50">
                     Jump To Newest Update
                 </div>
@@ -23,7 +23,7 @@ class NightHomePage{
 
     // adds the individual "posts" that show up in the feed on each Game Page
     addSocialPost(message) {
-        console.log(message)
+        //console.log(message)
         if (message == null || Object.hasOwn(message, 'done') && message.done) {
             return;
         }

@@ -45,7 +45,7 @@ class Shop{
                         teamArray[i],
                         4,
                         1,
-                        new Valuables({"stocks":1}),
+                        new Valuables({"greenMagic":1}),
                         StatsEventType.RUNS_SCORED
                     )
                 )
@@ -57,7 +57,7 @@ class Shop{
                         teamArray[i].getPitcher(),
                         20,
                         1,
-                        new Valuables({"tickets":1}),
+                        new Valuables({"redMagic":1}),
                         StatsEventType.STRIKEOUTS_THROWN
                     )
                 )
@@ -69,7 +69,7 @@ class Shop{
                         teamArray[i].getSlugger(),
                         2,
                         1,
-                        new Valuables({"caps":1}),
+                        new Valuables({"blueMagic":1}),
                         StatsEventType.HITS
                     )
                 )

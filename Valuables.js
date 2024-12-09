@@ -6,10 +6,10 @@ class Valuables{
 
 
     constructor(objectLiteral){
-        this.tickets = objectLiteral.tickets || 0; // 🎟️
-        this.stocks = objectLiteral.stocks || 0; // 💹
-        this.caps = objectLiteral.caps || 0; // 🧢
-        this.money = objectLiteral.money || 0; // 💰
+        this.redMagic = objectLiteral.redMagic || 0; // 🔥🎟️
+        this.greenMagic = objectLiteral.greenMagic || 0; // 🌵🪴🌿☘️💹
+        this.blueMagic = objectLiteral.blueMagic || 0; // 💧💦🌊🧢
+        this.money = objectLiteral.money || 0; // 🌕🌝💰
     }
 
     add(otherValuables){
@@ -22,9 +22,9 @@ class Valuables{
 
     getEmoji(){
         let result = "";
-        if(this.tickets > 0) result += "🎟️"
-        if(this.stocks > 0) result += "💹"
-        if(this.caps > 0) result += "🧢"
+        if(this.redMagic > 0) result += "🎟️"
+        if(this.greenMagic > 0) result += "💹"
+        if(this.blueMagic > 0) result += "🧢"
         return result
     }
 }

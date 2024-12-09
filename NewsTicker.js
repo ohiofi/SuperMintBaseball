@@ -77,7 +77,9 @@ class NewsTicker {
     }
 
     setItems(array){
+
         this.items = array;
+        console.log(this.items)
     }
 
     setSpeed(numberOfSeconds){

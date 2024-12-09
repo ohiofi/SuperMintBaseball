@@ -20,16 +20,16 @@ class UserPage{
                     <p id="money" class="font-monospace">50</p>
                 </div>
                 <div class="col">
-                    <strong>Stocks 💹</strong>
-                    <p id="stocks" class="font-monospace">0</p>
+                    <strong>Red Magic 🔥</strong>
+                    <p id="redMagic" class="font-monospace">0</p>
                 </div>
                 <div class="col">
-                    <strong>Tickets 🎟️</strong>
-                    <p id="tickets" class="font-monospace">0</p>
+                    <strong>Green Magic 🌵</strong>
+                    <p id="greenMagic" class="font-monospace">0</p>
                 </div>
                 <div class="col">
-                    <strong>Caps 🧢</strong>
-                    <p id="caps" class="font-monospace">0</p>
+                    <strong>Blue Magic 💧</strong>
+                    <p id="blueMagic" class="font-monospace">0</p>
                 </div>
                 <div class="col">
                     <strong>Cards 🃏</strong>
@@ -259,9 +259,9 @@ class UserPage{
         this.root.querySelector('#userName').innerText = user.name;
         this.root.querySelector('#userLives').innerText = user.lives;
         this.root.querySelector('#money').innerText = user.valuables.money;
-        this.root.querySelector('#stocks').innerText = user.valuables.stocks;
-        this.root.querySelector('#tickets').innerText = user.valuables.tickets;
-        this.root.querySelector('#caps').innerText = user.valuables.caps;
+        this.root.querySelector('#greenMagic').innerText = user.valuables.greenMagic;
+        this.root.querySelector('#redMagic').innerText = user.valuables.redMagic;
+        this.root.querySelector('#blueMagic').innerText = user.valuables.blueMagic;
         this.root.querySelector('#speedSelect').value = user.favoriteSpeed;
         //this.root.querySelector('#cardsCount').innerText = user.cards.length;
         this.root.querySelectorAll('.cardsCount').forEach(element => {
