@@ -7,7 +7,7 @@ class AfternoonHomePage{
                 <div id="dateAndTime"></div>
                 <div class="pageSummary col pb-4">Today's games are currently being played</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
+                    <button type="button" class="afternoonContinueButton bouncy btn btn-warning hide">CONTINUE</button>
                 </div>
             </div>
             <div class="row">

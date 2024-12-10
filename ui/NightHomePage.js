@@ -7,7 +7,7 @@ class NightHomePage{
                 <div id="dateAndTime"></div>
                 <div class="pageSummary col pb-5">🆘 Special Announcement 🆘</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning float-end">CONTINUE</button>
+                    <button type="button" class="nightContinueButton bouncy btn btn-warning float-end">CONTINUE</button>
                 </div>
             </div>
             <div id="messageFeedContainer" class="messageFeedContainer bg-333 shadow rounded-2 mb-5">
@@ -19,6 +19,14 @@ class NightHomePage{
             
             
         `.trim();
+        // Message feed scroll logic
+        const messageFeedContainer = this.root.querySelector('#messageFeedContainer');
+        const messageJumpButton = this.root.querySelector('#messageJumpButton');
+
+        messageJumpButton.addEventListener('click', () => {
+            messageJumpButton.classList.add('hide');
+            messageFeedContainer.scrollTo(0, messageFeedContainer.scrollHeight);
+        });
     }
 
     // adds the individual "posts" that show up in the feed on each Game Page

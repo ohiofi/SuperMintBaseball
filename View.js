@@ -1,6 +1,6 @@
 class View{
 
-    static addAlert(type, message) {
+    static addAlert(type, message, autoDismiss = false) {
         const alertContainer = document.getElementById('alertContainer');
         const alertDiv = View.createElement('div',null, `alert alert-${type} alert-dismissible fade py-1 m-1`);
         alertDiv.innerHTML = `
@@ -15,12 +15,18 @@ class View{
             alertDiv.classList.add('show');
         }, 50);
 
-        // Auto-remove after 4 seconds
-        setTimeout(() => {
-            alertDiv.classList.remove('show');
-            setTimeout(() => alertDiv.remove(), 500);
-        }, 4000);
+        if(autoDismiss){
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+                setTimeout(() => alertDiv.remove(), 500);
+            }, 4000);
+
+        }
     }
+
+        
+    
     static createElement(tag, idName, classNames, content) {
         const element = document.createElement(tag);
         if (idName) {
@@ -120,9 +126,35 @@ class View{
     //         }
     //     })
     // }
+
+    bindAfternoonContinueButtonClick(handler) {
+        const els = document.getElementsByClassName("afternoonContinueButton");
+        Array.from(els).forEach((el) => {
+            el.addEventListener('click', event => {
+
+                if (event.target.localName === 'button') {
+
+                    handler()
+                }
+            })
+        })
+    }
+
+    bindNightContinueButtonClick(handler) {
+        const els = document.getElementsByClassName("nightContinueButton");
+        Array.from(els).forEach((el) => {
+            el.addEventListener('click', event => {
+
+                if (event.target.localName === 'button') {
+
+                    handler()
+                }
+            })
+        })
+    }
     
-    bindContinueButtonClick(handler) {
-        const els = document.getElementsByClassName("continueButton");
+    bindShopContinueButtonClick(handler) {
+        const els = document.getElementsByClassName("shopContinueButton");
         Array.from(els).forEach((el) => {
             el.addEventListener('click', event => {
 

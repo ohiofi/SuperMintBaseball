@@ -66,7 +66,7 @@ class ShopView extends View{
         }
 
         // Schedule
-        this.schedulePage.addSchedule(model.world.league.getSchedule());
+        this.schedulePage.addSchedule(model.world.league.getSchedule(model.world.year));
 
         // Set up the shop display
         const shopDisplay = this.getCardDisplayCase(model.world.shop.getCardsOnDisplay());

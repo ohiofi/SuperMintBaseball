@@ -6,39 +6,44 @@ class UserPage{
             <div class="row">
                 <div class="pageSummary col pb-4">You are user</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning">CONTINUE</button>
+                    <button type="button" class="afternoonContinueButton bouncy btn btn-warning">CONTINUE</button>
                 </div>
             </div>
             <div class="container my-5">
             <div class="row text-center">
             <div class="col">
-                    <strong>Level 🚀</strong>
-                    <p id="userLevel" class="font-monospace">3</p>
-                </div>
-                <div class="col">
-                    <strong>Lives 🩸</strong>
-                    <p id="userLives" class="font-monospace">3</p>
-                </div>
-                <div class="col">
-                    <strong>Money 🌕</strong>
-                    <p id="money" class="font-monospace">50</p>
-                </div>
-                <div class="col">
-                    <strong>Red Magic 🔥</strong>
-                    <p id="redMagic" class="font-monospace">0</p>
-                </div>
-                <div class="col">
-                    <strong>Green Magic 🌵</strong>
-                    <p id="greenMagic" class="font-monospace">0</p>
-                </div>
-                <div class="col">
-                    <strong>Blue Magic 💧</strong>
-                    <p id="blueMagic" class="font-monospace">0</p>
-                </div>
-                <div class="col">
-                    <strong>Cards 🃏</strong>
-                    <p><span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span></p>
-                </div>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's current experience level.">Level 🚀</a>
+    <p id="userLevel" class="font-monospace">3</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Victory points required to level up. Victory Points are Red Magic multiplied by Green Magic multiplied by Blue Magic.">VP Goal 👑</a>
+    <p id="vpGoal" class="font-monospace">3</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's remaining lives.">Lives 🩸</a>
+    <p id="userLives" class="font-monospace">3</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Money. Spend it to buy cards. Earn magic which generates victory points.">Money 🌕</a>
+    <p id="money" class="font-monospace">50</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Red Magic is used for fire, love, blood, or whatever.">Red Magic 🔥</a>
+    <p id="redMagic" class="font-monospace">0</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Green Magic is used for plants, nature, healing, or whatever.">Green Magic 🌵</a>
+    <p id="greenMagic" class="font-monospace">0</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Blue Magic is used for water, cold, the sky, or whatever.">Blue Magic 💧</a>
+    <p id="blueMagic" class="font-monospace">0</p>
+</div>
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Trading Cards. Number the player currently holds and the maximum number the player can hold.">Cards 🃏</a>
+    <p><span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span></p>
+</div>
+
             </div>
 
                 <ul class="nav nav-tabs  nav-fill" id="userTab" role="tablist">
@@ -262,6 +267,8 @@ class UserPage{
         // Update the user name, lives, valuables, and cards count in the HTML
         this.root.querySelector('#userName').innerText = user.name;
         this.root.querySelector('#userLives').innerText = user.lives;
+        this.root.querySelector('#userLevel').innerText = user.level;
+        this.root.querySelector('#vpGoal').innerText = user.getGoal();
         this.root.querySelector('#money').innerText = user.valuables.money;
         this.root.querySelector('#greenMagic').innerText = user.valuables.greenMagic;
         this.root.querySelector('#redMagic').innerText = user.valuables.redMagic;

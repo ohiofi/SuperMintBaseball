@@ -46,9 +46,6 @@ class BroadcastNews {
             "Buzz",
             "Canon",
             "Canonical",
-            "Discourse",
-            "Disseminator",
-            "Distributer",
             "Mumbler",
             "Murmur",
             "Tattler",
@@ -56,15 +53,16 @@ class BroadcastNews {
         ]);
         this.network = PlotDevice.choice(["News", "Network", "Media","Messanger"]);
         this.colorScheme = {
-            light:"#e98e65",
-            mid:"#455019",
-            dark:"#c24b3c"
+            light:"#efae8f", // 19, 75%, 75%
+            mid:"#c24b3c", // 7, 53%, 50%
+            dark:"#455019", //72, 52%, 21%
+            
         };
         this.crest = new Crest(this.colorScheme,this.getNewsAbbreviation())
     }
 
     getFullName(){
-        return `${this.crest.render()} ${this.place} ${this.secondWord} ${this.network}`;
+        return `${this.crest.render(40)} <span style="background:'${this.colorScheme.light}';color:'${this.colorScheme.dark}';border-radius:'2px';"/>${this.place} ${this.secondWord} ${this.network}</span`;
     }
 
     getNewsAbbreviation(){

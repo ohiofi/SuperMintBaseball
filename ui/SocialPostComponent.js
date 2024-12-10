@@ -24,16 +24,42 @@ class SocialPostComponent extends HTMLElement {
                 color: white; /* Set both regular and visited links to white */
                 }
 
+                .divider {
+                    height: 1px;
+                    background-color: #ed1d61;
+                    border:none;
+                    margin-right:20px;
+                }
+
                 .font-monospace {
                     font-family: monospace, monospace;
+                }
+
+                #headline{
+                    height: 40px;
+                    line-height: 40px;
+                    padding: 10px;
+                    border-radius: 8px;
+                    -webkit-border-radius: 8px 8px 0px 0px;
+                    border-radius: 8px 8px 0px 0px; 
+                }
+
+                #log{
+                    padding: 10px;
+                    border-radius: 8px;
                 }
                 
                 .post {
                     border-radius: 8px;
-                    padding: 10px;
+                    /*padding: 10px;*/
                     margin: 10px 0;
                     background-color: #121214;
                     color: hsl(228, 5%, 80%);
+                    border-style: solid;
+                    border-width: 1px;
+                }
+                svg{
+                    vertical-align: middle;
                 }
 
                 .username {
@@ -49,9 +75,12 @@ class SocialPostComponent extends HTMLElement {
             </style>
 
             <div class="post">
-                <span class="username" id="username"></span> 
-                <span class="timestamp" id="timestamp"></span>
-                <p id="log"></p>
+                <div id="headline">
+                    <span class="username" id="username"></span> 
+                    <span class="timestamp" id="timestamp"></span>
+                </div>
+                <!--hr class="divider"-->
+                <div id="log"></div>
             </div>
         `.trim();
 
@@ -80,13 +109,15 @@ class SocialPostComponent extends HTMLElement {
         const message = JSON.parse(this.getAttribute('message'));
         //console.log(message)
         const timestamp = new Date().toLocaleTimeString();
-
-        this.shadowRoot.getElementById('timestamp').textContent = timestamp;
         this.shadowRoot.getElementById('username').innerHTML = message.username;
+        this.shadowRoot.getElementById('timestamp').textContent = timestamp;
         this.shadowRoot.getElementById('log').innerHTML = message.log;
-        // if (Object.hasOwn(message, 'bgcolor')) {
-        //     this.shadowRoot.getElementById('log').style.backgroundColor = message.bgcolor;
-        // }
+        if (Object.hasOwn(message, 'colorScheme') && message.colorScheme != null) {
+            this.shadowRoot.querySelector('.post').style.color = message.colorScheme.light;
+            this.shadowRoot.querySelector('.post').style.borderColor = `${message.colorScheme.dark}`
+            this.shadowRoot.querySelector('.post').style.boxShadow = `0px 0px 3px ${message.colorScheme.dark}`
+            // this.shadowRoot.querySelector('.divider').style.background = `${message.colorScheme.mid}`
+        }
 
     }
 

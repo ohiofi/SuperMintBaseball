@@ -119,7 +119,7 @@ sports_baseball
         this.homePage.addGameTableScores(gameDetails);
         
 
-        this.schedulePage.addSchedule(model.world.league.getSchedule());
+        this.schedulePage.addSchedule(model.world.league.getSchedule(model.world.year));
 
         const standings = {
             teams: model.world.league.getStandingsTableTeams(),
@@ -145,7 +145,7 @@ sports_baseball
         Array.from(items).forEach((each) => {
             each.innerHTML = `All of today's games have finished!`;
         });
-        const btns = document.getElementsByClassName("continueButton");
+        const btns = document.getElementsByClassName("afternoonContinueButton");
         Array.from(btns).forEach((btn) => {
             btn.classList.remove("hide");
         });

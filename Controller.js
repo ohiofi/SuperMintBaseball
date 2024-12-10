@@ -7,7 +7,7 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 4000;
+        this.speed = 40;
 
         let crestString = "";
         for (let each of this.model.world.league.teams) {
@@ -16,15 +16,10 @@ class Controller {
         document.getElementById("footerFinalRow").innerHTML = crestString;
         //this.model.world.league.skipToday()
 
-        //this.view = new AfternoonView()
-        //this.setupAfternoonView()
-        //this.setupShopView()
-        this.view = new NightView()
-        this.setupNightView();
+       
+        this.setupCurrentView();
 
-        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
-        this.view.navBar.bindNavBarClick(this.handleShowPage)
-        this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
+        
     }
 
     
@@ -103,27 +98,31 @@ class Controller {
     //     this.model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
     // }
 
-    
-
-    handleContinueButtonClick = () => {
+    handleAfternoonContinueButtonClick = () => {
         // update the model state
         this.model.next()
         // update the view
-        switch(this.model.state){
-            case ModelState.MORNING:
-                this.view = new ShopView();
-                this.setupShopView()
-                
-                break
-            case ModelState.AFTERNOON:
-                this.view = new AfternoonView();
-                this.setupAfternoonView()
-                break
-            case ModelState.NIGHT:
-                this.view = new NightView();
-                this.setupNightView()
-                break
-        }
+        this.setupCurrentView()
+        // const els = document.getElementsByClassName("afternoonContinueButton");
+        // Array.from(els).forEach((el) => { el.classList.add("hide")});
+    }
+
+    handleShopContinueButtonClick = () => {
+        // update the model state
+        this.model.next()
+        // update the view
+        this.setupCurrentView()
+        // const els = document.getElementsByClassName("shopContinueButton");
+        // Array.from(els).forEach((el) => { el.classList.add("hide")});
+    }
+
+    handleNightContinueButtonClick = () => {
+        // update the model state
+        this.model.next()
+        // update the view
+        this.setupCurrentView()
+        // const els = document.getElementsByClassName("shopContinueButton");
+        // Array.from(els).forEach((el) => { el.classList.add("hide")});
     }
 
     handleShopButtonClick = (value) => {
@@ -175,10 +174,27 @@ class Controller {
 
     setupAfternoonView(){
         this.view.setupAfternoonView(this.model)
-        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+        this.view.bindAfternoonContinueButtonClick(this.handleAfternoonContinueButtonClick);
         this.view.navBar.bindNavBarClick(this.handleShowPage)
         this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
         this.startGameLoop();
+    }
+
+    setupCurrentView(){
+        switch(this.model.state){
+            case ModelState.MORNING:
+                this.view = new ShopView();
+                this.setupShopView()
+                break
+            case ModelState.AFTERNOON:
+                this.view = new AfternoonView();
+                this.setupAfternoonView()
+                break
+            case ModelState.NIGHT:
+                this.view = new NightView();
+                this.setupNightView()
+                break
+        }
     }
 
     setupShopView() {
@@ -186,13 +202,16 @@ class Controller {
         this.view.setupShopView(this.model);
         // Bind events
         this.view.homePage.bindShopButtonClick(this.handleShopButtonClick);
-        this.view.bindContinueButtonClick(this.handleContinueButtonClick);
+        this.view.bindShopContinueButtonClick(this.handleShopContinueButtonClick);
         this.view.navBar.bindNavBarClick(this.handleShowPage)
         this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
     }
 
     setupNightView(){
         this.view.setupNightView(this.model)
+        this.view.bindNightContinueButtonClick(this.handleNightContinueButtonClick);
+        this.view.navBar.bindNavBarClick(this.handleShowPage)
+        this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
         this.model.world.plot.setIntroScript(this.model)
         this.startGameLoop()
     }
@@ -209,7 +228,7 @@ class Controller {
     }
 
     updateAfternoon() {
-        const gameMessages = this.model.world.nextGameMessages();
+        const gameMessages = this.model.world.nextGameMessages(this.model.world.year, this.model.world.day);
         // update home page scores
         this.view.homePage.addGameTableScores(gameMessages);
         // Live Games
@@ -232,7 +251,7 @@ class Controller {
         this.view.navBar.setCounters(this.model.users[0]);
         this.view.userPage.updateUserInfo(this.model.users[0]);
         // Check if all games are done
-        if (this.model.world.league.isTodayDone()) {
+        if (this.model.world.league.isTodayDone(this.model.world.year,this.model.world.day)) {
             this.view.showTodayIsDone();
             clearInterval(this.gameMessageInterval)
             // update news ticker one last time

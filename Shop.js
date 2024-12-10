@@ -28,7 +28,7 @@ class Shop{
     }
 
     constructor(){
-        this.displaySize = 13
+        this.displaySize = 25
         this.favTeamCards = [];
         this.pitcherCards = [];
         this.sluggerCards = [];

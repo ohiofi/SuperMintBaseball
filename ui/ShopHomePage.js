@@ -7,7 +7,7 @@ class ShopHomePage{
                 <div id="dateAndTime"></div>
                 <div class="pageSummary col pb-4">Please buy some cards so that we can continue.</div>
                 <div class="col">
-                    <button type="button" class="continueButton bouncy btn btn-warning float-start">CONTINUE</button>
+                    <button type="button" class="shopContinueButton bouncy btn btn-warning float-start">CONTINUE</button>
                 </div>
             </div>
             

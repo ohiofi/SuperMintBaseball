@@ -36,6 +36,12 @@ class User {
         return this.level * this.level * 150;
     }
 
+    getReward(){
+        // reward * (level ^ 3 / ( abs(level ^ 3 - yourScore ^ 3) + level ^ 3))
+        const rewardAmount = 50;
+        return Math.ceil(rewardAmount * (Math.pow(this.getGoal(),3) / ( Math.abs(Math.pow(this.getGoal(),3) - Math.pow(this.getVictoryPoints(), 3)) + Math.pow(this.getGoal(),3))));
+    }
+
     // victory points emoji is 👑
     getVictoryPoints(){
         return this.valuables.greenMagic * this.valuables.redMagic * this.valuables.blueMagic;
@@ -47,7 +53,7 @@ class User {
         for(let i=0; i<this.cards.length;i++){
             if(this.cards[i].isTriggered(data)){
                 this.cards[i].addRewardToUser(this)
-                View.addAlert("success","+" +this.cards[i].rewardAmount + this.cards[i].valuables.getEmoji()+" <small>"+this.cards[i].name + " " + this.cards[i].pastTenseEventString + "</small>")
+                View.addAlert("success","+" +this.cards[i].rewardAmount + this.cards[i].valuables.getEmoji()+" <small>"+this.cards[i].name + " " + this.cards[i].pastTenseEventString + "</small>",true)
             }
         }
     }

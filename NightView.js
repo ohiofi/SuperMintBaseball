@@ -47,6 +47,8 @@ class NightView extends View{
             batters: model.world.league.getStandingsTableBatters(10),
         };
         this.standingsPage.update(standings.teams, standings.pitchers, standings.batters);
+        const els = document.getElementsByClassName("nightContinueButton");
+        Array.from(els).forEach((el) => { el.classList.add("hide")});
         
         //this.liveGamesPage.addGameWidgets(gameDetails);
         // single game pages

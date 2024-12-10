@@ -33,11 +33,11 @@ const app = new Controller(new Model(), new View())
     
 // }
 
-// CUSTOM EVENT LISTENERS
-document.addEventListener('HomeRun', (event) => {
-  addAlert('Home Run! '+new Date(), 'success');
+// // CUSTOM EVENT LISTENERS
+// document.addEventListener('HomeRun', (event) => {
+//   addAlert('Home Run! '+new Date(), 'success');
  
-});
+// });
 
 // function showPage(pageName) {
 //   let els = document.getElementsByClassName("page");
@@ -69,10 +69,10 @@ document.addEventListener('HomeRun', (event) => {
 //     }, speed);
 // }
 
-function jumpToNewestMessage(){
-  messageFeedContainer.scrollTo(0,messageFeedContainer.scrollHeight);
-  document.getElementById("messageJumpButton").classList.add("hide");
-}
+// function jumpToNewestMessage(){
+//   messageFeedContainer.scrollTo(0,messageFeedContainer.scrollHeight);
+//   document.getElementById("messageJumpButton").classList.add("hide");
+// }
 
 // Set initial interval
 // startMessageInterval(5005 - parseInt(document.getElementById('speedSlider').value, 10), bgame);

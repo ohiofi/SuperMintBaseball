@@ -46,7 +46,7 @@ class League {
 
         this.seasons = [new Season(this.teams)]
         this.colorScheme = {
-            light:"#3d8bff",// hsl 216, 100%, 62%
+            light:"#7aafff",// hsl 216, 100%, 72%
             mid:"#D50032",  // hsl 346, 100%, 42%
             dark:"#002D72"  // hsl 216, 100%, 22%
         };
@@ -71,7 +71,7 @@ class League {
     }
 
     getCommissionerFullName(){
-        return `${this.crest.render()} Commissioner Vici`;
+        return `${this.crest.render(40)} Commissioner Vici`;
     }
 
     getGameDetails(year,day) {
@@ -460,8 +460,9 @@ class League {
         return False
     }
 
-    nextGameMessages(year) {
+    nextGameMessages(year,day) {
         if(year == null) throw new Error("null year")
-        return this.seasons[year].nextGameMessages();
+        if(day == null) throw new Error("null day")
+        return this.seasons[year].nextGameMessages(day);
     }
 }

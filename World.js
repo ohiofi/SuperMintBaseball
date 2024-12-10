@@ -58,8 +58,10 @@ class World{
         return this.league.isTodayDone();
     }
 
-    nextGameMessages(){
-        return this.league.nextGameMessages();
+    nextGameMessages(year, day){
+        if(year == null) throw new Error("null year")
+        if(day == null) throw new Error("null day")
+        return this.league.nextGameMessages(year, day);
     }
 
     

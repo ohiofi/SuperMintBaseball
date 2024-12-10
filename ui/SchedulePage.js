@@ -9,7 +9,7 @@ class SchedulePage{
                 Regular Season Games are listed below
             </div>
             <div class="col">
-                <button type="button" class="continueButton bouncy btn btn-warning hide">CONTINUE</button>
+                <button type="button" class="afternoonContinueButton bouncy btn btn-warning hide">CONTINUE</button>
             </div>
         </div>
 

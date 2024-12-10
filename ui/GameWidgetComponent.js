@@ -148,16 +148,16 @@ class GameWidgetComponent extends HTMLElement {
     //     homeName.addEventListener('click', this._onHomeNameClick.bind(this));
     // }
 
-    // _removeEventListeners() {
-    //     const inning = this.shadowRoot.querySelector('.inning');
-    //     inning.removeEventListener('click', this._onInningClick);
+    _removeEventListeners() {
+        const inning = this.shadowRoot.querySelector('.inning');
+        inning.removeEventListener('click', this._onInningClick);
 
-    //     const awayName = this.shadowRoot.querySelector('.away-name');
-    //     awayName.removeEventListener('click', this._onAwayNameClick);
+        const awayName = this.shadowRoot.querySelector('.away-name');
+        awayName.removeEventListener('click', this._onAwayNameClick);
 
-    //     const homeName = this.shadowRoot.querySelector('.home-name');
-    //     homeName.removeEventListener('click', this._onHomeNameClick);
-    // }
+        const homeName = this.shadowRoot.querySelector('.home-name');
+        homeName.removeEventListener('click', this._onHomeNameClick);
+    }
 
     // _onInningClick() {
     //     const pageNumber = this.getAttribute('page-number');

@@ -27,4 +27,10 @@ class Valuables{
         if(this.blueMagic > 0) result += "💧"
         return result
     }
+
+    setMagicToZero(){
+        this.redMagic = 0;
+        this.greenMagic = 0;
+        this.blueMagic = 0;
+    }
 }

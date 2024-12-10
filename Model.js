@@ -11,7 +11,7 @@ class Model {
         //this.game = JSON.parse(localStorage.getItem('savedGame')) || new Game();
         this.world = new World();
         this.users = [new User()];
-        this.state = ModelState.NIGHT;
+        this.state = ModelState.MORNING;
     }
 
     addUser() {
@@ -51,12 +51,21 @@ class Model {
     next() {
         switch (this.state) {
             case ModelState.MORNING:
+                console.log("morning -> afternoon")
+                // shop cleans out all the old cards
+                this.world.shop.onDisplay = [];
+                this.world.shop.displaySize = Math.max(this.world.shop.displaySize - 2, 5);
                 this.state = ModelState.AFTERNOON;
                 break;
             case ModelState.AFTERNOON:
+                console.log("afternoon -> night")
                 this.state = ModelState.NIGHT;
                 break;
             case ModelState.NIGHT:
+                console.log("night -> morning")
+                this.world.day++;
+                // setup shop for next day
+                this.world.shop.addCards(this.world.league.getTeamsPlayingToday(this.world.year,this.world.day));
                 this.state = ModelState.MORNING;
                 break;
         }
