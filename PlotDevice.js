@@ -287,9 +287,6 @@ class PlotDevice {
                     "Enough practice swings. We gotta get started.",
                     "Something's brewing. And it's not coffee.",
                     "Looks like we're in the bottom of the inning. Let's see if we can turn this around.",
-
-                ]),
-                PlotDevice.choice([
                     "Well, I assume we all know why we're here... I hope.",
                     "Buckle up. This meeting might be a bumpy ride.",
                     "Let's try to keep this short. I've got better things to do.",
@@ -553,7 +550,8 @@ class PlotDevice {
                 model.world.league.colorScheme,
                 [
                     "Nothing to fear people! That was just the sound of the blood syphon starting up.",
-                    "You might have just felt a little pinch. Or perhaps heard an odd, gurgling sound.",
+                    "Looks like the engineering department FINALLY got it working... and just when I was about to shut the league down!",
+                    "You may have just felt a little pinch. Or perhaps heard an odd, gurgling sound.",
                     "That would be the blood syphon draining about a third of your essence.",
                     "Did you forget? You agreed that the league could drain your blood when you signed your contract.",
                     "Selling off all of your blood should allow us to stay in business for at least another 24 hours.",

@@ -171,6 +171,13 @@ class Shop{
             this.onDisplay.push(addedCard);
         }
     }
+    setInventoryToZero(){
+        // destroy remaining cards
+        this.favTeamCards = [];
+        this.pitcherCards = [];
+        this.sluggerCards = [];
+        this.onDisplay = [];
+    }
     setPitcherCards(number){
         for(let i=0; i<number; i++){
             if(this.pitcherCards.length == 0) break

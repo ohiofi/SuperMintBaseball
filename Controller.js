@@ -7,7 +7,7 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.speed = 40;
+        this.speed = 3000;
 
         let crestString = "";
         for (let each of this.model.world.league.teams) {

@@ -53,7 +53,7 @@ class Model {
             case ModelState.MORNING:
                 console.log("morning -> afternoon")
                 // shop cleans out all the old cards
-                this.world.shop.onDisplay = [];
+                this.world.shop.setInventoryToZero();
                 this.world.shop.displaySize = Math.max(this.world.shop.displaySize - 2, 5);
                 this.state = ModelState.AFTERNOON;
                 break;

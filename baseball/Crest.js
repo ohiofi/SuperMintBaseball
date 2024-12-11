@@ -1,7 +1,7 @@
 class Crest {
     static crestCounter = 0
     constructor(colorScheme, teamPlaceAbbreviation) {
-        //this.id = Crest.crestCounter++;
+        //Crest.crestCounter++;
         this.colorScheme = colorScheme;
         this.teamPlaceAbbreviation = teamPlaceAbbreviation;
         this.shape = this.generateShape();
