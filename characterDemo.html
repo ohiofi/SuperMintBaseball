@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Canvas with Sliders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Color Emoji', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        canvas {
+            border: 1px solid black;
+            image-rendering: pixelated;
+            width: 200px;
+            height: 300px;
+        }
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Emoji Canvas with Sliders</h1>
+    <canvas id="emojiCanvas"></canvas>
+
+    <div id="sliders">
+        <!-- Sliders for Emoji 1 -->
+        <div class="slider-group">
+            <label>Emoji 1 X: <input type="range" id="emoji1X" min="-5" max="10" step="0.1" value="2.5"></label>
+            <label>Emoji 1 Y: <input type="range" id="emoji1Y" min="-50" max="50" step="0.1" value="10"></label>
+            <label>Emoji 1 Scale: <input type="range" id="emoji1Scale" min="0.1" max="20" step="0.1" value="10"></label>
+            <button id="randomFace">Random Face</button>
+        </div>
+
+        <!-- Sliders for Emoji 2 -->
+        <div class="slider-group">
+            <label>Emoji 2 X: <input type="range" id="emoji2X" min="-5" max="10" step="0.1" value="2.5"></label>
+            <label>Emoji 2 Y: <input type="range" id="emoji2Y" min="-50" max="50" step="0.1" value="20"></label>
+            <label>Emoji 2 Scale: <input type="range" id="emoji2Scale" min="0.1" max="20" step="0.1" value="10"></label>
+            <button id="randomStyle">Random Style</button>
+        </div>
+
+        <!-- Sliders for Emoji 3 -->
+        <div class="slider-group">
+            <label>Emoji 3 X: <input type="range" id="emoji3X" min="-5" max="10" step="0.1" value="2.5"></label>
+            <label>Emoji 3 Y: <input type="range" id="emoji3Y" min="-50" max="50" step="0.1" value="30"></label>
+            <label>Emoji 3 Scale: <input type="range" id="emoji3Scale" min="0.1" max="20" step="0.1" value="10"></label>
+            <button id="randomWeapon">Random Weapon</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('emojiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 200 / 10;
+        canvas.height = 300 / 10;
+
+        // Sliders
+        const sliders = {
+            emoji1X: document.getElementById('emoji1X'),
+            emoji1Y: document.getElementById('emoji1Y'),
+            emoji1Scale: document.getElementById('emoji1Scale'),
+            emoji2X: document.getElementById('emoji2X'),
+            emoji2Y: document.getElementById('emoji2Y'),
+            emoji2Scale: document.getElementById('emoji2Scale'),
+            emoji3X: document.getElementById('emoji3X'),
+            emoji3Y: document.getElementById('emoji3Y'),
+            emoji3Scale: document.getElementById('emoji3Scale')
+        };
+
+        // Emoji Data
+        const faces = ['😀', '😅', '😂', '😍', '😎', '😡', '😱'];
+        const styles = ['🎩', '👓', '👒', '👕', '👔', '🧢', '👟'];
+        const weapons = ['⚔️', '🛡️', '🔮', '🏹', '🔫', '🗡️'];
+
+        const emojis = [
+            { emoji: '😀', x: 2.5, y: 10, scale: 10 },
+            { emoji: '🎉', x: 2.5, y: 20, scale: 10 },
+            { emoji: '✨', x: 2.5, y: 30, scale: 10 }
+        ];
+
+        function drawEmojis() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            emojis.forEach(({ emoji, x, y, scale }) => {
+                ctx.font = `${scale}px 'Noto Emoji'`;
+                ctx.fillText(emoji, x , y);
+            });
+        }
+
+        function updateEmojiAttributes() {
+            emojis[0].x = parseInt(sliders.emoji1X.value);
+            emojis[0].y = parseInt(sliders.emoji1Y.value);
+            emojis[0].scale = parseFloat(sliders.emoji1Scale.value);
+
+            emojis[1].x = parseInt(sliders.emoji2X.value);
+            emojis[1].y = parseInt(sliders.emoji2Y.value);
+            emojis[1].scale = parseFloat(sliders.emoji2Scale.value);
+
+            emojis[2].x = parseInt(sliders.emoji3X.value);
+            emojis[2].y = parseInt(sliders.emoji3Y.value);
+            emojis[2].scale = parseFloat(sliders.emoji3Scale.value);
+
+            drawEmojis();
+        }
+
+        function getRandomEmoji(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        document.getElementById('randomFace').addEventListener('click', () => {
+            emojis[0].emoji = getRandomEmoji(faces);
+            drawEmojis();
+        });
+
+        document.getElementById('randomStyle').addEventListener('click', () => {
+            emojis[1].emoji = getRandomEmoji(styles);
+            drawEmojis();
+        });
+
+        document.getElementById('randomWeapon').addEventListener('click', () => {
+            emojis[2].emoji = getRandomEmoji(weapons);
+            drawEmojis();
+        });
+
+        // Add event listeners to sliders
+        Object.values(sliders).forEach(slider => {
+            slider.addEventListener('input', updateEmojiAttributes);
+        });
+
+        // Initial draw
+        drawEmojis();
+    </script>
+</body>
+</html>
