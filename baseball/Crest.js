@@ -6,7 +6,8 @@ class Crest {
         this.teamPlaceAbbreviation = teamPlaceAbbreviation;
         this.shape = this.generateShape();
         this.fontStyle = null;
-        switch(Math.floor(rng.random()*3)){
+        let randFont = Math.floor(rng.random()*6)
+        switch(randFont){
             case 0:
                 this.fontStyle = "serif";
                 break
@@ -15,6 +16,16 @@ class Crest {
                 break
             case 2:
                 this.fontStyle = "monospace";
+                break
+            case 3:
+                this.fontStyle = 'Josefin Sans", "monospace';
+                break
+            case 4:
+                this.fontStyle = "Graduate,serif";
+                break
+            case 5:
+                this.fontStyle = "Fraunces,serif";
+                break
         }
         this.shadowColor = null
         this.fontColor = null
@@ -239,8 +250,8 @@ class Crest {
             <polygon 
                 points="${this.shape}" 
                 fill="url(#gradient${Crest.crestCounter++})" 
-                stroke="rgba(127,127,127,0.9)"
-                stroke-width="3"
+                stroke="${this.colorScheme.light}"
+                stroke-width="1.4"
             />
             <style>
 
@@ -263,6 +274,7 @@ class Crest {
     `;
     }
 }
+//rgba(127,127,127,0.9)
 //stroke="${this.shadowColor}"
 //stroke-width="1"
 // style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"

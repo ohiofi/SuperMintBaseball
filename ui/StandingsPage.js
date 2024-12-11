@@ -8,9 +8,9 @@ class StandingsPage{
             <div class="pageSummary col pb-4">
                 Today's games are currently being played. Standings will be updated once today's games are finished.
             </div>
-            <div class="col">
+            <!--div class="col">
                 <button type="button" class="afternoonContinueButton bouncy btn btn-warning hide">CONTINUE</button>
-            </div>
+            </div-->
         </div>
         <div id="standingsSection"></div>
         `.trim();

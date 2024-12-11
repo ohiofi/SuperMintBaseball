@@ -5,9 +5,9 @@ class UserPage{
             <h3 id="userPageHeadline" class="pb-4 display-6 ">User</h3>
             <div class="row">
                 <div class="pageSummary col pb-4">You are user</div>
-                <div class="col">
+                <!--div class="col">
                     <button type="button" class="afternoonContinueButton bouncy btn btn-warning">CONTINUE</button>
-                </div>
+                </div-->
             </div>
             <div class="container my-5">
             <div class="row text-center">
