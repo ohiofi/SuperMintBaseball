@@ -1,8 +1,8 @@
 // Observer design pattern
-// a StatsEventManager generates/publishes a StatsEvent
-// a StatsEventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
-// a BaseballTeam or BaseballPlayer has a StatsEventManager
-// a User or the League subscribes to one or more StatsEventManagers and can handleEvent(data)
+// a EventManager generates/publishes a StatsEvent
+// a EventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
+// a BaseballTeam or BaseballPlayer has a EventManager
+// a User or the League subscribes to one or more EventManagers and can handleEvent(data)
 /**
  * Represents types of statistics events using an enumerated object.
  * Used to define various game events such as hits, home runs, or pitching stats.

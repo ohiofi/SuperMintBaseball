@@ -13,6 +13,7 @@ class User {
         this.cards = [];
         this.maxCards = 5;
         this.favoriteSpeed = 4000;
+        this.manager = new EventManager();
     }
 
     
@@ -25,6 +26,7 @@ class User {
                 leagueIdObject.manager.subscribe(this.handleEvent);
             }
         }
+        this.manager.notify(this)
     }
 
     get clickedUserIcon() {

@@ -3,7 +3,7 @@ class BaseballTeam {
 
     static restructure(jsonObject) {
         Object.setPrototypeOf(jsonObject, BaseballTeam.prototype);
-        jsonObject.manager = StatsEventManager.restructure(jsonObject.manager);
+        jsonObject.manager = EventManager.restructure(jsonObject.manager);
         if (jsonObject.pitcher != null)
             jsonObject.pitcher = Object.setPrototypeOf(
                 jsonObject.pitcher,
@@ -218,7 +218,7 @@ class BaseballTeam {
         this.xp = 0;
 
         this.batterUpNumber = 0;
-        this.manager = new StatsEventManager();
+        this.manager = new EventManager();
     }
 
     addPlateAppearances() {
@@ -631,6 +631,10 @@ getStatsTable() {
                 type="button" role="tab" aria-controls="info" aria-selected="false">Info</button>
             </li>
             <li class="nav-item" role="presentation">
+                <button class="nav-link link-secondary" id="crest-tab" data-bs-toggle="tab" data-bs-target="#crest" 
+                type="button" role="tab" aria-controls="crest" aria-selected="false">Crest</button>
+            </li>
+            <li class="nav-item" role="presentation">
                 <button class="nav-link link-secondary" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" 
                 type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
             </li>
@@ -679,6 +683,15 @@ getStatsTable() {
                     <tr><td>Batter Up Number</td><td>${this.batterUpNumber}</td></tr>
                     <tr><td>Jersey Numbers</td><td>${this.jerseyNumberList.join(", ")}</td></tr>
                 </table>
+            </div>
+                        <!-- Stats Tab -->
+            <div class="tab-pane fade" id="crest" role="tabpanel" aria-labelledby="crest-tab">
+                <div class="row">
+                    <div class="col text-center">
+                    ${this.crest.render(300)}
+                    </div>
+                    
+                </div>
             </div>
 
                         <!-- Stats Tab -->

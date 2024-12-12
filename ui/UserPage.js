@@ -232,6 +232,11 @@ class UserPage{
             });
         }
 
+        handleEvent = (data) => {
+            // when user data updates
+            console.log(data)
+        }
+
     setCardDisplay(user){
         this.root.querySelector("#userPageCardContainer").innerHTML = "";
         // add placeholder card if user has no cards...

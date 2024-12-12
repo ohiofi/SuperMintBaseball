@@ -6,7 +6,7 @@ class BaseballPlayer {
         Object.setPrototypeOf(jsonObject, BaseballPlayer.prototype);
         jsonObject.stats = Stats.restructure(jsonObject.stats);
         jsonObject.lifetimeStats = Stats.restructure(jsonObject.lifetimeStats);
-        jsonObject.manager = StatsEventManager.restructure(jsonObject.manager);
+        jsonObject.manager = EventManager.restructure(jsonObject.manager);
         return jsonObject;
     }
 
@@ -56,7 +56,7 @@ class BaseballPlayer {
         this.teamwork = BaseballPlayer.normalizeToTen(rng.random() * 6 + rng.random() * 6);
         this.stats = new Stats(); // current season only
         this.lifetimeStats = new Stats();
-        this.manager = new StatsEventManager();
+        this.manager = new EventManager();
     }
 
     addPlateAppearances() {
@@ -395,7 +395,7 @@ class BaseballPlayer {
                         <tr><td>Full Name</td><td>${this.firstName} "${this.nickName}" ${this.lastName}</td></tr>
                         <tr><td>Jersey Number</td><td>${this.jerseyNumber}</td></tr>
                         <tr><td>Position</td><td>${this.position}</td></tr>
-                        <tr><td>Tattoos</td><td>${this.tattoos}</td></tr>
+                        <tr><td>Tattoos</td><td><span class='noto fs-3'>${this.tattoos}</span></td></tr>
                         <tr><td>Age</td><td>${this.age}</td></tr>
                     </table>
                 </div>

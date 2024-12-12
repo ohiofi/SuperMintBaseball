@@ -1,5 +1,6 @@
 # crest maker
 from turtle import *
+import math
 svgPath = ""
 tracer(0)
 def setPoint():
@@ -182,6 +183,42 @@ def raidersStyleCrest():
         setPoint()
     print(svgPath)
 
+def raidersStyleCrestB(scale):
+    pu()
+    goto(50,2)
+    pd()
+    seth(40)
+    setPoint()
+    for i in range(7):
+        fd(15.5 *scale)
+        lt(7.75)
+        setPoint()
+    lt(120)
+    print(100-xcor(),ycor())
+    for i in range(8):
+        fd(6.25*scale)
+        rt(10)
+        setPoint()
+    mysteryHeading = heading()
+    lt(180-mysteryHeading)
+    mysteryDistance = xcor() - 50
+    fd(mysteryDistance)
+    setPoint()
+    fd(mysteryDistance)
+    lt(180-mysteryHeading)
+    setPoint()
+    for i in range(8):
+        rt(10)
+        fd(6.25*scale)
+        setPoint()
+    lt(120)
+    print(xcor(),ycor())
+    for i in range(7):
+        lt(7.75)
+        fd(15.5*scale)
+        setPoint()
+    print(svgPath)
+
 def sixPointedTopCrest():
     pu()
     goto(50,2)
@@ -228,6 +265,53 @@ def sixPointedTopCrest():
     #print(xcor())
     print(svgPath)
 
+def sixPointedTopCrestB():
+    pu()
+    goto(50,2)
+    pd()
+    seth(55)
+    setPoint()
+    for i in range(3):
+        fd(9)
+        rt(10)
+        setPoint()
+    for i in range(5):
+        fd(7.65)
+        lt(8*2)
+        setPoint()
+    for i in range(5):
+        fd(9)
+        rt(8)
+        setPoint()
+    #corner
+    #print(215-heading())
+    lt(61)
+    print(100-xcor(),ycor())
+    for i in range(5):
+        lt(90)
+        for i in range(5):
+            #fd(4.14555) # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            fd(3.445 )
+            rt(18)
+            setPoint()
+        #print(215-heading())
+    # print(xcor(),ycor())
+    lt(169)
+    for i in range(5):
+        rt(8)
+        fd(9)
+        setPoint()
+    for i in range(5):
+        lt(8*2)
+        fd(7.65)
+        setPoint()
+    for i in range(3):
+        rt(10)
+        fd(9)
+        setPoint()
+    print(xcor())
+    print(svgPath)
+
 def fivePointedTopCrest():
     pu()
     goto(50,2)
@@ -247,6 +331,7 @@ def fivePointedTopCrest():
         rt(7.9)
         setPoint()
     fd(5)
+    setPoint()
     #corner
     #print(215-heading())
     lt(47)
@@ -328,9 +413,37 @@ def fourPointedTopCrest():
     print(xcor())
     print(svgPath)
 
+def rotatedSquare():
+    radius = 40
+    pu()
+    goto(50,50)
+    for i in range(5):
+        x = math.cos(math.pi*0.5*i + math.pi*2/16)* radius + 50
+        y = math.sin(math.pi*0.5*i + math.pi*2/16)* radius + 50
+        goto(x,y)
+        setPoint()
+        pd()
+    print(svgPath)
 
+def eightPointedStar():
+    bigRadius = 50
+    lilRadius = 40
+    pu()
+    goto(50,50)
+    for i in range(17):
+        radius = 30
+        if i%4==2:
+            radius = bigRadius
+        elif i%4==0:
+            radius = lilRadius
+        x = math.cos(math.pi*2*1/16*i)* radius*1.1 + 50
+        y = math.sin(math.pi*2*1/16*i)* radius*0.9 + 50
+        goto(x,y)
+        setPoint()
+        pd()
+    print(svgPath)
 
 drawBorders()
-fourPointedTopCrest()
+fivePointedTopCrest()
 update()
 mainloop()

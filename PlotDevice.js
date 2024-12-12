@@ -104,9 +104,10 @@ class PlotDevice {
         const vp =
             model.users[0].getVictoryPoints()
         if (vp >= model.users[0].getGoal()) {
-            View.addAlert("success", `LEVEL UP! <span class="noto">🚀</span><br>${Math.round(model.users[0].getVictoryPoints()/model.users[0].getGoal()*100)}% above goal <span class="noto">👑</span>`)
+            View.addAlert("success", `LEVEL UP! <span class="noto">🚀</span><br>${Math.round(model.users[0].getVictoryPoints()/model.users[0].getGoal()*100-100)}% above goal <span class="noto">👑</span>`)
             View.addAlert("success", `Earned +${model.users[0].getReward()} <span class="noto">🪙</span>`)
             model.users[0].valuables.money += model.users[0].getReward();
+            model.users[0].level++;
             View.addAlert("success", `You magic levels have reset <span class="noto">🔥</span><span class="noto">🌵</span><span class="noto">💧</span>`);
             model.users[0].valuables.setMagicToZero();
             this.setMidScriptPositive(model);

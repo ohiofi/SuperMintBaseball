@@ -146,8 +146,8 @@ class Controller {
             //console.log("not enough money")
             View.addAlert("danger", `Oops! Not enough money! You have ${this.model.users[0].valuables.money}<span class="noto">🪙</span>, but that costs ${this.model.world.shop.onDisplay[value].cost}<span class="noto">🪙</span>`)
         }
-        this.view.userPage.updateUserInfo(this.model.users[0])
-        this.view.navBar.setCounters(this.model.users[0])
+        //this.view.userPage.updateUserInfo(this.model.users[0])
+        //this.view.navBar.setCounters(this.model.users[0])
     }
     handleShopBuyPlusOneHandClick = (value) => {
         console.log(value)
@@ -224,6 +224,8 @@ class Controller {
         this.view.bindShopContinueButtonClick(this.handleShopContinueButtonClick);
         this.view.navBar.bindNavBarClick(this.handleShowPage)
         this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
+        this.model.users[0].manager.subscribe(this.view.navBar.handleEvent)
+        this.model.users[0].manager.subscribe(this.view.userPage.handleEvent)
     }
 
     setupNightView(){

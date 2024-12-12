@@ -1,27 +1,27 @@
 // Observer design pattern
-// a StatsEventManager generates/publishes a StatsEvent
-// a StatsEventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
-// a BaseballTeam or BaseballPlayer has a StatsEventManager
-// a User or the League subscribes to one or more StatsEventManagers and can handleEvent(data)
+// a EventManager generates/publishes a StatsEvent
+// a EventManager belongs to a BaseballTeam or BaseballPlayer or something that has Stats
+// a BaseballTeam or BaseballPlayer has a EventManager
+// a User or the League subscribes to one or more EventManagers and can handleEvent(data)
 
 /**
  * Manages the publication and subscription of `StatsEvent` objects using the Observer design pattern.
  * Used by entities like `BaseballTeam` or `BaseballPlayer` to notify subscribers (e.g., Users or League) of statistical events.
  */
-class StatsEventManager {
+class EventManager {
 
     /**
-   * Restructures a plain JSON object into an instance of the `StatsEventManager` class.
+   * Restructures a plain JSON object into an instance of the `EventManager` class.
    * @param {Object} jsonObject - The plain JSON object to convert.
-   * @returns {StatsEventManager} The converted object with `StatsEventManager` prototype.
+   * @returns {EventManager} The converted object with `EventManager` prototype.
    */
     static restructure(jsonObject) {
-        Object.setPrototypeOf(jsonObject, StatsEventManager.prototype);
+        Object.setPrototypeOf(jsonObject, EventManager.prototype);
         return jsonObject;
     }
 
     /**
-   * Initializes a new instance of the `StatsEventManager` class.
+   * Initializes a new instance of the `EventManager` class.
    * Manages a list of subscribed listeners for event notifications.
    */
     constructor() {

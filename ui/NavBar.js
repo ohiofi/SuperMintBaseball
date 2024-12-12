@@ -82,7 +82,10 @@ class NavBar {
         })
     }
 
-    
+    handleEvent = (data) => {
+        // when user data updates
+        console.log(data)
+    }
 
     render(){
         return this.root;
