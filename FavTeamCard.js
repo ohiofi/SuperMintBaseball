@@ -34,7 +34,8 @@ class FavTeamCard extends TradingCard{
             colorMid="${this.colorScheme.mid}"
             colorDark="${this.colorScheme.dark}"
             emoji="${this.profilePic}"
-            font="${(18/this.profilePic.length+3)+'px monospace'}">
+            fontSize="${(18/this.profilePic.length+3)+'px'}"
+            fontFamily="monospace">
         </trading-card>`.trim();
     }
     isTriggered(statsEvent) {

@@ -63,6 +63,10 @@ class BaseballPlayer {
         this.stats.plateAppearances++;
         this.lifetimeStats.plateAppearances++;
     }
+    addAtBats() {
+        this.stats.atBats++;
+        this.lifetimeStats.atBats++;
+    }
     addBasesOnBalls() {
         this.stats.basesOnBalls++;
         this.lifetimeStats.basesOnBalls++;
@@ -398,31 +402,40 @@ class BaseballPlayer {
 
                                 <!-- Attributes Tab -->
                 <div class="tab-pane fade" id="attributes" role="tabpanel" aria-labelledby="attributes-tab">
-                    <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
-                        <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
-                        <tr><td>Hunger Rate</td><td>${this.hungerRate.toFixed(1)}</td></tr>
-                        <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
-                        <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
-                        <tr>
-                            <th colspan="2" class="text-center">Pitching Attributes</th>
-                        </tr>
-                        <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
-                        <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
-                        <tr><td>Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
-                        <tr>
-                            <th colspan="2" class="text-center">Batting Attributes</th>
-                        </tr>
-                        <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
-                        <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
-                        <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
-                        <tr><td>Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
-                        <tr>
-                            <th colspan="2" class="text-center">Defense Attributes</th>
-                        </tr>
-                        <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
-                        <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
-                        <tr><td>Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
-                    </table>
+                    <div class="row">
+                        <div class="col col-lg-6">    
+                            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                                <th colspan="2" class="text-center">Wellness</th>
+                                <tr><td>Hunger</td><td>${this.hunger.toFixed(1)}</td></tr>
+                                <tr><td>Metabolism</td><td>${this.hungerRate.toFixed(1)}</td></tr>
+                                <tr><td>Healthiness</td><td>${this.healthiness.toFixed(1)}</td></tr>
+                                <tr><td>Balance</td><td>${this.balance.toFixed(1)}</td></tr>
+                                <tr>
+                                    <th colspan="2" class="text-center">Pitching Attributes</th>
+                                </tr>
+                                <tr><td>Pitch Strength</td><td>${this.pitchStrength.toFixed(1)}</td></tr>
+                                <tr><td>Pitch Accuracy</td><td>${this.pitchAccuracy.toFixed(1)}</td></tr>
+                                <tr><td>Avg. Pitching Aptitude</td><td>${this.getPitchingAptitude().toFixed(1)}</td></tr>
+                                <tr>
+                            </table>
+                        </div>
+                        <div class="col col-lg-6">   
+                            <table class="table table-dark table-striped table-bordered small table-sm table-borderless">
+                                <th colspan="2" class="text-center">Batting Attributes</th>
+                                </tr>
+                                <tr><td>Swinginess</td><td>${this.swinginess.toFixed(1)}</td></tr>
+                                <tr><td>Thwackiness</td><td>${this.thwackiness.toFixed(1)}</td></tr>
+                                <tr><td>Hitting Power</td><td>${this.hittingPower.toFixed(1)}</td></tr>
+                                <tr><td>Avg. Batting Aptitude</td><td>${this.getBattingAptitude().toFixed(1)}</td></tr>
+                                <tr>
+                                    <th colspan="2" class="text-center">Defense Attributes</th>
+                                </tr>
+                                <tr><td>Reliability</td><td>${this.reliability.toFixed(1)}</td></tr>
+                                <tr><td>Teamwork</td><td>${this.teamwork.toFixed(1)}</td></tr>
+                                <tr><td>Avg. Defense Aptitude</td><td>${this.getDefenseAptitude().toFixed(1)}</td></tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
     
                 <!-- Stats Tab -->

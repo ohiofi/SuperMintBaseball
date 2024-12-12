@@ -16,7 +16,7 @@ class ShopHomePage{
             
         `.trim();
     }
-    bindShopButtonClick(handler) {
+    bindShopBuyButtonClick(handler) {
         const els = document.getElementsByClassName("shopButton");
         Array.from(els).forEach((el) => {
             el.addEventListener('click', event => {
@@ -25,9 +25,30 @@ class ShopHomePage{
                     const id = event.target.value
                     handler(id)
                 }
+                else if (event.target.localName === 'span') {
+                    const id = event.target.parentElement.value
+                    handler(id)
+                }
             })
         })
     }
+    bindShopBuyPlusOneHandClick(handler) {
+        const el = document.getElementById("shopCardSlotPlusOneHandCardButton");
+       
+            el.addEventListener('click', event => {
+
+                if (event.target.localName === 'button') {
+                    const id = event.target.value
+                    handler(id)
+                }
+                else if (event.target.localName === 'span') {
+                    const id = event.target.parentElement.value
+                    handler(id)
+                }
+            })
+        
+    }
+    
     
     setShop(shop){
         this.root.querySelector("#homePageCardContainer").innerHTML = "";

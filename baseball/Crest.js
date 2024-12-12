@@ -266,7 +266,7 @@ class Crest {
                 fill="${this.fontColor}" 
                 
                 font-size="${90/this.teamPlaceAbbreviation.length + 10}px" 
-                style="-webkit-text-stroke: 1px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -1px -1px 0px ${this.shadowColor}, -1px 1px 0px ${this.shadowColor}, 1px -1px 0px ${this.shadowColor};"
+                style="-webkit-text-stroke: 0.5px ${this.shadowColor}; text-shadow: 1px 1px 0px ${this.shadowColor}, -0.5px -0.5px 0px ${this.shadowColor}, -0.5px 0.75px 0px ${this.shadowColor}, 0.5px -0.5px 0px ${this.shadowColor};"
         >
                 ${this.teamPlaceAbbreviation}
             </text>

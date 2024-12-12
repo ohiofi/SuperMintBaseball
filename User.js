@@ -2,13 +2,13 @@ class User {
     constructor(name) {
         this.name = name;
         this.hasClickedUserIcon = false;
-        this.lives = 3; // 🩸
-        this.level = 1; // 🚀
+        this.lives = 3; // <span class="noto">🩸</span>
+        this.level = 1; // <span class="noto">🚀</span>
         this.valuables = new Valuables({
-            "money": 30, // 🌕🌝💰
-            "greenMagic": 3,// 🌵🪴🌿☘️💹
-            "redMagic": 4,// 🔥🎟️
-            "blueMagic": 5// 💧💦🌊🧢
+            "money": 30, // <span class="noto">🪙</span>🌝💰
+            "redMagic": 1,// <span class="noto">🔥</span>🎟️
+            "greenMagic": 2,// <span class="noto">🌵</span>🪴🌿☘️💹
+            "blueMagic": 3// <span class="noto">💧</span>💦🌊🧢
         });
         this.cards = [];
         this.maxCards = 5;
@@ -42,7 +42,7 @@ class User {
         return Math.ceil(rewardAmount * (Math.pow(this.getGoal(),3) / ( Math.abs(Math.pow(this.getGoal(),3) - Math.pow(this.getVictoryPoints(), 3)) + Math.pow(this.getGoal(),3))));
     }
 
-    // victory points emoji is 👑
+    // victory points emoji is 👑 <span class="noto">👑</span>
     getVictoryPoints(){
         return this.valuables.greenMagic * this.valuables.redMagic * this.valuables.blueMagic;
     }

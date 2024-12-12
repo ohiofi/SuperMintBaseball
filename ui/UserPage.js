@@ -10,38 +10,42 @@ class UserPage{
                 </div-->
             </div>
             <div class="container my-5">
-            <div class="row text-center">
+            <div class="row text-center border-bottom border-dark bg-000 rounded-2 p-1 mb-4">
             <div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's current experience level.">Level 🚀</a>
-    <p id="userLevel" class="font-monospace">3</p>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's current experience level.">Level</a>
+    <div><span id="userLevel" class="font-monospace">3</span><span class="noto">🚀</span></div>
+</div>
+            <div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Victory points required to level up. Victory Points are Red Magic multiplied by Green Magic multiplied by Blue Magic.">VP/Goal</a>
+    <div><span id="userVP" class="font-monospace">3</span>/<span id="vpGoal" class="font-monospace">3</span><span class="noto">👑</span></div>
+</div>
+
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's remaining lives.">Lives</a>
+    <div><span id="userLives" class="font-monospace">3</span><span class="noto">🩸</span></div>
+</div>
+
+</div>
+<div class="row text-center border-bottom border-dark bg-000 rounded-2 p-1 mb-4">
+<div class="col">
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Money. Spend it to buy cards. Earn magic which generates victory points.">Money</a>
+    <div><span id="money" class="font-monospace">50</span><span class="noto">🪙</span></div>
 </div>
 <div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Victory points required to level up. Victory Points are Red Magic multiplied by Green Magic multiplied by Blue Magic.">VP Goal 👑</a>
-    <p id="vpGoal" class="font-monospace">3</p>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Red Magic Points used for fire, love, blood, etc.">Red MP</a>
+    <div><span id="redMagic" class="font-monospace">0</span><span class="noto">🔥</span></div>
 </div>
 <div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="The player's remaining lives.">Lives 🩸</a>
-    <p id="userLives" class="font-monospace">3</p>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Green Magic Points used for plants, nature, healing, etc.">Green MP</a>
+    <div><span id="greenMagic" class="font-monospace">0</span><span class="noto">🌵</span></div>
 </div>
 <div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Money. Spend it to buy cards. Earn magic which generates victory points.">Money 🌕</a>
-    <p id="money" class="font-monospace">50</p>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Blue Magic Points used for water, cold, the sky, etc.">Blue MP</a>
+    <div><span id="blueMagic" class="font-monospace">0</span><span class="noto">💧</span></div>
 </div>
 <div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Red Magic is used for fire, love, blood, or whatever.">Red Magic 🔥</a>
-    <p id="redMagic" class="font-monospace">0</p>
-</div>
-<div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Green Magic is used for plants, nature, healing, or whatever.">Green Magic 🌵</a>
-    <p id="greenMagic" class="font-monospace">0</p>
-</div>
-<div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Blue Magic is used for water, cold, the sky, or whatever.">Blue Magic 💧</a>
-    <p id="blueMagic" class="font-monospace">0</p>
-</div>
-<div class="col">
-    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Trading Cards. Number the player currently holds and the maximum number the player can hold.">Cards 🃏</a>
-    <p><span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span></p>
+    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Trading Cards. Number the player currently holds and the maximum number the player can hold.">Cards</a>
+    <div><span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span><span class="noto">🃏</span></div>
 </div>
 
             </div>
@@ -72,8 +76,8 @@ class UserPage{
                     <div class="tab-pane fade show active" id="cards" role="tabpanel" aria-labelledby="cards-tab">
                         <div class="card text-secondary bg-222 shadow pb-4 mt-0">
                             <div class="card-header text-center">
-                                <h3>Cards 🃏
-                                <span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span>
+                                <h3>Cards 
+                                <span class="cardsCount font-monospace">0</span>/<span class="maxCards font-monospace">5</span><span class="noto">🃏</span>
                             </div>
                             <div id="userPageCardContainer" class="card-body row p-4">
                                 <!-- Cards content dynamically inserted here -->
@@ -252,7 +256,7 @@ class UserPage{
                 <span id="userCardSlot${i}" class="col text-center">
                 </span>
                 <div class="col-12 text-center pb-5">
-                    <button id="userCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-danger">SELL ME +${user.cards[i].cost/2}🌕</button>
+                    <button id="userCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-danger">SELL ME +${Math.floor(user.cards[i].cost*0.8)}<span class="noto">🪙</span></button>
                 </div>
             </span>
             `
@@ -268,6 +272,7 @@ class UserPage{
         this.root.querySelector('#userName').innerText = user.name;
         this.root.querySelector('#userLives').innerText = user.lives;
         this.root.querySelector('#userLevel').innerText = user.level;
+        this.root.querySelector('#userVP').innerText = user.getVictoryPoints();
         this.root.querySelector('#vpGoal').innerText = user.getGoal();
         this.root.querySelector('#money').innerText = user.valuables.money;
         this.root.querySelector('#greenMagic').innerText = user.valuables.greenMagic;

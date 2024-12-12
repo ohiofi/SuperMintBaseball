@@ -1,6 +1,7 @@
 class Shop{
-    static increaseHandSizeBasePrice = 9
-    static increaseHandSizeSquarePrice = 1
+    static plusOneHandSizeBasePrice = 9;
+    static plusOneHandSizeSquarePrice = 1;
+    static plusOneHandCardPrice(){ return Shop.plusOneHandSizeBasePrice + Shop.plusOneHandSizeSquarePrice * Shop.plusOneHandSizeSquarePrice }
     // takes an integer sum and splits it into three parts such that the total equals the given sum.
     static splitThreeWays(sum) {
         const part1 = Math.ceil(sum / 3); // First part
@@ -8,17 +9,17 @@ class Shop{
         const part3 = sum - part1 - part2;   // Third part ensures the total equals sum
         return [part1, part2, part3];
     }
-    static getHandSizeCard(cost){
-        const card = new TradingCard(CardType.INCREASE_HAND_SIZE,null, Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice);
+    static getPlusOneHandCard(cost){
+        const card = new TradingCard(CardType.INCREASE_HAND_SIZE,null, Shop.plusOneHandCardPrice());
         card.leagueIdNumber = -1;
         card.container.innerHTML = `
         <trading-card 
-            name="+1 HAND SIZE ✋"
+            name="+1 HAND SIZE"
             cardLine1="Hold 1 additional card"
-            cardLine2="✋"
-            cardLine3="✋"
-            cardLine4="✋"
-            cost="${Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice}"
+            cardLine2="<span class='noto'>✋</span>"
+            cardLine3="<span class='noto'>✋</span>"
+            cardLine4="<span class='noto'>✋</span>"
+            cost="${Shop.plusOneHandCardPrice()}"
             colorLight="#FFFFFF"
             colorMid="#333333"
             colorDark="#000000"
@@ -36,6 +37,7 @@ class Shop{
         
     }
 
+    // this needs refactored!!!!! for each active card type, etc
     addCards(teamArray){
         for(let i=0; i<teamArray.length;i++){
             if(!this.isCardInShop(teamArray[i].leagueIdNumber)){
@@ -95,7 +97,7 @@ class Shop{
     //                 <span id="shopCardSlot${i}" class="col-12 text-center">
     //                 </span>
     //                 <div class="col-12 text-center pb-5">
-    //                     <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${this.onDisplay[i].cost}🌕</button>
+    //                     <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${this.onDisplay[i].cost}<span class="noto">🪙</span></button>
     //                 </div>
     //             </span>
     //             `
@@ -103,18 +105,18 @@ class Shop{
     //         }
     //     }
     //     // always add the +1 Hand Size card
-    //     const handSizeCard = Shop.getHandSizeCard()
+    //     const handSizeCard = Shop.getPlusOneHandCard()
     //     this.root.innerHTML += `
     //             <span class="col row">
-    //                 <span id="shopCardSlotHandSizeCard" class="col-12 text-center">
+    //                 <span id="shopCardSlotPlusOneHandCard" class="col-12 text-center">
     //                 </span>
     //                 <div class="col-12 text-center pb-5">
-    //                     <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
-    //                         class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}🌕</button>
+    //                     <button id="shopCardSlotPlusOneHandCardButton" type="button" value="-1" 
+    //                         class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}<span class="noto">🪙</span></button>
     //                 </div>
     //             </span>
     //             `
-    //             this.root.querySelector("#shopCardSlotHandSizeCard").append(handSizeCard.render())
+    //             this.root.querySelector("#shopCardSlotPlusOneHandCard").append(handSizeCard.render())
     //     return this.root
     // }
     getCardsOnDisplay() {
@@ -151,8 +153,12 @@ class Shop{
         }
         return false
     }
-    isPurchaseAffordable(index, user){
+    isPlusOneHandAffordable(user){
         
+        return user.valuables.money >= Shop.plusOneHandCardPrice();
+    }
+    isPurchaseAffordable(index, user){
+        if(index == -1) return this.isPlusOneHandAffordable(user); // plus one hand card
         return user.valuables.money >= this.onDisplay[index].cost;
     }
     setSluggerCards(number){

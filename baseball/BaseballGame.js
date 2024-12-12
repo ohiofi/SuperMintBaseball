@@ -185,6 +185,7 @@ class BaseballGame {
             if (isSacrificeFly) {
                 this.batter.manager.notify(new StatsEvent(StatsEventType.SACRIFICE_FLIES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber))
             }
+            // NOTE: it's not necessary to award the batter a plate appearance here because it was already awarded for the flyout
             return `<br>${runner.getFullNameWithLink(20)} SCORES!`;
         }
         return "";
@@ -211,6 +212,12 @@ class BaseballGame {
                     this.count.outs++;
                     result += " " + this.batter.getFullNameWithLink(20) + " STRIKES OUT swinging. " + this.getOutsString()
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.batter.manager.notify(
+                        new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                    )
+                    this.batter.manager.notify(
+                        new StatsEvent(StatsEventType.AT_BATS,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                    )
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     this.setCountToZero();
                     this.gameState.previousState(this);
@@ -226,6 +233,12 @@ class BaseballGame {
                     this.count.outs++
                     result += " " + this.batter.getFullNameWithLink(20) + " STRIKES OUT looking. " + this.getOutsString();
                     this.batter.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_AT_BAT, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.batter.manager.notify(
+                        new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                    )
+                    this.batter.manager.notify(
+                        new StatsEvent(StatsEventType.AT_BATS,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                    )
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.STRIKEOUTS_THROWN, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     this.setCountToZero()
                     this.gameState.previousState(this);
@@ -235,9 +248,13 @@ class BaseballGame {
                 result += "<br>" + this.batter.getFullNameWithLink(20) + " is looking. BALL looking, " + this.count.balls + "-" + this.count.strikes
                 this.pitcher.setHungerUp()
                 if (this.count.balls >= 4) {
+                    // BASE ON BALLS
                     this.gameState.previousState(this);
                     result += ". Take your base."
                     this.batter.manager.notify(new StatsEvent(StatsEventType.BASES_ON_BALLS, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber));
+                    this.batter.manager.notify(
+                        new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                    )
                     this.pitcher.manager.notify(new StatsEvent(StatsEventType.WALKS_ALLOWED, this.defenseTeam.leagueIdNumber, this.pitcher.leagueIdNumber));
                     result += this.walkAndAdvanceBaseRunners()
                     this.setCountToZero()
@@ -266,16 +283,39 @@ class BaseballGame {
 
             let defender = this.defenseTeam.getRandomPlayer();
             let defenseScore = defender.getDefenseScore(this.pitchNumber);
-            if (defenseScore >= hitScore) {
-                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a fly ball. "
+            if (defenseScore >= hitScore * 2) {
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a ground out to "
                 this.count.outs++;
-                result += defender.getFullNameWithLink(20) + " makes the catch. " + this.getOutsString()
+                result += defender.getFullNameWithLink(20) + ". " + this.getOutsString()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                )
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.AT_BATS,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                )
                 defender.setHungerDown()
                 this.batter.setHungerUp()
                 if (this.count.outs < 3) {
+                    // possible sacrifice fly
                     result += this.getBaseRunnerMovement(1, true)
                 }
-            } else if (hitScore / defenseScore <= 1.999) {
+            } else if (defenseScore >= hitScore) {
+                result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a fly ball. "
+                this.count.outs++;
+                result += defender.getFullNameWithLink(20) + " makes the catch. " + this.getOutsString()
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                )
+                this.batter.manager.notify(
+                    new StatsEvent(StatsEventType.AT_BATS,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+                )
+                defender.setHungerDown()
+                this.batter.setHungerUp()
+                if (this.count.outs < 3) {
+                    // possible sacrifice fly
+                    result += this.getBaseRunnerMovement(1, true)
+                }
+            } else if (hitScore <= defenseScore * 1.999) {
                 result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a SINGLE"
                 result += this.getBaseRunnerMovement(1)
                 this.onBase[0] = this.batter;
@@ -286,7 +326,7 @@ class BaseballGame {
                 this.batter.manager.notify(
                     new StatsEvent(StatsEventType.SINGLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
-            } else if (hitScore / defenseScore <= 2.999) {
+            } else if (hitScore <= defenseScore * 2.999) {
                 result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a DOUBLE"
                 result += this.getBaseRunnerMovement(2)
                 this.onBase[1] = this.batter;
@@ -297,7 +337,7 @@ class BaseballGame {
                 this.batter.manager.notify(
                     new StatsEvent(StatsEventType.DOUBLES, this.offenseTeam.leagueIdNumber, this.batter.leagueIdNumber)
                 )
-            } else if (hitScore / defenseScore <= 3.999) {
+            } else if (hitScore <= defenseScore * 3.999) {
                 result += "<br>" + this.batter.getFullNameWithLink(20) + " hits a TRIPLE"
                 result += this.getBaseRunnerMovement(3)
                 this.onBase[2] = this.batter;
@@ -465,7 +505,8 @@ class BaseballGame {
     }
 
     getScore() {
-        return this.scoreboard.getScore(this.getInningString());
+        if(!this.hasStarted) return this.awayTeam.getNameWithLink()+" @ "+this.homeTeam.getNameWithLink();
+        return this.getInningString()+" "+this.awayTeam.getNameWithLink()+":&nbsp;"+this.scoreboard.getAwayScore()+" "+this.homeTeam.getNameWithLink()+":&nbsp;"+this.scoreboard.getHomeScore();
     }
 
     getStrikes() {
@@ -488,6 +529,12 @@ class BaseballGame {
     }
 
     incrementHits() {
+        this.batter.manager.notify(
+            new StatsEvent(StatsEventType.PLATE_APPEARANCES,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+        )
+        this.batter.manager.notify(
+            new StatsEvent(StatsEventType.AT_BATS,this.offenseTeam.leagueIdNumber,this.batter.leagueIdNumber)
+        )
         this.scoreboard.incrementHits(this.isTopOfInning);
     }
 

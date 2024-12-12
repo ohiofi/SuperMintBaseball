@@ -32,6 +32,14 @@ class Model {
             //console.log("Oops no more room for more cards")
         }
         else if (this.world.shop.isPurchaseAffordable(value, user)) {
+            if(value == -1){
+                // plus one hand card
+                console.log(value)
+                this.users[0].valuables.money -= Shop.plusOneHandCardPrice();
+                this.users[0].maxCards++;
+                Shop.plusOneHandSizeSquarePrice++;
+                return
+            }
             const buyingCard = this.world.shop.getPurchase(value, user);
             if (buyingCard) {
                 this.users[0].addCard(buyingCard, this.world.league.lookup(buyingCard.leagueIdNumber));

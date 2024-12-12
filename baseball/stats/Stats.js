@@ -31,8 +31,11 @@ class Stats {
 
         // Batting stats
 
-        /** @type {number} Number of turns as a batter. */
+        /** @type {number} Number of "Plate Appearances" which are awarded if: got a hit, base on balls, ground out, flyout, strikeout, or sacrifice fly. */
         this.plateAppearances = 0;
+
+        /** @type {number} Number of "At Bats" which are awarded if: ground out, fly out, got a hit, or struck out. */
+        this.atBats = 0;
 
         /** @type {number} Number of hits. */
         this.hits = 0;
@@ -104,7 +107,7 @@ class Stats {
    * @returns {string} Batting average as a fixed-point number or `-1` if at-bats are zero.
    */
     getBattingAverage() {
-        return (this.plateAppearances > 0 ? (this.hits / this.plateAppearances).toFixed(3) : 0);
+        return (this.atBats > 0 ? (this.hits / this.atBats).toFixed(3) : 0);
     }
 
     /**
@@ -112,7 +115,7 @@ class Stats {
    * @returns {string} OBP as a fixed-point number or `-1` if at-bats are zero.
    */
     getOnBasePercentage() {
-        return this.plateAppearances > 0 ? ((this.hits + 0.3 * this.stolenBases) / this.plateAppearances).toFixed(3) : 0;
+        return this.atBats > 0 ? ((this.hits + this.basesOnBalls + this.hitByPitch) / (this.atBats + this.basesOnBalls + this.hitByPitch + this.sacrificeFlies)).toFixed(3) : 0;
     }
 
     /**
@@ -120,7 +123,7 @@ class Stats {
    * @returns {string} OPS as a fixed-point number or `-1` if at-bats are zero.
    */
     getOnBasePlusSlugging() {
-        return this.plateAppearances > 0 ? ((this.plateAppearances * (this.plateAppearances + this.basesOnBalls + this.hitByPitch) + this.totalBases * (this.plateAppearances + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch)) / (this.plateAppearances * (this.plateAppearances + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch))).toFixed(3) : -1;
+        return this.atBats > 0 ? ((this.atBats * (this.hits + this.basesOnBalls + this.hitByPitch) + this.totalBases * (this.atBats + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch)) / (this.atBats * (this.atBats + this.basesOnBalls + this.sacrificeFlies + this.hitByPitch))).toFixed(3) : -1;
     }
 
     /**
@@ -253,16 +256,20 @@ getRecordAndPitcherStats() {
  * @returns {string} HTML string representing the table.
  */
 getBatterStats() {
-    const { plateAppearances, hits, singles, doubles, triples, homeRuns, runsScored, stolenBases, strikeoutsAtBat, sacrificeFlies } = this;
+    const { plateAppearances, atBats, hits, singles, doubles, triples, homeRuns, runsScored, stolenBases, strikeoutsAtBat, sacrificeFlies } = this;
 
     const rows = `
       <tr>
         <td>Batting Average</td>
         <td>${this.getBattingAverage()}</td>
       </tr>
-      <tr>
+      <!--tr>
         <td>${this.stringFormatKey("plateAppearances")}</td>
         <td>${plateAppearances}</td>
+      </tr-->
+      <tr>
+        <td>${this.stringFormatKey("atBats")}</td>
+        <td>${atBats}</td>
       </tr>
       <tr>
         <td>${this.stringFormatKey("hits")}</td>

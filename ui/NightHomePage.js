@@ -54,7 +54,7 @@ class NightHomePage{
             this.root.querySelector('#messageJumpButton').classList.remove("hide");
         }
     }
-    // bindShopButtonClick(handler) {
+    // bindShopBuyButtonClick(handler) {
     //     const els = document.getElementsByClassName("shopButton");
     //     Array.from(els).forEach((el) => {
     //         el.addEventListener('click', event => {

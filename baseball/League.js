@@ -116,14 +116,24 @@ class League {
         let table = `
     <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
         <thead>
-            <tr>
-                <th class="text-secondary">#</th>
-                <th class="text-secondary">Batter Name</th>
-                <th class="text-secondary">BA</th>
-                <th class="text-secondary">Hits</th>
-                <th class="text-secondary">OPS</th>
-            </tr>
-        </thead>
+    <tr>
+        <th class="text-secondary">
+            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="League rank">#</a>
+        </th>
+        <th class="text-secondary">
+            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Name of the batter">Batter Name</a>
+        </th>
+        <th class="text-secondary">
+            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Batting Average: hits divided by at-bats">BA</a>
+        </th>
+        <th class="text-secondary">
+            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Total number of hits achieved">Hits</a>
+        </th>
+        <th class="text-secondary">
+            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="On-base Plus Slugging: a combination of on-base percentage and slugging percentage">OPS</a>
+        </th>
+    </tr>
+</thead>
         <tbody>
     `;
         let count = 0;
@@ -169,11 +179,21 @@ class League {
     <table class="table table-striped table-dark shadow rounded-2 overflow-hidden  table-borderless">
         <thead>
             <tr>
-                <th class="text-secondary">#</th>
-                <th class="text-secondary">Pitcher Name</th>
-                <th class="text-secondary">SO/9</th>
-                <th class="text-secondary">SO</th>
-                <th class="text-secondary">ERA</th>
+                <th class="text-secondary">
+                    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="League Rank">#</a>
+                </th>
+                <th class="text-secondary">
+                    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Name of the pitcher">Pitcher Name</a>
+                </th>
+                <th class="text-secondary">
+                    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Strikeouts per nine innings pitched">SO/9</a>
+                </th>
+                <th class="text-secondary">
+                    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Total number of strikeouts achieved">SO</a>
+                </th>
+                <th class="text-secondary">
+                    <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Earned Run Average: the average number of earned runs allowed per nine innings pitched">ERA</a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -236,9 +256,15 @@ class League {
             <table class="table table-striped table-dark shadow rounded-2 overflow-hidden table-borderless">
                 <thead>
                     <tr>
-                        <th class="text-secondary">#</th>
-                        <th class="text-secondary">Team Name</th>
-                        <th class="text-secondary">W - L</th>
+                        <th class="text-secondary">
+                            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="League Rank">#</a>
+                        </th>
+                        <th class="text-secondary">
+                            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Name of the team">Team Name</a>
+                        </th>
+                        <th class="text-secondary">
+                            <a href="#" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Win-Loss record of the team">W - L</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -361,6 +387,10 @@ class League {
             case StatsEventType.RUNS_SCORED:
                 this.lookup(data.teamId).addRunsScored()
                 this.lookup(data.playerId).addRunsScored()
+                break
+            case StatsEventType.AT_BATS:
+                this.lookup(data.teamId).addAtBats()
+                this.lookup(data.playerId).addAtBats()
                 break
         }
 

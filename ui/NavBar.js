@@ -23,19 +23,19 @@ class NavBar {
                     <span id="counterSection"  class=" text-secondary pt-1 pe-1 small" data-link-to-page-id="userPage">
                         <span id="userIconNag"><span class="badge text-bg-warning bouncy z-3 position-relative top-0 start-50">YOUR CARDS →</span></span>
                         <a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Money. Spend it to buy cards. Earn magic which generates victory points.">
-    <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small">🌕</span>&nbsp;
+    <span id="moneyCounter" class="font-monospace">100</span><span class="opacity-75 small"><span class="noto">🪙</span></span>&nbsp;
 </a>
-<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Red Magic is used for fire, love, blood, or whatever.">
-    <span id="redMagicCounter" class="font-monospace ">3</span><span class="opacity-75 small">🔥</span>&nbsp;
+<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Red Magic Points used for fire, love, blood, etc.">
+    <span id="redMagicCounter" class="font-monospace ">3</span><span class="opacity-75 small"><span class="noto">🔥</span></span>&nbsp;
 </a>
-<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Green Magic is used for plants, nature, healing, or whatever.">
-    <span id="greenMagicCounter" class="font-monospace ">1</span><span class="opacity-75 small">🌵</span>&nbsp;
+<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Green Magic Points used for plants, nature, healing, etc.">
+    <span id="greenMagicCounter" class="font-monospace ">1</span><span class="opacity-75 small"><span class="noto">🌵</span></span>&nbsp;
 </a>
-<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Blue Magic is used for water, cold, the sky, or whatever.">
-    <span id="blueMagicCounter" class="font-monospace ">5</span><span class="opacity-75 small">💧</span>&nbsp;
+<a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Blue Magic Points used for water, cold, the sky, etc.">
+    <span id="blueMagicCounter" class="font-monospace ">5</span><span class="opacity-75 small"><span class="noto">💧</span></span>&nbsp;
 </a>
 <a href="#" data-link-to-page-id="userPage" class="text-decoration-none link-secondary" data-toggle="tooltip" title="Trading Cards. Number the player currently holds and the maximum number the player can hold.">
-    <span class="cardsCount font-monospace ">0</span>/<span class="maxCards font-monospace">5</span><span class="opacity-75 small">🃏</span>
+    <span class="cardsCount font-monospace ">0</span>/<span class="maxCards font-monospace">5</span><span class="opacity-75 small"><span class="noto">🃏</span></span>
 </a>
 
                         

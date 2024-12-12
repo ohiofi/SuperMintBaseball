@@ -17,7 +17,8 @@ class TradingCardComponent extends HTMLElement {
         this.colorDark = this.getAttribute('colorDark') || '#664500';
         this.gradientRotation = this.getAttribute('gradientRotation') || '0';
         this.emoji = this.getAttribute('emoji') || '🏃';
-        this.font = this.getAttribute('font') || '13px';
+        this.fontSize = this.getAttribute('fontSize') || '13px';
+        this.fontFamily = this.getAttribute('fontFamily') || "Noto Color Emoji"
         this.uniqueCanvasId = `canvas-${TradingCardComponent.cardCounter++}`;
 
         // HTML structure
@@ -34,7 +35,7 @@ class TradingCardComponent extends HTMLElement {
             <div class="tradingCardHeader">
               
                 <span class="cardName"><small>${this.name}</small></span>
-                <span class="cardCost"><small>${this.cost}🌕</small></span>
+                <span class="cardCost"><small>${this.cost}<span class="noto">🪙</span></small></span>
               
             </div>
             <div class="tradingCardImage">
@@ -76,7 +77,7 @@ class TradingCardComponent extends HTMLElement {
         // Set font size and alignment for the emoji
         // ctx.font = (emoji.length == 1 ? 33 : 7/emoji.length+6)+'px';
         
-        ctx.font = this.font;
+        ctx.font = this.fontSize + " " + this.fontFamily;
         
         
 
@@ -105,7 +106,13 @@ class TradingCardComponent extends HTMLElement {
           margin:5px;
           
         }
-        
+        .noto {
+          font-family: "Noto Color Emoji", sans-serif;
+          font-weight: 400;
+          font-style: normal;
+          border-radius: 50%;
+          background:rgba(0,0,0,0.3)
+        }
         .tradingCardContents {
           position: absolute;
           top: 0;

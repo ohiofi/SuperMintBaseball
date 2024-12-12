@@ -225,6 +225,10 @@ class BaseballTeam {
         this.stats.plateAppearances++;
         this.lifetimeStats.plateAppearances++;
     }
+    addAtBats() {
+        this.stats.atBats++;
+        this.lifetimeStats.atBats++;
+    }
     addBasesOnBalls() {
         this.stats.basesOnBalls++;
         this.lifetimeStats.basesOnBalls++;

@@ -40,9 +40,9 @@ profileEmojis = ["🏃","🏃‍♂️","🏃‍♀️","🤹","🤹‍♂️","
 🧑‍✈️
 👨‍✈️
 👩‍✈️
-🧑‍🚀
-👨‍🚀
-👩‍🚀
+🧑‍<span class="noto">🚀</span>
+👨‍<span class="noto">🚀</span>
+👩‍<span class="noto">🚀</span>
 🧑‍🚒
 👨‍🚒
 👩‍🚒

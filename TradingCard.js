@@ -7,12 +7,12 @@ const CardType = {
 
 class TradingCard {
     static getPlaceholderCard(){
-            const card = new TradingCard(CardType.INCREASE_HAND_SIZE,null, Shop.increaseHandSizeBasePrice + Shop.increaseHandSizeSquarePrice * Shop.increaseHandSizeSquarePrice);
+            const card = new TradingCard(CardType.INCREASE_HAND_SIZE,null, Shop.plusOneHandCardPrice());
             card.leagueIdNumber = -1;
             card.container.innerHTML = `
             <trading-card 
                 name="Your Cards Go Here"
-                cardLine1="Placeholder 😏"
+                cardLine1="Placeholder <span class='noto'>🫥</span>"
                 cardLine2="This Is Where I'd Put My Cards"
                 cardLine3="If I Had Any"
                 cardLine4="(not a real card)"
@@ -20,7 +20,7 @@ class TradingCard {
                 colorLight="rgba(127,127,255,0.0)"
                 colorMid="rgba(127,127,255,0.0)"
                 colorDark="rgba(127,127,255,0.0)"
-                emoji="🩳">
+                emoji="🫥">
             </trading-card>`.trim();
             return card;
     }

@@ -20,6 +20,14 @@ class ShopView extends View{
 
     }
 
+    disablePlusOneHandCard(){
+        document.getElementById("shopCardSlotPlusOneHandCardButton").disabled = true;
+        document.getElementById("shopCardSlotPlusOneHandCardButton").textContent = "SOLD";
+        document.getElementById("shopCardSlotPlusOneHandCardButton").classList.remove("btn-warning");
+        document.getElementById("shopCardSlotPlusOneHandCardButton").classList.add("btn-black");
+        document.getElementById("shopCardSlotPlusOneHandCard").style.opacity = 0.25;
+    }
+
     getCardDisplayCase(onDisplayArray){
         const cardDisplayCase = View.createElement("div","shopCardDisplayCase"," row p-5 gx-5")
         for(let i=0; i<onDisplayArray.length; i++){
@@ -29,7 +37,7 @@ class ShopView extends View{
                     <span id="shopCardSlot${i}" class="col-12 text-center">
                     </span>
                     <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${onDisplayArray[i].cost}🌕</button>
+                        <button id="shopCardSlot${i}Button" type="button" value=${i} class="shopButton btn btn-outline-warning">BUY ME -${onDisplayArray[i].cost}<span class="noto">🪙</span></button>
                     </div>
                 </span>
                 `
@@ -37,18 +45,18 @@ class ShopView extends View{
             }
         }
         // always add the +1 Hand Size card
-        const handSizeCard = Shop.getHandSizeCard()
+        const handSizeCard = Shop.getPlusOneHandCard()
         cardDisplayCase.innerHTML += `
                 <span class="col row">
-                    <span id="shopCardSlotHandSizeCard" class="col-12 text-center">
+                    <span id="shopCardSlotPlusOneHandCard" class="col-12 text-center">
                     </span>
                     <div class="col-12 text-center pb-5">
-                        <button id="shopCardSlotHandSizeCardButton" type="button" value="-1" 
-                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}🌕</button>
+                        <button id="shopCardSlotPlusOneHandCardButton" type="button" value="-1" 
+                            class="handSizeCardButton btn btn-outline-warning">BUY ME -${handSizeCard.cost}<span class="noto">🪙</span></button>
                     </div>
                 </span>
                 `
-                cardDisplayCase.querySelector("#shopCardSlotHandSizeCard").append(handSizeCard.render())
+                cardDisplayCase.querySelector("#shopCardSlotPlusOneHandCard").append(handSizeCard.render())
         return cardDisplayCase
     }
     
@@ -85,6 +93,8 @@ class ShopView extends View{
         const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth;
         model.world.newsTicker.setSpeed(newsTickerRibbonSize / 100);
     }
+
+    
 
     updateShopView(value){
         document.getElementById("shopCardSlot" + value + "Button").disabled = true;

@@ -91,7 +91,7 @@ class Controller {
     //     this.model.world.shop.setFavTeamCards(Shop.splitThreeWays(numberOfCards)[1])
     //     this.model.world.shop.setPitcherCards(Shop.splitThreeWays(numberOfCards)[2])
     //     this.view.homePage.setShop(this.model.world.shop.getCardDisplay(numberOfCards));
-    //     this.view.bindShopButtonClick(this.handleShopButtonClick);
+    //     this.view.bindShopBuyButtonClick(this.handleShopBuyButtonClick);
     //     this.model.world.newsTicker.setShopText();
     //     // set the ticker speed
     //     const newsTickerRibbonSize = document.getElementById('newsTickerRibbon').clientWidth
@@ -125,13 +125,14 @@ class Controller {
         // Array.from(els).forEach((el) => { el.classList.add("hide")});
     }
 
-    handleShopButtonClick = (value) => {
+
+    handleShopBuyButtonClick = (value) => {
         if (this.model.world.shop.isPurchaseAffordable(value, this.model.users[0]) 
             && this.model.users[0].hasRoomForThisCard(this.model.world.shop.onDisplay[value])
             ) {
             this.model.attemptShopPurchase(value, this.model.users[0])
             
-            this.view.userPage.updateUserInfo(this.model.users[0]);
+            //this.view.userPage.updateUserInfo(this.model.users[0]);
             this.view.userPage.setCardDisplay(this.model.users[0]);
 
             // update the shop view
@@ -139,14 +140,31 @@ class Controller {
         }
         else if (!this.model.users[0].hasRoomForThisCard(this.model.world.shop.onDisplay[value])) {
             //console.log(this.model.world.shop.onDisplay[value])
-            View.addAlert("danger", `oops! no room for more cards! you have ${this.model.users[0].cards.length}/${this.model.users[0].maxCards}🃏. can you buy +1 Hand Size?`)
+            View.addAlert("danger", `Oops! No room for more cards! You have ${this.model.users[0].cards.length}/${this.model.users[0].maxCards}<span class="noto">🃏</span>. Either sell one you own OR buy +1 Hand Size`)
         }
         else if (!this.model.world.shop.isPurchaseAffordable(value, this.model.users[0])) {
             //console.log("not enough money")
-            View.addAlert("danger", `oops! not enough money! you have ${this.model.users[0].valuables.money}🌕, but that costs ${this.model.world.shop.onDisplay[value].cost}🌕`)
+            View.addAlert("danger", `Oops! Not enough money! You have ${this.model.users[0].valuables.money}<span class="noto">🪙</span>, but that costs ${this.model.world.shop.onDisplay[value].cost}<span class="noto">🪙</span>`)
         }
         this.view.userPage.updateUserInfo(this.model.users[0])
-        //this.view.userPage.setCardDisplay(this.model.users[0])
+        this.view.navBar.setCounters(this.model.users[0])
+    }
+    handleShopBuyPlusOneHandClick = (value) => {
+        console.log(value)
+        if (this.model.world.shop.isPurchaseAffordable(value, this.model.users[0]) ) {
+            this.model.attemptShopPurchase(value, this.model.users[0])
+            
+            //this.view.userPage.updateUserInfo(this.model.users[0]);
+            this.view.userPage.setCardDisplay(this.model.users[0]);
+
+            // update the shop view
+            this.view.disablePlusOneHandCard();
+        }
+        else if (!this.model.world.shop.isPurchaseAffordable(value, this.model.users[0])) {
+            //console.log("not enough money")
+            View.addAlert("danger", `Oops! Not enough money! You have ${this.model.users[0].valuables.money}<span class="noto">🪙</span>, but that costs ${this.model.world.shop.onDisplay[value].cost}<span class="noto">🪙</span>`)
+        }
+        this.view.userPage.updateUserInfo(this.model.users[0])
         this.view.navBar.setCounters(this.model.users[0])
     }
     handleShowPage = (id) => {
@@ -201,7 +219,8 @@ class Controller {
         // Delegate view setup to the ShopView
         this.view.setupShopView(this.model);
         // Bind events
-        this.view.homePage.bindShopButtonClick(this.handleShopButtonClick);
+        this.view.homePage.bindShopBuyButtonClick(this.handleShopBuyButtonClick);
+        this.view.homePage.bindShopBuyPlusOneHandClick(this.handleShopBuyPlusOneHandClick);
         this.view.bindShopContinueButtonClick(this.handleShopContinueButtonClick);
         this.view.navBar.bindNavBarClick(this.handleShowPage)
         this.view.userPage.bindSpeedSelect(this.handleSpeedSelect)
